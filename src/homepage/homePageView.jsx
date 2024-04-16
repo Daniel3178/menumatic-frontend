@@ -25,12 +25,20 @@ const HomePageView = (props) => {
     <div className="flex flex-col items-center justify-center h-screen">
       {conditialRender()}
       <div className="mb-8">
-        <button onClick={props.getRandomReceipt} className="m-5 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2">
+        {/* <button onClick={props.getRandomReceipt} className="m-5 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2">
           Dislike
         </button>
         <button onClick={props.sendLike} className="m-5 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
           Like
+        </button> */}
+        <div className="flex items-center">
+        <button onClick={props.sendLike} class="m-8 bg-green-500 hover:bg-green-600 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
+          <img src={thumbs_up} alt="Image" class="w-8 h-8 rounded-full"/>
         </button>
+        <button onClick={props.getRandomReceipt} class="m-8 bg-red-500 hover:bg-red-600 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
+          <img src={thumbs_down} alt="Image" class="w-8 h-8 rounded-full"/>
+        </button>
+        </div>
       </div>
     </div>
   );
