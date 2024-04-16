@@ -13,4 +13,4 @@ const homePage = createSlice({
     });
     export const getLikesCounter = (state) => state.homePage.likesCounter;
     export default homePage.reducer;
-    export const {incrementLikesCounter} = homePage.action;
+    export const {incrementLikesCounter} = homePage.actions;
