@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getApiResults, searchBySpoonacularApiAsync } from '../store/spoonacularAPISlice';
 import { incrementLikesCounter, getLikesCounter } from './homePageSlice';
+import { addToReocemmendationList } from '../recommendation_page/recommendationPageSlice';
 import { useNavigate } from 'react-router-dom';
 const HomePagePresenter = () => {
     const dispatch = useDispatch();
@@ -15,11 +16,12 @@ const HomePagePresenter = () => {
         dispatch(searchBySpoonacularApiAsync());
     }
     const handleLike = () => {
+        dispatch(addToReocemmendationList(apiResult.recipes[0]))
         dispatch(incrementLikesCounter());
         dispatch(searchBySpoonacularApiAsync());
         if(likesCounter === 1){
           console.log("LIKE LIMIT REACHED")
-          navigate("/daniel-test")
+          navigate("/recommendation")
         }
         console.log(likesCounter)
         
