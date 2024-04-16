@@ -1,6 +1,6 @@
 import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 import spoonacularAPISlice from "./spoonacularAPISlice";
-import recommendationSlice from "./recommendationPageSlice";
+import recommendationSlice from "../recommendation_page/recommendationPageSlice";
 import homePageSlice from "../homepage/homePageSlice";
 
 export const listenerMiddleware = createListenerMiddleware();

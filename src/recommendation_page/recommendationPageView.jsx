@@ -3,21 +3,24 @@ import React from 'react'
 const RecommendationPageView = (props) => {
 
     const renderList = () =>{
-        props.listOfMeals.map((meal) => {
+        console.log("RENDERING LIST")
+        console.log(props.listOfMeals)
+        return (props.listOfMeals.map((meal) => {
+            console.log(meal)
+            console.log(meal.result.title)
             return (
                 <div>
-                    <h1>{meal.title}</h1>
-                    <img src = {meal.image} alt = "food"/>
+                    <h1>{meal.result.title}</h1>
+                    <img src={meal.result.image} alt="food" className="rounded-lg" />
                 </div>
             )
-        })  
+        }) ) 
     }
 
   return (
-    <div>
-{renderList()}
-
-    </div>
+    <section>
+        {renderList()}
+    </section>
   )
 }
 

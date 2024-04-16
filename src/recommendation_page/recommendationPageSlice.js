@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { url, options } from "../config/spoonacularApiConfig";
+
 
 
 const recommendation = createSlice({
