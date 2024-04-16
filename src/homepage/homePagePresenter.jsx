@@ -25,9 +25,9 @@ const HomePagePresenter = () => {
         
     }
 
-    useEffect(()=>{
-      dispatch(searchBySpoonacularApiAsync());
-    },[])
+    // useEffect(()=>{
+    //   dispatch(searchBySpoonacularApiAsync());
+    // },[])
   return (
     <HomePageView
     apiResults = {apiResult}
