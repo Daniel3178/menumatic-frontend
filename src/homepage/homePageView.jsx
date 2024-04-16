@@ -7,7 +7,7 @@ const HomePageView = (props) => {
   const conditialRender = () => {
     if (props.apiResults) {
       return (
-        <div className="bg-gray-100 p-8 rounded-lg shadow-md items-center justify-center">
+        <div className="bg-gray-100 p-8 rounded-3xl shadow-md items-center justify-center">
           <div className="flex flex-col items-center justify-center">
             <img src={props.apiResults.recipes[0].image} alt="food" className="rounded-lg"  /> {/* Adjust width and height as needed */}
             <h1 className="text-3xl font-bold mb-4 text-balance">{props.apiResults.recipes[0].title}</h1>
@@ -32,11 +32,11 @@ const HomePageView = (props) => {
           Like
         </button> */}
         <div className="flex items-center">
-        <button onClick={props.sendLike} class="m-8 bg-green-500 hover:bg-green-600 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
-          <img src={thumbs_up} alt="Image" class="w-8 h-8 rounded-full"/>
+        <button onClick={props.getRandomReceipt} className="m-20 bg-red-500 hover:bg-red-600 rounded-full w-40 h-40 flex items-center justify-center focus:outline-none">
+          <img src={thumbs_down} alt="Image" className="w-20 h-20 rounded-full"/>
         </button>
-        <button onClick={props.getRandomReceipt} class="m-8 bg-red-500 hover:bg-red-600 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
-          <img src={thumbs_down} alt="Image" class="w-8 h-8 rounded-full"/>
+        <button onClick={props.sendLike} className="m-20 bg-green-500 hover:bg-green-600 rounded-full w-40 h-40 flex items-center justify-center focus:outline-none">
+          <img src={thumbs_up} alt="Image" className="w-20 h-20 rounded-full"/>
         </button>
         </div>
       </div>
