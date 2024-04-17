@@ -1,6 +1,26 @@
-/*Inspiration: https://unused-css.com/blog/horizontal-list*/
-body { font-family: sans-serif; }
+.App {
+  color: #72a24d;
+}
 
+body { 
+  font-family: sans-serif; 
+  padding-left:25%;
+  padding-right:25%;
+}
+
+.interrow-padding{
+  height:40px;
+}
+
+/*---------REGARDING THE TABLE ---------*/
+
+input[type='number']{
+  width:35px;
+}
+
+/*---------REGARDING TOPMOST MENU---------*/
+/*Inspiration: https://unused-css.com/blog/horizontal-list*/
+/* To change to a desired form. This one at least assures that the list is ordered horisontally*/
 li:hover {
   text-decoration: underline;
 }
@@ -24,8 +44,4 @@ ul.category-menu li {
 
 ul.category-menu li:not(:last-child) {
   border-right: 1px solid white;
-}
-
-input[type='number']{
-  width:40px;
 }
