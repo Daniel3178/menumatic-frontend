@@ -299,7 +299,7 @@ function outObj(name, amount, unit){
     };
 }
 
-const shopListObject = () => {
+const ShopListObject = () => {
     let outArray;
     for(let i = 0; i < inArray.length; i++){
         for(let j = 0; inArray[i].extendedIngredients.length; j++){
@@ -323,7 +323,7 @@ const shopListObject = () => {
     return outArray;
 }
 
-const shopListObject1 = () => {
+const ShopListObject1 = () => {
     let outArray;
     for(let i = 0; i < inArray.length; i++){
         for(let j = 0; inArray[i].extendedIngredients.length; j++){
@@ -345,5 +345,5 @@ const shopListObject1 = () => {
     return outArray;
 }
 
-export default shopListObject;
+export default ShopListObject;
 
