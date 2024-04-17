@@ -9,10 +9,14 @@ body {
 }
 
 .interrow-padding{
-  height:40px;
+  height:60px;
 }
 
 /*---------REGARDING THE TABLE ---------*/
+
+td{
+  font-size:18px;
+}
 
 input[type='number']{
   width:35px;
