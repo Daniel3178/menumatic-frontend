@@ -53,7 +53,7 @@ const RecepiesForWeek = (props) => {
           </tr>
       </table>
 
-      <input type="submit" value="✔ Shopping list"></input>
+      <button class="button" role="button">Show Shopping List</button>
 
     </div>
   )
