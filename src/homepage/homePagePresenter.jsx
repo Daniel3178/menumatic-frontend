@@ -1,24 +1,35 @@
 import React from 'react';
 import HomePageView from './homePageView';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getApiResults, searchBySpoonacularApiAsync } from '../store/spoonacularAPISlice';
 import { incrementLikesCounter, getLikesCounter } from './homePageSlice';
 import { addToReocemmendationList } from '../recommendation_page/recommendationPageSlice';
 import { useNavigate } from 'react-router-dom';
+import { objects } from '../assets/constObjects';
+
 const HomePagePresenter = () => {
+
+  //TODO: uncomment dispatch functions to work with the API
+  //TODO: Change objetcs[0] to apiResult in order to bring back the API functionality
+  //TODO: uncomment apiResult to work with the API
+
+  const [counter, setCounter] = useState(0)
+
     const dispatch = useDispatch();
-    const apiResult = useSelector(getApiResults)
-    const likesCounter = useSelector(getLikesCounter)
+    // const apiResult = useSelector(getApiResults)
+    const likesCounter = useSelector(getLikesCounter) //TODO: remove when api is working
     const navigate = useNavigate()
     const handleGetRandomReceipt = () => {
         console.log("Button Clicked");
-        dispatch(searchBySpoonacularApiAsync());
+        setCounter((counter + 1) % 2)  //TODO: remove when api is working
+        // dispatch(searchBySpoonacularApiAsync());
     }
     const handleLike = () => {
-        dispatch(addToReocemmendationList(apiResult.recipes[0]))
-        dispatch(incrementLikesCounter());
-        dispatch(searchBySpoonacularApiAsync());
+        // dispatch(addToReocemmendationList(apiResult.recipes[0]))
+        dispatch(incrementLikesCounter(objects[counter]));
+        setCounter((counter + 1) % 2) // TODO: remove when api is working
+        // dispatch(searchBySpoonacularApiAsync());
         if(likesCounter === 1){
           console.log("LIKE LIMIT REACHED")
           navigate("/recommendation")
@@ -28,11 +39,11 @@ const HomePagePresenter = () => {
     }
 
     useEffect(()=>{
-      dispatch(searchBySpoonacularApiAsync());
+      // dispatch(searchBySpoonacularApiAsync());
     },[])
   return (
     <HomePageView
-    apiResults = {apiResult}
+    apiResults = {objects[counter]}
     getRandomReceipt = {handleGetRandomReceipt}
     sendLike = {handleLike}
     

@@ -8,10 +8,13 @@ const RecommendationPagePresenter = () => {
     const dispatch = useDispatch();
     const recommendationList = useSelector(getRecommendationList);
 
-
+const handleRequst = ()=>{
+  console.log("Hello world")
+}
   return (
     <RecommendationPageView
     listOfMeals = {recommendationList}
+    myatr={handleRequst}
     />
   )
 }
