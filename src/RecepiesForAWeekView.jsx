@@ -36,7 +36,7 @@ const RecepiesForWeek = (props) => {
       </ul>
       <table style={{width:"100%"}}>
           <tr>
-<th style={{width:"30%"}}></th> <th style={{width:"50%"}}></th> <th style={{width:"20%"}}></th> <th ></th>
+            <th style={{width:"30%"}}></th> <th style={{width:"50%"}}></th> <th style={{width:"20%"}}></th> <th ></th>
           </tr>
           <RecepieForADay dayOfTheWeek="1" dish={props.RecepiesForWeekData[0].dish} priceLevel={props.RecepiesForWeekData[0].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="2" dish={props.RecepiesForWeekData[1].dish} priceLevel={props.RecepiesForWeekData[1].priceLevel}></RecepieForADay>
@@ -45,7 +45,7 @@ const RecepiesForWeek = (props) => {
           <RecepieForADay dayOfTheWeek="5" dish={props.RecepiesForWeekData[4].dish} priceLevel={props.RecepiesForWeekData[4].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="6" dish={props.RecepiesForWeekData[5].dish} priceLevel={props.RecepiesForWeekData[5].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="7" dish={props.RecepiesForWeekData[6].dish} priceLevel={props.RecepiesForWeekData[6].priceLevel}></RecepieForADay>
-          <tr>
+          <tr className="interrow-padding">
             <td>Default portions</td>
             <td></td>
             <td></td>
