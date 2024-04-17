@@ -6,15 +6,6 @@ import React from 'react'
 
 
 
-// Generate a document with text
-// This is very rudimentary, and designed for the constaints of the first sprint.
-// There are alot of helper functions in the jspdf library and I encourage anyone tasked with 
-// improving the styling of the pdf documents to take a look there.
-
-
-/* document : jsPDF
- * foodJSON : A spoonacular JSON
- * */
 
 const FoodJSONExample = `{
     "id": 716429,
@@ -669,7 +660,8 @@ const InstructionJSONExample = `
 `
 
 // document : a pdfJS document
-// foodJSON : a spoonacular item in JSON format
+// foodJSON : a result in JSON format
+// Helper function that extracts ingredients from a JSON that is retrieved from "Get Recipe Information" API
 function ingredientsToString(foodJSON) {
     var stuff = "";
 
@@ -681,17 +673,29 @@ function ingredientsToString(foodJSON) {
     }
     return stuff;
 }
-
+// document : a pdfJS document
+// foodJSON : a result in JSON format
+// Helper function that extracts instructions from a JSON that is retrieved from "Get Analyzed Recipe Instructions" API
 function instructionsToString(instructionsJSON) {
     var stuff = "";
 
-    // loop through the ingredients
+    // loop through the instructions
     for (var i = 0; i < instructionsJSON[0]["steps"].length; i++) {
         // Add tittle
         stuff += i + ". " + instructionsJSON[0]["steps"][i]["step"] + "\n";
     }
     return stuff;
 }
+
+
+// Generate a document with text
+// This is very rudimentary, and designed for the constaints of the first sprint.
+// There are alot of helper functions in the jspdf library and I encourage anyone tasked with 
+// improving the styling of the pdf documents to take a look there.
+
+/* document : jsPDF
+ * foodJSON : A spoonacular JSON
+ * */
 
 function printText(doc, text) {
     //
@@ -709,8 +713,8 @@ function printText(doc, text) {
     return;
 }
 
-// This component is purely to test the function.
-// Remove when no longer necessary.
+// This react component is purely to test the function.
+// Remove when no longer necessary. Also remove binding in main.jsx
 function CreatePDFForm() {
     const [inputText, setInputText] = React.useState("");
 
