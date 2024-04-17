@@ -3,16 +3,17 @@ import { clock } from "../assets";
 
 const HomePageView = (props) => {
   console.log(props.apiResults);
-
+  
+  // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
   const conditialRender = () => {
     if (props.apiResults) {
       return (
         <div className="bg-gray-100 p-8 rounded-lg shadow-md">
-          <img src={props.apiResults.recipes[0].image} alt="food" className="rounded-lg" />
-          <h1 className="text-3xl font-bold mb-4">{props.apiResults.recipes[0].title}</h1>
+          <img src={props.apiResults[0].image} alt="food" className="rounded-lg" />
+          <h1 className="text-3xl font-bold mb-4">{props.apiResults[0].title}</h1>
           <div className="flex items-center">
             <img src={clock} alt="clock" className="w-6 h-6 mr-2 pb-2" /> {/* Adjust size as needed */}
-            <h1 className="text-3xl font-bold mb-4">{props.apiResults.recipes[0].readyInMinutes} min</h1>
+            <h1 className="text-3xl font-bold mb-4">{props.apiResults[0].readyInMinutes} min</h1>
           </div>
         </div>
       );
