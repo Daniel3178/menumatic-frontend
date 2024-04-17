@@ -8,7 +8,7 @@ body {
   padding-right:25%;
 }
 
-.interrow-padding{
+tr:not(:first-of-type){
   height:60px;
 }
 
@@ -50,7 +50,7 @@ ul.category-menu li:not(:last-child) {
   border-right: 1px solid white;
 }
 
-/* CSS */
+/*------- REGARDING THE BUTTON -------- */
 .button{
   background-color: #13aa52;
   border: 1px solid #13aa52;
