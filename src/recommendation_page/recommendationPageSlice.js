@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementLikesCounter } from "../homepage/homePageSlice";
+import ShopListObject from "../inkopslista/InkopslistaPresenter";
 
 
 const recommendation = createSlice({
@@ -23,7 +24,13 @@ const recommendation = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(incrementLikesCounter, (state, action) => {
-            state.recommendationList.push({count: 1, result: {...action.payload.recipes[0]}});
+            state.recommendationList.push({portions: 1, result: {...action.payload[0]}});
+            if(state.recommendationList.length == 2){
+                console.log(state.recommendationList) 
+                console.log("RecommendationPageSlice, state.recommendationList")
+                console.log(...state.recommendationList)
+                ShopListObject(...state.recommendationList)
+            }
         });
     }
     });
