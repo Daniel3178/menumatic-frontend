@@ -1,6 +1,6 @@
 import React from "react";
 
-const inArray = [
+/* const inArray = [
     {
       "recipe": {
         "vegetarian": false,
@@ -289,7 +289,7 @@ const inArray = [
       },
       "portions": 6
     }
-  ]
+  ] */
 
 function outObj(name, amount, unit){
     return {
@@ -299,8 +299,10 @@ function outObj(name, amount, unit){
     };
 }
 
-const ShopListObject = () => {
+const ShopListObject = (inArray) => {
     let outArray;
+    console.log("InkopslistaPresenter, ShoplistObject, InArray")
+    console.log(inArray[0]);
     for(let i = 0; i < inArray.length; i++){
         for(let j = 0; inArray[i].extendedIngredients.length; j++){
             for(let k = 0; outArray.length; k++){
@@ -320,6 +322,7 @@ const ShopListObject = () => {
             }
         }
     }
+    console.log(outArray);
     return outArray;
 }
 
