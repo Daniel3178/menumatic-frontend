@@ -15,7 +15,7 @@ const dummyData = [
 const RecepieForADay = (props) => {
 
     return (
-        <tr class="interrow-padding" >
+        <tr>
             <td>Day {props.dayOfTheWeek}</td>
             <td>{props.dish}</td>
             <td>{props.priceLevel}</td>
@@ -61,6 +61,7 @@ const RecepiesForWeek = (props) => {
 
 export default RecepiesForWeek;
 
+/* Can be useful for testing purposes
 export function App(props) {
   return (
     <div className='App'>
@@ -71,3 +72,4 @@ export function App(props) {
 
 // Log to console
 console.log('Hello console')
+*/
