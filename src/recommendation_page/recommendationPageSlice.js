@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementLikesCounter } from "../homepage/homePageSlice";
-import ShopListObject from "../inkopslista/InkopslistaPresenter";
 
 
 const recommendation = createSlice({
@@ -29,7 +28,6 @@ const recommendation = createSlice({
                 console.log(state.recommendationList) 
                 console.log("RecommendationPageSlice, state.recommendationList")
                 console.log(...state.recommendationList)
-                ShopListObject(...state.recommendationList)
             }
         });
     }
