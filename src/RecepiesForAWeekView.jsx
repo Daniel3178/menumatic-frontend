@@ -1,4 +1,15 @@
-import React from 'react'
+import React from 'react';
+
+const dummyData = [
+  {dish:"lorem ipsum aaaaa", priceLevel: "$"},
+  {dish:"lorem ipsum", priceLevel: "$"},
+  {dish:"lorem ipsum", priceLevel: "$"},
+  {dish:"lorem ipsum", priceLevel: "$"},
+  {dish:"lorem ipsum", priceLevel: "$"},
+  {dish:"lorem ipsum", priceLevel: "$"},
+  {dish:"lorem ipsum", priceLevel: "$"}
+];
+
 
 // These are lists which are made to be horisontal through CSS. Find template of this?
 const RecepieForADay = (props) => {
@@ -8,7 +19,7 @@ const RecepieForADay = (props) => {
             <td>Day {props.dayOfTheWeek}</td>
             <td>{props.dish}</td>
             <td>{props.priceLevel}</td>
-            <td><input type="number" id={props.dayOfTheWeek} name="quantity" min="1" value="1"></input></td>
+            <td><input type="number" id={props.dayOfTheWeek} name="quantity" min="1" defaultValue="1" max="100"></input></td>
         </tr>
     )
 }
@@ -33,11 +44,11 @@ const RecepiesForWeek = (props) => {
           <RecepieForADay dayOfTheWeek="7" dish={props.RecepiesForWeekData[6].dish} priceLevel={props.RecepiesForWeekData[6].priceLevel}></RecepieForADay>
           <tr>
             <td>Default portions</td>
-            <td><input type="number" id="defaultPortions" name="quantity" min="1" value="1"></input></td>
+            <td><input type="number" id="defaultPortions" name="quantity" min="1" defaultValue="1" max="100"></input></td>
           </tr>
       </table>
 
-      <input type="submit" value="✔ Shopping list."></input>
+      <input type="submit" value="✔ Shopping list"></input>
 
     </div>
   )
