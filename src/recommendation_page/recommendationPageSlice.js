@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { incrementLikesCounter } from "../homepage/homePageSlice";
 
 
 const recommendation = createSlice({
@@ -20,6 +20,12 @@ const recommendation = createSlice({
                 }});
         }
     },
+    extraReducers: (builder) => {
+        builder
+        .addCase(incrementLikesCounter, (state, action) => {
+            state.recommendationList.push({count: 1, result: {...action.payload.recipes[0]}});
+        });
+    }
     });
 
 
