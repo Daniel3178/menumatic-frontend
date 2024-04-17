@@ -5,6 +5,8 @@ const RecommendationPageView = (props) => {
     const renderList = () =>{
         console.log("RENDERING LIST")
         const dayOfTheWeek = ["Monday", "Tuesday"];
+        const priceLevel = ["$$", "$$$$"];
+        const portions = [1, 2, 3];
         console.log(props.listOfMeals)  //Tar emot recommendationlist, alltså array av likeade meals.
         return (props.listOfMeals.map((meal, i) => {   //Loopar igenom listan av meals, där meals är det nuvarande elementet som inspekteras i array:en. 
             console.log(meal)   //printar ut den meal som nuvarande inspekterades i loop. {portions: 1, result: {...}} där {...} består av alla data om meal.
@@ -12,10 +14,10 @@ const RecommendationPageView = (props) => {
             return (    //Och för varje element i listOfMeals, så skapar vi en header av dess namn.. osv.. Här kan vi göra mycket
                 <div className='w-[1280px] border border-black flex flex-row'>  
         
-                    <div className='border border-black w-[320px]'>{dayOfTheWeek[i]}</div>
-                    <div className='border border-black w-[320px] flex flex-row'>{meal.result.title}</div>
-                    <div></div>
-                    <div></div>
+                    <div className='border border-black w-[320px] text-center'>{dayOfTheWeek[i]}</div>
+                    <div className='border border-black w-[320px] text-center'>{meal.result.title}</div>
+                    <div className = 'border border-black w-[320px] text-center'>{priceLevel[i]} </div>
+                    <div className='border border-black w-[320px] text-center'>{portions[i]}</div>
 
                 </div>
             )

@@ -38,7 +38,7 @@ const RecepiesForWeek = (props) => {
           <tr>
             <th style={{width:"30%"}}></th> <th style={{width:"50%"}}></th> <th style={{width:"20%"}}></th> <th ></th>
           </tr>
-          <RecepieForADay dayOfTheWeek="1" dish={props.RecepiesForWeekData[0].dish} priceLevel={props.RecepiesForWeekData[0].priceLevel}></RecepieForADay>
+          <RecepieForADay dayOfTheWeek="Monday" dish={props.RecepiesForWeekData[0].dish} priceLevel={props.RecepiesForWeekData[0].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="2" dish={props.RecepiesForWeekData[1].dish} priceLevel={props.RecepiesForWeekData[1].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="3" dish={props.RecepiesForWeekData[2].dish} priceLevel={props.RecepiesForWeekData[2].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="4" dish={props.RecepiesForWeekData[3].dish} priceLevel={props.RecepiesForWeekData[3].priceLevel}></RecepieForADay>
