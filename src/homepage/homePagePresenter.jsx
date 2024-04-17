@@ -16,8 +16,8 @@ const HomePagePresenter = () => {
         dispatch(searchBySpoonacularApiAsync());
     }
     const handleLike = () => {
-        dispatch(addToReocemmendationList(apiResult.recipes[0]))
-        dispatch(incrementLikesCounter());
+        // dispatch(addToReocemmendationList(apiResult.recipes[0]))
+        dispatch(incrementLikesCounter(apiResult));
         dispatch(searchBySpoonacularApiAsync());
         if(likesCounter === 1){
           console.log("LIKE LIMIT REACHED")
