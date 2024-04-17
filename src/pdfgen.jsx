@@ -677,7 +677,7 @@ function ingredientsToString(foodJSON) {
     // loop through the ingredients
     for (var i = 0; i < foodJSON["extendedIngredients"].length; i++) {
         // Add tittle
-        stuff += foodJSON["extendedIngredients"][i]["measures"]["metric"]["amount"] + " " + foodJSON["extendedIngredients"][i]["measures"]["metric"]["unitShort"] + " " + foodJSON["extendedIngredients"][i]["name"] + "\n";
+        stuff += Math.ceil(parseFloat(foodJSON["extendedIngredients"][i]["measures"]["metric"]["amount"])) + " " + foodJSON["extendedIngredients"][i]["measures"]["metric"]["unitShort"] + " " + foodJSON["extendedIngredients"][i]["name"] + "\n";
     }
     return stuff;
 }
