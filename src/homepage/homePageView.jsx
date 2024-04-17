@@ -2,7 +2,7 @@ import React from 'react';
 import { clock } from "../assets";
 
 const HomePageView = (props) => {
-  console.log(props.apiResults);
+  console.log(props.apiResults);  //Visar den första apiResult på homepage, alltså första suggestion av meal.
   
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
   const conditialRender = () => {
