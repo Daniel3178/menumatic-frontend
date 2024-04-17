@@ -5,7 +5,7 @@ li:hover {
   text-decoration: underline;
 }
 
-ul.recepie-for-a-day {
+ul.category-menu {
   list-style: none;
   background-color: #48abe0;
   color: white;
@@ -14,7 +14,7 @@ ul.recepie-for-a-day {
   margin-top: 1rem;
 }
 
-ul.recepie-for-a-day li {
+ul.category-menu li {
   display: inline-block;
   padding: 0 0.5rem;
   min-width: 7rem;
@@ -22,6 +22,10 @@ ul.recepie-for-a-day li {
   cursor: pointer;
 }
 
-ul.recepie-for-a-day li:not(:last-child) {
+ul.category-menu li:not(:last-child) {
   border-right: 1px solid white;
+}
+
+input[type='number']{
+  width:40px;
 }
