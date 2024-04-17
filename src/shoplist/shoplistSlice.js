@@ -10,8 +10,6 @@ const shoplistSlice = createSlice({
     generateShoplist: (state, action) => {
         //console.log("InkopslistaPresenter, shoplistObject, InArray, ERROR here ");
         
-      let inArray = action.payload;
-      let outArray = [];
 
       const stripIngr = (meal) => {
           const portions = meal.portions
@@ -31,7 +29,7 @@ const shoplistSlice = createSlice({
           let flag = -1
           for(let j = 0; j < state.allItems.length; j++){
             if(props[i].name == state.allItems[j]?.name){
-              allItems[j].amount += props[i].amount
+              state.allItems[j].amount += props[i].amount
               flag = 1
             }
           }
