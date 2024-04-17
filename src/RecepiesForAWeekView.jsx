@@ -45,7 +45,7 @@ const RecepiesForWeek = (props) => {
           <RecepieForADay dayOfTheWeek="5" dish={props.RecepiesForWeekData[4].dish} priceLevel={props.RecepiesForWeekData[4].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="6" dish={props.RecepiesForWeekData[5].dish} priceLevel={props.RecepiesForWeekData[5].priceLevel}></RecepieForADay>
           <RecepieForADay dayOfTheWeek="7" dish={props.RecepiesForWeekData[6].dish} priceLevel={props.RecepiesForWeekData[6].priceLevel}></RecepieForADay>
-          <tr className="interrow-padding">
+          <tr>
             <td>Default portions</td>
             <td></td>
             <td></td>
