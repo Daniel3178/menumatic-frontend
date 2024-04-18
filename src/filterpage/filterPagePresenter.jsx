@@ -16,12 +16,12 @@ const FilterPagePresenter = () => {
   const handleApplyFilter = (includeTags, excludeTags) => {
     dispatch(saveBoundel1(includeTags))
     dispatch(saveBoundel2(excludeTags))
-    navigate("/homepage-test")
+    navigate("/")
   }
 
   const handleCancel = () => {
     console.log("Cancel button pressed")
-    navigate("/homepage-test")
+    navigate("/")
   }
 
   return (

@@ -34,7 +34,7 @@ const HomePagePresenter = () => {
     dispatch(incrementLikesCounter(objects[counter]));
     setCounter((counter + 1) % 15) // TODO: remove when api is working
     // dispatch(searchBySpoonacularApiAsync());
-    if (likesCounter === 10) {
+    if (likesCounter === 7) {
       console.log("LIKE LIMIT REACHED")
       navigate("/recommendation")
     }

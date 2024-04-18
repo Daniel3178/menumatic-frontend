@@ -27,7 +27,7 @@ const ShoplistPageView = (props) => {
 
   const pdfButtonCom = () =>{
     return (
-      <div className='bg-blue-500 w-[200px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+      <div className='bg-blue-500 w-[150px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
         {generateShoppingListPDFLink(parseToStringArray())}
       </div>
     )

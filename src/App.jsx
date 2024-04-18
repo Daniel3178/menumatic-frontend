@@ -12,7 +12,7 @@ const App = () => {
         <Route path="/pdf-test" element={<CreatePDFForm />} />
         <Route path="/daniel-test" element={<DanielTestPresenter/>}/>
         <Route path="/recommendation" element={<RecommendationPagePresenter/>}/>
-        <Route path="/homepage-test" element={<HomePagePresenter/>}/>
+        <Route path="/" element={<HomePagePresenter/>}/>
         <Route path="/filterpage-test" element={<FilterPagePresenter/>}/>
         <Route path="/shoplist-test" element={<ShoplistPagePresenter/>}/>
       </Routes>
