@@ -105,23 +105,21 @@ const ListItem = ({ children, dot = '•', stylesheet = styles }) => {
   );
 };
 // Create Document Componentit
-const Recipes = ({ title, ingredients, instructions }) => (
-  <Document>
-    <Page size="A5" orientation={"landscape"} style={styles_recipe.page}>
-      <Text style={styles_recipe.mainbody}> by menumatic</Text>
-      <View style={styles_recipe.headline_section} >
-        <Text style={styles_recipe.headline}>{title}</Text>
-      </View>
-      <View style={styles_recipe.section}>
-        <Text style={styles_recipe.headline2}>Ingredients:</Text>
-        <BulletList items={ingredients} stylesheet={styles_recipe} />
-      </View>
-      <View style={styles_recipe.section}>
-        <Text style={styles_recipe.headline2}>Instructions:</Text>
-        <BulletList items={instructions} dot={""} stylesheet={styles_recipe} />
-      </View>
-    </Page>
-  </Document >
+const Recipe = ({ title, ingredients, instructions }) => (
+  <Page size="A5" orientation={"landscape"} style={styles_recipe.page}>
+    <Text style={styles_recipe.mainbody}> by menumatic</Text>
+    <View style={styles_recipe.headline_section} >
+      <Text style={styles_recipe.headline}>{title}</Text>
+    </View>
+    <View style={styles_recipe.section}>
+      <Text style={styles_recipe.headline2}>Ingredients:</Text>
+      <BulletList items={ingredients} stylesheet={styles_recipe} />
+    </View>
+    <View style={styles_recipe.section}>
+      <Text style={styles_recipe.headline2}>Instructions:</Text>
+      <BulletList items={instructions} dot={""} stylesheet={styles_recipe} />
+    </View>
+  </Page>
 );
 
 
@@ -148,6 +146,62 @@ const ShoppingList = ({ ingredients }) => (
     </Page>
   </Document>
 );
+
+
+
+
+
+/* generateRecipesListPDFLink(recipes)
+ * Pre:
+ * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
+ * fileName: The filename of the downloaded file, (needs to include file extension".pdf"!)
+ * Out:
+ * A react component (PDFDownloadLink) which generates a download link for the client.
+ * Author: 
+ * Gustav Landberg <landbergg@outlook.com>
+ * */
+export function generateShoppingListPDFLink(ingredients, fileName = "ShoppingList.pdf") {
+  return (
+    <div>
+      <PDFDownloadLink document={<ShoppingList ingredients={ingredients} />} fileName={fileName}>
+        {({ blob, url, loading, error }) =>
+          loading ? 'Loading document...' : 'Download Shoppling List'
+        }
+      </PDFDownloadLink>
+    </div>
+  )
+}
+/* generateRecipesListPDFLink(recipes)
+ * Pre:
+ * recipes: a list of format
+ *  [[title, [ingredient1, ingredient2, ...], [instruction1, instruction2, ...]],...]
+ *  where title, ingredientX, instructionX are strings containing the corresponding information
+ * Post:
+ * A react component (PDFDownloadLink) which generates a download link for the client.
+ * Author:
+ * Gustav Landberg <landbergg@outlook.com>
+ * */
+export function generateRecipesListPDFLink(recipes) {
+  const recipesDocument = () => (
+    <Document>
+      {recipes.map((recipe) => (
+        <Recipe key={Math.random()} title={recipe[0]} ingredients={recipe[1]} instruction={recipe[2]} />
+      ))}
+    </Document>
+  )
+  return (
+    <div>
+      <PDFDownloadLink document={recipesDocument} fileName="recipes.pdf">
+        {({ blob, url, loading, error }) =>
+          loading ? 'Loading document...' : 'Download Recipes'
+        }
+      </PDFDownloadLink>
+    </div>
+  )
+}
+
+
+
 function CreatePDFForm() {
   const [inputText, setInputText] = React.useState("");
 
@@ -160,7 +214,7 @@ function CreatePDFForm() {
   console.log(ingredientsList);
   return (
     <div>
-      <PDFDownloadLink document={<Recipes title="chokladbollar" ingredients={ingredientsList} instructions={["1. gör chokladbollarna"]} />} fileName="recipes.pdf">
+      <PDFDownloadLink document={<Document><Recipe title="chokladbollar" ingredients={ingredientsList} instructions={["1. gör chokladbollarna"]} /></Document>} fileName="recipes.pdf">
         {({ blob, url, loading, error }) =>
           loading ? 'Loading document...' : 'Download Recipes'
         }
