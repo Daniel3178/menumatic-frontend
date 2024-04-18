@@ -22,7 +22,7 @@ const HomePagePresenter = () => {
   const navigate = useNavigate()
   const handleGetRandomReceipt = () => {
     console.log("Button Clicked");
-    setCounter((counter + 1) % 2)  //TODO: remove when api is working
+    setCounter((counter + 1) % 15)  //TODO: remove when api is working
     // dispatch(searchBySpoonacularApiAsync());
 
     if(showInfo){
@@ -32,7 +32,7 @@ const HomePagePresenter = () => {
   const handleLike = () => {
     // dispatch(addToReocemmendationList(apiResult.recipes[0]))
     dispatch(incrementLikesCounter(objects[counter]));
-    setCounter((counter + 1) % 2) // TODO: remove when api is working
+    setCounter((counter + 1) % 15) // TODO: remove when api is working
     // dispatch(searchBySpoonacularApiAsync());
     if (likesCounter === 1) {
       console.log("LIKE LIMIT REACHED")
