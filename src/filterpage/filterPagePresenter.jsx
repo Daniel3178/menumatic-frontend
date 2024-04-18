@@ -9,9 +9,19 @@ import { objects } from '../assets/constObjects';
 
 const FilterPagePresenter = () => {
 
+  const navigate = useNavigate()
+
+  const handleApplyFilter = (includeTags, excludeTags) => {
+    // TODO: send data to api slice
+    console.log("Filter button pressed")
+    console.log("include Tags: " + includeTags.toString());
+    console.log("exclude Tags: " + excludeTags.toString());
+    navigate("/homepage-test")
+  } 
+
   return (
     <FilterPageView
-
+    applyFilter={handleApplyFilter}
     />
   );
 }
