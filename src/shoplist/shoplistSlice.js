@@ -39,16 +39,18 @@ const shoplistSlice = createSlice({
             if(props[i].name === state.allItems[j].name){
               console.log("!!DUPE FOUND!!" + props[i].name + " and " + state.allItems[j].name)
               state.allItems[j].amount += props[i].amount
-              state.allItems[j].amount = Math.round(state.allItems[j].amount * 10) / 10
               flag = 1
             }
           }
           if(flag == -1){
-            props[i].amount = Math.round(props[i].amount * 10) / 10
             state.allItems.push(props[i])
           }
         }
-        console.log("allItems:" + state.allItems[0].amount)
+        for(let i = 0; i < state.allItems.length; i++){
+          let cur = state.allItems[i].amount
+          state.allItems[i].amount = Math.ceil(cur*10)/10
+        }
+        
       }
       
       for(let i = 0; i < action.payload.length; i++){
