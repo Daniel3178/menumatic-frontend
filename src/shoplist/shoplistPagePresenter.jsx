@@ -6,16 +6,22 @@ import { generateShoplist } from "./shoplistSlice";
 import { getRecommendationList } from "../recommendation_page/recommendationPageSlice";
 import { useEffect } from "react";
 
+
 const ShoplistPagePresenter = () =>{
   const dispatch = useDispatch();
   const allItems = useSelector(getAllItems)
   const shoplist = useSelector(getRecommendationList)
+
   useEffect(()=>{
     dispatch(generateShoplist(shoplist))
   },[dispatch, shoplist])
+
+
+
   return(
 <ShoplistPageView
 allItems = {allItems}
+// generatePDF = {handleGeneratePDF}
 />
   )
 }

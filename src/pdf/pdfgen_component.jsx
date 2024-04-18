@@ -165,7 +165,7 @@ export function generateShoppingListPDFLink(ingredients, fileName = "ShoppingLis
     <div>
       <PDFDownloadLink document={<ShoppingList ingredients={ingredients} />} fileName={fileName}>
         {({ blob, url, loading, error }) =>
-          loading ? 'Loading document...' : 'Download Shoppling List'
+          loading ? 'Loading document...' : 'Download PDF'
         }
       </PDFDownloadLink>
     </div>
@@ -204,7 +204,6 @@ export function generateRecipesListPDFLink(recipes) {
 
 function CreatePDFForm() {
   const [inputText, setInputText] = React.useState("");
-
 
   function handleChange(event) {
     setInputText(event.target.value);

@@ -14,7 +14,7 @@ const RecommendationPagePresenter = () => {
 
 
 const handleGoToShoplist = ()=>{
-  dispatch(generateShoplist(recommendationList));
+  // dispatch(generateShoplist(recommendationList));
   navigate("/shoplist-test");
 }
   return (

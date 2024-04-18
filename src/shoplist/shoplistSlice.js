@@ -37,7 +37,7 @@ const shoplistSlice = createSlice({
           let flag = -1
           for(let j = 0; j < state.allItems.length; j++){
             if(props[i].name === state.allItems[j].name){
-              console.log("!!DUPE FOUND!!" + props[i].name + " and " + state.allItems[j].name)
+              // console.log("!!DUPE FOUND!!" + props[i].name + " and " + state.allItems[j].name)
               state.allItems[j].amount += props[i].amount
               flag = 1
             }
