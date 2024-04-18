@@ -2,7 +2,7 @@ import React from 'react'
 import './RecepiesForAWeekViewCSS.css';
 
 const dummyData = [
-  {dish:"lorem ipsum aaaaa I LOVE BIG CHUNGUS ", priceLevel: "$"},
+  {dish:"lorem ipsum aaaaa ced contra iditor iqito ", priceLevel: "$"},
   {dish:"lorem ipsum", priceLevel: "$"},
   {dish:"lorem ipsum", priceLevel: "$$$"},
   {dish:"lorem ipsum", priceLevel: "$"},
