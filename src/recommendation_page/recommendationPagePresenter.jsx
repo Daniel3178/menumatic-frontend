@@ -1,21 +1,16 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getRecommendationList, updateCount, addToReocemmendationList  } from './recommendationPageSlice';
+import { useSelector } from 'react-redux';
+import { getRecommendationList, updateCount } from './recommendationPageSlice';
 import RecommendationPageView from './recommendationPageView';
-import { generateShoplist } from '../shoplist/shoplistSlice';
 import { useNavigate } from 'react-router-dom';
 
+//TODO: Update count is not used
 const RecommendationPagePresenter = () => {
-
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const recommendationList = useSelector(getRecommendationList);
 
 
 const handleGoToShoplist = ()=>{
-  // dispatch(generateShoplist(recommendationList));
-  console.log("ERROR")
   navigate("/shoplist-test");
 }
   return (

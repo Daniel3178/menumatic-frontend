@@ -110,10 +110,6 @@ const ListItem = ({ children, dot = '•'}) => {
         textAlign: 'right',
         marginRight: 35,
       }}>{first + " " + second}</Text>
-      {/* <Text style={{
-        width: 60,
-        fontWeight: "bold",
-      }}>{ second}</Text> */}
       <Text style={styles.bullet}>{ third}</Text>
     </View>
   );
@@ -154,10 +150,6 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
         marginBottom: 20,
         fontSize: 14,
       }}>Amount</Text>
-      {/* <Text style={{
-        width: 60,
-        fontWeight: "bold",
-      }}>{ second}</Text> */}
       <Text style={{
         fontWeight: 'bold',
         marginBottom: 20,
