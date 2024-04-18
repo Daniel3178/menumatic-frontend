@@ -34,8 +34,7 @@ const HomePagePresenter = () => {
           console.log("LIKE LIMIT REACHED")
           navigate("/recommendation")
         }
-        console.log(likesCounter)
-        
+        console.log(likesCounter) 
     }
 
     useEffect(()=>{
