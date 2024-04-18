@@ -29,6 +29,7 @@ const ShoplistPageView = ({ allItems }) => {
       {
         renderTheIngredientList(allItems)
       }
+      
     </div>
   );
 };

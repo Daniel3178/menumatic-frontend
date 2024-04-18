@@ -205,7 +205,6 @@ export function generateRecipesListPDFLink(recipes) {
 function CreatePDFForm() {
   const [inputText, setInputText] = React.useState("");
 
-
   function handleChange(event) {
     setInputText(event.target.value);
   }
