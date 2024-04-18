@@ -6,27 +6,49 @@ const FilterPageView = (props) => {
 
 
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
-  
-  
+
+
 
   const includeTags = ["Vegetarian", "Vegan"];
-  let excludeTags = ["Gluten", "Shellfish", "Nuts", "Egg"];
-  const [includeSwitchValues, setIncludeSwitchValues] = useState(Array(includeTags.length).fill(false));
-  const [excludeSwitchValues, setExcludeSwitchValues] = useState(Array(excludeTags.length).fill(false));
+  const excludeTags = ["Gluten", "Shellfish", "Nuts", "Egg"];
 
-  const handleIncludeSwitchToggle = (index) => {
-    const newSwitchValues = [...includeSwitchValues];
-    newSwitchValues[index] = !newSwitchValues[index];
-    setIncludeSwitchValues(newSwitchValues);
-    console.log(index + newSwitchValues[index])
-  };
+  const [includedItems, setIncludedItems] = useState([])
 
-  const handleExcludeSwitchToggle = (index) => {
-    const newSwitchValues = [...excludeSwitchValues];
-    newSwitchValues[index] = !newSwitchValues[index];
-    setExcludeSwitchValues(newSwitchValues);
-    console.log(index + newSwitchValues[index])
-  };
+  function includeCheckboxHandler(event) {
+    let isSelected = event.target.checked
+    let value = event.target.value
+
+    if (isSelected) {
+      setIncludedItems([...includedItems, value])
+      console.log(value + " isChecked")
+    } else {
+      console.log(value + " isUnChecked")
+      setIncludedItems((prevData) => {
+        return prevData.filter((id) => {
+          return id != value
+        })
+      })
+    }
+  }
+
+  const [excludedItems, setExcludedItems] = useState([])
+
+  function excludeCheckboxHandler(event) {
+    let isSelected = event.target.checked
+    let value = event.target.value
+
+    if (isSelected) {
+      setExcludedItems([...excludedItems, value])
+      console.log(value + " isChecked")
+    } else {
+      console.log(value + " isUnChecked")
+      setExcludedItems((prevData) => {
+        return prevData.filter((id) => {
+          return id != value
+        })
+      })
+    }
+  }
 
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center h-screen">
@@ -42,8 +64,9 @@ const FilterPageView = (props) => {
                 <label className="relative inline-flex cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={includeSwitchValues[index]}
-                    onChange={() => handleIncludeSwitchToggle(index)}
+                    // checked={includeSwitchValues[index]}
+                    value={ingredient}
+                    onChange={(event) => includeCheckboxHandler(event)}
                     className="peer sr-only"
                   />
                   <div className="peer h-4 w-11 rounded-full border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
@@ -66,8 +89,9 @@ const FilterPageView = (props) => {
                 <label className="relative inline-flex cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={excludeSwitchValues[index]}
-                    onChange={() => handleExcludeSwitchToggle(index)}
+                    value={ingredient}
+                    // checked={includedItems.includes(ingredient)}
+                    onChange={(event) => excludeCheckboxHandler(event)}
                     className="peer sr-only"
                   />
                   <div className="peer h-4 w-11 rounded-full border bg-slate-200 after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-300 peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>
@@ -81,6 +105,8 @@ const FilterPageView = (props) => {
       <button onClick={props.toggleInfoView} className="hover:scale-110 shadow-md m-7 bg-green-500 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
         <img src={done} alt="Image" className="w-10 h-10 rounded-full" />
       </button>
+      <span>Include tags: {includedItems}</span>
+      <span>Exclude tags: {excludedItems}</span>
     </div>
   );
 };
