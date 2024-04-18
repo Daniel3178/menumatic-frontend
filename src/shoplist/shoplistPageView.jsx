@@ -17,7 +17,7 @@ function renderTheIngredientList(allItems) {
       </div>
     );
   } else {
-    return (<p className="text-gray-700 text-center">Ingen inköpslista tillgänglig.</p>);
+    return (<p className="text-gray-700 text-center">No shopping list available.</p>);
   }
 }
 
@@ -25,7 +25,7 @@ function renderTheIngredientList(allItems) {
 const ShoplistPageView = ({ allItems }) => {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Inköpslista</h1>
+      <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
       {
         renderTheIngredientList(allItems)
       }
