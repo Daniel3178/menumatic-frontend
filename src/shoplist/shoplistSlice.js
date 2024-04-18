@@ -42,11 +42,13 @@ const shoplistSlice = createSlice({
               state.allItems[j].amount += props[i].amount
               flag = 1
             }
-            if(flag = -1){
-              state.allItems.push(props[i])
-            }
+            
+          }
+          if(flag == -1){
+            state.allItems.push(props[i])
           }
         }
+        console.log("allItems:" + state.allItems)
       }
       
       for(let i = 0; i < action.payload.length; i++){
