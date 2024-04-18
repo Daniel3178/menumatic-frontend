@@ -12,7 +12,7 @@ const ShoplistPagePresenter = () =>{
   const shoplist = useSelector(getRecommendationList)
   useEffect(()=>{
     dispatch(generateShoplist(shoplist))
-  },[])
+  },[dispatch, shoplist])
   return(
 <ShoplistPageView
 allItems = {allItems}
