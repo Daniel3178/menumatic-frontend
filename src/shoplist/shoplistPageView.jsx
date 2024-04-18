@@ -1,49 +1,31 @@
 import React from 'react';
 
-const dummyValues = [
-  {amount:69, unit:"Lulz", name:"Bobama sauce"},
-  {amount:69, unit:"Lulz", name:"Bobama sauce"},
-  {amount:69, unit:"Lulz", name:"Bobama sauce"},
-]
-
-function renderTheIngredientList(allItems){
-  if(allItems.length > 0){
-    return(
-      <table style={{ width: "100%" }}>
-      <tr>
-        <th style={{ width: "50%" }}>Amount</th>
-        <th style={{ width: "50%" }}>Ingredient</th>
-      </tr> 
-      {
-        allItems.map((ingredientData, index) => (
-          <tr key={index} className="flex justify-between items-center border-b pb-2">
-            <td>{`${ingredientData.amount} ${ingredientData.unit}`}</td>
-            <td>{ingredientData.name}</td>
-          </tr>
-        )) 
-      }
-      </table>
-    )
-    /* Alternative solution to statement above:
-      <ul className="space-y-2">
-        {allItems.map((ingredient, index) => (
-          <li key={index} className="flex justify-between items-center border-b pb-2">
-            <span className="text-sm text-gray-500">{`${ingredient.amount} ${ingredient.unit}`}</span>
-            <span className="text-lg text-gray-700">{ingredient.name}</span>
-          </li>
+function renderTheIngredientList(allItems) {
+  if (allItems.length > 0) {
+    return (
+      <div className="w-full">
+        <div className="flex justify-between border-b pb-2">
+          <div style={{ width: "50%" }}>Amount</div>
+          <div style={{ width: "50%" }}>Ingredient</div>
+        </div>
+        {allItems.map((ingredientData, index) => (
+          <div key={index} className="flex justify-between items-center border-b pb-2">
+            <div style={{ width: "50%" }}>{`${ingredientData.amount} ${ingredientData.unit}`}</div>
+            <div style={{ width: "50%" }}>{ingredientData.name}</div>
+          </div>
         ))}
-      </ul>
-    */
-  }
-  else{
-    return (<p className="text-gray-700 text-center">Ingen inköpslista tillgänglig.</p>)
+      </div>
+    );
+  } else {
+    return (<p className="text-gray-700 text-center">No shopping list available.</p>);
   }
 }
+
 
 const ShoplistPageView = ({ allItems }) => {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Inköpslista</h1>
+      <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
       {
         renderTheIngredientList(allItems)
       }
