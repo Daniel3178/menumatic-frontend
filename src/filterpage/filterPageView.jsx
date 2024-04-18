@@ -95,14 +95,19 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
           </li>
         ))}
       </ul>
+
       
-      {/* Button to apply filters */}
-      <div>
+      <div className="flex">
+        {/* Button to apply filters */}
+        <button onClick={() => props.cancel()} className="hover:scale-110 shadow-md m-7 bg-gray-150 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
+          <img src={close} alt="Image" className="w-10 h-10 rounded-full" />
+        </button>
+        {/* Button to cancel */}
         <button onClick={() => props.applyFilter(includedItems, excludedItems)} className="hover:scale-110 shadow-md m-7 bg-green-500 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
           <img src={done} alt="Image" className="w-10 h-10 rounded-full" />
         </button>
       </div>
-      
+
       {/* Displaying included and excluded tags for debugging */}
       <span>Include tags: {includedItems}</span>
       <span>Exclude tags: {excludedItems}</span>

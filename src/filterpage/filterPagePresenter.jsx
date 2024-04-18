@@ -17,11 +17,17 @@ const FilterPagePresenter = () => {
     console.log("include Tags: " + includeTags.toString());
     console.log("exclude Tags: " + excludeTags.toString());
     navigate("/homepage-test")
-  } 
+  }
+
+  const handleCancel = () => {
+    console.log("Cancel button pressed")
+    navigate("/homepage-test")
+  }
 
   return (
     <FilterPageView
     applyFilter={handleApplyFilter}
+    cancel={handleCancel}
     />
   );
 }
