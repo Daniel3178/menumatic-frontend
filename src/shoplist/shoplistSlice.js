@@ -19,7 +19,7 @@ const shoplistSlice = createSlice({
           console.log(ingredients)
           for(let i = 0; i < ingredients.length; i++){
             const calcAmount = ingredients[i].amount * (portions / servings)
-            ingrArr.push({name: ingredients[i].nameClean, amount: calcAmount, unit: ingredients[i].unitShort})
+            ingrArr.push({name: ingredients[i].nameClean, amount: calcAmount, unit: ingredients[i].unit})
         }
         return ingrArr
       }
