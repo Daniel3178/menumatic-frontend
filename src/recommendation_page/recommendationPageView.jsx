@@ -10,10 +10,19 @@ const dummyData = [
   {dish:"lorem ipsum", priceLevel: "$"},
   {dish:"lorem ipsum", priceLevel: "$"}
 ];
-/**
- * Gå in i TeomansLabberi och hämta kolumntabellen som ska vara högst uppe med portions osv.
- * Implementera det i denna branch.
- */
+
+function pricePerServingToApproximatePriceLevel(instancePricePerServing){
+    // Dummy values
+    if(instancePricePerServing < 100){
+        return "$"
+    }
+    else if (instancePricePerServing < 1000){
+        return "$$"
+    }
+    else{
+        return "$$$"
+    }
+}
 
 // These are lists which are made to be horisontal through CSS. Find template of this?
 const RecepieForADay = (props) => {
@@ -35,7 +44,7 @@ const RecommendationPageView = (props) => {
         console.log(props.listOfMeals)
         return (props.listOfMeals.map((mealDataForTheDay, mealIndex) => {
             return (
-                <RecepieForADay dayOfTheWeek={mealIndex + 1} dish={mealDataForTheDay.result.title} priceLevel={mealDataForTheDay.result.pricePerServing}></RecepieForADay>
+                <RecepieForADay dayOfTheWeek={mealIndex + 1} dish={mealDataForTheDay.result.title} priceLevel={pricePerServingToApproximatePriceLevel(mealDataForTheDay.result.pricePerServing)}></RecepieForADay>
             )
         }))
     }
