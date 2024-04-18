@@ -16,10 +16,16 @@ export const filterPage = createSlice({
     },
     reducers: {
         saveBoundel1: (state, action) => {
-            state.apiPrefs.boundel1.paramsArray.push(action.payload)
+            if (state.apiPrefs.boundel1.paramsArray.length !== 0) {
+                state.apiPrefs.boundel1.paramsArray.length = 0;
+            }
+            state.apiPrefs.boundel1.paramsArray.push(action.payload);
         },
         saveBoundel2: (state, action) => {
-            state.apiPrefs.boundel2.paramsArray.push(action.payload)
+            if (state.apiPrefs.boundel2.paramsArray.length !== 0) {
+                state.apiPrefs.boundel2.paramsArray.length = 0;
+            }
+            state.apiPrefs.boundel2.paramsArray.push(action.payload);
         },
     },
     });
