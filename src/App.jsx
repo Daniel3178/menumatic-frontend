@@ -1,6 +1,6 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import DanielTestPresenter from "./test/danielTestPresenter";
-import CreatePDFForm from "./pdfgen"
+import CreatePDFForm from "./pdf/pdfgen_component"
 const App = () => {
   return (
     <BrowserRouter>
