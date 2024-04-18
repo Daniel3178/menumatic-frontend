@@ -45,6 +45,10 @@ const HomePagePresenter = () => {
 
   }
 
+  const handleNavigateToFilterPage = () => {
+    navigate("/filterpage_test")
+  }
+
   const handleToggleInfoView = () => {
     dispatch(toggleInfoView());
     console.log(showInfo);
@@ -60,6 +64,7 @@ const HomePagePresenter = () => {
       getRandomReceipt={handleGetRandomReceipt}
       sendLike={handleLike}
       toggleInfoView={handleToggleInfoView}
+      navigateToFilterPage={handleNavigateToFilterPage}
       info = {showInfo}
     />
   );
