@@ -58,7 +58,7 @@ const HomePageView = (props) => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className=" w-[550px] flex justify-end">
-        <button onCLick={props.toggleInfoView} className="flex items-center justify-end m-2 bg-white  w-20 h-20 focus:outline-none">
+        <button onClick={props.navigateToFilterPage} className="flex items-center justify-end m-2 bg-white  w-20 h-20 focus:outline-none">
           <img src={tune} alt="Image" className="w-10 h-10 rounded-full hover:scale-110" />
         </button>
       </div>

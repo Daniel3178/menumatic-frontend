@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const homePage = createSlice({
     name: "homePage",
     initialState: {
-        likesCounter: 0,
+        likesCounter: 1,
         showInfo: false,
     },
     reducers: {
