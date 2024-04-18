@@ -10,6 +10,10 @@ const dummyData = [
   {dish:"lorem ipsum", priceLevel: "$"},
   {dish:"lorem ipsum", priceLevel: "$"}
 ];
+/**
+ * Gå in i TeomansLabberi och hämta kolumntabellen som ska vara högst uppe med portions osv.
+ * Implementera det i denna branch.
+ */
 
 // These are lists which are made to be horisontal through CSS. Find template of this?
 const RecepieForADay = (props) => {
@@ -45,10 +49,10 @@ const RecommendationPageView = (props) => {
             </ul>
             <table style={{ width: "100%" }}>
                 <tr>
-                    <th style={{ width: "30%" }}></th> 
-                    <th style={{ width: "50%" }}></th> 
-                    <th style={{ width: "20%" }}></th> 
-                    <th></th>
+                    <th style={{ width: "30%" }}>Day</th> 
+                    <th style={{ width: "50%" }}>Dish</th> 
+                    <th style={{ width: "20%" }}>Price level</th> 
+                    <th>Portions</th>
                 </tr>
                 {renderTheFoodRecommendationsPerDay()}
                 <tr>
