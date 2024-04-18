@@ -48,7 +48,7 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
 
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center h-screen"> {/* Main container */}
-      <h1>FOOD PREFERENCE</h1> {/* Heading for food preference */}
+      <h1 className="font-bold m-1">FOOD PREFERENCE</h1> {/* Heading for food preference */}
       <ul> {/* List of included tag switches */}
         {includeTags.map((ingredient, index) => ( // Mapping through includeTags array
           <li key={index}> {/* Each tag */}
@@ -72,7 +72,7 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
         ))}
       </ul>
 
-      <h1>ALLERGIES</h1> {/* Heading for allergies */}
+      <h1 className="font-bold m-1">ALLERGIES</h1> {/* Heading for allergies */}
       <ul> {/* List of exclude tag switches */}
         {excludeTags.map((ingredient, index) => ( // Mapping through excludeTags array
           <li key={index}> {/* Each tag */}
