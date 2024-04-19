@@ -7,12 +7,13 @@ import filterPageSlice from "../filterpage/filterPageSlice";
 
 export const listenerMiddleware = createListenerMiddleware();
 export const store = configureStore({
-    reducer: {
-        spoonacularApi: spoonacularAPISlice,
-        homePage: homePageSlice,
-        shoplist: shoplistSlice,
-        recommendation: recommendationSlice,
-        filterPage: filterPageSlice,
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(listenerMiddleware.middleware)
-})
+  reducer: {
+    spoonacularApi: spoonacularAPISlice,
+    homePage: homePageSlice,
+    shoplist: shoplistSlice,
+    recommendation: recommendationSlice,
+    filterPage: filterPageSlice,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+});
