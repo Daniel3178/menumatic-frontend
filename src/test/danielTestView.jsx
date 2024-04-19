@@ -15,10 +15,12 @@ const DanielTestView = (props) => {
   }
 
   return (
-    <div>
+    <selection>
+      <div>
         <button onClick = {props.getRandomReceipt}>Call API</button>
         {conditialRender()}
-    </div>
+      </div>
+    </selection>
   )
 }
 

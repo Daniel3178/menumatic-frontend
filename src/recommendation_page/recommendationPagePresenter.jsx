@@ -1,20 +1,27 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { getRecommendationList, updateCount, addToReocemmendationList  } from './recommendationPageSlice';
 import RecommendationPageView from './recommendationPageView';
+import { generateShoplist } from '../shoplist/shoplistSlice';
+import { useNavigate } from 'react-router-dom';
 
 const RecommendationPagePresenter = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const recommendationList = useSelector(getRecommendationList);
 
-const handleRequst = ()=>{
-  console.log("Hello world")
+
+const handleGoToShoplist = ()=>{
+  // dispatch(generateShoplist(recommendationList));
+  console.log("ERROR")
+  navigate("/shoplist-test");
 }
   return (
     <RecommendationPageView
     listOfMeals = {recommendationList}
-    myatr={handleRequst}
+    goToShoplist={handleGoToShoplist}
     />
   )
 }
