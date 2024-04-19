@@ -104,7 +104,16 @@ const ListItem = ({ children, dot = '•', stylesheet = styles }) => {
     </View>
   );
 };
-// Create Document Componentit
+/* A recipe (title, ingredients, instructions)
+ * Pre:
+ * title: The title of the recipe
+ * ingredients: a list of strings (ingredients)
+ * instructions: a list of strings (instructions)
+ * Post:
+ *
+ * Author: Gustav Landberg <landbergg@outlook.com>
+ * */
+
 const Recipe = ({ title, ingredients, instructions }) => (
   <Page size="A5" orientation={"landscape"} style={styles_recipe.page}>
     <Text style={styles_recipe.mainbody}> by menumatic</Text>
@@ -122,7 +131,15 @@ const Recipe = ({ title, ingredients, instructions }) => (
   </Page>
 );
 
-
+/* BulletList(items, dot, stylesheet)
+ * Pre:
+ * items:the list of strings which should make up the bullets points
+ * dot: the character for the dot which shall preface each point in the bullet list, can be empty
+ * stylesheet: the stylesheet which should be used (make sure that the relevant fields for ListItems are defined)
+ * Post:
+ * A bullet list in a View (must be placed under Document->Page)
+ * Author: Gustav Landberg <landbergg@outlook.com>
+ * */
 const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
   return (
     <View>
@@ -134,7 +151,12 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
 }
 
 
-
+/* ShopplingList (ingredients)
+ * Pre: A list of ingredients
+ * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
+ * Post: A Shopping list PDF documents
+ * Author: Gustav Landberg <landbergg@outlook.com>
+ * */
 const ShoppingList = ({ ingredients }) => (
   <Document>
     <Page size="A6" style={styles.page}>
@@ -201,7 +223,13 @@ export function generateRecipesListPDFLink(recipes) {
 }
 
 
-
+/* CreatePDFForm
+ * This function is for testing. Remove when no longer necessary
+ * **Deprecated**
+*  Pre: none
+*  Post: CreatePDFForm : A simple component which will generate downloads links to two generated PDF documents
+*  Author: Gustav Landberg <landbergg@outlook.com>
+*/
 function CreatePDFForm() {
   const [inputText, setInputText] = React.useState("");
 
