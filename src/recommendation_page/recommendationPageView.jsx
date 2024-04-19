@@ -4,6 +4,13 @@ import { useNavigate } from "react-router-dom";
 const RecommendationPageView = (props) => {
   //renderList
   const navigate = useNavigate();
+
+  /**
+ * @param {props.dayOfTheWeek} props.dayOfTheWeek: The mealIndex + 1 (i.e starting with day 1).
+ * @param {props.dish} props.dish: The title of the dish fetched from the API.
+ * @param {props.priceLevel} props.priceLevel: The price interval fetched for the dish from the prince range function.
+ * Returns a table to display a row of the fetched day
+ */
   const renderList = () => {
     return props.listOfMeals.map((mealDataForTheDay, mealIndex) => {
       return (
@@ -63,6 +70,10 @@ const RecommendationPageView = (props) => {
   );
 };
 
+/**
+ * @param {instancePricePerServing} instancePricePerServing: The current price for a serving.
+ * Purpose: Determines a range of a price level to be displayed on the screen, represented by dollar signs.
+ */
 function pricePerServingToApproximatePriceLevel(instancePricePerServing) {
   if (instancePricePerServing < 100) {
     return "$";
@@ -73,10 +84,17 @@ function pricePerServingToApproximatePriceLevel(instancePricePerServing) {
   }
 }
 
+/**
+ * @param {props.dayOfTheWeek} props.dayOfTheWeek: The mealIndex + 1 (i.e starting with day 1).
+ * @param {props.dish} props.dish: The title of the dish fetched from the API.
+ * @param {props.priceLevel} props.priceLevel: The price interval fetched for the dish from the prince range function.
+ * Returns a table to display a row of the fetched day
+ */
 const RecepieForADay = (props) => {
+  // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
   return (
     <tr>
-      <td className="pl-8">Day {props.dayOfTheWeek}</td>
+      <td>Day {props.dayOfTheWeek}</td>
       <td>{props.dish}</td>
       <td>{props.priceLevel}</td>
       <td>

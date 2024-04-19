@@ -4,32 +4,32 @@ export const filterPage = createSlice({
     name: "filterPage",
     initialState: {
         apiPrefs: {
-            boundel1: {
+            includeTags: {
                 title: "food preference",
                 paramsArray: [],
             },
-            boundel2: {
+            excludeTags: {
                 title: "allergies",
                 paramsArray: [],
             }
         }
     },
     reducers: {
-        saveBoundel1: (state, action) => {
-            if (state.apiPrefs.boundel1.paramsArray.length !== 0) {
-                state.apiPrefs.boundel1.paramsArray.length = 0;
+        saveIncludeTags: (state, action) => {
+            if (state.apiPrefs.includeTags.paramsArray.length !== 0) {
+                state.apiPrefs.includeTags.paramsArray.length = 0;
             }
-            state.apiPrefs.boundel1.paramsArray.push(action.payload);
+            state.apiPrefs.includeTags.paramsArray.push(action.payload);
         },
-        saveBoundel2: (state, action) => {
-            if (state.apiPrefs.boundel2.paramsArray.length !== 0) {
-                state.apiPrefs.boundel2.paramsArray.length = 0;
+        saveExcludeTags: (state, action) => {
+            if (state.apiPrefs.excludeTags.paramsArray.length !== 0) {
+                state.apiPrefs.excludeTags.paramsArray.length = 0;
             }
-            state.apiPrefs.boundel2.paramsArray.push(action.payload);
+            state.apiPrefs.excludeTags.paramsArray.push(action.payload);
         },
     },
     });
 
     export default filterPage.reducer;
 
-    export const {saveBoundel1, saveBoundel2} = filterPage.actions;
+    export const {saveIncludeTags, saveExcludeTags} = filterPage.actions;

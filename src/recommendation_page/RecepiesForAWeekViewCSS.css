@@ -1,21 +1,26 @@
-body { 
-  font-family: sans-serif; 
-  padding-left:25%;
-  padding-right:25%;
+/*
+* [Depricated]: This files contains styles for recommendation page. Since the team has not 
+* decided whether to use Tailwind or not, this file is not used in the current state of tha app.
+*/
+
+body {
+  font-family: sans-serif;
+  padding-left: 25%;
+  padding-right: 25%;
 }
 
-tr:not(:first-of-type){
-  height:60px;
+tr:not(:first-of-type) {
+  height: 60px;
 }
 
 /*---------REGARDING THE TABLE ---------*/
 
-td{
-  font-size:18px;
+td {
+  font-size: 18px;
 }
 
-input[type='number']{
-  width:35px;
+input[type="number"] {
+  width: 35px;
 }
 
 /*---------REGARDING TOPMOST MENU---------*/
@@ -47,15 +52,16 @@ ul.category-menu li:not(:last-child) {
 }
 
 /*------- REGARDING THE BUTTON -------- */
-.button{
+.button {
   background-color: #13aa52;
   border: 1px solid #13aa52;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont,
+    sans-serif;
   font-size: 35px;
   font-weight: 400;
   outline: none;
@@ -67,11 +73,11 @@ ul.category-menu li:not(:last-child) {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  margin-left: 150px
+  margin-left: 150px;
 }
 
 .button:hover {
-  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
   transform: translateY(-2px);
 }
 
