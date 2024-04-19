@@ -10,13 +10,13 @@ const RecommendationPagePresenter = () => {
   const recommendationList = useSelector(getRecommendationList);
 
   /**
-   * [depricated]: navigate is done in the view
    * Handles request to go to shoplist page
    * By Daniel
    */
   const handleGoToShoplist = () => {
     navigate("/shoplist-test");
   };
+
   return (
     <RecommendationPageView
       listOfMeals={recommendationList}

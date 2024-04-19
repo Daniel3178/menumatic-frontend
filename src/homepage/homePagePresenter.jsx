@@ -11,7 +11,6 @@ import {
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
-import { addToReocemmendationList } from "../recommendation_page/recommendationPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 

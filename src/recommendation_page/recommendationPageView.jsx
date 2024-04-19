@@ -1,10 +1,8 @@
 import React from "react";
 import "./RecepiesForAWeekViewCSS.css";
-import { useNavigate } from "react-router-dom";
+
 const RecommendationPageView = (props) => {
   //renderList
-  const navigate = useNavigate();
-
   /**
  * @param {props.dayOfTheWeek} props.dayOfTheWeek: The mealIndex + 1 (i.e starting with day 1).
  * @param {props.dish} props.dish: The title of the dish fetched from the API.
@@ -59,9 +57,7 @@ const RecommendationPageView = (props) => {
       </table>
       <button
         className="w-[160px] h-[50px] text-[14px] bg-green-400 rounded self-center"
-        onClick={() => {
-          navigate("/shoplist-test");
-        }}
+        onClick={props.goToShoplist}
         role="button"
       >
         Show Shopping List

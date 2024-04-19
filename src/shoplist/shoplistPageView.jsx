@@ -1,7 +1,5 @@
 import React from "react";
-import { generateShoplist } from "./shoplistSlice";
 import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
-import { useState } from "react";
 
 /**
  * Represents the view component of the shopping list page.
@@ -11,8 +9,6 @@ import { useState } from "react";
 
 const ShoplistPageView = (props) => {
   const parseToStringArray = () => {
-    // console.log("[STATE1]")
-    console.log("[FINAL]");
     const resultArray = [];
     props.allItems.forEach((ingredient) => {
       resultArray.push(
@@ -22,15 +18,7 @@ const ShoplistPageView = (props) => {
     return resultArray;
   };
 
-  // const handleGeneratePDF = () => {
-  //   console.log("PDF")
-  //   const inpuArray = parseToStringArray();
 
-  //   const test = generateShoppingListPDFLink(inpuArray)
-  //   console.log(test)
-  // }
-
-  const [viewPdf, setViewPdf] = useState(false);
 
   /**
    * Generates a button component for PDF download
@@ -57,9 +45,6 @@ const ShoplistPageView = (props) => {
 
   function renderTheIngredientList() {
     if (props.allItems.length > 0) {
-      console.log("[STATE1]");
-
-      console.log(props);
       return (
         <div className="w-full">
           <div className="flex items-center  justify-between border-b pb-2">
@@ -107,10 +92,7 @@ const ShoplistPageView = (props) => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
-      {viewPdf ? pdfButtonCom() : null}
       {renderTheIngredientList()}
-
-      {console.log("[STATE2]")}
     </div>
   );
 };

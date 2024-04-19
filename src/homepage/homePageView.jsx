@@ -1,12 +1,9 @@
 import React from 'react';
-import { clock, thumbs_up, thumbs_down, info, close, info_i, tune } from "../assets";
+import { clock, thumbs_up, thumbs_down, close, info_i, tune } from "../assets";
 
 const HomePageView = (props) => {
-  console.log(props.apiResults);
 
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
-
-
   //conditionalRender either renders the info view for the current dish, or the photo for the current dish.
   const conditionalRender = () => {
     //if info has been toggled the infopage is shown.
