@@ -20,11 +20,12 @@ const HomePagePresenter = () => {
   const likesCounter = useSelector(getLikesCounter) //TODO: remove when api is working
   const showInfo = useSelector(getShowInfo)
   const navigate = useNavigate()
+
   const handleGetRandomReceipt = () => {
-    console.log("Button Clicked");
     setCounter((counter + 1) % 15)  //TODO: remove when api is working
     // dispatch(searchBySpoonacularApiAsync());
 
+    //If info view is active, go back to photo view after dislike.
     if(showInfo){
       dispatch(toggleInfoView());
     }
@@ -35,10 +36,10 @@ const HomePagePresenter = () => {
     setCounter((counter + 1) % 15) // TODO: remove when api is working
     // dispatch(searchBySpoonacularApiAsync());
     if (likesCounter === 7) {
-      console.log("LIKE LIMIT REACHED")
       navigate("/recommendation")
     }
-    console.log(likesCounter);
+    
+    //If info view is active, go back to photo view after like.
     if(showInfo){
       dispatch(toggleInfoView());
     }
@@ -51,9 +52,9 @@ const HomePagePresenter = () => {
 
   const handleToggleInfoView = () => {
     dispatch(toggleInfoView());
-    console.log(showInfo);
   }
 
+  // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
     // dispatch(searchBySpoonacularApiAsync());
   }, [])

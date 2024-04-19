@@ -7,7 +7,9 @@ const HomePageView = (props) => {
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
 
 
+  //conditionalRender either renders the info view for the current dish, or the photo for the current dish.
   const conditionalRender = () => {
+    //if info has been toggled the infopage is shown.
     if (props.info) {
       return (
 
@@ -17,7 +19,7 @@ const HomePageView = (props) => {
               <h1 className="text-3xl font-bold mb-4 text-balance">{props.apiResults[0].title} </h1>
               <div>
                 <div className="flex items-center">
-                  <img src={clock} alt="clock" className="w-6 h-6 mr-2 mb-4" /> {/* Adjust size as needed */}
+                  <img src={clock} alt="clock" className="w-6 h-6 mr-2 mb-4" />
                   <h1 className="text-3xl font-bold mb-4">{props.apiResults[0].readyInMinutes} min</h1>
                 </div>
                 <h2 className="text-xl font-semibold mb-2">Ingredients:</h2>
@@ -35,6 +37,7 @@ const HomePageView = (props) => {
         </div>
       );
     }
+    //if result from api exists render image. This code can only be reached if previous if statement is not true
     if (props.apiResults) {
       return (
         <div className="flex flex-col items-center justify-center h-screen">
@@ -42,7 +45,7 @@ const HomePageView = (props) => {
             <img src={props.apiResults[0].image} alt="food" className="rounded-lg" />
             <h1 className="text-3xl font-bold mb-4">{props.apiResults[0].title}</h1>
             <div className="flex items-center">
-              <img src={clock} alt="clock" className="w-6 h-6 mr-2 pb-2" /> {/* Adjust size as needed */}
+              <img src={clock} alt="clock" className="w-6 h-6 mr-2 pb-2" /> 
               <h1 className="text-3xl font-bold mb-4">{props.apiResults[0].readyInMinutes} min</h1>
             </div>
           </div>
