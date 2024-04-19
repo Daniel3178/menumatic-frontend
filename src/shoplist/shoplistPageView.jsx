@@ -2,6 +2,13 @@ import React from "react";
 import { generateShoplist } from "./shoplistSlice";
 import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
 import { useState } from "react";
+
+/**
+ * Represents the view component of the shopping list page.
+ * @param {Object} props - Component props
+ * @param {Array} props.allItems - Array of shopping list items
+ */
+
 const ShoplistPageView = (props) => {
   const parseToStringArray = () => {
     // console.log("[STATE1]")
@@ -25,6 +32,9 @@ const ShoplistPageView = (props) => {
 
   const [viewPdf, setViewPdf] = useState(false);
 
+  /**
+   * Generates a button component for PDF download
+   */
   const pdfButtonCom = () => {
     return (
       <div className="bg-blue-500 w-[150px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -32,6 +42,18 @@ const ShoplistPageView = (props) => {
       </div>
     );
   };
+
+  /**
+   * Renders a list of ingredients as part of the shopping list. If there are items
+   * in the allItems prop, it displays each ingredient with its amount and unit, along with a
+   * header for 'Amount' and 'Ingredient'. It also includes a button for PDF generation
+   * via the pdfButtonCom function. If allItems is empty, it shows a message indicating
+   * that no shopping list is available.
+   *
+   * @function
+   * @returns {JSX.Element} A JSX element representing the list of ingredients and their
+   * amounts or a message if no items are present.
+   */
 
   function renderTheIngredientList() {
     if (props.allItems.length > 0) {

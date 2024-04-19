@@ -8,12 +8,28 @@ const shoplistSlice = createSlice({
   },
   reducers: {
     generateShoplist: (state, action) => {
-      //console.log("InkopslistaPresenter, shoplistObject, InArray, ERROR here ");
-
+      /**
+       * Takes an object meal: {{result}, portions}
+       * retrieves the data needed for creating the shopping list:
+       *    *portions: number of portions specified by user
+       *    *servings: number of servings for the recipe
+       *    *ingredients: array of ingredients for recipe from which following is retrieved
+       *        *nameClean: name of ingredient
+       *        *measures.metric.amount: amount of ingredient in metric
+       *        *measures.metric.unitShort: unit for the ingredient in metric
+       *
+       * calcAmount: calculates amount of each ingredient in order to get wanted amount of portions
+       * pushes stripped objects {name, amount, unit} into IngrArr (to be returned to next function)
+       *
+       * @param {Objct} meal - A meal object containing portions (number) and result (object), 
+       * where result includes serving details and a list of ingredients.
+       * @function
+       * @returns {Array<Object>} ingrArr - An array of objects, each representing an ingredient
+       * with its name, calculated amount, and unit.
+       *
+       */
       const stripIngr = (meal) => {
-        //wanted number of portions specified by user
         const portions = meal.portions;
-        //number of servings for recipe
         const servings = meal.result.servings;
         const ingredients = meal.result.extendedIngredients;
         const ingrArr = [];
@@ -34,6 +50,18 @@ const shoplistSlice = createSlice({
         return ingrArr;
       };
       console.log(stripIngr(action.payload[0]));
+
+      /**
+       * Updates the allItems state with the provided list of items. For each item in the input list,
+       * the function checks if the item already exists in the state's allItems list. If an item exists,
+       * it increments the item's amount by the amount specified in the input list. If the item does not
+       * exist, it is added to the allItems list. After processing all items, it rounds the amount
+       * of each item in the allItems list to the nearest tenth.
+       *
+       * @param {Array<Object>} props - An array of item objects to be added or updated in the allItems list.
+       * Each object in the array should have a name property (string) representing the item's name,
+       * and an amount property (number) representing the quantity of the item.
+       */
 
       const updateAllItems = (props) => {
         for (let i = 0; i < props.length; i++) {
