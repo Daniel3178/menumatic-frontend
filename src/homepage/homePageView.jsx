@@ -10,7 +10,6 @@ const HomePageView = (props) => {
   const conditionalRender = () => {
     if (props.info) {
       return (
-
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="w-[550px] h-[550px] bg-gray-100 rounded-xl shadow-md overflow-auto">
             <div className="p-6">

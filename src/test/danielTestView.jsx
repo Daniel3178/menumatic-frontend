@@ -1,27 +1,27 @@
-import React from 'react'
+import React from "react";
 
 const DanielTestView = (props) => {
   console.log(props.apiResults);
 
   const conditialRender = () => {
     if (props.apiResults) {
-        return (
-            <div>
-                <h1>{props.apiResults.recipes[0].title}</h1>
-                <img src = {props.apiResults.recipes[0].image} alt = "food"/>
-            </div>
-        )
+      return (
+        <div>
+          <h1>{props.apiResults.recipes[0].title}</h1>
+          <img src={props.apiResults.recipes[0].image} alt="food" />
+        </div>
+      );
     }
-  }
+  };
 
   return (
     <selection>
       <div>
-        <button onClick = {props.getRandomReceipt}>Call API</button>
+        <button onClick={props.getRandomReceipt}>Call API</button>
         {conditialRender()}
       </div>
     </selection>
-  )
-}
+  );
+};
 
-export default DanielTestView
+export default DanielTestView;
