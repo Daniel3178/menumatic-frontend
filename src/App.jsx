@@ -5,7 +5,7 @@ import DanielTestPresenter from "./test/danielTestPresenter";
 import CreatePDFForm from "./pdf/pdfgen_component";
 import RecommendationPagePresenter from "./recommendation_page/recommendationPagePresenter";
 import ShoplistPagePresenter from "./shoplist/shoplistPagePresenter";
-
+import SignUpPagePresenter from "./signUp_page/signUpPagePresenter";
 // `path` contains the path for a current page. `element` contains the page to which the current page's redirect operations will lead.
 const App = () => {
   return (
@@ -20,6 +20,7 @@ const App = () => {
         <Route path="/" element={<HomePagePresenter />} />
         <Route path="/filterpage-test" element={<FilterPagePresenter />} />
         <Route path="/shoplist-test" element={<ShoplistPagePresenter />} />
+        <Route path="/signup" element={<SignUpPagePresenter />} />
       </Routes>
     </BrowserRouter>
   );
