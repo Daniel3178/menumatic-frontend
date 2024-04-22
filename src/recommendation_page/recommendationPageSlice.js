@@ -39,7 +39,7 @@ const recommendation = createSlice({
     builder.addCase(incrementLikesCounter, (state, action) => {
       state.recommendationList.push({
         portions: 1,
-        result: { ...action.payload[0] },
+        result: action.payload,
       });
     });
   },
