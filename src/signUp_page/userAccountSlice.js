@@ -11,7 +11,6 @@ export const signUpAsync = createAsyncThunk(
           payload.email,
           payload.password
         );
-        console.log(userCredentials.user)
         return {
           email: userCredentials.user.email,
           userId: userCredentials.user.uid,
@@ -34,12 +33,10 @@ export const signUpAsync = createAsyncThunk(
       email: null,
       userId: null,
       isLoggedIn: false,
+      status: "",
     },
     reducers: {
       signInCurrentUser(state, action) {
-        if (action.payload.username) {
-          state.username = action.payload.username;
-        }
         state.email = action.payload.email;
         state.userId = action.payload.userId;
         state.isLoggedIn = true;
