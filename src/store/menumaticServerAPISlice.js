@@ -1,24 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'localhost:5000';
-// const options = {
-// 	method: 'POST',
-// 	headers: {
-// 		'User-id': '4e9db78df8msh8414202f72976fap1cb9c3jsn17e6a5ffdd16',
-//     	'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-// 	}
-// };
-
-
-
+const url = 'https://localhost:8080';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
   async (info) => {
-
     const userId = info.userId;
     const data = info.data;
-
     const options = {
       method: 'POST',
       headers: {
@@ -29,6 +17,43 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
     };
 
     const response = await fetch(url, options);
+    return response.json();
+  }
+);
+
+export const fetchUserShopinglist = createAsyncThunk(
+  "menumaticServerApi/saveShoplistToMenumaticDb",
+  async (info) => {
+    const userId = info.userId;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-id': userId,
+      },
+    };
+
+    const response = await fetch(url, options);
+    return response.json();
+  }
+);
+
+export const fetchUserRecepiesByListId = createAsyncThunk(
+  "menumaticServerApi/saveShoplistToMenumaticDb",
+  async (info) => {
+
+    const userId = info.userId;
+    const listId = info.listId;
+    const paramUrl = `https://localhost:8080?id=${listId}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-id': userId,
+      },
+    };
+
+    const response = await fetch(paramUrl, options);
     return response.json();
   }
 );
