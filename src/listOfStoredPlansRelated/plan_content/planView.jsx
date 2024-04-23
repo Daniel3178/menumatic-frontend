@@ -1,7 +1,8 @@
 import React from "react";
-import "./RecepiesForAplanListViewCSS.css";
+import ".../recommendation_page/RecepiesForAplanListViewCSS.css";
 import { useNavigate } from "react-router-dom";
-const RecommendationPageView = (props) => {
+
+export default PlanRecommendationPageView = (props) => {
   //renderList
   const navigate = useNavigate();
 
@@ -59,7 +60,7 @@ const RecommendationPageView = (props) => {
       </table>
       <button
         onClick={() => {
-          navigate("/shoplist-test");
+          navigate("/plan/shoplist", { state : { planIdentifier : planIdentifier} });
         }}
         class="button"
         role="button"
@@ -109,5 +110,3 @@ const RecepieForADay = (props) => {
     </tr>
   );
 };
-
-export default RecommendationPageView;
