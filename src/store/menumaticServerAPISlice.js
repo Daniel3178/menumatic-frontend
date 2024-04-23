@@ -61,18 +61,31 @@ export const fetchUserRecepiesByListId = createAsyncThunk(
 const menumaticServerApi = createSlice({
   name: "spoonacularApi",
   initialState: {
-    results: null,
+    allList: [],
+    selectedList:{
+      listId: null,
+      recepies:[]
+    }
   },
   reducers: {
-    setSpoonacularApi: (state, action) => {
-      state.spoonacularApi = action.payload;
+    setSelectedListId: (state, action) => {
+      state.selectedList.listId = action.payload;
+    },
+    flushUserData: (state, action) => {
+      state.allList = [];
+      state.selectedList.listId = null;
+      state.selectedList.recepies = [];
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(searchBySpoonacularApiAsync.fulfilled, (state, action) => {
-      state.results = action.payload;
+    builder.addCase(fetchUserShopinglist.fulfilled, (state, action) => {
+      state.allList = action.payload;
+    }).addCase(fetchUserRecepiesByListId.fulfilled, (state, action) => {
+      state.selectedList.recepies = action.payload;
     });
   },
 });
-export const getApiResults = (state) => state.menumaticServerApi.results;
+export const getMenumaticAllList = (state) => state.menumaticServerApi.allList;
+export const getMenumaticSelecedList = (state) => state.menumaticServerApi.selectedList;
+export const { setSelectedListId, flushUserData } = menumaticServerApi.actions;
 export default menumaticServerApi.reducer;
