@@ -2,6 +2,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import HomePagePresenter from "./homepage/homePagePresenter";
 import FilterPagePresenter from "./filterpage/filterPagePresenter";
 import DanielTestPresenter from "./test/danielTestPresenter";
+import GustavTestPresenter from "./test/gustavTestPresenter";
 import CreatePDFForm from "./pdf/pdfgen_component";
 import RecommendationPagePresenter from "./recommendation_page/recommendationPagePresenter";
 import ShoplistPagePresenter from "./shoplist/shoplistPagePresenter";
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/pdf-test" element={<CreatePDFForm />} />
         <Route path="/daniel-test" element={<DanielTestPresenter />} />
+        <Route path="/gustav-test" element={<GustavTestPresenter />} />
         <Route
           path="/recommendation"
           element={<RecommendationPagePresenter />}

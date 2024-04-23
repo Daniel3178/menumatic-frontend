@@ -6,7 +6,6 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
   async (props) => {
     const excludeTags = props.excludeTags
     const includeTags = props.includeTags
-    console.log(props)
 
     let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&include-tags=dinner'
 
@@ -25,6 +24,23 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
     
 
     customUrl = customUrl.toLowerCase()
+
+    console.log(customUrl)
+
+    const response = await fetch(customUrl, options);
+    return response.json();
+  }
+);
+
+export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
+  "spoonacularApi/searchBySpoonacularApiBulk",
+  async (props) => {
+
+    console.log(props)
+
+    let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids='
+    let recipeIdString = props.join()
+    customUrl = customUrl.concat(recipeIdString)
 
     console.log(customUrl)
 
