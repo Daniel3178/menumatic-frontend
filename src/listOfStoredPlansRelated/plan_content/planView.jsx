@@ -1,15 +1,17 @@
 import React from "react";
-import "./RecepiesForAWeekViewCSS.css";
+import ".../recommendation_page/RecepiesForAplanListViewCSS.css";
 import { useNavigate } from "react-router-dom";
 
-const RecommendationPageView = (props) => {
+export const PlanRecommendationPageView = (props) => {
   //renderList
+  const navigate = useNavigate();
+
   /**
- * @param {props.dayOfTheWeek} props.dayOfTheWeek: The mealIndex + 1 (i.e starting with day 1).
- * @param {props.dish} props.dish: The title of the dish fetched from the API.
- * @param {props.priceLevel} props.priceLevel: The price interval fetched for the dish from the prince range function.
- * Returns a table to display a row of the fetched day
- */
+   *  Method: Iterates over props.listOfMeals, i.e the array of liked meals.
+   *  @param {mealDataForTheDay} mealDataForTheDay: The name of the currently iterated element in the array.
+   *  @param {mealIndex} mealIndex: The index of the currently iterated element.
+   *  Returns: A row of the data from the API.
+   */
   const renderList = () => {
     return props.listOfMeals.map((mealDataForTheDay, mealIndex) => {
       return (
@@ -25,23 +27,23 @@ const RecommendationPageView = (props) => {
   };
 
   return (
-    <div className="flex flex-col justify-center">
+    <div>
+      <ul className="category-menu">
+        <li>Billig</li>
+        <li>Rekommenderas</li>
+        <li>Dyr</li>
+        <li>Snabb</li>
+      </ul>
       <table style={{ width: "100%" }}>
-        {/* <tr className="bg-[#48abe0] h-14">
-                    <th className="text-left pl-8">Billig</th> 
-                    <th className="text-left">Rekommenderas</th> 
-                    <th className="text-left">Dyr</th> 
-                    <th className="text-left">Snabb</th>
-                </tr> */}
-        <tr className="bg-red-400 h-10">
-          <th className="text-left pl-8">Day</th>
-          <th className="text-left">Dish</th>
-          <th className="text-left">Price level</th>
-          <th className="text-left">Portions</th>
+        <tr>
+          <th style={{ width: "30%" }}>Day</th>
+          <th style={{ width: "50%" }}>Dish</th>
+          <th style={{ width: "20%" }}>Price level</th>
+          <th>Portions</th>
         </tr>
         {renderList()}
         <tr>
-          <td className="pl-8">Default portions</td>
+          <td>Default portions</td>
           <td></td>
           <td></td>
           <td>
@@ -57,8 +59,10 @@ const RecommendationPageView = (props) => {
         </tr>
       </table>
       <button
-        className="w-[160px] h-[50px] text-[14px] bg-green-400 rounded self-center"
-        onClick={props.goToShoplist}
+        onClick={() => {
+          navigate("/plan/shoplist", { state : { planIdentifier : planIdentifier} });
+        }}
+        class="button"
         role="button"
       >
         Show Shopping List
@@ -106,5 +110,3 @@ const RecepieForADay = (props) => {
     </tr>
   );
 };
-
-export default RecommendationPageView;

@@ -5,6 +5,8 @@ import homePageSlice from "../homepage/homePageSlice";
 import shoplistSlice from "../shoplist/shoplistSlice";
 import filterPageSlice from "../filterpage/filterPageSlice";
 import userAccountSlice from "../signUp_page/userAccountSlice";
+import planListSlice from "../listOfStoredPlansRelated/plan_list/planListSlice";
+import menumaticServerAPISlice from "./menumaticServerAPISlice";
 export const listenerMiddleware = createListenerMiddleware();
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ export const store = configureStore({
     recommendation: recommendationSlice,
     filterPage: filterPageSlice,
     userAccount: userAccountSlice,
+    planList: planListSlice,
+    menumaticServerApi: menumaticServerAPISlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
