@@ -14,8 +14,6 @@ listenerMiddleware.startListening({
     }
 })
 
-
-
 }
 
 export default MenumaticDatabase
