@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 import { useDispatch } from 'react-redux';
 import { signInCurrentUser, signOutCurrentUser } from '../signUp_page/userAccountSlice';
-import {flushUserData, flushAllList, } from '../store/menumaticServerAPISlice'
+import {flushUserData} from '../store/menumaticServerAPISlice'
 const FirebaseAuthentication = () => {
     const dispatch = useDispatch();
     useEffect(() => {
