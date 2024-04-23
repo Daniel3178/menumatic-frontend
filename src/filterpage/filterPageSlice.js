@@ -19,13 +19,13 @@ export const filterPage = createSlice({
             if (state.apiPrefs.includeTags.paramsArray.length !== 0) {
                 state.apiPrefs.includeTags.paramsArray.length = 0;
             }
-            state.apiPrefs.includeTags.paramsArray.push(...action.payload);
+            state.apiPrefs.includeTags.paramsArray.push(action.payload);
         },
         saveExcludeTags: (state, action) => {
             if (state.apiPrefs.excludeTags.paramsArray.length !== 0) {
                 state.apiPrefs.excludeTags.paramsArray.length = 0;
             }
-            state.apiPrefs.excludeTags.paramsArray.push(...action.payload);
+            state.apiPrefs.excludeTags.paramsArray.push(action.payload);
         },
     },
     });
