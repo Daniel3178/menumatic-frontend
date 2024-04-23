@@ -11,7 +11,7 @@ import {
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
-import { addToReocemmendationList } from "../recommendation_page/recommendationPageSlice";
+import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 
@@ -23,31 +23,36 @@ const HomePagePresenter = () => {
   const [counter, setCounter] = useState(0);
 
   const dispatch = useDispatch();
-  // const apiResult = useSelector(getApiResults)
+  const apiResult = useSelector(getApiResults)
   const likesCounter = useSelector(getLikesCounter) //TODO: remove when api is working
   const showInfo = useSelector(getShowInfo)
+  const excludeTags = useSelector(getExcludeTags)
+  const includeTags = useSelector(getIncludeTags)
   const navigate = useNavigate()
 
   const handleGetRandomReceipt = () => {
-    setCounter((counter + 1) % 15)  //TODO: remove when api is working
-    // dispatch(searchBySpoonacularApiAsync());
+    // setCounter((counter + 1) % 15)  //TODO: remove when api is working
+
+    dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
 
     //If info view is active, go back to photo view after dislike.
-    if(showInfo){
+    if (showInfo) {
       dispatch(toggleInfoView());
     }
   };
   const handleLike = () => {
-    // dispatch(addToReocemmendationList(apiResult.recipes[0]))
-    dispatch(incrementLikesCounter(objects[counter]));
-    setCounter((counter + 1) % 15); // TODO: remove when api is working
-    // dispatch(searchBySpoonacularApiAsync());
+    //dispatch(addToReocemmendationList(apiResult.recipes[0]))
+    dispatch(incrementLikesCounter(apiResult.recipes[0]));
+    console.log("homepage presenter")
+    console.log(apiResult.recipes[0])
+    //setCounter((counter + 1) % 15); // TODO: remove when api is working
+    dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
     if (likesCounter === 7) {
       navigate("/recommendation")
     }
-    
+
     //If info view is active, go back to photo view after like.
-    if(showInfo){
+    if (showInfo) {
       dispatch(toggleInfoView());
     }
   };
@@ -62,12 +67,14 @@ const HomePagePresenter = () => {
 
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
-    // dispatch(searchBySpoonacularApiAsync());
+    if (counter == 0) {
+      dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
+    }
   }, []);
 
   return (
     <HomePageView
-      apiResults={objects[counter]}
+      apiResults={apiResult}
       getRandomReceipt={handleGetRandomReceipt}
       sendLike={handleLike}
       toggleInfoView={handleToggleInfoView}

@@ -47,17 +47,17 @@ const styles = StyleSheet.create({
   },
   listItem: {
     flexDirection: "row",
-    marginBottom: 4,
-    textAlign: "center",
+    paddingHorizontal: 8,
+    paddingLeft: 130,
     alignItems: "center",
-    alignSelf: "center",
-    fontSize: 13,
+    fontSize: 9,
   },
   bullet: {
-    fontSize: 13,
-    marginRight: 5,
-    textAlign: "center",
-    alignSelf: "center",
+    width: 200,
+    fontSize: 10,
+    marginRight: 8,
+    fontWeight: "bold",
+    color: "#333",
   },
   section: {
     margin: 30,
@@ -107,10 +107,20 @@ const styles_recipe = StyleSheet.create({
     flexGrow: 1,
   },
 });
-const ListItem = ({ children, dot = "•", stylesheet = styles }) => {
+const ListItem = ({ children, dot = '•'}) => {
+  console.log("children: " + children);
+  const wordsArray = children.split(" ");
+  const [first, second, ...rest] = wordsArray;
+  const third = rest.join(" ");
   return (
-    <View style={{ stylesheet }.listItem}>
-      <Text style={{ stylesheet }.bullet}>{dot + children}</Text>
+    <View style={styles.listItem}>
+      <Text style={{
+        width: 60,
+        fontWeight: "bold",
+        textAlign: 'right',
+        marginRight: 35,
+      }}>{first + " " + second}</Text>
+      <Text style={styles.bullet}>{ third}</Text>
     </View>
   );
 };
@@ -125,7 +135,7 @@ const ListItem = ({ children, dot = "•", stylesheet = styles }) => {
  * */
 
 const Recipe = ({ title, ingredients, instructions }) => (
-  <Page size="A5" orientation={"landscape"} style={styles_recipe.page}>
+  <Page size="A4" orientation={"landscape"} style={styles_recipe.page}>
     <Text style={styles_recipe.mainbody}> by menumatic</Text>
     <View style={styles_recipe.headline_section}>
       <Text style={styles_recipe.headline}>{title}</Text>
@@ -153,6 +163,28 @@ const Recipe = ({ title, ingredients, instructions }) => (
 const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
   return (
     <View>
+    <View style={{
+      flexDirection: "row",
+      paddingHorizontal: 8,
+      paddingLeft: 130,
+      alignItems: "center",
+    }}>
+      <Text style={{
+        width: 60,
+        textAlign: 'right',
+        marginRight: 35,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        fontSize: 14,
+      }}>Amount</Text>
+      <Text style={{
+        fontWeight: 'bold',
+        marginBottom: 20,
+        fontSize: 14,
+        marginRight: 8,
+        width: 200,
+      }}>Ingredient</Text>
+    </View>
       {items.map((item) => (
         <ListItem
           key={item.id || Math.random()}
@@ -175,10 +207,14 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
  * */
 const ShoppingList = ({ ingredients }) => (
   <Document>
-    <Page size="A6" style={styles.page}>
+    <Page size="A5" style={styles.page}>
       <View>
         <Text style={styles.mainbody}> by menumatic</Text>
-        <Text style={styles.headline}>Shopping List</Text>
+        <Text style={{
+          fontSize: 24,
+          textAlign: "center",
+          marginBottom: 20,
+        }}>Shopping List</Text>
         <BulletList items={ingredients} />
       </View>
     </Page>

@@ -33,3 +33,5 @@ export const filterPage = createSlice({
     export default filterPage.reducer;
 
     export const {saveIncludeTags, saveExcludeTags} = filterPage.actions;
+    export const getExcludeTags = (state) => state.filterPage.apiPrefs.excludeTags.paramsArray
+    export const getIncludeTags = (state) => state.filterPage.apiPrefs.includeTags.paramsArray

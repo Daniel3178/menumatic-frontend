@@ -5,7 +5,7 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
 
 
   const includeTags = ["Vegetarian", "Vegan"]; // Array of tags that can be include
-  const excludeTags = ["Gluten", "Shellfish", "Nuts", "Egg"]; // Array of tags that can be exclude
+  const excludeTags = ["Gluten"]; // Array of tags that can be exclude
 
   const [includedItems, setIncludedItems] = useState([]); // State hook for included items
   const [excludedItems, setExcludedItems] = useState([]); // State hook for excluded items

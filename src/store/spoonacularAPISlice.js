@@ -1,10 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { url, options } from "../config/spoonacularApiConfig";
+import {options } from "../config/spoonacularApiConfig";
 
 export const searchBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApi",
-  async () => {
-    const response = await fetch(url, options);
+  async (props) => {
+    const excludeTags = props.excludeTags
+    const includeTags = props.includeTags
+    console.log(props)
+
+    let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&include-tags=dinner'
+
+
+    if(includeTags.length){
+      let includeString = includeTags.join()
+      customUrl = customUrl.concat(",", includeString)
+    }
+
+    if(excludeTags.length){
+      let substring = "&exclude-tags="
+      let excludeString = substring.concat(excludeTags.join())
+      customUrl = customUrl.concat(excludeString) 
+    }
+
+    
+
+    customUrl = customUrl.toLowerCase()
+
+    console.log(customUrl)
+
+    const response = await fetch(customUrl, options);
     return response.json();
   }
 );
