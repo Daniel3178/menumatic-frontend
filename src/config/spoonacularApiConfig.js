@@ -1,4 +1,4 @@
-const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?tags=dinner&number=1';
+
 const options = {
 	method: 'GET',
 	headers: {
@@ -7,4 +7,4 @@ const options = {
 	}
 };
 
-export { url, options}
+export {options}

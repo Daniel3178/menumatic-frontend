@@ -11,6 +11,7 @@ import {
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
+import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 
@@ -25,11 +26,14 @@ const HomePagePresenter = () => {
   const apiResult = useSelector(getApiResults)
   const likesCounter = useSelector(getLikesCounter) //TODO: remove when api is working
   const showInfo = useSelector(getShowInfo)
+  const excludeTags = useSelector(getExcludeTags)
+  const includeTags = useSelector(getIncludeTags)
   const navigate = useNavigate()
 
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
-    dispatch(searchBySpoonacularApiAsync());
+
+    dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
 
     //If info view is active, go back to photo view after dislike.
     if (showInfo) {
@@ -42,7 +46,7 @@ const HomePagePresenter = () => {
     console.log("homepage presenter")
     console.log(apiResult.recipes[0])
     //setCounter((counter + 1) % 15); // TODO: remove when api is working
-    dispatch(searchBySpoonacularApiAsync());
+    dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
     if (likesCounter === 7) {
       navigate("/recommendation")
     }
@@ -64,7 +68,7 @@ const HomePagePresenter = () => {
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
     if (counter == 0) {
-      dispatch(searchBySpoonacularApiAsync());
+      dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
     }
   }, []);
 
