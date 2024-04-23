@@ -7,7 +7,7 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
     const excludeTags = props.excludeTags
     const includeTags = props.includeTags
 
-    let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&include-tags=dinner'
+    let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=10&include-tags=dinner'
 
 
     if(includeTags.length){
@@ -28,6 +28,7 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
     console.log(customUrl)
 
     const response = await fetch(customUrl, options);
+    console.log("response", response)
     return response.json();
   }
 );
@@ -52,18 +53,27 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
 const spoonacularApi = createSlice({
   name: "spoonacularApi",
   initialState: {
-    results: null,
+    results: [],
+    resultsState: "loading",
+    userSavedRecipes:[],
+
   },
   reducers: {
-    setSpoonacularApi: (state, action) => {
-      state.spoonacularApi = action.payload;
+    popFirstRecipe: (state, action) => {
+      state.results.shift();
     },
   },
   extraReducers: (builder) => {
     builder.addCase(searchBySpoonacularApiAsync.fulfilled, (state, action) => {
-      state.results = action.payload;
+      // console.log(action.payload)
+      state.results.push(...action.payload.recipes);
+      state.resultsState = "ready";
+    }).addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
+      state.userSavedRecipes.push(action.payload);
     });
   },
 });
+export const { popFirstRecipe } = spoonacularApi.actions;
 export const getApiResults = (state) => state.spoonacularApi.results;
+export const getApiResultsState = (state) => state.spoonacularApi.resultsState;
 export default spoonacularApi.reducer;

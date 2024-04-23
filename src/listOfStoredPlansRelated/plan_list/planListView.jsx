@@ -14,7 +14,7 @@ const plansData = {
 const PlanListView = (props) => {
 
   const renderMeals = (recipesName) => {
-    console.log("recipesName", recipesName)
+    // console.log("recipesName", recipesName)
     return recipesName.map((name) => {
       // {console.log("name", name)}
       return(<p >{name}</p>);
@@ -34,8 +34,8 @@ const PlanListView = (props) => {
   };
 
   function renderList() {
-    console.log("renderList")
-    console.log("allList", props.allLists)
+    // console.log("renderList")
+    // console.log("allList", props.allLists)
     return props.allLists.map((planData) => {
       return (
 

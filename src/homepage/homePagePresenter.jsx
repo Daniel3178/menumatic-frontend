@@ -14,6 +14,7 @@ import {
 import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
+import {getApiResultsState, popFirstRecipe} from "../store/spoonacularAPISlice"
 
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
@@ -28,12 +29,15 @@ const HomePagePresenter = () => {
   const showInfo = useSelector(getShowInfo)
   const excludeTags = useSelector(getExcludeTags)
   const includeTags = useSelector(getIncludeTags)
+  const apiResultsState = useSelector(getApiResultsState)
   const navigate = useNavigate()
 
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
-
-    dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
+dispatch(popFirstRecipe())
+    if(apiResult.length < 6){
+      dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
+    }
 
     //If info view is active, go back to photo view after dislike.
     if (showInfo) {
@@ -42,14 +46,19 @@ const HomePagePresenter = () => {
   };
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
-    dispatch(incrementLikesCounter(apiResult.recipes[0]));
-    console.log("homepage presenter")
-    console.log(apiResult.recipes[0])
-    //setCounter((counter + 1) % 15); // TODO: remove when api is working
-    dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
     if (likesCounter === 7) {
       navigate("/recommendation")
     }
+    dispatch(incrementLikesCounter(apiResult[0]));
+dispatch(popFirstRecipe())
+
+    console.log("homepage presenter")
+    console.log(apiResult.recipes[0])
+    if(apiResult.lentgh <6){
+      dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
+    }
+    //setCounter((counter + 1) % 15); // TODO: remove when api is working
+
 
     //If info view is active, go back to photo view after like.
     if (showInfo) {
@@ -67,7 +76,9 @@ const HomePagePresenter = () => {
 
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
-    if (counter == 0) {
+    console.log("USE EFFECT")
+    if (apiResult.length == 0) {
+      console.log("fetching")
       dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
     }
   }, []);
@@ -75,6 +86,7 @@ const HomePagePresenter = () => {
   return (
     <HomePageView
       apiResults={apiResult}
+      apiResultsState={apiResultsState}
       getRandomReceipt={handleGetRandomReceipt}
       sendLike={handleLike}
       toggleInfoView={handleToggleInfoView}
