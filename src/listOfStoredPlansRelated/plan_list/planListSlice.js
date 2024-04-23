@@ -32,7 +32,7 @@ export const planListSlice = createSlice({
   }, */
 });
 
-export const { addToPlanList, updateCount } = planList.actions;
+export const { addToPlanList, updateCount } = planListSlice.actions;
 
 export const getListOfPlans = (state) => state.planList.listOfPlans;
-export default planList.reducer;
+export default planListSlice.reducer;

@@ -4,8 +4,7 @@ import {
   getRecommendationList,
   updateCount,
   addToReocemmendationList,
-} from "./recommendationPageSlice";
-import RecommendationPageView from "./recommendationPageView";
+} from "../../recommendation_page/recommendationPageSlice";
 import { useNavigate } from "react-router-dom";
 
 const PlanPresenter = () => {

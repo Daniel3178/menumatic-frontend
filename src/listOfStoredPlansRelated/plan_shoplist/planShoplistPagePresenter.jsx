@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import ShoplistPageView from "./shoplistPageView"
+import ShoplistPageView from "../../shoplist/shoplistPageView"
 import { useDispatch, useSelector } from 'react-redux';
-import { generateShoplist, getAllItems } from "./shoplistSlice";
-import { getRecommendationList } from "../recommendation_page/recommendationPageSlice";
+import { generateShoplist, getAllItems } from "../../shoplist/shoplistSlice";
+import { getRecommendationList } from "../../recommendation_page/recommendationPageSlice";
 
 /**
  * ShoplistPagePresenter fetches and manages the state for the shopping list,

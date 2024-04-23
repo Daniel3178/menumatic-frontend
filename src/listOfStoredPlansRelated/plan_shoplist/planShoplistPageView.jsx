@@ -1,5 +1,5 @@
 import React from "react";
-import { generateShoplist } from "./shoplistSlice";
+import { generateShoplist } from "../../shoplist/shoplistSlice";
 import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
 import { useState } from "react";
 

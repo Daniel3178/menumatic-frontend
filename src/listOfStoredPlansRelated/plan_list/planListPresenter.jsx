@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import PlanListView from "./planListView";
+import planListView from "./planListView";
 import { useNavigate } from "react-router-dom";
 import { getListOfPlans } from "./planListSlice";
 
-export default planListPresenter = () => {
+const planListPresenter = () => {
   const navigate = useNavigate();
   const listOfPlans = useSelector(getListOfPlans);
 
@@ -13,8 +13,11 @@ export default planListPresenter = () => {
   };
 
   return (
-    <planListView listOfWeekPlans={listOfPlans}>
+    <planListView
+      listOfWeekPlans={listOfPlans}
       goToWeekPlan={handleGoToWeekPlan}
-    </planListView>
+    />
   );
 };
+
+export default planListPresenter;

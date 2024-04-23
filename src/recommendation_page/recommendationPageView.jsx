@@ -1,7 +1,6 @@
 import React from "react";
-import "./RecepiesForAplanListViewCSS.css";
-import { useNavigate } from "react-router-dom";
 import "./RecepiesForAWeekViewCSS.css";
+import { useNavigate } from "react-router-dom";
 
 const RecommendationPageView = (props) => {
   //renderList

@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/RecipesForAPlanListViewCSS.css";
+import '../../recommendation_page/RecepiesForAWeekViewCSS.css';
 import { useNavigate } from "react-router-dom";
 
 const plansData = {
@@ -10,7 +10,7 @@ const plansData = {
   ],
 }; // Dummy values
 
-export default PlanListView = (props) => {
+const PlanListView = (props) => {
   const navigate = useNavigate();
   const RecepiePlanOverviewRow = (props) => {
     // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
@@ -52,3 +52,5 @@ export default PlanListView = (props) => {
     </table>
   );
 };
+
+export default PlanListView;

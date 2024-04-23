@@ -2,7 +2,7 @@ import React from "react";
 import ".../recommendation_page/RecepiesForAplanListViewCSS.css";
 import { useNavigate } from "react-router-dom";
 
-export default PlanRecommendationPageView = (props) => {
+export const PlanRecommendationPageView = (props) => {
   //renderList
   const navigate = useNavigate();
 
