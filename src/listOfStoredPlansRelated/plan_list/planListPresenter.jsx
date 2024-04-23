@@ -1,23 +1,31 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import planListView from "./planListView";
+import { useSelector, useDispatch } from "react-redux";
+import PlanListView from "./planListView";
 import { useNavigate } from "react-router-dom";
-import { getListOfPlans } from "./planListSlice";
+import { getMenumaticAllList } from "../../store/menumaticServerAPISlice";
+import { setSelectedListId } from "./planListSlice";
 
-const planListPresenter = () => {
+const PlanListPresenter = () => {
   const navigate = useNavigate();
-  const listOfPlans = useSelector(getListOfPlans);
+  const allList = useSelector(getMenumaticAllList);
+  const dispatch = useDispatch();
 
-  const handleGoToWeekPlan = () => {
+  const selectAndNavigateHandler = (weekId) => {
+    dispatch(setSelectedListId(weekId));
     navigate("/weekplan");
   };
 
+  const dummyData = [
+    {id: 1, name: 'W1', recipesName: ['m1', 'm2']},
+    {id: 2, name: 'W2', recipesName: ['m3', 'm4']}
+  ]
+
   return (
-    <planListView
-      listOfWeekPlans={listOfPlans}
-      goToWeekPlan={handleGoToWeekPlan}
+    <PlanListView
+      allLists={dummyData}
+      selectAndNavigateToWeekPlan={selectAndNavigateHandler}
     />
   );
 };
 
-export default planListPresenter;
+export default PlanListPresenter;

@@ -39,7 +39,7 @@ export const fetchUserShopinglist = createAsyncThunk(
 );
 
 export const fetchUserRecepiesByListId = createAsyncThunk(
-  "menumaticServerApi/saveShoplistToMenumaticDb",
+  "menumaticServerApi/fetchUserRecepiesByListId",
   async (info) => {
 
     const userId = info.userId;
