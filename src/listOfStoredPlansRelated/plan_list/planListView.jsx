@@ -12,18 +12,21 @@ const plansData = {
 }; // Dummy values
 
 const PlanListView = (props) => {
+
   const renderMeals = (recipesName) => {
+    console.log("recipesName", recipesName)
     return recipesName.map((name) => {
-      <p>{name}</p>;
+      // {console.log("name", name)}
+      return(<p >{name}</p>);
     });
   };
   const RecepiePlanOverviewRow = (list) => {
     // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
     console.log("list", list)
     return (
-      <div
+      <div className="border border-black rounded my-4 px-4"
       onClick = {() => {props.selectAndNavigateToWeekPlan(list.planID)}}>
-        <h1>{list.planName}</h1>
+        <h1 className="text-[24px] text-center">{list.planName}</h1>
         {renderMeals(list.planRecipes)}
         {/* Possible iteration of the recipe names contained wtihin a plan. Make so all contents are displayed and possibly overflow to a new row. Until that this is implemented, make the line above's content conspicously large */}
       </div>
