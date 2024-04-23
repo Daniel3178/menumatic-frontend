@@ -7,6 +7,7 @@ import RecommendationPagePresenter from "./recommendation_page/recommendationPag
 import ShoplistPagePresenter from "./shoplist/shoplistPagePresenter";
 import SignUpPagePresenter from "./signUp_page/signUpPagePresenter";
 import SignInPagePresenter from "./signIn_page/signInPagePresenter";
+import RecipeDetailsPagePresenter from "./recepie_details_page/recipeDetailsPagePresenter";
 // `path` contains the path for a current page. `element` contains the page to which the current page's redirect operations will lead.
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/shoplist-test" element={<ShoplistPagePresenter />} />
         <Route path="/signup" element={<SignUpPagePresenter />} />
         <Route path="/signIn" element={<SignInPagePresenter />} />
+        <Route path="/recipeDetails" element={<RecipeDetailsPagePresenter />} />
       </Routes>
     </BrowserRouter>
   );
