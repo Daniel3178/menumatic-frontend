@@ -1,4 +1,4 @@
-import React from "react";
+import { useState }  from "react";
 import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
 
 /**
@@ -7,7 +7,42 @@ import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
  * @param {Array} props.allItems - Array of shopping list items
  */
 
+
+
 const ShoplistPageView = (props) => {
+
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  const Overlay = () => {
+
+    if(showOverlay){
+    return (
+      <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-75 z-50">
+        <div className="bg-white p-6 rounded-lg">
+          <p className="text-center text-gray-800">Sign in to save meal plan in the app or export as PDF.</p>
+  
+          <button
+            className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            id="save"
+            onClick={props.saveMealPlan}
+          >
+            Save
+          </button>
+  
+          <button
+            className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            id="signup"
+            type="exportPDF"
+          //onClick={generateShoppingListPDFLink(parseToStringArray())}
+          >
+            Export PDF
+          </button>
+  
+        </div>
+      </div>
+    );}
+  };
+
   const parseToStringArray = () => {
     const resultArray = [];
     props.allItems.forEach((ingredient) => {
@@ -18,6 +53,29 @@ const ShoplistPageView = (props) => {
     return resultArray;
   };
 
+  
+  const renderFirstSaveButton = () => {
+    
+    if (props.isLoggedIn) {
+      return(
+      <button
+        className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+        id="save"
+        onClick={props.saveMealPlan}
+      > 
+        Save!
+      </button>)
+    }else{
+      return(
+        <button
+          className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          id="save"
+          onClick={() => setShowOverlay(true)}
+        >
+          Save?
+        </button>)
+    }
+  }
 
 
   /**
@@ -58,7 +116,8 @@ const ShoplistPageView = (props) => {
               style={{ width: "50%" }}
             >
               <h1 className="  text-[21px] text-bold pl-[40px]">Ingredient</h1>
-              {pdfButtonCom()}
+              {renderFirstSaveButton()}
+              {/* {pdfButtonCom()} */}
             </div>
             {/* <button onClick={()=>{
               setViewPdf(true)
@@ -93,6 +152,7 @@ const ShoplistPageView = (props) => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
       {renderTheIngredientList()}
+      {Overlay()}
     </div>
   );
 };

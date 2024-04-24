@@ -15,7 +15,7 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
       },
       body: JSON.stringify(data),
     };
-
+    console.log(options)
     const response = await fetch(url, options);
     return response.json();
   }

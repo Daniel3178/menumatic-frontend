@@ -68,7 +68,7 @@ export const signUpAsync = createAsyncThunk(
 
   export default userAccountSlice.reducer;
 //getters
-export const getUsername = (state) => state.currentUserAccount.username;
-export const getUserEmail = (state) => state.currentUserAccount.email;
-export const getUserId = (state) => state.currentUserAccount.userId;
-export const getIsLoggedIn = (state) => state.currentUserAccount.isLoggedIn;
+export const getUsername = (state) => state.userAccount.username;
+export const getUserEmail = (state) => state.userAccount.email;
+export const getUserId = (state) => state.userAccount.userId;
+export const getIsLoggedIn = (state) => state.userAccount.isLoggedIn;
