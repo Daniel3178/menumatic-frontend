@@ -41,10 +41,13 @@ export const fetchUserShopinglist = createAsyncThunk(
     };
 
     const response = await fetch(url, options);
-    return response.json();
+    return await response.json();
   }
 );
 
+/**
+ * [deprecated]
+ */
 export const fetchUserRecepiesByListId = createAsyncThunk(
   "menumaticServerApi/fetchUserRecepiesByListId",
   async (info) => {
@@ -61,7 +64,7 @@ export const fetchUserRecepiesByListId = createAsyncThunk(
     };
 
     const response = await fetch(paramUrl, options);
-    return response.json();
+    return await response.json();
   }
 );
 
