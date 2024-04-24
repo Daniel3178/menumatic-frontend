@@ -12,7 +12,7 @@ import { useState } from "react";
 export default PlanShoplistPageView = (props) => {
   const parseToStringArray = () => {
     // console.log("[STATE1]")
-    console.log("[FINAL]");
+    // console.log("[FINAL]");
     const resultArray = [];
     props.allItems.forEach((ingredient) => {
       resultArray.push(
@@ -57,9 +57,9 @@ export default PlanShoplistPageView = (props) => {
 
   function renderTheIngredientList() {
     if (props.allItems.length > 0) {
-      console.log("[STATE1]");
+      // console.log("[STATE1]");
 
-      console.log(props);
+      // console.log(props);
       return (
         <div className="w-full">
           <div className="flex items-center  justify-between border-b pb-2">
@@ -110,7 +110,7 @@ export default PlanShoplistPageView = (props) => {
       {viewPdf ? pdfButtonCom() : null}
       {renderTheIngredientList()}
 
-      {console.log("[STATE2]")}
+      {/* {console.log("[STATE2]")} */}
     </div>
   );
 };

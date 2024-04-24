@@ -19,7 +19,7 @@ const GustavTestPresenter = () => {
   useEffect(() => {
         
         dispatch(searchBySpoonacularApiBulkAsync([4715538,716429]));
-        console.log(getApiResults)
+        // console.log(getApiResults)
   }, []);
 
   return (

@@ -11,7 +11,7 @@ const DanielTestPresenter = () => {
   const apiResult = useSelector(getApiResults);
  const userId = useSelector((state) => state.userAccount.userId);
   const handleGetRandomReceipt = () => {
-    console.log("Button Clicked");
+    // console.log("Button Clicked");
     dispatch(saveShoplistToMenumaticDb({userId: userId, data:{name: "test", ingredients: ["test1", "test2"]}}));
   };
   return (

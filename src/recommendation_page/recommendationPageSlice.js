@@ -43,16 +43,16 @@ const recommendation = createSlice({
         testArr.push(item);
       })
       state.affordableDishesList.dishes.push(...testArr.sort((a, b) => a.result.pricePerServing - b.result.pricePerServing).slice(0,7));
-      console.log("sorting based on price", testArr)
+      // console.log("sorting based on price", testArr)
       // state.affordableDishesList.dishes.push(...state.recommendationList.slice(0,7));
 
       state.popularDishesList.dishes.push(...testArr.sort((a, b) => b.result.spoonacularScore - a.result.spoonacularScore).slice(0,7));
       // state.popularDishesList.dishes.push(...state.recommendationList.slice(0,7));
-      console.log("sorting based on popularity",testArr)
+      // console.log("sorting based on popularity",testArr)
       state.quickDishesList.dishes.push(...testArr.sort((a, b) => a.result.readyInMinutes - b.result.readyInMinutes ).slice(0,7));
       // state.quickDishesList.dishes.push(...state.recommendationList.slice(0,7));
       // const testArr = state.recommendationList;
-      console.log("sorting based on quick",testArr)
+      // console.log("sorting based on quick",testArr)
       state.state = "ready";
     },
     /*
@@ -72,7 +72,7 @@ const recommendation = createSlice({
           break;
         }
         case "Popular": {
-          console.log("popular dishes");
+          // console.log("popular dishes");
           state.popularDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;
@@ -81,7 +81,7 @@ const recommendation = createSlice({
           break;
         }
         case "Quick": {
-          console.log("quick dishes")
+          // console.log("quick dishes")
           state.quickDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;

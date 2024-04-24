@@ -22,7 +22,7 @@ const PlanListView = (props) => {
   };
   const RecepiePlanOverviewRow = (list) => {
     // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
-    console.log("list", list)
+    // console.log("list", list)
     return (
       <div className="border border-black rounded my-4 px-4"
       onClick = {() => {props.selectAndNavigateToWeekPlan(list.planID)}}>

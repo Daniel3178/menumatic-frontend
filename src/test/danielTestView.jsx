@@ -1,7 +1,7 @@
 import React from "react";
 
 const DanielTestView = (props) => {
-  console.log(props.apiResults);
+  // console.log(props.apiResults);
 
   const conditialRender = () => {
     if (props.apiResults) {

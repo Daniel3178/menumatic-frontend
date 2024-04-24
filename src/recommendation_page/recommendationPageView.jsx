@@ -30,7 +30,7 @@ const RecommendationPageView = (props) => {
 
   switch (props.selectedTab) {
     case "Popular": {
-      console.log("Popular dishes", props.selectedTab)
+      // console.log("Popular dishes", props.selectedTab)
       return (
         <div>
           <div className="flex">
@@ -47,7 +47,7 @@ const RecommendationPageView = (props) => {
       );
     }
     case "Quick": {
-      console.log("Quick dishes", props.selectedTab)
+      // console.log("Quick dishes", props.selectedTab)
 
       return (
         <div>
@@ -67,7 +67,7 @@ const RecommendationPageView = (props) => {
       );
     }
     case "Affordable": {
-      console.log("Affordable dishes", props.selectedTab)
+      // console.log("Affordable dishes", props.selectedTab)
 
       return (
         <div>

@@ -12,7 +12,7 @@ import { useState } from "react";
 export default PlanShoplistPageView = (props) => {
   const parseToStringArray = () => {
     // console.log("[STATE1]")
-    console.log("[FINAL]");
+    // console.log("[FINAL]");
     const resultArray = [];
     props.allItems.forEach((ingredient) => {
       resultArray.push(
