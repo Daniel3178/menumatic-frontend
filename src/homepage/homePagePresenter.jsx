@@ -14,7 +14,10 @@ import {
 import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
-import {getApiResultsState, popFirstRecipe} from "../store/spoonacularAPISlice"
+import {
+  getApiResultsState,
+  popFirstRecipe,
+} from "../store/spoonacularAPISlice";
 
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
@@ -24,19 +27,24 @@ const HomePagePresenter = () => {
   const [counter, setCounter] = useState(0);
 
   const dispatch = useDispatch();
-  const apiResult = useSelector(getApiResults)
-  const likesCounter = useSelector(getLikesCounter) //TODO: remove when api is working
-  const showInfo = useSelector(getShowInfo)
-  const excludeTags = useSelector(getExcludeTags)
-  const includeTags = useSelector(getIncludeTags)
-  const apiResultsState = useSelector(getApiResultsState)
-  const navigate = useNavigate()
+  const apiResult = useSelector(getApiResults);
+  const likesCounter = useSelector(getLikesCounter); //TODO: remove when api is working
+  const showInfo = useSelector(getShowInfo);
+  const excludeTags = useSelector(getExcludeTags);
+  const includeTags = useSelector(getIncludeTags);
+  const apiResultsState = useSelector(getApiResultsState);
+  const navigate = useNavigate();
 
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
-dispatch(popFirstRecipe())
-    if(apiResult.length < 6){
-      dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
+    dispatch(popFirstRecipe());
+    if (apiResult.length < 6) {
+      dispatch(
+        searchBySpoonacularApiAsync({
+          excludeTags: excludeTags,
+          includeTags: includeTags,
+        })
+      );
     }
 
     //If info view is active, go back to photo view after dislike.
@@ -47,18 +55,22 @@ dispatch(popFirstRecipe())
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
     if (likesCounter === 7) {
-      navigate("/recommendation")
+      navigate("/recommendation");
     }
     dispatch(incrementLikesCounter(apiResult[0]));
-dispatch(popFirstRecipe())
+    dispatch(popFirstRecipe());
 
-    console.log("homepage presenter")
-    console.log(apiResult.recipes[0])
-    if(apiResult.lentgh <6){
-      dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
+    // console.log("homepage presenter")
+    // console.log(apiResult.recipes[0])
+    if (apiResult.lentgh < 6) {
+      dispatch(
+        searchBySpoonacularApiAsync({
+          excludeTags: excludeTags,
+          includeTags: includeTags,
+        })
+      );
     }
     //setCounter((counter + 1) % 15); // TODO: remove when api is working
-
 
     //If info view is active, go back to photo view after like.
     if (showInfo) {
@@ -72,14 +84,19 @@ dispatch(popFirstRecipe())
 
   const handleToggleInfoView = () => {
     dispatch(toggleInfoView());
-  }
+  };
 
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
-    console.log("USE EFFECT")
+    // console.log("USE EFFECT")
     if (apiResult.length == 0) {
-      console.log("fetching")
-      dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
+      // console.log("fetching")
+      dispatch(
+        searchBySpoonacularApiAsync({
+          excludeTags: excludeTags,
+          includeTags: includeTags,
+        })
+      );
     }
   }, []);
 

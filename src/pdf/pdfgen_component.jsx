@@ -108,7 +108,7 @@ const styles_recipe = StyleSheet.create({
   },
 });
 const ListItem = ({ children, dot = '•'}) => {
-  console.log("children: " + children);
+  // console.log("children: " + children);
   const wordsArray = children.split(" ");
   const [first, second, ...rest] = wordsArray;
   const third = rest.join(" ");
@@ -297,7 +297,7 @@ function CreatePDFForm() {
   }
 
   var ingredientsList = inArrayExample.map((x) => x.join(" "));
-  console.log(ingredientsList);
+  // console.log(ingredientsList);
   return (
     <div>
       <PDFDownloadLink

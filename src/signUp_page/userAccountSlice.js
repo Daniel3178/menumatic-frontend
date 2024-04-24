@@ -16,7 +16,7 @@ export const signUpAsync = createAsyncThunk(
           userId: userCredentials.user.uid,
         };
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
         if (error.message === "Firebase: Error (auth/email-already-in-use).") {
           alert("Email already in use! Try another one!");
         } else {
@@ -52,10 +52,10 @@ export const signUpAsync = createAsyncThunk(
     },
     extraReducers: (builder) => {
       builder.addCase(signUpAsync.fulfilled, (state, action) => {
-        console.log("extra reducer", action.payload.email, action.payload.userId)
+        // console.log("extra reducer", action.payload.email, action.payload.userId)
         state.email = action.payload.email;
         state.userId = action.payload.userId;
-        console.log(state.email, state.userId);
+        // console.log(state.email, state.userId);
         alert(
           `You've successfully created an account! \nemail: ${action.payload.email}`
         );

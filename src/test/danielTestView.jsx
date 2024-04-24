@@ -7,8 +7,8 @@ const DanielTestView = (props) => {
     if (props.apiResults) {
       return (
         <div>
-          <h1>{props.apiResults.recipes[0].title}</h1>
-          <img src={props.apiResults.recipes[0].image} alt="food" />
+          {/* <h1>{props.apiResults.recipes[0].title}</h1>
+          <img src={props.apiResults.recipes[0].image} alt="food" /> */}
         </div>
       );
     }

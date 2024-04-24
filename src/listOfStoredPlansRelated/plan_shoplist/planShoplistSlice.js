@@ -49,7 +49,7 @@ const planShoplistSlice = createSlice({
         }
         return ingrArr;
       };
-      console.log(stripIngr(action.payload[0]));
+      // console.log(stripIngr(action.payload[0]));
 
       /**
        * Updates the allItems state with the provided list of items. For each item in the input list,

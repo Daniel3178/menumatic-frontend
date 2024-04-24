@@ -34,7 +34,7 @@ const SignInPagePresenter = () => {
             setEmail("");
             setPassword("");
           } catch (error) {
-            console.log(error);
+            // console.log(error);
             alert("Incorrect username or password");
           }
       };

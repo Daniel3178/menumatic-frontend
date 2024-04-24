@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'https://localhost:8080';
+const url = 'http://130.229.176.192 q:8080/api/daniel-test';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
@@ -17,7 +17,14 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
     };
     console.log(options)
     const response = await fetch(url, options);
-    return response.json();
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const responseData = await response.json();
+    console.log("Response:", responseData);
+    console.log(responseData.data);
+    return responseData;
   }
 );
 

@@ -26,7 +26,7 @@ const recommendation = createSlice({
     updateCount: (state, action) => {
       state.recommendationList.map((item) => {
         if (item.result.id === action.payload.id) {
-          item.count = action.payload.count;
+          item.portions = action.payload.portions;
         }
       });
     },
