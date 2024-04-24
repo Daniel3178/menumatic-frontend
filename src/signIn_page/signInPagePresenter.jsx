@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 const SignInPagePresenter = () => {
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    
 
     const handleSignOutACB = () => {
         signOut(auth)
@@ -33,11 +35,13 @@ const SignInPagePresenter = () => {
             );
             setEmail("");
             setPassword("");
+            navigate(-1)
           } catch (error) {
             // console.log(error);
             alert("Incorrect username or password");
           }
       };
+    
 
   return (
     <SignInPageView
