@@ -10,9 +10,8 @@ const RecommendationPagePresenter = () => {
   const navigate = useNavigate();
   const recommendationList = useSelector(getRecommendationList);
   const dispatch = useDispatch();
-  // const [count, setCount] = useState(0);
+  
   const handleUpdateCount = (props) => {
-    console.log("id: ", props.id, "count: ", props.portions);
   dispatch(updateCount({id: props.id, portions: props.portions}));
   }
 

@@ -10,7 +10,7 @@ const RecommendationPageView = (props) => {
  * Returns a table to display a row of the fetched day
  */
 const RecepieForADay = (recipe) => {
-  console.log("RecepieForADay", recipe);
+  // console.log("RecepieForADay", recipe);
   // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
   return (
     <tr>
