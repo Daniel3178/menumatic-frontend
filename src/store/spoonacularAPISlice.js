@@ -25,10 +25,10 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
 
     customUrl = customUrl.toLowerCase()
 
-    console.log(customUrl)
+    // console.log(customUrl)
 
     const response = await fetch(customUrl, options);
-    console.log("response", response)
+    // console.log("response", response)
     return response.json();
   }
 );
@@ -37,7 +37,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiBulk",
   async (props) => {
 
-    console.log(props)
+    // console.log(props)
 
     let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids='
     let recipeIdString = props.join()

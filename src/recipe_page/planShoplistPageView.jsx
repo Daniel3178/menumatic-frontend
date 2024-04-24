@@ -57,9 +57,9 @@ export default PlanShoplistPageView = (props) => {
 
   function renderTheIngredientList() {
     if (props.allItems.length > 0) {
-      console.log("[STATE1]");
+      // console.log("[STATE1]");
 
-      console.log(props);
+      // console.log(props);
       return (
         <div className="w-full">
           <div className="flex items-center  justify-between border-b pb-2">
