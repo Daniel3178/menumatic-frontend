@@ -1,13 +1,20 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getRecommendationList, updateCount } from './recommendationPageSlice';
 import RecommendationPageView from './recommendationPageView';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 //TODO: Update count is not used
 const RecommendationPagePresenter = () => {
   const navigate = useNavigate();
   const recommendationList = useSelector(getRecommendationList);
+  const dispatch = useDispatch();
+  // const [count, setCount] = useState(0);
+  const handleUpdateCount = (props) => {
+    console.log("id: ", props.id, "count: ", props.portions);
+  dispatch(updateCount({id: props.id, portions: props.portions}));
+  }
 
   /**
    * Handles request to go to shoplist page
@@ -21,6 +28,7 @@ const RecommendationPagePresenter = () => {
     <RecommendationPageView
       listOfMeals={recommendationList}
       goToShoplist={handleGoToShoplist}
+      updateCount={handleUpdateCount}
     />
   );
 };
