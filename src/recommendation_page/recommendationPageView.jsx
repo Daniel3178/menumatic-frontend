@@ -39,6 +39,7 @@ const RecommendationPageView = (props) => {
           <DishListComponent
             listOfMeals={props.popularDishes}
             updateCount={props.updateCount}
+            goToShoplist={props.goToShoplist}
           />
         </div>
       );
@@ -53,6 +54,8 @@ const RecommendationPageView = (props) => {
           <DishListComponent
             listOfMeals={props.quickDishes}
             updateCount={props.updateCount}
+            goToShoplist={props.goToShoplist}
+
           />
         </div>
       );
@@ -69,6 +72,8 @@ const RecommendationPageView = (props) => {
           <DishListComponent
             listOfMeals={props.affordableDishes}
             updateCount={props.updateCount}
+            goToShoplist={props.goToShoplist}
+
           />
         </div>
       );

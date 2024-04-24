@@ -105,14 +105,14 @@ const RecepieForADay = (recipe) => {
  */
 function pricePerServingToApproximatePriceLevel(instancePricePerServing) {
   if (instancePricePerServing < 100) {
-    console.log("instancePricePerServing", instancePricePerServing);
+    // console.log("instancePricePerServing", instancePricePerServing);
     return "$";
   } else if (instancePricePerServing < 1000) {
-    console.log("instancePricePerServing", instancePricePerServing);
+    // console.log("instancePricePerServing", instancePricePerServing);
 
     return "$$";
   } else {
-    console.log("instancePricePerServing", instancePricePerServing);
+    // console.log("instancePricePerServing", instancePricePerServing);
 
     return "$$$";
   }

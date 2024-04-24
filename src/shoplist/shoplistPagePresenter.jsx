@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ShoplistPageView from "./shoplistPageView"
 import { useDispatch, useSelector } from 'react-redux';
 import { generateShoplist, getAllItems } from "./shoplistSlice";
-import { getRecommendationList } from "../recommendation_page/recommendationPageSlice";
+import { getRecommendationList, getAffordableDishesList, getPopularDishesList,getSelectedTab, getQuickDishesList } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
 import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice"
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,10 @@ const ShoplistPagePresenter = () => {
   const shoplist = useSelector(getRecommendationList);
   const isLoggedIn = useSelector(getIsLoggedIn)
   const userId = useSelector(getUserId)
+  const affordableDishes = useSelector(getAffordableDishesList);
+  const popularDishes = useSelector(getPopularDishesList);
+  const quickDishes = useSelector(getQuickDishesList);
+  const selectedTab = useSelector(getSelectedTab);
 
   /**
  * @brief Handles saving meal plans to the database.
@@ -63,7 +67,18 @@ const ShoplistPagePresenter = () => {
 
   // Fetch and generate the shopping list when the component mounts or shoplist changes
   useEffect(() => {
-    dispatch(generateShoplist(shoplist))
+    switch(selectedTab){
+      case "Affordable":
+        dispatch(generateShoplist(affordableDishes))
+        break;
+      case "Popular":
+        dispatch(generateShoplist(popularDishes))
+        break;
+      case "Quick":
+        dispatch(generateShoplist(quickDishes))
+        break;
+    }
+    // dispatch(generateShoplist(shoplist))
   }, [dispatch, shoplist])
 
   return (
