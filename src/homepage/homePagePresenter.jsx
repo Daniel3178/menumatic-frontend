@@ -18,6 +18,7 @@ import {
   getApiResultsState,
   popFirstRecipe,
 } from "../store/spoonacularAPISlice";
+import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
 
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
@@ -37,8 +38,7 @@ const HomePagePresenter = () => {
 
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
-    dispatch(popFirstRecipe());
-    if (apiResult.length < 6) {
+    if (apiResult.length < 6 && apiResult.length > 3) {
       dispatch(
         searchBySpoonacularApiAsync({
           excludeTags: excludeTags,
@@ -46,6 +46,7 @@ const HomePagePresenter = () => {
         })
       );
     }
+    dispatch(popFirstRecipe());
 
     //If info view is active, go back to photo view after dislike.
     if (showInfo) {
@@ -54,15 +55,7 @@ const HomePagePresenter = () => {
   };
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
-    if (likesCounter === 7) {
-      navigate("/recommendation");
-    }
-    dispatch(incrementLikesCounter(apiResult[0]));
-    dispatch(popFirstRecipe());
-
-    // console.log("homepage presenter")
-    // console.log(apiResult.recipes[0])
-    if (apiResult.lentgh < 6) {
+    if (apiResult.length < 6 && apiResult.length > 3) {
       dispatch(
         searchBySpoonacularApiAsync({
           excludeTags: excludeTags,
@@ -70,6 +63,15 @@ const HomePagePresenter = () => {
         })
       );
     }
+    if (likesCounter === 0) {
+      dispatch(sortLikedDishes());
+      navigate("/recommendation");
+    }
+    dispatch(incrementLikesCounter(apiResult[0]));
+    dispatch(popFirstRecipe());
+    // console.log("homepage presenter")
+    // console.log(apiResult.recipes[0])
+
     //setCounter((counter + 1) % 15); // TODO: remove when api is working
 
     //If info view is active, go back to photo view after like.
@@ -86,9 +88,19 @@ const HomePagePresenter = () => {
     dispatch(toggleInfoView());
   };
 
+  // const [reloadOnce, setReloadOnce] = useState(true);
+
+  // useEffect(() => {
+  //   if (reloadOnce) {
+  //     window.location.reload();
+  //     setReloadOnce(false);
+  //   }
+  // }, [reloadOnce]);
+
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
     // console.log("USE EFFECT")
+    // window.location.reload();
     if (apiResult.length == 0) {
       // console.log("fetching")
       dispatch(
