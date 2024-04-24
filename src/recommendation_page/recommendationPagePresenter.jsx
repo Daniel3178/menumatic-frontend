@@ -14,6 +14,7 @@ const RecommendationPagePresenter = () => {
   const selectedTab = useSelector(getSelectedTab);
   
   const handleUpdateCount = (props) => {
+    console.log("update count", props);
   dispatch(updateCount({id: props.id, portions: props.portions, list: props.list}));
   }
 

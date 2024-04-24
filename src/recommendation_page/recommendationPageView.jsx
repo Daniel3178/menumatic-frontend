@@ -30,6 +30,7 @@ const RecommendationPageView = (props) => {
 
   switch (props.selectedTab) {
     case "Popular": {
+      console.log("Popular dishes", props.selectedTab)
       return (
         <div>
           <div className="flex">
@@ -40,11 +41,14 @@ const RecommendationPageView = (props) => {
             listOfMeals={props.popularDishes}
             updateCount={props.updateCount}
             goToShoplist={props.goToShoplist}
+            selectedTab={props.selectedTab}
           />
         </div>
       );
     }
     case "Quick": {
+      console.log("Quick dishes", props.selectedTab)
+
       return (
         <div>
           <div className="flex">
@@ -55,12 +59,16 @@ const RecommendationPageView = (props) => {
             listOfMeals={props.quickDishes}
             updateCount={props.updateCount}
             goToShoplist={props.goToShoplist}
+            selectedTab={props.selectedTab}
+
 
           />
         </div>
       );
     }
     case "Affordable": {
+      console.log("Affordable dishes", props.selectedTab)
+
       return (
         <div>
           <div className="flex">
@@ -73,6 +81,7 @@ const RecommendationPageView = (props) => {
             listOfMeals={props.affordableDishes}
             updateCount={props.updateCount}
             goToShoplist={props.goToShoplist}
+            selectedTab={props.selectedTab}
 
           />
         </div>

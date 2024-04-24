@@ -24,7 +24,7 @@ const RecepieForADay = (recipe) => {
           onChange={(e) => {
             e.preventDefault();
             console.log("e.target.value", e.target.value);
-            props.updateCount({id: recipe.id, portions: e.target.value});}
+            props.updateCount({id: recipe.id, portions: e.target.value, list: props.selectedTab});}
           }
           min="1"
           defaultValue="1"

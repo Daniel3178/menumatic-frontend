@@ -63,26 +63,31 @@ const recommendation = createSlice({
      */
     updateCount: (state, action) => {
       switch (action.payload.list) {
-        case "affordable": {
+        case "Affordable": {
           state.affordableDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;
             }
           });
+          break;
         }
-        case "popular": {
+        case "Popular": {
+          console.log("popular dishes");
           state.popularDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;
             }
           });
+          break;
         }
-        case "quick": {
+        case "Quick": {
+          console.log("quick dishes")
           state.quickDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;
             }
           });
+          break;
         }
       }
     },
