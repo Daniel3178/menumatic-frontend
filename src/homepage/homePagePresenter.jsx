@@ -52,8 +52,6 @@ dispatch(popFirstRecipe())
     dispatch(incrementLikesCounter(apiResult[0]));
 dispatch(popFirstRecipe())
 
-    console.log("homepage presenter")
-    console.log(apiResult.recipes[0])
     if(apiResult.lentgh <6){
       dispatch(searchBySpoonacularApiAsync({excludeTags:excludeTags, includeTags:includeTags}));
     }

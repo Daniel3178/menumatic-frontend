@@ -12,6 +12,11 @@ import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
 const ShoplistPageView = (props) => {
 
   const [showOverlay, setShowOverlay] = useState(false);
+  const [nameInput, setNameInput] = useState(Date().substring(0,24));
+
+  let handleNameInputChange = (event) => {
+    setNameInput(event.target.value);
+  };
 
   const Overlay = () => {
 
@@ -19,19 +24,19 @@ const ShoplistPageView = (props) => {
     return (
       <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-75 z-50">
         <div className="bg-white p-6 rounded-lg">
-          <p className="text-center text-gray-800">Sign in to save meal plan in the app or export as PDF.</p>
+          <p className="text-center text-gray-800">Log in to save meal plan in the app or export as PDF.</p>
   
           <button
             className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            id="save"
-            onClick={props.saveMealPlan}
+            id="signIn"
+            onClick={props.navigateToLogin}
           >
-            Save
+            Log in
           </button>
   
           <button
             className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            id="signup"
+            id="exportPDF"
             type="exportPDF"
           //onClick={generateShoppingListPDFLink(parseToStringArray())}
           >
@@ -58,21 +63,31 @@ const ShoplistPageView = (props) => {
     
     if (props.isLoggedIn) {
       return(
-      <button
-        className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-        id="save"
-        onClick={props.saveMealPlan}
-      > 
-        Save!
-      </button>)
+        <div class="flex flex-col items-end">
+        <input 
+          class="border rounded-lg px-4 py-2 mb-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm font-normal"
+          type="text" 
+          id="nameInput" 
+          value={nameInput}
+          onChange={handleNameInputChange}
+        />
+        <button
+          class="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white "
+          id="save"
+          onClick={() =>props.saveMealPlan(nameInput)}
+        > 
+          Save
+        </button>
+      </div>
+      )
     }else{
       return(
         <button
-          className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white"
           id="save"
           onClick={() => setShowOverlay(true)}
         >
-          Save?
+          Save
         </button>)
     }
   }
