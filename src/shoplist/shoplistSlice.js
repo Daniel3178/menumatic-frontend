@@ -7,6 +7,7 @@ const shoplistSlice = createSlice({
   },
   reducers: {
     generateShoplist: (state, action) => {
+      console.log("generateShoplist SLICE", action.payload)
       /**
        * Takes an object meal: {{result}, portions}
        * retrieves the data needed for creating the shopping list:
@@ -82,8 +83,11 @@ const shoplistSlice = createSlice({
       };
 
       for (let i = 0; i < action.payload.length; i++) {
+        console.log("LOOP", action.payload[i])
         updateAllItems(stripIngr(action.payload[i]));
       }
+
+      console.log("FINAL")
     },
   },
 });

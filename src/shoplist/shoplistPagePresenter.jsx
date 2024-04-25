@@ -28,38 +28,56 @@ const ShoplistPagePresenter = () => {
  * This function retrieves meal information from the shoplist and saves it to the database. 
  * @remarks The function assumes that the shoplist variable is defined and contains necessary meal information.
  */
-  const handleSaveMealPlan = (nameInput) => {
 
+
+  const extractRecepies = (list) =>{
     // Array to store recipe objects
     const recipes = [];
-
     // Iterating over each meal in the shoplist
-    shoplist.map((meal) => {
-
+    list.map((meal) => {
       // Creating a recipe object with meal information
       const recipeDbObject = {
         name: meal.result.title,
         portion: meal.portions,
         id: meal.result.id
       };
-
       // Adding the recipe object to the recipes array
       recipes.push(recipeDbObject);
     });
+    return recipes;
+  }
+  const handleSaveMealPlan = (nameInput) => {
 
-    // Dispatching action to save the shoplist to the database
-    dispatch(saveShoplistToMenumaticDb(
-      {
-        userId: userId,
-        data: {
-          planName: nameInput,
-          recipes: recipes
+    let resultRecipes = [];
+    switch(selectedTab){
+
+      case "Affordable":{
+
+        resultRecipes = extractRecepies(affordableDishes);
+        break;
+      }
+      case "Popular": {
+        resultRecipes = extractRecepies(popularDishes);
+        break;
+      }
+      case "Quick": {
+        resultRecipes = extractRecepies(quickDishes);
+        break;
         }
-      }));
+    }
+        dispatch(saveShoplistToMenumaticDb({
+          userId: userId,
+          data: {
+            planName: nameInput,
+            recipes: resultRecipes
+          }
+        }));
+        navigate("/")
+    }
+    // Dispatching action to save the shoplist to the database
+    // dispatch(saveShoplistToMenumaticDb(
 
-    navigate("/")
 
-  };
 
   const handleNavigateToLogIn = () => {
     navigate("/signin")

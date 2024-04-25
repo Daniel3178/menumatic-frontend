@@ -108,6 +108,7 @@ const menumaticServerApi = createSlice({
   },
 });
 export const getMenumaticAllList = (state) => state.menumaticServerApi.allList;
+export const getMenumaticSavedRecipes = (state) => state.menumaticServerApi.userSavedRecipes;
 export const getMenumaticSelecedList = (state) => state.menumaticServerApi.selectedList;
 export const getMenumaticState = (state) => state.menumaticServerApi.state;
 export const { setSelectedListId, flushUserData, setMenumaticServerState } = menumaticServerApi.actions;

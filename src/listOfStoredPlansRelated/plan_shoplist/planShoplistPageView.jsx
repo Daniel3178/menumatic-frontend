@@ -1,6 +1,6 @@
 import React from "react";
 import { generateShoplist } from "../../shoplist/shoplistSlice";
-import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
+import { generateShoppingListPDFLink } from "../../pdf/pdfgen_component";
 import { useState } from "react";
 
 /**
@@ -9,7 +9,7 @@ import { useState } from "react";
  * @param {Array} props.allItems - Array of shopping list items
  */
 
-export default PlanShoplistPageView = (props) => {
+const PlanShoplistPageView = (props) => {
   const parseToStringArray = () => {
     // console.log("[STATE1]")
     // console.log("[FINAL]");
@@ -104,8 +104,10 @@ export default PlanShoplistPageView = (props) => {
     }
   }
 
-  return (
-    <div className="container mx-auto p-4">
+  if(props.state === "ready"){
+
+    return (
+      <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
       {viewPdf ? pdfButtonCom() : null}
       {renderTheIngredientList()}
@@ -113,4 +115,13 @@ export default PlanShoplistPageView = (props) => {
       {/* {console.log("[STATE2]")} */}
     </div>
   );
+}
+else if(props.state === "loading"){
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold text-center mb-4">Loading...</h1>
+    </div>
+  );
+}
 };
+export default PlanShoplistPageView;

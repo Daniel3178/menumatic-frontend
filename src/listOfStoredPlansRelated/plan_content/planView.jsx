@@ -17,7 +17,7 @@ const PlanView = ({ week, recipes, goToShoplist }) => {
       <h1>Recipes for {week}</h1>
       <ul>
         {recipes.map((recipe, index) => (
-          <li key={index}>{recipe}</li>
+          <li key={index}>{recipe.name}</li>
         ))}
       </ul>
     </div>
