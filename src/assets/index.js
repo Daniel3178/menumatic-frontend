@@ -10,5 +10,8 @@ import done from "./done.svg"
 import like_btn from "./like_btn.svg"
 import dislike_btn from "./dislike_btn.svg"
 import logo from "./MENUMATIC_logo.svg"
+import noimage from "./noimage.png"
 
-export {clock, thumbs_up, thumbs_down, info, info_i, close, tune, done, dislike_btn, like_btn, logo, clock_icon}
+export {clock, thumbs_up, thumbs_down, info, info_i, close, tune, done, dislike_btn, like_btn, logo, clock_icon, noimage}
+
+

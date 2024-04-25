@@ -1,96 +1,18 @@
-import { useState }  from "react";
+import React from "react";
+import { generateShoplist } from "./shoplistSlice";
 import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
+import { useState } from "react";
 
 /**
  * Represents the view component of the shopping list page.
  * @param {Object} props - Component props
  * @param {Array} props.allItems - Array of shopping list items
- */
+*/
 
-
-
-const ShoplistPageView = (props) => {
-
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [nameInput, setNameInput] = useState(Date().substring(0,24));
-
-  const handleNameInputChange = (event) => {
-    setNameInput(event.target.value);
-  };
-
-
-  /**
- * Renders a save button.
- * If the user is logged in the button sends the meal plan to the server to be stored, it also render an input box for assigning a name to the plan.
- * If the user is not logged in it opens a pop-up window with login/export pdf.
- */
-  const renderSaveButton = () => {
-    
-    if (props.isLoggedIn) {
-      return(
-        <div class="flex flex-col items-end">
-        <input 
-          class="border rounded-lg px-4 py-2 mb-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm font-normal"
-          type="text" 
-          id="nameInput" 
-          value={nameInput}
-          onChange={handleNameInputChange}
-        />
-        <button
-          class="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white "
-          id="save"
-          onClick={() =>props.saveMealPlan(nameInput)}
-        > 
-          Save
-        </button>
-      </div>
-      )
-    }else{
-      return(
-        <button
-          className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white"
-          id="save"
-          onClick={() => setShowOverlay(true)}
-        >
-          Save
-        </button>)
-    }
-  }
-
-  /**
- * Renders a pop-up window with login/export pdf, if a non logged in user presses "save".
- */
-  const overlay = () => {
-    if(showOverlay){
-    return (
-      <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-75 z-50">
-        <div className="bg-white p-6 rounded-lg">
-
-          <p className="text-center text-gray-800">Log in to save meal plan in the app or export as PDF.</p>
-  
-          <button
-            className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            id="signIn"
-            onClick={props.navigateToLogin}
-          >
-            Log in
-          </button>
-  
-          <button
-            className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            id="exportPDF"
-            type="exportPDF"
-          //onClick={generateShoppingListPDFLink(parseToStringArray())}
-          >
-            Export PDF
-          </button>
-  
-        </div>
-      </div>
-    );}
-  };
-
+export default PlanShoplistPageView = (props) => {
   const parseToStringArray = () => {
+    // console.log("[STATE1]")
+    console.log("[FINAL]");
     const resultArray = [];
     props.allItems.forEach((ingredient) => {
       resultArray.push(
@@ -100,9 +22,15 @@ const ShoplistPageView = (props) => {
     return resultArray;
   };
 
-  
-  
+  // const handleGeneratePDF = () => {
+  //   console.log("PDF")
+  //   const inpuArray = parseToStringArray();
 
+  //   const test = generateShoppingListPDFLink(inpuArray)
+  //   console.log(test)
+  // }
+
+  const [viewPdf, setViewPdf] = useState(false);
 
   /**
    * Generates a button component for PDF download
@@ -129,6 +57,9 @@ const ShoplistPageView = (props) => {
 
   function renderTheIngredientList() {
     if (props.allItems.length > 0) {
+      // console.log("[STATE1]");
+
+      // console.log(props);
       return (
         <div className="w-full">
           <div className="flex items-center  justify-between border-b pb-2">
@@ -142,8 +73,7 @@ const ShoplistPageView = (props) => {
               style={{ width: "50%" }}
             >
               <h1 className="  text-[21px] text-bold pl-[40px]">Ingredient</h1>
-              {renderSaveButton()}
-              {/* {pdfButtonCom()} */}
+              {pdfButtonCom()}
             </div>
             {/* <button onClick={()=>{
               setViewPdf(true)
@@ -177,10 +107,10 @@ const ShoplistPageView = (props) => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
+      {viewPdf ? pdfButtonCom() : null}
       {renderTheIngredientList()}
-      {overlay()}
+
+      {console.log("[STATE2]")}
     </div>
   );
 };
-
-export default ShoplistPageView;

@@ -1,14 +1,15 @@
 import React, { useState } from 'react'; // Importing necessary modules
 import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, done } from "../assets"; // Importing necessary assets
-
+import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 const FilterPageView = (props) => { // Creating a functional component FilterPageView with props
 
 
-  const includeTags = ["Vegetarian", "Vegan"]; // Array of tags that can be include
-  const excludeTags = ["Gluten", "Shellfish", "Nuts", "Egg"]; // Array of tags that can be exclude
+  const includeTags = ["Pescetarian", "Vegetarian", "Vegan", "Primal"]; // Array of tags that can be include
+  const excludeTags = ["Gluten", "Egg", "Dairy", "Shellfish", "Peanut", "Tree Nut"]; // Array of tags that can be exclude
 
-  const [includedItems, setIncludedItems] = useState([]); // State hook for included items
-  const [excludedItems, setExcludedItems] = useState([]); // State hook for excluded items
+  const [includedItems, setIncludedItems] = useState(props.storedIncludeTags); // State hook for included items
+  const [excludedItems, setExcludedItems] = useState(props.storedExcludeTags); // State hook for excluded items
+  
 
   // Function to handle inclusion of tags
   function includeCheckboxHandler(event) {
@@ -17,9 +18,9 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
 
     if (isSelected) {
       setIncludedItems([...includedItems, value]); // If checked, add to included items
-      console.log(value + " isChecked");
+      // console.log(value + " isChecked");
     } else {
-      console.log(value + " isUnChecked");
+      // console.log(value + " isUnChecked");
       setIncludedItems((prevData) => { // If unchecked, remove from included items
         return prevData.filter((id) => {
           return id !== value;
@@ -35,9 +36,9 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
 
     if (isSelected) {
       setExcludedItems([...excludedItems, value]); // If checked, add to excluded items
-      console.log(value + " isChecked");
+      // console.log(value + " isChecked");
     } else {
-      console.log(value + " isUnChecked");
+      // console.log(value + " isUnChecked");
       setExcludedItems((prevData) => { // If unchecked, remove from excluded items
         return prevData.filter((id) => {
           return id !== value;
@@ -61,6 +62,7 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
                   <input
                     type="checkbox"
                     value={ingredient}
+                    checked = {includedItems.includes(ingredient)}
                     onChange={(event) => includeCheckboxHandler(event)} // On change event for inclusion
                     className="peer sr-only"
                   />
@@ -85,6 +87,7 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
                   <input
                     type="checkbox"
                     value={ingredient}
+                    checked = {excludedItems.includes(ingredient)}
                     onChange={(event) => excludeCheckboxHandler(event)} // On change event for exclusion
                     className="peer sr-only"
                   />

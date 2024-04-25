@@ -19,13 +19,13 @@ export const filterPage = createSlice({
             if (state.apiPrefs.includeTags.paramsArray.length !== 0) {
                 state.apiPrefs.includeTags.paramsArray.length = 0;
             }
-            state.apiPrefs.includeTags.paramsArray.push(action.payload);
+            state.apiPrefs.includeTags.paramsArray.push(...action.payload);
         },
         saveExcludeTags: (state, action) => {
             if (state.apiPrefs.excludeTags.paramsArray.length !== 0) {
                 state.apiPrefs.excludeTags.paramsArray.length = 0;
             }
-            state.apiPrefs.excludeTags.paramsArray.push(action.payload);
+            state.apiPrefs.excludeTags.paramsArray.push(...action.payload);
         },
     },
     });
@@ -33,3 +33,5 @@ export const filterPage = createSlice({
     export default filterPage.reducer;
 
     export const {saveIncludeTags, saveExcludeTags} = filterPage.actions;
+    export const getExcludeTags = (state) => state.filterPage.apiPrefs.excludeTags.paramsArray
+    export const getIncludeTags = (state) => state.filterPage.apiPrefs.includeTags.paramsArray

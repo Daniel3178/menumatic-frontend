@@ -2,14 +2,14 @@ import React from 'react';
 import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, dislike_btn, like_btn, logo, clock_icon } from "../assets";
 
 const HomePageView = (props) => {
-  console.log(props.apiResults);
-
+  
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
-
-
   //conditionalRender either renders the info view for the current dish, or the photo for the current dish.
   const conditionalRender = () => {
+
+    
     //if info has been toggled the infopage is shown.
+
     if (props.info) {
       return (
         <div>
@@ -19,6 +19,7 @@ const HomePageView = (props) => {
     }
     //if result from api exists render image. This code can only be reached if previous if statement is not true
     if (props.apiResults) {
+      //console.log(props.apiResults)
       return (
         <div>
         </div>
@@ -46,6 +47,17 @@ const HomePageView = (props) => {
                 {props.apiResults[0].readyInMinutes} min
               </div>
             </div>
+          </div>
+        </div>
+        {conditionalRender()}
+        <div className="mb-8 flex flex-col items-center ">
+          <div className="flex items-center">
+            <button onClick={props.getRandomReceipt} className="hover:scale-105 shadow-md mt-15 mr-20 bg-red-500 hover:bg-red-600 rounded-full w-40 h-40 flex items-center justify-center focus:outline-none">
+              <img src={thumbs_down} alt="Image" className="w-20 h-20 rounded-full" />
+            </button>
+            <button onClick={props.sendLike} className="hover:scale-105 shadow-md mt-15 ml-20 bg-green-500 hover:bg-green-600 rounded-full w-40 h-40 flex items-center justify-center focus:outline-none">
+              <img src={thumbs_up} alt="Image" className="w-20 h-20 rounded-full" />
+            </button>
           </div>
         </div>
       </div>

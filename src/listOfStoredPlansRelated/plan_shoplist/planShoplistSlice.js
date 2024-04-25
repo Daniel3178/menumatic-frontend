@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { connectStorageEmulator } from "firebase/storage";
 
-const shoplistSlice = createSlice({
+const planShoplistSlice = createSlice({
   name: "Shoplist",
   initialState: {
     allItems: [],
@@ -48,6 +49,7 @@ const shoplistSlice = createSlice({
         }
         return ingrArr;
       };
+      // console.log(stripIngr(action.payload[0]));
 
       /**
        * Updates the allItems state with the provided list of items. For each item in the input list,

@@ -8,7 +8,7 @@ const homePage = createSlice({
     },
     reducers: {
         incrementLikesCounter: (state, action) => {
-            state.likesCounter += 1;
+            state.likesCounter = (state.likesCounter + 1)% 16;
         },
         toggleInfoView: (state, action) => {
             state.showInfo = !state.showInfo;
