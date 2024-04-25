@@ -42,7 +42,11 @@ const HomePageView = (props) => {
       return (
         <div className="flex justify-center">
           <div className="w-405 h-540 rounded-large relative shadow-xl">
-            <img src={"https://img.spoonacular.com/recipes/" + props.apiResults[0].id + "-636x393." + props.apiResults[0].imageType} className="object-cover w-full h-full rounded-large" alt="Example Image" />
+          <img src={"https://img.spoonacular.com/recipes/" + props.apiResults[0].id + "-636x393." + props.apiResults[0].imageType} className="object-cover w-full h-full rounded-large"
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src=noimage;
+            }}/>
             <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large w-405 h-130">
               <div className='mt-2 ml-2'>
                 <p className="text-whiteSmoke font-outfit text-2xl font-medium">{props.apiResults[0].title}</p>
