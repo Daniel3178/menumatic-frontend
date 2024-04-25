@@ -17,7 +17,7 @@ const RecepieForADay = (recipe) => {
       <td>{recipe.priceLevel}</td>
       <td>
         <input
-          type="number"
+        type='number'
           id={recipe.dayOfTheWeek}
           name="quantity"
           value={recipe.portionCount}
@@ -27,7 +27,6 @@ const RecepieForADay = (recipe) => {
             props.updateCount({id: recipe.id, portions: e.target.value, list: props.selectedTab});}
           }
           min="1"
-          defaultValue="1"
         ></input>
       </td>
     </tr>
@@ -45,6 +44,7 @@ const RecepieForADay = (recipe) => {
     return props.listOfMeals.map((mealDataForTheDay, mealIndex) => {
       return (
         <RecepieForADay
+        key={mealIndex}
           dayOfTheWeek={mealIndex + 1}
           dish={mealDataForTheDay.result.title}
           id={mealDataForTheDay.result.id}
@@ -59,6 +59,8 @@ const RecepieForADay = (recipe) => {
   return (
     <div className="flex flex-col justify-center">
       <table style={{ width: "100%" }}>
+        <tbody>
+
         {/* <tr className="bg-[#48abe0] h-14">
                     <th className="text-left pl-8">Billig</th> 
                     <th className="text-left">Rekommenderas</th> 
@@ -84,9 +86,10 @@ const RecepieForADay = (recipe) => {
               min="1"
               defaultValue="1"
               max="100"
-            ></input>
+              ></input>
           </td>
         </tr>
+              </tbody>
       </table>
       <button
         className="w-[160px] h-[50px] text-[14px] bg-green-400 rounded self-center text-white font-semibold"

@@ -14,15 +14,14 @@ const plansData = {
 const PlanListView = (props) => {
 
   const renderMeals = (recipesName) => {
-    // console.log("recipesName", recipesName)
-    return recipesName.map((name) => {
-      // {console.log("name", name)}
-      return(<p >{name}</p>);
+    return recipesName.map((recipe) => {
+      return(<p >{recipe.name}</p>);
     });
   };
   const RecepiePlanOverviewRow = (list) => {
     // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
-    console.log("list", list)
+    // console.log("list", list)
+    // console.log("list.planRecipes", list.planRecipes)
     return (
       <div className="border border-black rounded my-4 px-4"
       onClick = {() => {props.selectAndNavigateToWeekPlan(list.planID)}}>
@@ -36,21 +35,29 @@ const PlanListView = (props) => {
   function renderList() {
     // console.log("renderList")
     // console.log("allList", props.allLists)
-    return props.allLists.map((planData) => {
+    return props.allLists.map((planData, index) => {
+      // console.log("planData", planData)
       return (
+        <div key={index}>
 
         <RecepiePlanOverviewRow
           planID={planData.id}
           planName={planData.name}
-          planRecipes={planData.recipesName}
-        ></RecepiePlanOverviewRow>
+          planRecipes={planData.recipes}
+          ></RecepiePlanOverviewRow>
+          </div>
       );
     });
   }
 
+  if(props.serverState === "loading"){
+    return <p>Loading...</p>
+  }
+  else if(props.serverState === "ready"){
   return (
     <div>{renderList()}</div>
   );
+}
 };
 
 export default PlanListView;

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { options } from "../config/spoonacularApiConfig";
+import { generateShoplist } from "../shoplist/shoplistSlice";
 
 function buildURL(baseURL, params) {
   //console.log("Entering build url")
@@ -92,18 +93,43 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
 
 export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiBulk",
-  async (props) => {
-
+  async (props, {dispatch}) => {
+   dispatch(setSavedRecipesState("loading"));
     // console.log(props)
-
+    const copyProp = props[0];
+    // console.log("PROPS", copyProp)
+    const ids = [];
+    copyProp.map((recipe) => ids.push(recipe.id))
+    console.log("IDS", ids);
     let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids='
-    let recipeIdString = props.join()
+    let recipeIdString = ids.join()
     customUrl = customUrl.concat(recipeIdString)
 
-    console.log(customUrl)
-
     const response = await fetch(customUrl, options);
-    return response.json();
+    const jsonResponse = await response.json()
+    const result = [];
+
+    const findPoriont = (id)=>{
+      for(let i = 0; i < copyProp.length; i++){
+        if(copyProp[i].id === id){
+          console.log("FOUND PORTION", copyProp[i].id)
+          console.log("FOUND PORTION", copyProp[i].id)
+          return copyProp[i].portions;
+        }
+      }
+    }
+
+    jsonResponse.map((recipe) => {
+      result.push( {
+        portions: findPoriont(recipe.id),
+        result: recipe
+      })
+    })
+
+
+console.log("Result Rebuilt", result)
+    dispatch(generateShoplist(result))
+    return result;
   }
 );
 
@@ -112,12 +138,16 @@ const spoonacularApi = createSlice({
   initialState: {
     results: [],
     resultsState: "loading",
+    savedRecipesState: "",
     userSavedRecipes: [],
 
   },
   reducers: {
     popFirstRecipe: (state, action) => {
       state.results.shift();
+    },
+    setSavedRecipesState: (state, action) => {
+      state.savedRecipesState = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -126,13 +156,15 @@ const spoonacularApi = createSlice({
       state.results.push(...action.payload.recipes);
       state.resultsState = "ready";
     }).addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
-      state.userSavedRecipes.push(action.payload);
+      state.userSavedRecipes.push(...action.payload);
+      state.savedRecipesState = "ready";
     }).addCase(searchComplexBySpoonacularApiAsync.fulfilled, (state, action) => {
       state.results.push(...action.payload);
       state.resultsState = "ready";})
   },
 });
-export const { popFirstRecipe } = spoonacularApi.actions;
+export const { popFirstRecipe, setSavedRecipesState } = spoonacularApi.actions;
 export const getApiResults = (state) => state.spoonacularApi.results;
 export const getApiResultsState = (state) => state.spoonacularApi.resultsState;
+export const getSavedRecipesState = (state) => state.spoonacularApi.savedRecipesState;
 export default spoonacularApi.reducer;
