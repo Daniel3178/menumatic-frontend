@@ -2,17 +2,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { options } from "../config/spoonacularApiConfig";
 
 function buildURL(baseURL, params) {
-  console.log("Entering build url")
+  //console.log("Entering build url")
   // Use map to create an array of parameter strings
   const paramStrings = params.map(param => `${param.key}=${param.value}`);
-  console.log("paramStrings: ", paramStrings)
+  //console.log("paramStrings: ", paramStrings)
   // Join the parameter strings with '&' to form the query string
   let queryString = paramStrings.join('&');
-  console.log("querystring: ", queryString)
+  //console.log("querystring: ", queryString)
 
   // Concatenate the base URL with the query string
   let fullURL = `${baseURL}?${queryString}`;
-  console.log("full url: ", fullURL)
+  //console.log("full url: ", fullURL)
   // Return the full URL
   return fullURL;
 }
@@ -53,11 +53,11 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
 export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchComplexBySpoonacularApi",
   async (props) => {
-    console.log("search recipes")
+    //console.log("search recipes")
     const diet = props.diet.join()
-    console.log("diets joined")
+    //console.log("diets joined")
     const intolerances = props.intolerances.join()
-    console.log("intolerances joined")
+    //console.log("intolerances joined")
 
     let baseUrl = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
 
@@ -74,29 +74,15 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
       { key: "diet", value: diet },
       { key: "intolerances", value: intolerances }
     ];
-    console.log("before build url")
+    //console.log("before build url")
     const generatedUrl = buildURL(baseUrl, params);
 
     
-    console.log("API url: ", generatedUrl)
-    const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?query=food&intolerances=%2C&type=main%20course&instructionsRequired=true&fillIngredients=false&addRecipeInformation=true&ignorePantry=true&sort=random&number=10'
-    // let result = "empty"
-    // try {
-    //   const response = await fetch(url, options);
-    //   result = await response.json();
-    //   console.log(result);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-    
-    // // const response = await fetch(testurl, options);
-    // console.log("response", result)
-    // return result.json();
-
+    //console.log("API url: ", generatedUrl)
     const response = await fetch(generatedUrl, options);
     const jsonResponse = await response.json()
     const customResponse = jsonResponse.results
-    console.log(customResponse)
+    //console.log(customResponse)
     return customResponse;
   }
 );

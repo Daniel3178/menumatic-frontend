@@ -4,8 +4,8 @@ import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 const FilterPageView = (props) => { // Creating a functional component FilterPageView with props
 
 
-  const includeTags = ["Vegetarian", "Vegan"]; // Array of tags that can be include
-  const excludeTags = ["Gluten"]; // Array of tags that can be exclude
+  const includeTags = ["Pescetarian", "Vegetarian", "Vegan", "Primal"]; // Array of tags that can be include
+  const excludeTags = ["Gluten", "Egg", "Dairy", "Shellfish", "Peanut", "Tree Nut"]; // Array of tags that can be exclude
 
   const [includedItems, setIncludedItems] = useState(props.storedIncludeTags); // State hook for included items
   const [excludedItems, setExcludedItems] = useState(props.storedExcludeTags); // State hook for excluded items
