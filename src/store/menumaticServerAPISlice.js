@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'http://localhost:8080/api/user/create/';
+const url = 'http://130.229.176.192:8080/api/user/create/';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
   async (info) => {
     const userId = info.userId;
-    const data = [info.data];
+    const data = info.data;
     const options = {
       method: 'POST',
       headers: {
@@ -31,7 +31,7 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
   async (info, dispatch) => {
-    const customUrl = "http://localhost:8080/api/user/mealplans/";
+    const customUrl = "http://130.229.176.192:8080/api/user/mealplans/";
     const userId = info;
     console.log(info)
     console.log(userId)
