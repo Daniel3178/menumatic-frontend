@@ -44,12 +44,22 @@ const HomePageView = (props) => {
                 <img src={clock_icon} className="" />
               </div>
               <div className='text-whiteSmoke font-outfit text-2xl font-thin'>
-                {props.apiResults.readyInMinutes} min
+                {props.apiResults[0].readyInMinutes} min
               </div>
             </div>
           </div>
         </div>
         {conditionalRender()}
+        <div className="mb-8 flex flex-col items-center ">
+          <div className="flex items-center">
+            <button onClick={props.getRandomReceipt} className="hover:scale-105 shadow-md mt-15 mr-20 bg-red-500 hover:bg-red-600 rounded-full w-40 h-40 flex items-center justify-center focus:outline-none">
+              <img src={thumbs_down} alt="Image" className="w-20 h-20 rounded-full" />
+            </button>
+            <button onClick={props.sendLike} className="hover:scale-105 shadow-md mt-15 ml-20 bg-green-500 hover:bg-green-600 rounded-full w-40 h-40 flex items-center justify-center focus:outline-none">
+              <img src={thumbs_up} alt="Image" className="w-20 h-20 rounded-full" />
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="flex space-x-20 justify-center mt-8">
