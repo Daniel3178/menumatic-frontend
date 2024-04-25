@@ -33,6 +33,12 @@ const recommendation = createSlice({
       state.recommendationList.push({ count: 1, result: action.payload });
     },
 
+    flushRecommendationList: (state) => {
+      state.recommendationList = [];
+      state.affordableDishesList.dishes = [];
+      state.popularDishesList.dishes = [];
+      state.quickDishesList.dishes = [];
+    },
     setSelectedTab: (state, action) => {
       state.selectedTab = action.payload;
     },
@@ -43,16 +49,8 @@ const recommendation = createSlice({
         testArr.push(item);
       })
       state.affordableDishesList.dishes.push(...testArr.sort((a, b) => a.result.pricePerServing - b.result.pricePerServing).slice(0,7));
-      // console.log("sorting based on price", testArr)
-      // state.affordableDishesList.dishes.push(...state.recommendationList.slice(0,7));
-
       state.popularDishesList.dishes.push(...testArr.sort((a, b) => b.result.spoonacularScore - a.result.spoonacularScore).slice(0,7));
-      // state.popularDishesList.dishes.push(...state.recommendationList.slice(0,7));
-      // console.log("sorting based on popularity",testArr)
       state.quickDishesList.dishes.push(...testArr.sort((a, b) => a.result.readyInMinutes - b.result.readyInMinutes ).slice(0,7));
-      // state.quickDishesList.dishes.push(...state.recommendationList.slice(0,7));
-      // const testArr = state.recommendationList;
-      // console.log("sorting based on quick",testArr)
       state.state = "ready";
     },
     /*
@@ -113,7 +111,7 @@ const recommendation = createSlice({
  * Purpose: Takes the actions retrieved from the recommendation slice and sets them to fixed variables.
  * Export reducers in the slice
  */
-export const { addToReocemmendationList, setSelectedTab,updateCount, sortLikedDishes } = recommendation.actions;
+export const { addToReocemmendationList,flushRecommendationList, setSelectedTab,updateCount, sortLikedDishes } = recommendation.actions;
 /**
  * Purpose: Returns the recommendationList from the state
  * @param {*} state: the store

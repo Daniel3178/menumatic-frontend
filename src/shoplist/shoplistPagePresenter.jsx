@@ -73,6 +73,7 @@ const ShoplistPagePresenter = () => {
           }
         }));
         navigate("/")
+        window.location.reload();
     }
     // Dispatching action to save the shoplist to the database
     // dispatch(saveShoplistToMenumaticDb(
