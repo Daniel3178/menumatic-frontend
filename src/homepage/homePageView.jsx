@@ -2,10 +2,12 @@ import React from 'react';
 import { clock, thumbs_up, thumbs_down, close, info_i, tune } from "../assets";
 
 const HomePageView = (props) => {
-
+  
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
   //conditionalRender either renders the info view for the current dish, or the photo for the current dish.
   const conditionalRender = () => {
+
+    console.log("apiResult", props.apiResults)
     //if info has been toggled the infopage is shown.
 
     if (props.info) {
@@ -40,7 +42,7 @@ const HomePageView = (props) => {
       return (
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="w-[550px] h-[550px] bg-gray-100 p-8 rounded-lg shadow-md">
-            <img src={props.apiResults[0].image} alt="food" className="rounded-lg" />
+            <img src={"https://img.spoonacular.com/recipes/" + props.apiResults[0].id + "-636x393." + props.apiResults[0].imageType} alt="food" className="rounded-lg" />
             <h1 className="text-3xl font-bold mb-4">{props.apiResults[0].title}</h1>
             <div className="flex items-center">
               <img src={clock} alt="clock" className="w-6 h-6 mr-2 pb-2" /> 

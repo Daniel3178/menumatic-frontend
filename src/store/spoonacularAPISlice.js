@@ -93,9 +93,11 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
     // console.log("response", result)
     // return result.json();
 
-    const response = await fetch(url, options);
-    console.log("response", response.json())
-    return response.json();
+    const response = await fetch(generatedUrl, options);
+    const jsonResponse = await response.json()
+    const customResponse = jsonResponse.results
+    console.log(customResponse)
+    return customResponse;
   }
 );
 
@@ -139,7 +141,9 @@ const spoonacularApi = createSlice({
       state.resultsState = "ready";
     }).addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
       state.userSavedRecipes.push(action.payload);
-    });
+    }).addCase(searchComplexBySpoonacularApiAsync.fulfilled, (state, action) => {
+      state.results.push(...action.payload);
+      state.resultsState = "ready";})
   },
 });
 export const { popFirstRecipe } = spoonacularApi.actions;

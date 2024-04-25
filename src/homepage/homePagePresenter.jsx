@@ -42,8 +42,8 @@ const HomePagePresenter = () => {
     if (apiResult.length < 6 && apiResult.length > 3) {
       dispatch(
         searchComplexBySpoonacularApiAsync({
-          diet: excludeTags,
-          intolerances: includeTags,
+          intolerances: excludeTags,
+          diet: includeTags,
         })
       );
     }
@@ -60,8 +60,8 @@ const HomePagePresenter = () => {
     if (apiResult.length < 6 && apiResult.length > 3) {
       dispatch(
         searchComplexBySpoonacularApiAsync({
-          diet: excludeTags,
-          intolerances: includeTags,
+          intolerances: excludeTags,
+          diet: includeTags,
         })
       );
     }
@@ -107,8 +107,8 @@ const HomePagePresenter = () => {
       // console.log("fetching")
       dispatch(
         searchComplexBySpoonacularApiAsync({
-          diet: excludeTags,
-          intolerances: includeTags,
+          intolerances: excludeTags,
+          diet: includeTags,
         })
       );
     }
