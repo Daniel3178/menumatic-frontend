@@ -27,7 +27,7 @@ const HomePageView = (props) => {
   };
 
   return (
-    <div className="bg-page min-h-screen w-full">
+    <div className="bg-page min-h-screen w-full fixed top-0 right-0 bottom-0 left-0">
       <div className="flex justify-center w-444 h-102 mt-8 mb-16">
         <img src={logo} />
       </div>
