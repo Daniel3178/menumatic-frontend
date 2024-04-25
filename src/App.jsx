@@ -10,7 +10,6 @@ import ShoplistPagePresenter from "./shoplist/shoplistPagePresenter";
 import PlanListPresenter from "./listOfStoredPlansRelated/plan_list/planListPresenter";
 import PlanPresenter from "./listOfStoredPlansRelated/plan_content/planPresenter";
 import PlanShoplistPagePresenter from "./listOfStoredPlansRelated/plan_shoplist/planShoplistPagePresenter";
-
 import SignUpPagePresenter from "./signUp_page/signUpPagePresenter";
 import SignInPagePresenter from "./signIn_page/signInPagePresenter";
 import RecipeDetailsPagePresenter from "./recepie_details_page/recipeDetailsPagePresenter";

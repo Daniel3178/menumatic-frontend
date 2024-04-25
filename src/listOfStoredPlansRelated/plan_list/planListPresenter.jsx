@@ -12,7 +12,7 @@ const PlanListPresenter = () => {
 
   const selectAndNavigateHandler = (weekId) => {
     dispatch(setSelectedListId(weekId));
-    navigate("/weekplan");
+    navigate("/plan");
   };
 
   const dummyData = [
