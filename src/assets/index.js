@@ -6,5 +6,6 @@ import info_i from "./info_i.svg"
 import close from "./close.svg"
 import tune from "./tune.svg"
 import done from "./done.svg"
+import noimage from "./noimage.png"
 
-export {clock, thumbs_up, thumbs_down, info, info_i, close, tune, done}
+export {clock, thumbs_up, thumbs_down, info, info_i, close, tune, done, noimage}

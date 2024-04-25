@@ -1,5 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {options } from "../config/spoonacularApiConfig";
+import { options } from "../config/spoonacularApiConfig";
+
+function buildURL(baseURL, params) {
+  //console.log("Entering build url")
+  // Use map to create an array of parameter strings
+  const paramStrings = params.map(param => `${param.key}=${param.value}`);
+  //console.log("paramStrings: ", paramStrings)
+  // Join the parameter strings with '&' to form the query string
+  let queryString = paramStrings.join('&');
+  //console.log("querystring: ", queryString)
+
+  // Concatenate the base URL with the query string
+  let fullURL = `${baseURL}?${queryString}`;
+  //console.log("full url: ", fullURL)
+  // Return the full URL
+  return fullURL;
+}
 
 export const searchBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApi",
@@ -10,18 +26,18 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
     let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=10&include-tags=dinner'
 
 
-    if(includeTags.length){
+    if (includeTags.length) {
       let includeString = includeTags.join()
       customUrl = customUrl.concat(",", includeString)
     }
 
-    if(excludeTags.length){
+    if (excludeTags.length) {
       let substring = "&exclude-tags="
       let excludeString = substring.concat(excludeTags.join())
-      customUrl = customUrl.concat(excludeString) 
+      customUrl = customUrl.concat(excludeString)
     }
 
-    
+
 
     customUrl = customUrl.toLowerCase()
 
@@ -32,6 +48,47 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
     return response.json();
   }
 );
+
+//new
+export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
+  "spoonacularApi/searchComplexBySpoonacularApi",
+  async (props) => {
+    //console.log("search recipes")
+    const diet = props.diet.join()
+    //console.log("diets joined")
+    const intolerances = props.intolerances.join()
+    //console.log("intolerances joined")
+
+    let baseUrl = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
+
+    let params = [
+      { key: "query", value: 'food' },
+      { key: "type", value: 'main%20course' },
+      { key: "instructionsRequired", value: 'true' },
+      { key: "fillIngredients", value: 'true' },
+      { key: "addRecipeInformation", value: 'true' },
+      { key: "ignorePantry", value: 'true' },
+      { key: "sort", value: 'random' },
+      { key: "number", value: '10' },
+      { key: "limitLicense", value: 'false' },
+      { key: "diet", value: diet },
+      { key: "intolerances", value: intolerances }
+    ];
+    //console.log("before build url")
+    const generatedUrl = buildURL(baseUrl, params);
+
+    
+    //console.log("API url: ", generatedUrl)
+    const response = await fetch(generatedUrl, options);
+    const jsonResponse = await response.json()
+    const customResponse = jsonResponse.results
+    //console.log(customResponse)
+    return customResponse;
+  }
+);
+
+
+
 
 export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiBulk",
@@ -55,7 +112,7 @@ const spoonacularApi = createSlice({
   initialState: {
     results: [],
     resultsState: "loading",
-    userSavedRecipes:[],
+    userSavedRecipes: [],
 
   },
   reducers: {
@@ -70,7 +127,9 @@ const spoonacularApi = createSlice({
       state.resultsState = "ready";
     }).addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
       state.userSavedRecipes.push(action.payload);
-    });
+    }).addCase(searchComplexBySpoonacularApiAsync.fulfilled, (state, action) => {
+      state.results.push(...action.payload);
+      state.resultsState = "ready";})
   },
 });
 export const { popFirstRecipe } = spoonacularApi.actions;

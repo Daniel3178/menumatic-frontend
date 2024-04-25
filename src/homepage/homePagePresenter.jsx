@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getApiResults,
   searchBySpoonacularApiAsync,
+  searchComplexBySpoonacularApiAsync
 } from "../store/spoonacularAPISlice";
 import {
   incrementLikesCounter,
@@ -40,9 +41,9 @@ const HomePagePresenter = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
     if (apiResult.length < 6 && apiResult.length > 3) {
       dispatch(
-        searchBySpoonacularApiAsync({
-          excludeTags: excludeTags,
-          includeTags: includeTags,
+        searchComplexBySpoonacularApiAsync({
+          intolerances: excludeTags,
+          diet: includeTags,
         })
       );
     }
@@ -53,13 +54,14 @@ const HomePagePresenter = () => {
       dispatch(toggleInfoView());
     }
   };
+
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
     if (apiResult.length < 6 && apiResult.length > 3) {
       dispatch(
-        searchBySpoonacularApiAsync({
-          excludeTags: excludeTags,
-          includeTags: includeTags,
+        searchComplexBySpoonacularApiAsync({
+          intolerances: excludeTags,
+          diet: includeTags,
         })
       );
     }
@@ -104,9 +106,9 @@ const HomePagePresenter = () => {
     if (apiResult.length == 0) {
       // console.log("fetching")
       dispatch(
-        searchBySpoonacularApiAsync({
-          excludeTags: excludeTags,
-          includeTags: includeTags,
+        searchComplexBySpoonacularApiAsync({
+          intolerances: excludeTags,
+          diet: includeTags,
         })
       );
     }

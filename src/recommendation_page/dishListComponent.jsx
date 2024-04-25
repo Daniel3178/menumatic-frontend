@@ -92,7 +92,7 @@ const RecepieForADay = (recipe) => {
               </tbody>
       </table>
       <button
-        className="w-[160px] h-[50px] text-[14px] bg-green-400 rounded self-center"
+        className="w-[160px] h-[50px] text-[14px] bg-green-400 rounded self-center text-white font-semibold"
         onClick={props.goToShoplist}
         role="button"
       >

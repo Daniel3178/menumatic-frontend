@@ -2,24 +2,31 @@ import React from "react";
 import "./RecepiesForAWeekViewCSS.css";
 import { useNavigate } from "react-router-dom";
 import DishListComponent from "./dishListComponent";
+
 const RecommendationPageView = (props) => {
   const navBar = () => {
     return (
-      <div className=" flex pb-4 ">
+      <div className="flex pb-4 justify-center items-center">
         <button
-          className="border w-40 h-10 text-[18px] mx-4 bg-slate-500"
+          className={`m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white font-semibold ${
+            props.selectedTab === "Popular" ? "bg-green-500 h-14 font-bold" : "bg-slate-500"
+          }`}
           onClick={() => props.setSelectTab("Popular")}
         >
           Popular
         </button>
         <button
-          className="border w-40 h-10 text-[18px] mx-4 bg-slate-500"
+          className={`m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white font-semibold ${
+            props.selectedTab === "Quick" ? "bg-green-500 h-14 font-bold" : "bg-slate-500"
+          }`}
           onClick={() => props.setSelectTab("Quick")}
         >
           Quick
         </button>
         <button
-          className="border w-40 h-10 text-[18px] mx-4 bg-slate-500"
+          className={`m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white font-semibold ${
+            props.selectedTab === "Affordable" ? "bg-green-500 h-14 font-bold" : "bg-slate-500"
+          }`}
           onClick={() => props.setSelectTab("Affordable")}
         >
           Affordable
@@ -33,9 +40,8 @@ const RecommendationPageView = (props) => {
       // console.log("Popular dishes", props.selectedTab)
       return (
         <div>
-          <div className="flex">
+          <div className="flex justify-center items-center">
             {navBar()}
-            <h1 className="py-2 bg-green-400 h-10 w-40 text-center">Popular</h1>
           </div>
           <DishListComponent
             listOfMeals={props.popularDishes}
@@ -51,17 +57,14 @@ const RecommendationPageView = (props) => {
 
       return (
         <div>
-          <div className="flex">
+          <div className="flex justify-center items-center">
             {navBar()}
-            <h1 className="py-2 bg-green-400 h-10 w-40 text-center">Quick</h1>
           </div>
           <DishListComponent
             listOfMeals={props.quickDishes}
             updateCount={props.updateCount}
             goToShoplist={props.goToShoplist}
             selectedTab={props.selectedTab}
-
-
           />
         </div>
       );
@@ -71,18 +74,14 @@ const RecommendationPageView = (props) => {
 
       return (
         <div>
-          <div className="flex">
+          <div className="flex justify-center items-center">
             {navBar()}
-            <h1 className="py-2 bg-green-400 h-10 w-40 text-center">
-              Affordable
-            </h1>
           </div>
           <DishListComponent
             listOfMeals={props.affordableDishes}
             updateCount={props.updateCount}
             goToShoplist={props.goToShoplist}
             selectedTab={props.selectedTab}
-
           />
         </div>
       );
