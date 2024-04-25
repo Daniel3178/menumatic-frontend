@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'http://2001:6b0:1:1041:545f:752a:6986:761a:8080/api/user/create';
+const url = 'http://localhost:8080/api/user/create/';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
@@ -30,8 +30,11 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
-  async (info) => {
-    const userId = info.userId;
+  async (info, dispatch) => {
+    const customUrl = "http://localhost:8080/api/user/mealplans/";
+    const userId = info;
+    console.log(info)
+    console.log(userId)
     const options = {
       method: 'GET',
       headers: {
@@ -40,7 +43,10 @@ export const fetchUserShopinglist = createAsyncThunk(
       },
     };
 
-    const response = await fetch(url, options);
+    console.log("Fetching user shopping list is CALLED");
+  // dispatch(setMenumaticServerState("loading"));    
+    const response = await fetch(customUrl, options);
+    // console.log(response)
     return await response.json();
   }
 );
@@ -72,12 +78,17 @@ const menumaticServerApi = createSlice({
   name: "spoonacularApi",
   initialState: {
     allList: [],
+    state: "",
     selectedList:{
       listId: null,
       recepies:[]
     }
   },
+
   reducers: {
+    setMenumaticServerState: (state, action) => {
+      state.state = action.payload;
+    },
     setSelectedListId: (state, action) => {
       state.selectedList.listId = action.payload;
     },
@@ -90,6 +101,7 @@ const menumaticServerApi = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchUserShopinglist.fulfilled, (state, action) => {
       state.allList = action.payload;
+      state.state = "ready";
     }).addCase(fetchUserRecepiesByListId.fulfilled, (state, action) => {
       state.selectedList.recepies = action.payload;
     });
@@ -97,5 +109,6 @@ const menumaticServerApi = createSlice({
 });
 export const getMenumaticAllList = (state) => state.menumaticServerApi.allList;
 export const getMenumaticSelecedList = (state) => state.menumaticServerApi.selectedList;
-export const { setSelectedListId, flushUserData } = menumaticServerApi.actions;
+export const getMenumaticState = (state) => state.menumaticServerApi.state;
+export const { setSelectedListId, flushUserData, setMenumaticServerState } = menumaticServerApi.actions;
 export default menumaticServerApi.reducer;
