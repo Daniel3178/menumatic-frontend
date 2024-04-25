@@ -65,7 +65,7 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
       { key: "query", value: 'food' },
       { key: "type", value: 'main%20course' },
       { key: "instructionsRequired", value: 'true' },
-      { key: "fillIngredients", value: 'false' },
+      { key: "fillIngredients", value: 'true' },
       { key: "addRecipeInformation", value: 'true' },
       { key: "ignorePantry", value: 'true' },
       { key: "sort", value: 'random' },
