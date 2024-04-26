@@ -6,6 +6,9 @@ const shoplistSlice = createSlice({
     allItems: [],
   },
   reducers: {
+    flushShoplist: (state, action) => {
+state.allItems = [];
+    },
     generateShoplist: (state, action) => {
       console.log("generateShoplist SLICE", action.payload)
       /**
@@ -92,5 +95,5 @@ const shoplistSlice = createSlice({
   },
 });
 export const getAllItems = (state) => state.shoplist.allItems;
-export const { generateShoplist } = shoplistSlice.actions;
+export const { generateShoplist, flushShoplist } = shoplistSlice.actions;
 export default shoplistSlice.reducer;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { clock, thumbs_up, thumbs_down, close, info_i, tune, noimage } from "../assets";
+import { useNavigate } from 'react-router-dom';
 
 const HomePageView = (props) => {
   
@@ -63,7 +64,7 @@ const HomePageView = (props) => {
       );
     }
   };
-
+const navigate = useNavigate();
   const renderHomePage = () =>{
     if(props.apiResultsState === "ready"){
       return(
@@ -72,6 +73,7 @@ const HomePageView = (props) => {
           <button onClick={props.navigateToFilterPage} className="flex items-center justify-end m-2 bg-white  w-20 h-20 focus:outline-none">
             <img src={tune} alt="Image" className="w-10 h-10 rounded-full hover:scale-110" />
           </button>
+          <button onClick={()=> navigate("/plan_list")} className="flex items-center justify-end m-2 bg-green-500 rounded w-35 px-4 h-10 self-center focus:outline-none"> Saved meal plans </button>
         </div>
         {conditionalRender()}
         <div className="mb-8 flex flex-col items-center ">

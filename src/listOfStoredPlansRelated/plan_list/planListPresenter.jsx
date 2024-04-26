@@ -24,7 +24,8 @@ const PlanListPresenter = () => {
   ]
 
   useEffect(() => {
-    dispatch(fetchUserShopinglist({userId: userId}))
+    console.log("Fetching user shopping list")
+    dispatch(fetchUserShopinglist( userId))
   },[])
 
   return (

@@ -30,8 +30,9 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
-  async (info, dispatch) => {
-    const customUrl = "http://130.229.176.192:8080/api/user/mealplans/";
+  async (info, {dispatch}) => {
+    dispatch(setMenumaticServerState("loading"));
+    const customUrl = "http://localhost:8080/api/user/mealplans/";
     const userId = info;
     console.log(info)
     console.log(userId)
@@ -78,7 +79,7 @@ const menumaticServerApi = createSlice({
   name: "spoonacularApi",
   initialState: {
     allList: [],
-    state: "",
+    state: "loading",
     selectedList:{
       listId: null,
       recepies:[]
@@ -100,6 +101,8 @@ const menumaticServerApi = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserShopinglist.fulfilled, (state, action) => {
+      console.log("FETCHING IS DONE")
+      console.log(action.payload)
       state.allList = action.payload;
       state.state = "ready";
     }).addCase(fetchUserRecepiesByListId.fulfilled, (state, action) => {
