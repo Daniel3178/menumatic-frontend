@@ -14,6 +14,7 @@ export default {
       },
       height: {
         '540': '540px',
+        '400': '400px',
         '130': '130px'
       },
       colors: {
