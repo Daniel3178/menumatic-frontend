@@ -153,17 +153,19 @@ const ShoplistPageView = (props) => {
           </div>
           {props.allItems.map((ingredientData, index) => (
             <div key={index} className="flex flex-col border-b pb-2">
-              <h1 className="border border-black">{ingredientData.category}</h1>
-              {console.log(ingredientData)}
+              <h1 className="">{` Category : ${ingredientData.category}`}</h1>
+              {/* {console.log(ingredientData)} */}
               {ingredientData.ingredients.map((ingr, index) => (
                 <div key={index} className="flex flex-row items-center justify-between">
-                  <div
-                    className="  pr-[40px] "
-                    style={{ width: "50%" }}
-                  >{`${ingr.amount} ${ingr.unit}`}</div>
+                  <div className="flex flex-row ">
+                  {ingr.measures.map((measure, index) => {
+                  return(<div
+                  className=" flex-row pr-[40px] "
+                >{`${measure.amount.toFixed(2)} ${measure.unit}`}</div>)
+                  })}
+                  </div>
                   <div
                     className="self-end text-start pl-[40px]"
-                    style={{ width: "50%" }}
                   >
                     {ingr.name}
                   </div>

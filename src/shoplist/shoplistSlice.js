@@ -48,8 +48,9 @@ state.allItems = [];
           ingrArr.push({
             category: ingredients[i].aisle,
             name: ingredients[i].nameClean === null? ingredients[i].name : ingredients[i].nameClean,
-            amount: calcAmount,
-            unit: ingredients[i].measures.metric.unitShort,
+            measures:[{amount: calcAmount, unit: ingredients[i].measures.metric.unitShort}],
+            // amount: calcAmount,
+            // unit: ingredients[i].measures.metric.unitShort,
           });
         }
         return ingrArr;
@@ -108,6 +109,28 @@ state.allItems = [];
           categorizedIngredients[index].ingredients.push(item);
         }
       });
+
+      const normalizedIngredients = (category) => {
+        const newIngredients = [];
+        category.ingredients.forEach((ingredient) => {
+          const ingrIndex = newIngredients.findIndex(
+            (newIngredient) => newIngredient.name === ingredient.name
+          );
+          if (ingrIndex === -1) {
+            newIngredients.push({
+              category: ingredient.category,
+              name: ingredient.name,
+              measures: ingredient.measures,
+            });
+          } else {
+            newIngredients[ingrIndex].measures.push(ingredient.measures[0]);
+          }
+
+        });
+        category.ingredients = newIngredients;
+      };
+
+      categorizedIngredients.forEach((category) => normalizedIngredients(category));
       state.allItems = categorizedIngredients;
       console.log("Categorized Ingredients final", categorizedIngredients)
     },
