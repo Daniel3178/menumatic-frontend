@@ -13,6 +13,7 @@ import PlanShoplistPagePresenter from "./listOfStoredPlansRelated/plan_shoplist/
 import SignUpPagePresenter from "./signUp_page/signUpPagePresenter";
 import SignInPagePresenter from "./signIn_page/signInPagePresenter";
 import RecipeDetailsPagePresenter from "./recepie_details_page/recipeDetailsPagePresenter";
+import MenuPresenter from "./menu/menuPresenter";
 // `path` contains the path for a current page. `element` contains the page to which the current page's redirect operations will lead.
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/signup" element={<SignUpPagePresenter />} />
         <Route path="/signIn" element={<SignInPagePresenter />} />
         <Route path="/recipeDetails" element={<RecipeDetailsPagePresenter />} />
+        <Route path="/jonathan-test" element={<MenuPresenter />} />
       </Routes>
     </BrowserRouter>
   );

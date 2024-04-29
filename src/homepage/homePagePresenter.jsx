@@ -20,8 +20,8 @@ import {
   popFirstRecipe,
 } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
-import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
-import { flushShoplist } from "../shoplist/shoplistSlice";
+import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
+
 
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
@@ -97,6 +97,7 @@ const HomePagePresenter = () => {
     dispatch(toggleInfoView());
   };
 
+
   // const [reloadOnce, setReloadOnce] = useState(true);
 
   // useEffect(() => {
@@ -125,7 +126,8 @@ const HomePagePresenter = () => {
   }, []);
 
   return (
-    <HomePageView
+    <div>
+      <HomePageView
       apiResults={apiResult}
       apiResultsState={apiResultsState}
       getRandomReceipt={handleGetRandomReceipt}
@@ -134,7 +136,14 @@ const HomePagePresenter = () => {
       navigateToFilterPage={handleNavigateToFilterPage}
       navigateToPlanList={handleNavigateToPlanList}
       info={showInfo}
+      isLoggedIn={getIsLoggedIn}
     />
+    <MenuView
+    
+    />
+    </div>
+
+    
   );
 };
 
