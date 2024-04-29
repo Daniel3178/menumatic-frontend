@@ -7,7 +7,7 @@ const ingredientsList = (items) => {
       <ul className="space-y-1 list-disc">
         {items.map((item, index) => (
           <li key={index} className="font-outfit text-gunmetal">
-            {item.name}
+            {item.nameClean}
           </li>
         ))}
       </ul>
@@ -36,11 +36,11 @@ const HomePageView = (props) => {
             <div className="overflow-y-auto h-400">
               {ingredientsList(props.apiResults[0].extendedIngredients)}
             </div>
-            
+
             <div className="flex absolute bottom-0 w-405 justify-end mb-4">
-                <button onClick={props.toggleInfoView} className="tracking-wider mr-2 flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-bold hover:shadow-mid foucs:shadow-in w-32 h-12">
-                  VIEW LESS
-                </button>
+              <button onClick={props.toggleInfoView} className="tracking-wider mr-2 flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-bold hover:shadow-mid foucs:shadow-in w-32 h-12">
+                VIEW LESS
+              </button>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ const HomePageView = (props) => {
   };
 
   const menuRender = () => {
-    return(
+    return (
       <div className="fixed top-0 right-0 h-screen w-72 bg-cerulean">
         <div className="flex justify-center mt-6">
           <button className="tracking-wider mr-2 flex justify-center rounded-full bg-whiteSmoke text-bold hover:shadow-mid foucs:shadow-in w-36 h-14">
