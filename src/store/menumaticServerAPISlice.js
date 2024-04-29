@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'http://localhost:8080/api/user/create/';
+const url = 'http://130.229.176.192:8080/api/user/create/';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(

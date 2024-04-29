@@ -18,6 +18,10 @@ function buildURL(baseURL, params) {
   return fullURL;
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 export const searchBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApi",
   async (props) => {
@@ -63,15 +67,17 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
     let baseUrl = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
 
     let params = [
-      { key: "query", value: 'food' },
+      { key: "query", value: '' },
       { key: "type", value: 'main%20course' },
       { key: "instructionsRequired", value: 'true' },
       { key: "fillIngredients", value: 'true' },
       { key: "addRecipeInformation", value: 'true' },
       { key: "ignorePantry", value: 'true' },
-      { key: "sort", value: 'random' },
+      { key: "sort", value: 'popularity' },
       { key: "number", value: '10' },
       { key: "limitLicense", value: 'false' },
+      { key: "offset", value: getRandomInt(900) },
+      { key: "maxReadyTime", value: 90},
       { key: "diet", value: diet },
       { key: "intolerances", value: intolerances }
     ];
@@ -81,7 +87,9 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
     
     //console.log("API url: ", generatedUrl)
     const response = await fetch(generatedUrl, options);
+    //console.log("Response: ", response)
     const jsonResponse = await response.json()
+    //console.log(jsonResponse)
     const customResponse = jsonResponse.results
     //console.log(customResponse)
     return customResponse;
