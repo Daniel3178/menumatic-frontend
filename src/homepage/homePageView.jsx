@@ -12,27 +12,25 @@ const HomePageView = (props) => {
 
     if (props.info) {
       return (
-        <div className="flex flex-col items-center justify-center h-screen">
-          <div className="w-[550px] h-[550px] bg-gray-100 rounded-xl shadow-md overflow-auto">
-            <div className="p-6">
-              <h1 className="text-3xl font-bold mb-4 text-balance">{props.apiResults[0].title} </h1>
-              <div>
-                <div className="flex items-center">
-                  <img src={clock} alt="clock" className="w-6 h-6 mr-2 mb-4" />
-                  <h1 className="text-3xl font-bold mb-4">{props.apiResults[0].readyInMinutes} min</h1>
+        <div className="flex justify-center">
+          <div className="bg-vanilla w-405 h-540 rounded-large relative shadow-xl">
+            
+            <div className="absolute inset-x-0 bottom-0 bg-vanilla rounded-b-large w-405 h-130">
+              <div className='mt-2 ml-2'>
+                
+              </div>
+              <div className='mb-4 absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between'>
+                <div className='flex space-x-4 items-center font-outfit text-bold'>
+                
                 </div>
-                <h2 className="text-xl font-semibold mb-2">Ingredients:</h2>
-                <ul className="h-50 list-disc pl-5 overflow-auto">
-                  {props.apiResults[0].extendedIngredients.map((item, index) => (
-                    <li key={index} className="text-lg">{item.name}</li>
-                  ))}
-                </ul>
+                <div className='items-center flex justify-end'>
+                  <button onClick={props.toggleInfoView} className="tracking-wider mr-2 flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-bold hover:shadow-mid foucs:shadow-in w-32 h-12">
+                    VIEW LESS
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <button onClick={props.toggleInfoView} className=" hover:scale-110 shadow-md m-2 bg-gray-100 hover:bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center focus:outline-none">
-            <img src={close} alt="Image" className="w-10 h-10 rounded-full" />
-          </button>
         </div>
       );
     }
@@ -42,21 +40,28 @@ const HomePageView = (props) => {
       return (
         <div className="flex justify-center">
           <div className="w-405 h-540 rounded-large relative shadow-xl">
-          <img src={"https://img.spoonacular.com/recipes/" + props.apiResults[0].id + "-636x393." + props.apiResults[0].imageType} className="object-cover w-full h-full rounded-large"
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null;
-              currentTarget.src=noimage;
-            }}/>
+            <img src={"https://img.spoonacular.com/recipes/" + props.apiResults[0].id + "-636x393." + props.apiResults[0].imageType} className="object-cover w-full h-full rounded-large"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null;
+                currentTarget.src = noimage;
+              }} />
             <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large w-405 h-130">
               <div className='mt-2 ml-2'>
                 <p className="text-whiteSmoke font-outfit text-2xl font-medium">{props.apiResults[0].title}</p>
               </div>
-              <div className='mb-4 absolute inset-x-0 bottom-0 flex space-x-4 items-center'>
-                <div className='mt-2 ml-2 flex text-whiteSmoke'>
-                  <img src={clock_icon} className="" />
+              <div className='mb-4 absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between'>
+                <div className='flex space-x-4 items-center'>
+                  <div className='mt-2 ml-2 flex text-whiteSmoke'>
+                    <img src={clock_icon} className="" />
+                  </div>
+                  <div className='text-whiteSmoke font-outfit text-2xl font-thin'>
+                    {props.apiResults[0].readyInMinutes} min
+                  </div>
                 </div>
-                <div className='text-whiteSmoke font-outfit text-2xl font-thin'>
-                  {props.apiResults[0].readyInMinutes} min
+                <div className='items-center flex justify-end'>
+                  <button onClick={props.toggleInfoView} className="tracking-wider mr-2 flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-bold hover:shadow-mid foucs:shadow-in w-32 h-12">
+                    VIEW MORE
+                  </button>
                 </div>
               </div>
             </div>
