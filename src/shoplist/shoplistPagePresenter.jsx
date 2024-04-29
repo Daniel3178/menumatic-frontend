@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ShoplistPageView from "./shoplistPageView"
 import { useDispatch, useSelector } from 'react-redux';
-import { generateShoplist, getAllItems } from "./shoplistSlice";
+import { generateShoplist,getRemovedItems, getAllItems, removeItem, restoreItem } from "./shoplistSlice";
 import { getRecommendationList, getAffordableDishesList, getPopularDishesList,getSelectedTab, getQuickDishesList } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
 import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice"
@@ -21,6 +21,8 @@ const ShoplistPagePresenter = () => {
   const popularDishes = useSelector(getPopularDishesList);
   const quickDishes = useSelector(getQuickDishesList);
   const selectedTab = useSelector(getSelectedTab);
+  const removedItems = useSelector(getRemovedItems);
+
 
   /**
  * @brief Handles saving meal plans to the database.
@@ -77,7 +79,12 @@ const ShoplistPagePresenter = () => {
     // Dispatching action to save the shoplist to the database
     // dispatch(saveShoplistToMenumaticDb(
 
-
+    const handleRemoveItem = (item) => {
+      dispatch(removeItem(item))
+    }
+const handleRestoreItem = (item) => {
+  dispatch(restoreItem(item))
+}
 
   const handleNavigateToLogIn = () => {
     navigate("/signin")
@@ -105,6 +112,9 @@ const ShoplistPagePresenter = () => {
       isLoggedIn={isLoggedIn}
       saveMealPlan={handleSaveMealPlan}
       navigateToLogin={handleNavigateToLogIn}
+      removeItem={handleRemoveItem}
+      restoreItem={handleRestoreItem}
+      removedItems={removedItems}
     // generatePDF = {handleGeneratePDF}
     />
   );

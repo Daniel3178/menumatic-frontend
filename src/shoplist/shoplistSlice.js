@@ -4,13 +4,14 @@ const shoplistSlice = createSlice({
   name: "Shoplist",
   initialState: {
     allItems: [],
+    removedItems: [],
   },
   reducers: {
     flushShoplist: (state, action) => {
-state.allItems = [];
+      state.allItems = [];
     },
     generateShoplist: (state, action) => {
-      console.log("generateShoplist SLICE", action.payload)
+      console.log("generateShoplist SLICE", action.payload);
       /**
        * Takes an object meal: {{result}, portions}
        * retrieves the data needed for creating the shopping list:
@@ -24,7 +25,7 @@ state.allItems = [];
        * calcAmount: calculates amount of each ingredient in order to get wanted amount of portions
        * pushes stripped objects {name, amount, unit} into IngrArr (to be returned to next function)
        *
-       * @param {Objct} meal - A meal object containing portions (number) and result (object), 
+       * @param {Objct} meal - A meal object containing portions (number) and result (object),
        * where result includes serving details and a list of ingredients.
        * @function
        * @returns {Array<Object>} ingrArr - An array of objects, each representing an ingredient
@@ -47,8 +48,16 @@ state.allItems = [];
           }
           ingrArr.push({
             category: ingredients[i].aisle,
-            name: ingredients[i].nameClean === null? ingredients[i].name : ingredients[i].nameClean,
-            measures:[{amount: calcAmount, unit: ingredients[i].measures.metric.unitShort}],
+            name:
+              ingredients[i].nameClean === null
+                ? ingredients[i].name
+                : ingredients[i].nameClean,
+            measures: [
+              {
+                amount: calcAmount,
+                unit: ingredients[i].measures.metric.unitShort,
+              },
+            ],
             // amount: calcAmount,
             // unit: ingredients[i].measures.metric.unitShort,
           });
@@ -99,13 +108,11 @@ state.allItems = [];
           (categorizedItem) => categorizedItem.category === category
         );
         if (index === -1) {
-          console.log("NOT FOUND PUSHING TO Categorized", categorizedIngredients, category)
           categorizedIngredients.push({
             category: category,
             ingredients: [item],
           });
         } else {
-          console.log("FOUND PUSHING TO Categorized", categorizedIngredients, category)
           categorizedIngredients[index].ingredients.push(item);
         }
       });
@@ -125,17 +132,137 @@ state.allItems = [];
           } else {
             newIngredients[ingrIndex].measures.push(ingredient.measures[0]);
           }
-
         });
         category.ingredients = newIngredients;
       };
 
-      categorizedIngredients.forEach((category) => normalizedIngredients(category));
+      categorizedIngredients.forEach((category) =>
+        normalizedIngredients(category)
+      );
       state.allItems = categorizedIngredients;
-      console.log("Categorized Ingredients final", categorizedIngredients)
+    },
+    removeItem: (state, action) => {
+      const tempItems = [];
+      state.allItems.forEach((category) => {
+        const getIngr = (ingrList) => {
+          const result = [];
+          ingrList.forEach((ingr) => {
+            result.push({
+              category: ingr.category,
+              name: ingr.name,
+              measures: ingr.measures,
+            });
+          });
+          return result;
+        };
+        tempItems.push({
+          category: category.category,
+          ingredients: getIngr(category.ingredients),
+        });
+      });
+      tempItems.map((category) => {
+        category.ingredients = category.ingredients.filter(
+          (item) => item.name !== action.payload.name
+        );
+      });
+      state.allItems = tempItems;
+      const tempRemovedItems = [];
+      state.removedItems.forEach((category) => {
+        const getIngr = (ingrList) => {
+          const result = [];
+          ingrList.forEach((ingr) => {
+            result.push({
+              category: ingr.category,
+              name: ingr.name,
+              measures: ingr.measures,
+            });
+          });
+          return result;
+        };
+        tempRemovedItems.push({
+          category: category.category,
+          ingredients: getIngr(category.ingredients),
+        });
+      });
+      const index = tempRemovedItems.findIndex(
+        (item) => item.category === action.payload.category
+      );
+      if (index === -1) {
+        console.log("INDEX OF REMOVED not", index);
+        tempRemovedItems.push({
+          category: action.payload.category,
+          ingredients: [action.payload],
+        });
+      } else {
+        console.log("INDEX OF REMOVED not", index);
+        tempRemovedItems[index].ingredients.push(action.payload);
+      }
+      state.removedItems = tempRemovedItems;
+    },
+    restoreItem: (state, action) => {
+      const tempItems = [];
+      state.removedItems.forEach((category) => {
+        const getIngr = (ingrList) => {
+          const result = [];
+          ingrList.forEach((ingr) => {
+            result.push({
+              category: ingr.category,
+              name: ingr.name,
+              measures: ingr.measures,
+            });
+          });
+          return result;
+        };
+        tempItems.push({
+          category: category.category,
+          ingredients: getIngr(category.ingredients),
+        });
+      });
+      tempItems.map((category) => {
+        category.ingredients = category.ingredients.filter(
+          (item) => item.name !== action.payload.name
+        );
+      });
+      state.removedItems = tempItems;
+      const tempRemovedItems = [];
+      state.allItems.forEach((category) => {
+        const getIngr = (ingrList) => {
+          const result = [];
+          ingrList.forEach((ingr) => {
+            result.push({
+              category: ingr.category,
+              name: ingr.name,
+              measures: ingr.measures,
+            });
+          });
+          return result;
+        };
+        tempRemovedItems.push({
+          category: category.category,
+          ingredients: getIngr(category.ingredients),
+        });
+      });
+
+      const index = tempRemovedItems.findIndex(
+        (item) => item.category === action.payload.category
+      );
+      if (index === -1) {
+        console.log("INDEX OF REMOVED not", index);
+        tempRemovedItems.push({
+          category: action.payload.category,
+          ingredients: [action.payload],
+        });
+      } else {
+        console.log("INDEX OF REMOVED not", index);
+        tempRemovedItems[index].ingredients.push(action.payload);
+      }
+      state.allItems = tempRemovedItems;
     },
   },
 });
 export const getAllItems = (state) => state.shoplist.allItems;
-export const { generateShoplist, flushShoplist } = shoplistSlice.actions;
+export const getRemovedItems = (state) => state.shoplist.removedItems;
+
+export const { generateShoplist, flushShoplist, removeItem, restoreItem } =
+  shoplistSlice.actions;
 export default shoplistSlice.reducer;
