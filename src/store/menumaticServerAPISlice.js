@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'http://localhost:8080/api/user/create/';
+const url = 'http://130.229.176.192:8080/api/user/create/';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
   async (info) => {
     const userId = info.userId;
-    const data = [info.data];
+    const data = info.data;
     const options = {
       method: 'POST',
       headers: {
@@ -15,26 +15,36 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
       },
       body: JSON.stringify(data),
     };
-    console.log(options)
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
+    // console.log("MY STATE:",options)
+    try {
+      const response = await fetch(url, options);
+      // console.log("Response", response.state)
+      if (!response.ok) {
+        throw new Error('Failed to post data');
+      }
+      const responseData = await response.json();
+      // console.log("Response:", responseData);
+      // console.log(responseData.data);
+      alert("Data saved successfully")
+      return responseData;
     }
-
-    const responseData = await response.json();
-    console.log("Response:", responseData);
-    console.log(responseData.data);
-    return responseData;
+    catch (error) {
+      // console.log("Error:", error);
+      alert("Saving failed, server is down");
+      return error;
+    
+    }
   }
 );
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
-  async (info, dispatch) => {
+  async (info, {dispatch}) => {
+    dispatch(setMenumaticServerState("loading"));
     const customUrl = "http://localhost:8080/api/user/mealplans/";
     const userId = info;
-    console.log(info)
-    console.log(userId)
+    // console.log(info)
+    // console.log(userId)
     const options = {
       method: 'GET',
       headers: {
@@ -46,6 +56,10 @@ export const fetchUserShopinglist = createAsyncThunk(
     console.log("Fetching user shopping list is CALLED");
   // dispatch(setMenumaticServerState("loading"));    
     const response = await fetch(customUrl, options);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user shopList');
+    }
     // console.log(response)
     return await response.json();
   }
@@ -78,7 +92,7 @@ const menumaticServerApi = createSlice({
   name: "spoonacularApi",
   initialState: {
     allList: [],
-    state: "",
+    state: "loading",
     selectedList:{
       listId: null,
       recepies:[]
@@ -100,10 +114,17 @@ const menumaticServerApi = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserShopinglist.fulfilled, (state, action) => {
+      // console.log("FETCHING IS DONE")
+      // console.log(action.payload)
       state.allList = action.payload;
       state.state = "ready";
+    }).addCase(fetchUserShopinglist.rejected, (state, action) => {
+      // console.log("FETCHING IS FAILED")
+      state.state = "failed";
     }).addCase(fetchUserRecepiesByListId.fulfilled, (state, action) => {
       state.selectedList.recepies = action.payload;
+    }).addCase(fetchUserRecepiesByListId.rejected, (state, action) => {
+      state.state = "failed";
     });
   },
 });

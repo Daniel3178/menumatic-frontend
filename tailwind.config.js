@@ -14,6 +14,7 @@ export default {
       },
       height: {
         '540': '540px',
+        '400': '400px',
         '130': '130px'
       },
       colors: {
@@ -40,6 +41,7 @@ export default {
         base: ['16px', '24px'],
         lg: ['20px', '28px'],
         xl: ['24px', '32px'],
+        xxl: ['32px', '36px']
       },
 
     },

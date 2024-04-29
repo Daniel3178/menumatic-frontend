@@ -18,6 +18,10 @@ function buildURL(baseURL, params) {
   return fullURL;
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 export const searchBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApi",
   async (props) => {
@@ -63,15 +67,17 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
     let baseUrl = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
 
     let params = [
-      { key: "query", value: 'food' },
+      { key: "query", value: '' },
       { key: "type", value: 'main%20course' },
       { key: "instructionsRequired", value: 'true' },
       { key: "fillIngredients", value: 'true' },
       { key: "addRecipeInformation", value: 'true' },
       { key: "ignorePantry", value: 'true' },
-      { key: "sort", value: 'random' },
+      { key: "sort", value: 'popularity' },
       { key: "number", value: '10' },
       { key: "limitLicense", value: 'false' },
+      { key: "offset", value: getRandomInt(900) },
+      { key: "maxReadyTime", value: 90},
       { key: "diet", value: diet },
       { key: "intolerances", value: intolerances }
     ];
@@ -81,7 +87,9 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
     
     //console.log("API url: ", generatedUrl)
     const response = await fetch(generatedUrl, options);
+    //console.log("Response: ", response)
     const jsonResponse = await response.json()
+    //console.log(jsonResponse)
     const customResponse = jsonResponse.results
     //console.log(customResponse)
     return customResponse;
@@ -100,7 +108,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     // console.log("PROPS", copyProp)
     const ids = [];
     copyProp.map((recipe) => ids.push(recipe.id))
-    console.log("IDS", ids);
+    // console.log("IDS", ids);
     let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids='
     let recipeIdString = ids.join()
     customUrl = customUrl.concat(recipeIdString)
@@ -112,8 +120,8 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     const findPoriont = (id)=>{
       for(let i = 0; i < copyProp.length; i++){
         if(copyProp[i].id === id){
-          console.log("FOUND PORTION", copyProp[i].id)
-          console.log("FOUND PORTION", copyProp[i].id)
+          // console.log("FOUND PORTION", copyProp[i].id)
+          // console.log("FOUND PORTION", copyProp[i].id)
           return copyProp[i].portions;
         }
       }
@@ -127,7 +135,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     })
 
 
-console.log("Result Rebuilt", result)
+// console.log("Result Rebuilt", result)
     dispatch(generateShoplist(result))
     return result;
   }

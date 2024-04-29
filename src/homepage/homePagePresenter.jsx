@@ -20,6 +20,8 @@ import {
   popFirstRecipe,
 } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
+import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
+import { flushShoplist } from "../shoplist/shoplistSlice";
 
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
@@ -36,6 +38,7 @@ const HomePagePresenter = () => {
   const includeTags = useSelector(getIncludeTags);
   const apiResultsState = useSelector(getApiResultsState);
   const navigate = useNavigate();
+
 
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
@@ -86,6 +89,10 @@ const HomePagePresenter = () => {
     navigate("/filterpage-test");
   };
 
+  const handleNavigateToPlanList = () => {
+    navigate("/plan_list");
+  };
+
   const handleToggleInfoView = () => {
     dispatch(toggleInfoView());
   };
@@ -103,6 +110,8 @@ const HomePagePresenter = () => {
   useEffect(() => {
     // console.log("USE EFFECT")
     // window.location.reload();
+// dispatch(flushRecommendationList())
+// dispatch(flushShoplist())
     if (apiResult.length == 0) {
       // console.log("fetching")
       dispatch(
@@ -112,6 +121,7 @@ const HomePagePresenter = () => {
         })
       );
     }
+            // window.location.reload();
   }, []);
 
   return (
@@ -122,6 +132,7 @@ const HomePagePresenter = () => {
       sendLike={handleLike}
       toggleInfoView={handleToggleInfoView}
       navigateToFilterPage={handleNavigateToFilterPage}
+      navigateToPlanList={handleNavigateToPlanList}
       info={showInfo}
     />
   );

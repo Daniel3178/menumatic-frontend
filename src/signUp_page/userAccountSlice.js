@@ -16,7 +16,7 @@ export const signUpAsync = createAsyncThunk(
           userId: userCredentials.user.uid,
         };
       } catch (error) {
-        // console.log(error.message);
+        console.log(error.message);
         if (error.message === "Firebase: Error (auth/email-already-in-use).") {
           alert("Email already in use! Try another one!");
         } else {

@@ -6,6 +6,9 @@ const shoplistSlice = createSlice({
     allItems: [],
   },
   reducers: {
+    flushShoplist: (state, action) => {
+state.allItems = [];
+    },
     generateShoplist: (state, action) => {
       console.log("generateShoplist SLICE", action.payload)
       /**
@@ -32,6 +35,7 @@ const shoplistSlice = createSlice({
         const portions = meal.portions;
         const servings = meal.result.servings;
         const ingredients = meal.result.extendedIngredients;
+
         const ingrArr = [];
         for (let i = 0; i < ingredients.length; i++) {
           let calcAmount = 0;
@@ -42,9 +46,11 @@ const shoplistSlice = createSlice({
             calcAmount = ingredients[i].measures.metric.amount;
           }
           ingrArr.push({
-            name: ingredients[i].nameClean,
-            amount: calcAmount,
-            unit: ingredients[i].measures.metric.unitShort,
+            category: ingredients[i].aisle,
+            name: ingredients[i].nameClean === null? ingredients[i].name : ingredients[i].nameClean,
+            measures:[{amount: calcAmount, unit: ingredients[i].measures.metric.unitShort}],
+            // amount: calcAmount,
+            // unit: ingredients[i].measures.metric.unitShort,
           });
         }
         return ingrArr;
@@ -83,14 +89,53 @@ const shoplistSlice = createSlice({
       };
 
       for (let i = 0; i < action.payload.length; i++) {
-        console.log("LOOP", action.payload[i])
+        // console.log("LOOP", action.payload[i])
         updateAllItems(stripIngr(action.payload[i]));
       }
+      const categorizedIngredients = [];
+      state.allItems.forEach((item) => {
+        const category = item.category;
+        const index = categorizedIngredients.findIndex(
+          (categorizedItem) => categorizedItem.category === category
+        );
+        if (index === -1) {
+          console.log("NOT FOUND PUSHING TO Categorized", categorizedIngredients, category)
+          categorizedIngredients.push({
+            category: category,
+            ingredients: [item],
+          });
+        } else {
+          console.log("FOUND PUSHING TO Categorized", categorizedIngredients, category)
+          categorizedIngredients[index].ingredients.push(item);
+        }
+      });
 
-      console.log("FINAL")
+      const normalizedIngredients = (category) => {
+        const newIngredients = [];
+        category.ingredients.forEach((ingredient) => {
+          const ingrIndex = newIngredients.findIndex(
+            (newIngredient) => newIngredient.name === ingredient.name
+          );
+          if (ingrIndex === -1) {
+            newIngredients.push({
+              category: ingredient.category,
+              name: ingredient.name,
+              measures: ingredient.measures,
+            });
+          } else {
+            newIngredients[ingrIndex].measures.push(ingredient.measures[0]);
+          }
+
+        });
+        category.ingredients = newIngredients;
+      };
+
+      categorizedIngredients.forEach((category) => normalizedIngredients(category));
+      state.allItems = categorizedIngredients;
+      console.log("Categorized Ingredients final", categorizedIngredients)
     },
   },
 });
 export const getAllItems = (state) => state.shoplist.allItems;
-export const { generateShoplist } = shoplistSlice.actions;
+export const { generateShoplist, flushShoplist } = shoplistSlice.actions;
 export default shoplistSlice.reducer;
