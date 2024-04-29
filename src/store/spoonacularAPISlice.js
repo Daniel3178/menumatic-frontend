@@ -100,7 +100,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     // console.log("PROPS", copyProp)
     const ids = [];
     copyProp.map((recipe) => ids.push(recipe.id))
-    console.log("IDS", ids);
+    // console.log("IDS", ids);
     let customUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids='
     let recipeIdString = ids.join()
     customUrl = customUrl.concat(recipeIdString)
@@ -112,8 +112,8 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     const findPoriont = (id)=>{
       for(let i = 0; i < copyProp.length; i++){
         if(copyProp[i].id === id){
-          console.log("FOUND PORTION", copyProp[i].id)
-          console.log("FOUND PORTION", copyProp[i].id)
+          // console.log("FOUND PORTION", copyProp[i].id)
+          // console.log("FOUND PORTION", copyProp[i].id)
           return copyProp[i].portions;
         }
       }
@@ -127,7 +127,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     })
 
 
-console.log("Result Rebuilt", result)
+// console.log("Result Rebuilt", result)
     dispatch(generateShoplist(result))
     return result;
   }

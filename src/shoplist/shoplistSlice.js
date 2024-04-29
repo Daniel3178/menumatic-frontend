@@ -86,11 +86,11 @@ state.allItems = [];
       };
 
       for (let i = 0; i < action.payload.length; i++) {
-        console.log("LOOP", action.payload[i])
+        // console.log("LOOP", action.payload[i])
         updateAllItems(stripIngr(action.payload[i]));
       }
 
-      console.log("FINAL")
+      // console.log("FINAL")
     },
   },
 });

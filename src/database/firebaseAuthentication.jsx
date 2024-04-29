@@ -9,7 +9,7 @@ const FirebaseAuthentication = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            console.log("User is signed in");
+            // console.log("User is signed in");
             dispatch(
               signInCurrentUser({
                 email: user.email,
