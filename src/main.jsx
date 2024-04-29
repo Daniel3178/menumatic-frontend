@@ -8,10 +8,10 @@ import "./index.css";
 
 // The root method which instantiates the web application.
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <App />
       <FirebaseAuthentication/>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
