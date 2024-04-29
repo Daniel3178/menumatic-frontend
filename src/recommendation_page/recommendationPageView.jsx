@@ -43,7 +43,7 @@ const RecommendationPageView = (props) => {
 
   const renderRecommendationTable = (listOfMeals) => (
     <div className="bg-page min-h-screen w-full fixed top-0 right-0 bottom-0 left-0 flex justify-center">
-      <div className="w-[840px] ">
+      <div className="w-[840px] mr-10 ml-10">
         <div className="flex justify-center w-444 h-102 mt-8 mb-16">
           <img src={logo} />
         </div>
