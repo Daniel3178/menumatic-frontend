@@ -136,9 +136,11 @@ const HomePagePresenter = () => {
       navigateToFilterPage={handleNavigateToFilterPage}
       navigateToPlanList={handleNavigateToPlanList}
       info={showInfo}
+      isLoggedIn={getIsLoggedIn}
     />
-
+    <MenuView
     
+    />
     </div>
 
     

@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const menuPage = createSlice({
     name: "menuPage",
     initialState: {
-        menuState: "base",
+        menuState: "loggedOut",
     },
     reducers: {
         setMenuView: (state, action) => {
