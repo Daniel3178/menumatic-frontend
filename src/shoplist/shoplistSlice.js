@@ -35,6 +35,7 @@ state.allItems = [];
         const portions = meal.portions;
         const servings = meal.result.servings;
         const ingredients = meal.result.extendedIngredients;
+
         const ingrArr = [];
         for (let i = 0; i < ingredients.length; i++) {
           let calcAmount = 0;
@@ -45,7 +46,8 @@ state.allItems = [];
             calcAmount = ingredients[i].measures.metric.amount;
           }
           ingrArr.push({
-            name: ingredients[i].nameClean,
+            category: ingredients[i].aisle,
+            name: ingredients[i].nameClean === null? ingredients[i].name : ingredients[i].nameClean,
             amount: calcAmount,
             unit: ingredients[i].measures.metric.unitShort,
           });
@@ -89,8 +91,25 @@ state.allItems = [];
         // console.log("LOOP", action.payload[i])
         updateAllItems(stripIngr(action.payload[i]));
       }
-
-      // console.log("FINAL")
+      const categorizedIngredients = [];
+      state.allItems.forEach((item) => {
+        const category = item.category;
+        const index = categorizedIngredients.findIndex(
+          (categorizedItem) => categorizedItem.category === category
+        );
+        if (index === -1) {
+          console.log("NOT FOUND PUSHING TO Categorized", categorizedIngredients, category)
+          categorizedIngredients.push({
+            category: category,
+            ingredients: [item],
+          });
+        } else {
+          console.log("FOUND PUSHING TO Categorized", categorizedIngredients, category)
+          categorizedIngredients[index].ingredients.push(item);
+        }
+      });
+      state.allItems = categorizedIngredients;
+      console.log("Categorized Ingredients final", categorizedIngredients)
     },
   },
 });

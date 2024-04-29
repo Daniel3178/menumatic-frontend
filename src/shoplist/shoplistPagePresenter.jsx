@@ -15,7 +15,6 @@ const ShoplistPagePresenter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const allItems = useSelector(getAllItems);
-  const shoplist = useSelector(getRecommendationList);
   const isLoggedIn = useSelector(getIsLoggedIn)
   const userId = useSelector(getUserId)
   const affordableDishes = useSelector(getAffordableDishesList);
@@ -98,7 +97,7 @@ const ShoplistPagePresenter = () => {
         break;
     }
     // dispatch(generateShoplist(shoplist))
-  }, [dispatch, shoplist])
+  }, [])
 
   return (
     <ShoplistPageView
