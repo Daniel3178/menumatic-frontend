@@ -1,4 +1,4 @@
-import { useState }  from "react";
+import { useState } from "react";
 import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
 
 /**
@@ -7,87 +7,84 @@ import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
  * @param {Array} props.allItems - Array of shopping list items
  */
 
-
-
 const ShoplistPageView = (props) => {
-
   const [showOverlay, setShowOverlay] = useState(false);
-  const [nameInput, setNameInput] = useState(Date().substring(0,24));
+  const [nameInput, setNameInput] = useState(Date().substring(0, 24));
 
   const handleNameInputChange = (event) => {
     setNameInput(event.target.value);
   };
 
-
   /**
- * Renders a save button.
- * If the user is logged in the button sends the meal plan to the server to be stored, it also render an input box for assigning a name to the plan.
- * If the user is not logged in it opens a pop-up window with login/export pdf.
- */
+   * Renders a save button.
+   * If the user is logged in the button sends the meal plan to the server to be stored, it also render an input box for assigning a name to the plan.
+   * If the user is not logged in it opens a pop-up window with login/export pdf.
+   */
   const renderSaveButton = () => {
-    
     if (props.isLoggedIn) {
-      return(
+      return (
         <div class="flex flex-col items-end">
-        <input 
-          class="border rounded-lg px-4 py-2 mb-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm font-normal"
-          type="text" 
-          id="nameInput" 
-          value={nameInput}
-          onChange={handleNameInputChange}
-        />
-        <button
-          class="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white "
-          id="save"
-          onClick={() =>props.saveMealPlan(nameInput)}
-        > 
-          Save
-        </button>
-      </div>
-      )
-    }else{
-      return(
+          <input
+            class="border rounded-lg px-4 py-2 mb-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm font-normal"
+            type="text"
+            id="nameInput"
+            value={nameInput}
+            onChange={handleNameInputChange}
+          />
+          <button
+            class="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white "
+            id="save"
+            onClick={() => props.saveMealPlan(nameInput)}
+          >
+            Save
+          </button>
+        </div>
+      );
+    } else {
+      return (
         <button
           className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white"
           id="save"
           onClick={() => setShowOverlay(true)}
         >
           Save
-        </button>)
+        </button>
+      );
     }
-  }
+  };
 
   /**
- * Renders a pop-up window with login/export pdf, if a non logged in user presses "save".
- */
+   * Renders a pop-up window with login/export pdf, if a non logged in user presses "save".
+   */
   const overlay = () => {
-    if(showOverlay){
-    return (
-      <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-75 z-50">
-        <div className="bg-white p-6 rounded-lg">
+    if (showOverlay) {
+      return (
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-75 z-50">
+          <div className="bg-white p-6 rounded-lg">
+            <p className="text-center text-gray-800">
+              Log in to save meal plan in the app or export as PDF.
+            </p>
 
-          <p className="text-center text-gray-800">Log in to save meal plan in the app or export as PDF.</p>
-  
-          <button
-            className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            id="signIn"
-            onClick={props.navigateToLogin}
-          >
-            Log in
-          </button>
-  
-          <button
-            className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            id="exportPDF"
-            type="exportPDF"
-          //onClick={generateShoppingListPDFLink(parseToStringArray())}
-          >
-            Export PDF
-          </button>
-  
+            <button
+              className="m-1 p-1 w-40 h-12 border border-green-500 rounded-md bg-green-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              id="signIn"
+              onClick={props.navigateToLogin}
+            >
+              Log in
+            </button>
+
+            <button
+              className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              id="exportPDF"
+              type="exportPDF"
+              //onClick={generateShoppingListPDFLink(parseToStringArray())}
+            >
+              Export PDF
+            </button>
+          </div>
         </div>
-      </div>
-    );}
+      );
+    }
   };
 
   const parseToStringArray = () => {
@@ -100,9 +97,88 @@ const ShoplistPageView = (props) => {
     return resultArray;
   };
 
-  
-  
+  const showIngredientsRemove = (ing) => {
+    if (ing.ingredients.length > 0) {
+      return ing.ingredients.map((ingr, index) => (
+        <div
+          key={index}
+          className="flex border border-red-500 flex-row items-center justify-between"
+        >
+          <button
+            onClick={() => props.removeItem(ingr)}
+            className="border border-black bg-slate-500"
+          >
+            Remov
+          </button>
+          <div className="flex flex-row ">
+            {ingr.measures.map((measure, index) => {
+              return (
+                <div className=" flex-row pr-[40px] ">{`${measure.amount.toFixed(
+                  2
+                )} ${measure.unit}`}</div>
+              );
+            })}
+          </div>
+          <div className="self-end text-start pl-[40px]">{ingr.name}</div>
+        </div>
+      ));
+    } else if (ing.ingredients.length === 0) {
+      return <div></div>;
+    }
+  };
 
+  const showIngredientsRestore = (ing) => {
+    if (ing.ingredients.length > 0) {
+      return ing.ingredients.map((ingr, index) => (
+        <div
+          key={index}
+          className="flex border border-red-500 flex-row items-center justify-between"
+        >
+          <button
+            onClick={() => props.restoreItem(ingr)}
+            className="border border-black bg-slate-500"
+          >
+            Remov
+          </button>
+          <div className="flex flex-row ">
+            {ingr.measures.map((measure, index) => {
+              return (
+                <div className=" flex-row pr-[40px] ">{`${measure.amount.toFixed(
+                  2
+                )} ${measure.unit}`}</div>
+              );
+            })}
+          </div>
+          <div className="self-end text-start pl-[40px]">{ingr.name}</div>
+        </div>
+      ));
+    } else if (ing.ingredients.length === 0) {
+      return <div></div>;
+    }
+  };
+
+  const renderIngredients = (list, shoIngr) => {
+    const conditionRender = (ingr) => {
+      if (ingr.ingredients.length > 0) {
+        return (
+          <div>
+            <h1 className="">{` Category : ${ingr.category}`}</h1>
+          </div>
+        );
+      } else {
+        return <div></div>;
+      }
+    };
+
+    return list.map((ingredientData, index) => (
+      <div key={index} className="flex flex-col border-b pb-2">
+        {/* <h1 className="">{` Category : ${ingredientData.category}`}</h1> */}
+        {conditionRender(ingredientData)}
+        {/* {console.log(ingredientData)} */}
+        {shoIngr(ingredientData)}
+      </div>
+    ));
+  };
 
   /**
    * Generates a button component for PDF download
@@ -151,38 +227,9 @@ const ShoplistPageView = (props) => {
             }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download PDF</button>
              */}
           </div>
-          {props.allItems.map((ingredientData, index) => (
-            <div key={index} className="flex flex-col border-b pb-2">
-              <h1 className="">{` Category : ${ingredientData.category}`}</h1>
-              {/* {console.log(ingredientData)} */}
-              {ingredientData.ingredients.map((ingr, index) => (
-                <div key={index} className="flex flex-row items-center justify-between">
-                  <div className="flex flex-row ">
-                  {ingr.measures.map((measure, index) => {
-                  return(<div
-                  className=" flex-row pr-[40px] "
-                >{`${measure.amount.toFixed(2)} ${measure.unit}`}</div>)
-                  })}
-                  </div>
-                  <div
-                    className="self-end text-start pl-[40px]"
-                  >
-                    {ingr.name}
-                  </div>
-                </div>
-              ))}
-              {/* <div
-                className="self-start text-end pr-[40px] "
-                style={{ width: "50%" }}
-              >{`${ingredientData.amount} ${ingredientData.unit}`}</div>
-              <div
-                className="self-end text-start pl-[40px]"
-                style={{ width: "50%" }}
-              >
-                {ingredientData.name}
-              </div> */}
-            </div>
-          ))}
+          {renderIngredients(props.allItems, showIngredientsRemove)}
+          <h1>REMOVED ITEMS</h1>
+          {renderIngredients(props.removedItems, showIngredientsRestore)}
         </div>
       );
     } else {
