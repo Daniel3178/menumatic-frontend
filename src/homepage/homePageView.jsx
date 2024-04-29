@@ -101,7 +101,7 @@ const HomePageView = (props) => {
             </button>
           </div>
           <div>
-            <button className="mt-10 hover:underline">
+            <button onClick={props.navigateToPlanList} className="mt-10 hover:underline">
               Saved meal plans
             </button>
           </div>

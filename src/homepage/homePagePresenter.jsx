@@ -86,6 +86,10 @@ const HomePagePresenter = () => {
     navigate("/filterpage-test");
   };
 
+  const handleNavigateToPlanList = () => {
+    navigate("/plan_list");
+  };
+
   const handleToggleInfoView = () => {
     dispatch(toggleInfoView());
   };
@@ -122,6 +126,7 @@ const HomePagePresenter = () => {
       sendLike={handleLike}
       toggleInfoView={handleToggleInfoView}
       navigateToFilterPage={handleNavigateToFilterPage}
+      navigateToPlanList={handleNavigateToPlanList}
       info={showInfo}
     />
   );
