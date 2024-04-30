@@ -56,8 +56,10 @@ const PlanListView = (props) => {
   else if(props.serverState === "ready"){
   return (
     <div>{renderList()}</div>
-  );
-}
+  );}
+  else if(props.serverState === "failed"){
+    return <p>Server is down</p>
+  }
 };
 
 export default PlanListView;

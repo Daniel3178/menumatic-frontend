@@ -2,6 +2,7 @@ import React from "react";
 import { generateShoplist } from "../../shoplist/shoplistSlice";
 import { generateShoppingListPDFLink } from "../../pdf/pdfgen_component";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Represents the view component of the shopping list page.
@@ -30,7 +31,7 @@ const PlanShoplistPageView = (props) => {
   //   console.log(test)
   // }
 
-  const [viewPdf, setViewPdf] = useState(false);
+const navigate = useNavigate();
 
   /**
    * Generates a button component for PDF download
@@ -38,7 +39,9 @@ const PlanShoplistPageView = (props) => {
   const pdfButtonCom = () => {
     return (
       <div className="bg-blue-500 w-[150px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        {generateShoppingListPDFLink(parseToStringArray())}
+        {
+        generateShoppingListPDFLink(parseToStringArray())
+        }
       </div>
     );
   };
@@ -63,8 +66,12 @@ const PlanShoplistPageView = (props) => {
       return (
         <div className="w-full">
           <div className="flex items-center  justify-between border-b pb-2">
-            <div className=" " style={{ width: "50%" }}>
-              <h1 className="  text-[21px] font-bold text-end pr-[40px]">
+            <div className="flex justify-between " style={{ width: "50%" }}>
+              <button onClick={()=> {
+                navigate("/");
+                window.location.reload();
+            }} className="bg-green-500 hover:bg-green-700 text-white  font-bold py-2 h-[50px] px-4 rounded">Back to Home</button>
+              <h1 className=" text-[21px] font-bold pt-2 pr-[40px]">
                 Amount
               </h1>
             </div>
@@ -72,7 +79,7 @@ const PlanShoplistPageView = (props) => {
               className=" flex flex-row justify-between font-bold fon items-center "
               style={{ width: "50%" }}
             >
-              <h1 className="  text-[21px] text-bold pl-[40px]">Ingredient</h1>
+              <h1 className="  text-[21px]  text-bold pl-[40px]">Ingredient</h1>
               {pdfButtonCom()}
             </div>
             {/* <button onClick={()=>{
@@ -109,7 +116,6 @@ const PlanShoplistPageView = (props) => {
     return (
       <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
-      {viewPdf ? pdfButtonCom() : null}
       {renderTheIngredientList()}
 
       {/* {console.log("[STATE2]")} */}

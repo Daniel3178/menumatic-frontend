@@ -16,9 +16,9 @@ const DanielTestView = (props) => {
 
   return (
     <selection>
-      <div>
-        <button onClick={props.getRandomReceipt}>Call API</button>
-        {conditialRender()}
+      <div className="">
+        {/* <button onClick={props.getRandomReceipt}>Call API</button>
+        {conditialRender()} */}
       </div>
     </selection>
   );
