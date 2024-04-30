@@ -38,8 +38,8 @@ const PlanListView = (props) => {
     };
 
     return (
-      <div className="bg-cerulean rounded-2xl my-4 px-4 shadow-xl w-[840px] h-[180px] content-center"
-        onClick={() => { handleNavigate }}>
+      <button className="bg-cerulean rounded-2xl my-4 px-4 shadow-xl w-[840px] h-[180px] content-center hover:brightness-75 hover:shadow-mid"
+        onClick={() => { props.selectAndNavigateToWeekPlan(list.planID) }}>
         <div className="grid grid-cols-4 gap-4">
           <div className="border-r border-whiteSmoke flex justify-center">
             <div>
@@ -55,7 +55,7 @@ const PlanListView = (props) => {
           </div>
           <div className="relative">
             {/*add remove button here*/}
-            <button className="absolute top-0 right-0 rounded-md text-whiteSmoke hover:bg-whiteSmoke"
+            <button className="absolute top-0 right-0 rounded-md hover:brightness-200"
               onClick={(event) => handleDelete(event, list.planID)} aria-label="Delete meal plan">
               <img src={closeBtn} />
             </button>
@@ -64,7 +64,7 @@ const PlanListView = (props) => {
         </div>
 
         {/* Possible iteration of the recipe names contained wtihin a plan. Make so all contents are displayed and possibly overflow to a new row. Until that this is implemented, make the line above's content conspicously large */}
-      </div>
+      </button>
     );
   };
 
