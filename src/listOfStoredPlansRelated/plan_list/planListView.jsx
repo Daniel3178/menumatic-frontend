@@ -54,7 +54,7 @@ const PlanListView = (props) => {
           </div>
           <div className="relative">
             {/*add remove button here*/}
-            <button className="absolute top-0 right-0 rounded-full text-whiteSmoke hover:bg-red-700"
+            <button className="absolute top-0 right-0 rounded-md text-whiteSmoke hover:bg-whiteSmoke"
               onClick={(event) => handleDelete(event, list.planID)} aria-label="Delete meal plan">
               <img src={closeBtn} />
             </button>

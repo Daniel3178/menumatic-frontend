@@ -59,7 +59,7 @@ const HomePageView = (props) => {
               }} />
             <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large w-405 h-130">
               <div className='mt-2 ml-2'>
-                <p className="text-whiteSmoke font-outfit text-2xl font-medium">{props.apiResults[0].title}</p>
+                <p className="text-whiteSmoke font-outfit text-2xl font-medium truncate">{props.apiResults[0].title}</p>
               </div>
               <div className='mb-4 absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between'>
                 <div className='flex space-x-4 items-center'>
