@@ -13,7 +13,8 @@ import logo from "./MENUMATIC_logo.svg"
 import noimage from "./noimage.png"
 import backGreen from "./backGreen.svg"
 import closeBtn from "./closeBtn.svg"
+import backBlack from "./backBlack.svg"
 
-export {clock, closeBtn, thumbs_up, thumbs_down, info, info_i, close, tune, done, dislike_btn, like_btn, logo, clock_icon, noimage, backGreen}
+export {clock, backBlack, closeBtn, thumbs_up, thumbs_down, info, info_i, close, tune, done, dislike_btn, like_btn, logo, clock_icon, noimage, backGreen}
 
 
