@@ -17,6 +17,13 @@ export default {
         '400': '400px',
         '130': '130px'
       },
+      scale: {
+        '25': '0.25',
+        '50': '0.5',
+        '75': '0.75',
+        '100': '1',
+        '125': '1.25',
+      },
       colors: {
         cerulean: '#4281A4',
         yellowGreen: '#BDD358',
@@ -43,7 +50,6 @@ export default {
         xl: ['24px', '32px'],
         xxl: ['32px', '36px']
       },
-
     },
   },
   plugins: [],
