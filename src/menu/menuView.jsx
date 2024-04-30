@@ -2,6 +2,8 @@ import React from "react";
 import { backGreen, backBlue } from "../assets";
 
 const MenuView = (props) => {
+
+
   const handleSignInCB = (e) => {
     e.preventDefault();
     props.signIn({ email: props.email, password: props.password });
@@ -30,7 +32,7 @@ const MenuView = (props) => {
   const signupMenu = () => {
     if (props.stateSignup) {
       return (
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen">
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen animate-slide-in">
           <button onClick={props.hideSignup} className="justify-start ml-6 mt-6">
             <img src={backBlue} />
           </button>
@@ -42,7 +44,7 @@ const MenuView = (props) => {
               <input
                 className="m-2 p-2 w-56 h-12 bg-yellowGreen border-b-[2px] border-cerulean placeholder-whiteSmoke outline-none"
                 type="email"
-                placeholder="Enter email"
+                placeholder="e-mail"
                 value={props.email}
                 onChange={(e) => props.setEmail(e.target.value)}
                 required
@@ -53,7 +55,7 @@ const MenuView = (props) => {
                 onKeyUp={validate_password}
                 id="pass"
                 type="password"
-                placeholder="Enter password"
+                placeholder="password"
                 value={props.password}
                 onChange={(e) => props.setPassword(e.target.value)}
                 required
@@ -65,7 +67,7 @@ const MenuView = (props) => {
                 onKeyUp={validate_password}
                 id="confirm_pass"
                 type="password"
-                placeholder="Confirm password"
+                placeholder="confirm password"
                 required
                 minLength="6"
               />
@@ -90,7 +92,7 @@ const MenuView = (props) => {
   const loginMenu = () => {
     if (props.stateLogin) {
       return (
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-cerulean">
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-cerulean animate-slide-in">
           {signupMenu()}
           <button onClick={props.hideLogin} className="justify-start ml-6 mt-6">
             <img src={backGreen} />
