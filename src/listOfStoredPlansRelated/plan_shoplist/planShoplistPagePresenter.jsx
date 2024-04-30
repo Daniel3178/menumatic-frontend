@@ -21,7 +21,7 @@ const PlanShoplistPagePresenter = () => {
 const shoplist = useSelector(getMenumaticSavedRecipes)
   // Fetch and generate the shopping list when the component mounts or shoplist changes
   useEffect(() => {
-    console.log("shoplist PLAN", shoplist)
+    // console.log("shoplist PLAN", shoplist)
     // dispatch(generateShoplist(shoplist))
   }, [dispatch, shoplist]);
 

@@ -31,6 +31,7 @@ export default {
       },
       borderRadius: {
         'large': '20px',
+        'small': '10px',
       },
       fontFamily: {
         'outfit': ['outfit', 'sans-serif'],
@@ -47,4 +48,3 @@ export default {
   },
   plugins: [],
 }
-

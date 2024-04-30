@@ -91,4 +91,4 @@ const planShoplistSlice = createSlice({
 });
 export const getAllItems = (state) => state.shoplist.allItems;
 export const { generateShoplist } = shoplistSlice.actions;
-export default shoplistSlice.reducer;
+export default planShoplistSlice.reducer;

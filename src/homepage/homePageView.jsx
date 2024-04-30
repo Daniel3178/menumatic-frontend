@@ -79,7 +79,6 @@ const HomePageView = (props) => {
             </div>
           </div>
         </div>
-
       );
     }
   };
