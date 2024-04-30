@@ -90,8 +90,10 @@ const HomePageView = (props) => {
           <div className="flex justify-center w-444 h-102 mt-8 mb-16">
             <img src={logo} />
           </div>
-          <div className=''>
-            {conditionalRender()}
+          <div className='w-[405px]'>
+            <div className=''>
+              {conditionalRender()}
+            </div>
             <div className="flex space-x-20 justify-center mt-8">
               <button onClick={props.getRandomReceipt} className="flex rounded-full shadow-xl hover:shadow-mid foucs:shadow-in">
                 <img src={dislike_btn} />
