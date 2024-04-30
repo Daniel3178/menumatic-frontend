@@ -1,6 +1,23 @@
 import React from 'react'
 
 const DishListComponent = (props) => {
+  
+  const incrementValue = (index, action) => {
+    const input = document.getElementById(`inputField-${index}`);
+    if (!input) return; 
+    let newValue = parseInt(input.value, 10);
+    if (action === 'increment') {
+      newValue++;
+    } else if (action === 'decrement' && newValue > 1) {
+      newValue--;
+    }
+    input.value = newValue;
+
+    const event = new Event('input', { bubbles: true });
+    input.dispatchEvent(event);
+  };
+  
+
   /**
    * @param {props.dayOfTheWeek} props.dayOfTheWeek: The mealIndex + 1 (i.e starting with day 1).
    * @param {props.dish} props.dish: The title of the dish fetched from the API.
@@ -8,6 +25,9 @@ const DishListComponent = (props) => {
    * Returns a table to display a row of the fetched day
    */
   const RecepieForADay = (recipe) => {
+
+    
+
     // console.log("RecepieForADay", recipe);
     // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
     return (
@@ -17,7 +37,67 @@ const DishListComponent = (props) => {
         <span className="text-center w-[60%] whitespace-nowrap truncate truncate-hover">{recipe.dish}</span>
         <span className="text-center w-[10%]">{recipe.priceLevel}</span>
         <span className="text-center w-[20%]">
-          <input className='bg-cerulean'
+        <div className="py-2 px-3 inline-block">
+      <div className="flex items-center gap-x-1.5">
+        <button
+          type="button"
+          className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md bg-gunmetal text-whiteSmoke shadow-sm hover:opacity-90"
+          onClick={() => incrementValue(recipe.dayOfTheWeek, 'decrement')}
+        >
+          <svg
+            className="flex-shrink-0 size-3.5"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14"></path>
+          </svg>
+        </button>
+        <input
+          type='text'
+          id={`inputField-${recipe.dayOfTheWeek}`}
+          name="quantity"
+          value={recipe.portionCount}
+          onInput={(e) => {
+            e.preventDefault();
+            console.log("e.target.value", e.target.value);
+            props.updateCount({ id: recipe.id, portions: e.target.value, list: props.selectedTab });
+          }
+          }
+          className="p-0 w-6 bg-transparent border-0 text-whiteSmoke text-center focus:ring-0 "
+          
+        />
+        <button
+          type="button"
+          className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md bg-gunmetal text-whiteSmoke shadow-sm hover:opacity-90"
+          
+          onClick={() => incrementValue(recipe.dayOfTheWeek, 'increment')}
+        >
+          <svg
+            className="flex-shrink-0 size-3.5"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14"></path>
+            <path d="M12 5v14"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+          {/* <input className='bg-cerulean'
             type='number'
             id={recipe.dayOfTheWeek}
             name="quantity"
@@ -29,7 +109,7 @@ const DishListComponent = (props) => {
             }
             }
             min="1"
-          ></input>
+          ></input> */}
         </span>
 
       </div>

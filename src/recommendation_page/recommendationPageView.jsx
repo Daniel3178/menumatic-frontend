@@ -9,9 +9,13 @@ const RecommendationPageView = (props) => {
 
   // Individual button for navbar
   const NavButton = ({ selectedTab, tabName, onClick }) => (
+
     <button
-      className={`mr-1 p-1 w-[200px] h-[80px] rounded-large bg-cerulean font-outfit text-whiteSmoke shadow-xl ${selectedTab === tabName ? "bg-yellowGreen h-14" : "bg-cerulean"
-        }`}
+      className={`
+    mr-1 p-1 h-[80px] rounded-large bg-cerulean font-medium text-lg font-outfit text-whiteSmoke shadow-xl hover:shadow-mid
+    transition-all duration-500 
+    ${selectedTab === tabName ? "w-[200px] bg-yellowGreen" : "w-[180px]"} 
+  `}
       onClick={() => onClick(tabName)}
     >
       {tabName.toUpperCase()}

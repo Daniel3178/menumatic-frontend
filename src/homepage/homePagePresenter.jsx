@@ -20,8 +20,8 @@ import {
   popFirstRecipe,
 } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
-import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
-import { flushShoplist } from "../shoplist/shoplistSlice";
+import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
+
 
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
