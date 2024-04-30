@@ -3,7 +3,8 @@ import "../../recommendation_page/RecepiesForAWeekViewCSS.css";
 import { useNavigate } from "react-router-dom";
 import { render } from "react-dom";
 import { useDispatch } from "react-redux";
-import { logo, closeBtn } from "../../assets";
+import { backBlack, logo, closeBtn } from "../../assets";
+import {deleteMealPlan} from "../../store/menumaticServerAPISlice";
 
 const plansData = {
   result: [
@@ -94,6 +95,12 @@ const PlanListView = (props) => {
         <div className="w-[840px] mr-10 ml-10">
           <div className="flex justify-center w-444 h-102 mt-8 mb-16">
             <img src={logo} />
+          </div>
+          <div>
+            <button className="text-whiteSmoke hover:shadow-xl"
+              onClick={() => props.navigateBack()} aria-label="go back">
+              <img src={backBlack} />
+            </button>
           </div>
           <div>
             <p className="text-[48px] font-outfit font-bold text-gunmetal tracking-wider">WEEK PLANS</p>

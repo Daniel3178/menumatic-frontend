@@ -18,6 +18,10 @@ const PlanListPresenter = () => {
     navigate("/plan");
   };
 
+  const handleNavigateBack = () => {
+    navigate(-1);
+  };
+
   const dummyData = [
     {id: 1, name: 'W1', recipesName: ['m1', 'm2']},
     {id: 2, name: 'W2', recipesName: ['m3', 'm4']}
@@ -34,6 +38,8 @@ const PlanListPresenter = () => {
       allLists={allList}
       selectAndNavigateToWeekPlan={selectAndNavigateHandler}
       userId={userId}
+      navigateBack={handleNavigateBack}
+      
     />
   );
 };
