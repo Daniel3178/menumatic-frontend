@@ -16,7 +16,7 @@ const plansData = {
 const PlanListView = (props) => {
 
   const dispatch = useDispatch();
-  
+
   const renderMeals = (recipesName) => {
     return recipesName.map((recipe) => {
       return (<p className="text-[18px] font-outfit text-whiteSmoke truncate mt-2 mb-2">{recipe.name}</p>);
@@ -35,7 +35,7 @@ const PlanListView = (props) => {
       event.stopPropagation(); // Prevent click event from bubbling up to the parent
       dispatch(deleteMealPlan({ userId: props.userId, mealPlanId }));
     };
-    
+
     return (
       <div className="bg-cerulean rounded-2xl my-4 px-4 shadow-xl w-[840px] h-[180px] content-center"
         onClick={() => { handleNavigate }}>
@@ -43,7 +43,7 @@ const PlanListView = (props) => {
           <div className="border-r border-whiteSmoke flex justify-center">
             <div>
               <p className="text-[24px] font-outfit font-medium text-whiteSmoke">week</p>
-              <p className="text-[64px] font-outfit font-bold text-whiteSmoke flex justify-center">{list.planID}</p> 
+              <p className="text-[64px] font-outfit font-bold text-whiteSmoke flex justify-center">{list.planID}</p>
             </div>
           </div>
           <div>
@@ -52,18 +52,16 @@ const PlanListView = (props) => {
           <div>
             {renderMeals(list.planRecipes.slice(4, 7))}
           </div>
-          <div>
+          <div className="relative">
             {/*add remove button here*/}
-            <button className = "right-5 mt-2 ml-2 p-1 rounded-full text-whiteSmoke hover:bg-red-700"
-        onClick={(event) => handleDelete(event, list.planID)}
-        aria-label="Delete meal plan"
-        >
-          X
-        </button>
+            <button className="absolute top-0 right-0 rounded-full text-whiteSmoke hover:bg-red-700"
+              onClick={(event) => handleDelete(event, list.planID)} aria-label="Delete meal plan">
+              <img src={closeBtn} />
+            </button>
           </div>
 
         </div>
-        
+
         {/* Possible iteration of the recipe names contained wtihin a plan. Make so all contents are displayed and possibly overflow to a new row. Until that this is implemented, make the line above's content conspicously large */}
       </div>
     );
@@ -93,19 +91,19 @@ const PlanListView = (props) => {
   else if (props.serverState === "ready") {
     return (
       <div className="bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
-      <div className="w-[840px] mr-10 ml-10">
-        <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-          <img src={logo} />
-        </div>
-        <div>
-          <p className="text-[48px] font-outfit font-bold text-gunmetal tracking-wider">WEEK PLANS</p>
-        </div>
-        <div>
-          {renderList()}
+        <div className="w-[840px] mr-10 ml-10">
+          <div className="flex justify-center w-444 h-102 mt-8 mb-16">
+            <img src={logo} />
+          </div>
+          <div>
+            <p className="text-[48px] font-outfit font-bold text-gunmetal tracking-wider">WEEK PLANS</p>
+          </div>
+          <div>
+            {renderList()}
+          </div>
         </div>
       </div>
-    </div>
-    
+
 
     );
   }
