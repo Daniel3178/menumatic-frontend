@@ -37,6 +37,42 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
   }
 );
 
+export const saveFoodPrefToMenumaticDb = createAsyncThunk(
+  "menumaticServerApi/saveFoodPrefToMenumaticDb",
+  async (info) => {
+    const userId = info.userId;
+    const data = [info.data];
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-id': userId,
+      },
+      body: JSON.stringify(data),
+    };
+    const customUrlUrl = 'http://130.229.176.192:8080/api/user'
+    // console.log("MY STATE:",options)
+    try {
+      const response = await fetch(customUrlUrl, options);
+      // console.log("Response", response.state)
+      if (!response.ok) {
+        throw new Error('Failed to post data');
+      }
+      const responseData = await response.json();
+      // console.log("Response:", responseData);
+      // console.log(responseData.data);
+      alert("Data saved successfully")
+      return responseData;
+    }
+    catch (error) {
+      // console.log("Error:", error);
+      alert("Saving failed, server is down");
+      return error;
+    
+    }
+  }
+);
+
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
   async (info, {dispatch}) => {
