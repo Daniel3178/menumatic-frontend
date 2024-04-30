@@ -86,18 +86,20 @@ const HomePageView = (props) => {
   const renderHomePage = () => {
     if (props.apiResultsState === "ready") {
       return (
-        <div className="bg-page min-h-screen w-full top-0 right-0 bottom-0 left-0">
+        <div className="bg-smokeWhite min-h-screen w-full">
           <div className="flex justify-center w-444 h-102 mt-8 mb-16">
             <img src={logo} />
           </div>
-          {conditionalRender()}
-          <div className="flex space-x-20 justify-center mt-8">
-            <button onClick={props.getRandomReceipt} className="flex rounded-full shadow-xl hover:shadow-mid foucs:shadow-in">
-              <img src={dislike_btn} />
-            </button>
-            <button onClick={props.sendLike} className="flex rounded-full shadow-xl hover:shadow-mid foucs:shadow-in">
-              <img src={like_btn} />
-            </button>
+          <div className=''>
+            {conditionalRender()}
+            <div className="flex space-x-20 justify-center mt-8">
+              <button onClick={props.getRandomReceipt} className="flex rounded-full shadow-xl hover:shadow-mid foucs:shadow-in">
+                <img src={dislike_btn} />
+              </button>
+              <button onClick={props.sendLike} className="flex rounded-full shadow-xl hover:shadow-mid foucs:shadow-in">
+                <img src={like_btn} />
+              </button>
+            </div>
           </div>
         </div>
       )
