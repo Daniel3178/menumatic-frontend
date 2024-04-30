@@ -98,6 +98,19 @@ const MenuPresenter = () => {
         }
     };
 
+
+
+//*************SIGN UP STUFF*************
+
+const handleSignUp = (e) => {
+  e.preventDefault();
+  dispatch(signUpAsync({ email, password }));
+  setEmail("");
+  setPassword("");
+}
+
+
+
   return (
     <MenuView
       navigateToPlanList={navigateToPlanList}
@@ -128,6 +141,8 @@ const MenuPresenter = () => {
       setPassword={setPassword}
       signIn ={handleSignInACB}
       signOut ={handleSignOutACB}
+
+      signUp={handleSignUp}
     />
     );
 }
