@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const url = "http://localhost:8080/api/user/create/";
+const deleteUrl = 'http://130.229.176.192:8080/api/user/mealplans/delete';
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
@@ -38,7 +39,9 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 
 export const deleteMealPlan = createAsyncThunk(
   "menumaticServerApi/deleteMealPlan",
-  async ({ userId, mealPlanId }, { rejectWithValue }) => {
+  async ({ info }) => {
+    const userId = info.userId;
+    const mealPlanId = info.mealPlanId;
     const options = {
       method: "DELETE",
       headers: {
@@ -47,15 +50,13 @@ export const deleteMealPlan = createAsyncThunk(
       },
       body: JSON.stringify({ mealPlanId }),
     };
-    try {
-      const response = await fetch(`${deleteUrl}`, options);
-      if (!response.ok) {
-        throw new Error("Failed to delete the meal plan");
-      }
-      return mealPlanId; // return the ID of the deleted meal plan
-    } catch (error) {
-      return rejectWithValue(error.message);
+    console.log("Fetching user shopping list is CALLED");
+    // dispatch(setMenumaticServerState("loading"));
+    const response = await fetch(`${deleteUrl}`, options);
+    if (!response.ok) {
+      throw new Error("Failed to delete the meal plan.");
     }
+    return await response.json();
   }
 );
 
