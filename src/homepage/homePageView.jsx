@@ -6,7 +6,7 @@ const ingredientsList = (items) => {
     <div className="ml-8 mr-4">
       <ul className="space-y-1 list-disc">
         {items.map((item, index) => (
-          <li key={index} className="font-outfit text-gunmetal">
+          <li key={index} className="font-outfit font-normal text-[18px] text-gunmetal">
             {item.nameClean}
           </li>
         ))}
@@ -30,10 +30,10 @@ const HomePageView = (props) => {
           <div className="bg-vanilla w-405 h-540 rounded-large relative shadow-xl">
 
             <div className='p-2'>
-              <p className="text-gunmetal font-outfit text-2xl font-medium">{props.apiResults[0].title}</p>
+              <p className="text-gunmetal font-outfit text-[24px] font-medium">{props.apiResults[0].title}</p>
             </div>
 
-            <div className="overflow-y-auto h-400">
+            <div className="overflow-y-auto h-[380px]">
               {ingredientsList(props.apiResults[0].extendedIngredients)}
             </div>
 
@@ -59,7 +59,7 @@ const HomePageView = (props) => {
               }} />
             <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large w-405 h-130">
               <div className='mt-2 ml-2'>
-                <p className="text-whiteSmoke font-outfit text-2xl font-medium truncate">{props.apiResults[0].title}</p>
+                <p className="text-whiteSmoke font-outfit text-[32px] font-medium truncate">{props.apiResults[0].title}</p>
               </div>
               <div className='mb-4 absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between'>
                 <div className='flex space-x-4 items-center'>
