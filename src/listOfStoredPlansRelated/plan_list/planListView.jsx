@@ -19,7 +19,7 @@ const PlanListView = (props) => {
 
   const renderMeals = (recipesName) => {
     return recipesName.map((recipe) => {
-      return (<p className="text-[18px] font-outfit text-whiteSmoke truncate mt-2 mb-2">{recipe.name}</p>);
+      return (<p className="text-[18px] font-outfit text-whiteSmoke truncate mt-2 mb-2">title={recipe.name}</p>);
     });
   };
   const RecepiePlanOverviewRow = (list) => {
