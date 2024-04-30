@@ -3,7 +3,7 @@ import "../../recommendation_page/RecepiesForAWeekViewCSS.css";
 import { useNavigate } from "react-router-dom";
 import { render } from "react-dom";
 import { useDispatch } from "react-redux";
-import {logo } from "../../assets";
+import { logo, closeBtn } from "../../assets";
 
 const plansData = {
   result: [
