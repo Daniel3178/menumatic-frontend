@@ -33,6 +33,7 @@ const PlanListPresenter = () => {
     serverState = {menumaticServerState}
       allLists={allList}
       selectAndNavigateToWeekPlan={selectAndNavigateHandler}
+      userId={userId}
     />
   );
 };

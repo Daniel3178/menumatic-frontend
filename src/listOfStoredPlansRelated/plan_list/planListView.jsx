@@ -2,6 +2,8 @@ import React from "react";
 import "../../recommendation_page/RecepiesForAWeekViewCSS.css";
 import { useNavigate } from "react-router-dom";
 import { render } from "react-dom";
+import { useDispatch } from "react-redux";
+import {logo } from "../../assets";
 
 const plansData = {
   result: [
@@ -13,20 +15,55 @@ const plansData = {
 
 const PlanListView = (props) => {
 
+  const dispatch = useDispatch();
+  
   const renderMeals = (recipesName) => {
     return recipesName.map((recipe) => {
-      return(<p >{recipe.name}</p>);
+      return (<p className="text-[18px] font-outfit text-whiteSmoke truncate mt-2 mb-2">{recipe.name}</p>);
     });
   };
   const RecepiePlanOverviewRow = (list) => {
     // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
     // console.log("list", list)
     // console.log("list.planRecipes", list.planRecipes)
+
+    const handleNavigate = () => {
+      props.selectAndNavigateToWeekPlan(list.planID);
+    };
+
+    const handleDelete = (event, mealPlanId) => {
+      event.stopPropagation(); // Prevent click event from bubbling up to the parent
+      dispatch(deleteMealPlan({ userId: props.userId, mealPlanId }));
+    };
+    
     return (
-      <div className="border border-black rounded my-4 px-4"
-      onClick = {() => {props.selectAndNavigateToWeekPlan(list.planID)}}>
-        <h1 className="text-[24px] text-center">{list.planName}</h1>
-        {renderMeals(list.planRecipes)}
+      <div className="bg-cerulean rounded-2xl my-4 px-4 shadow-xl w-[840px] h-[180px] content-center"
+        onClick={() => { handleNavigate }}>
+        <div className="grid grid-cols-4 gap-4">
+          <div className="border-r border-whiteSmoke flex justify-center">
+            <div>
+              <p className="text-[24px] font-outfit font-medium text-whiteSmoke">week</p>
+              <p className="text-[64px] font-outfit font-bold text-whiteSmoke flex justify-center">{list.planID}</p> 
+            </div>
+          </div>
+          <div>
+            {renderMeals(list.planRecipes.slice(0, 4))}
+          </div>
+          <div>
+            {renderMeals(list.planRecipes.slice(4, 7))}
+          </div>
+          <div>
+            {/*add remove button here*/}
+            <button className = "right-5 mt-2 ml-2 p-1 rounded-full text-whiteSmoke hover:bg-red-700"
+        onClick={(event) => handleDelete(event, list.planID)}
+        aria-label="Delete meal plan"
+        >
+          X
+        </button>
+          </div>
+
+        </div>
+        
         {/* Possible iteration of the recipe names contained wtihin a plan. Make so all contents are displayed and possibly overflow to a new row. Until that this is implemented, make the line above's content conspicously large */}
       </div>
     );
@@ -40,24 +77,39 @@ const PlanListView = (props) => {
       return (
         <div key={index}>
 
-        <RecepiePlanOverviewRow
-          planID={planData.id}
-          planName={planData.name}
-          planRecipes={planData.recipes}
+          <RecepiePlanOverviewRow
+            planID={planData.id}
+            planName={planData.name}
+            planRecipes={planData.recipes}
           ></RecepiePlanOverviewRow>
-          </div>
+        </div>
       );
     });
   }
 
-  if(props.serverState === "loading"){
+  if (props.serverState === "loading") {
     return <p>Loading...</p>
   }
-  else if(props.serverState === "ready"){
-  return (
-    <div>{renderList()}</div>
-  );}
-  else if(props.serverState === "failed"){
+  else if (props.serverState === "ready") {
+    return (
+      <div className="bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
+      <div className="w-[840px] mr-10 ml-10">
+        <div className="flex justify-center w-444 h-102 mt-8 mb-16">
+          <img src={logo} />
+        </div>
+        <div>
+          <p className="text-[48px] font-outfit font-bold text-gunmetal tracking-wider">WEEK PLANS</p>
+        </div>
+        <div>
+          {renderList()}
+        </div>
+      </div>
+    </div>
+    
+
+    );
+  }
+  else if (props.serverState === "failed") {
     return <p>Server is down</p>
   }
 };
