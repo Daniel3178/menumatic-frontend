@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GustavTestView from "./gustavTestView";
 import { useDispatch, useSelector } from "react-redux";
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
 
 import {
     getApiResults,

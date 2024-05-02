@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { saveTags } from "../menu/filterPageSlice";
 const url = "http://localhost:8080/api/user/create/";
 const deleteUrl = 'localhost:8080/api/user/mealplan/delete';
+
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
@@ -58,7 +60,6 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
     const custUrl = 'http://localhost:8080/api/food-preferences/set/'
     try {
       await fetch(custUrl, options);
-      alert("Data saved successfully")
     }
     catch (error) {
       alert("Saving failed, server is down");
@@ -160,12 +161,27 @@ export const fetchUserFoodPref = createAsyncThunk(
         'User-id': userId,
       },
     };  
+
     const response = await fetch(customUrl, options);
+    const fetchedData = await response.json();
+
+    const includeList = [];
+    const excludeList = [];
+
+fetchedData.forEach(item => {
+    const [type, value] = item.split('-');
+    if (type === 'include') {
+        includeList.push(value);
+    } else if (type === 'exclude') {
+        excludeList.push(value);
+    }
+});
+dispatch(saveTags({includeTags: includeList, excludeTags: excludeList}));
 
     if (!response.ok) {
       throw new Error("Failed to fetch user shopList");
     }
-    return await response.json();
+    return await fetchedData;
   }
 );
 

@@ -20,8 +20,8 @@ import { setStateLogin,
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
-import { saveIncludeTags, saveExcludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags, saveTags } from "./filterPageSlice";
+import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
 
 
 const MenuPresenter = () => {
@@ -120,8 +120,9 @@ const storedExcludeTags = useSelector(getExcludeTags)
 const storedIncludeTags = useSelector(getIncludeTags)
 
   const handleApplyFilter = (includeTags, excludeTags) => {
-    dispatch(saveIncludeTags(includeTags))
-    dispatch(saveExcludeTags(excludeTags))
+    // dispatch(saveIncludeTags(includeTags))
+    // dispatch(saveExcludeTags(excludeTags))
+    dispatch(saveTags({includeTags: includeTags, excludeTags: excludeTags}))
     navigate("/")
   }
 

@@ -2,10 +2,10 @@ import React from 'react';
 import FilterPageView from './filterPageView';
 import { useDispatch} from 'react-redux';
 import { useSelector} from 'react-redux';
-import { saveIncludeTags, saveExcludeTags, saveTags } from "./filterPageSlice";
+import { saveIncludeTags, saveExcludeTags, saveTags } from "../menu/filterPageSlice";
 import { useNavigate } from 'react-router-dom';
 
-import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
 const FilterPagePresenter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

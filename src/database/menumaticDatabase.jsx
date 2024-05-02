@@ -3,15 +3,13 @@ import { listenerMiddleware } from '../store/store'
 import {setSelectedListId} from '../listOfStoredPlansRelated/plan_list/planListSlice'
 import { useDispatch } from 'react-redux'
 import { fetchUserRecepiesByListId, saveFoodPrefToMenumaticDb } from '../store/menumaticServerAPISlice'
-import { saveTags } from '../filterpage/filterPageSlice'
+import { saveTags } from '../menu/filterPageSlice'
 const MenumaticDatabase = () => {
 
+//TODO: DEPRICATED    
 listenerMiddleware.startListening({
     actionCreator: setSelectedListId,
     effect: async (action, listenerApi) => {
-        // console.log(action.payload)
-        //TODO: uncomment when server is ready
-    //    await listenerApi.dispatch(fetchUserRecepiesByListId(action.payload))
     }
 });
 

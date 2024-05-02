@@ -12,7 +12,7 @@ import {
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 import {

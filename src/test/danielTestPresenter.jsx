@@ -19,17 +19,7 @@ const DanielTestPresenter = () => {
     // dispatch(fetchUserShopinglist({userId: userId}));
     const test = ['include-Vegetarian', 'include-Vegan', 'exclude-Egg', 'exclude-Shellfish']
 
-const includeList = [];
-const excludeList = [];
 
-test.forEach(item => {
-    const [type, value] = item.split('-');
-    if (type === 'include') {
-        includeList.push(value);
-    } else if (type === 'exclude') {
-        excludeList.push(value);
-    }
-});
 
   };
   return (

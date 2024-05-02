@@ -1,6 +1,6 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { backGreen, backBlue, backBlack, close, done } from "../assets";
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 
 const MenuView = (props) => {
 
@@ -45,6 +45,11 @@ const MenuView = (props) => {
 
   const [includedItems, setIncludedItems] = useState(props.storedIncludeTags); // State hook for included items
   const [excludedItems, setExcludedItems] = useState(props.storedExcludeTags); // State hook for excluded items
+
+  useEffect(() => {
+    setIncludedItems(props.storedIncludeTags);
+    setExcludedItems(props.storedExcludeTags);
+  },[props.storedIncludeTags, props.storedExcludeTags])
 
   // Function to handle inclusion of tags
   function includeCheckboxHandler(event) {
