@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
+import { getIsLoggedIn, getUserId, getUsername, getUserEmail, signUpAsync} from "../signUp_page/userAccountSlice"
 import MenuView from './menuView';
 
 import { getMenuStateBase,
@@ -122,11 +122,9 @@ const storedIncludeTags = useSelector(getIncludeTags)
   const handleApplyFilter = (includeTags, excludeTags) => {
     dispatch(saveIncludeTags(includeTags))
     dispatch(saveExcludeTags(excludeTags))
-    navigate("/")
   }
 
   const handleCancel = () => {
-    navigate("/")
   }
 
 

@@ -228,7 +228,7 @@ const MenuView = (props) => {
               )
             )}
           </ul>
-          <div className="flex justify-center mt-10 font-outfit tracing-wider text-whiteSmoke">
+          <div className="flex justify-center mt-10 font-outfit text-whiteSmoke">
             {/* Button to apply filters */}
             <button
               onClick={applyFilterButton}
@@ -236,9 +236,9 @@ const MenuView = (props) => {
               id="signup"
               type="submit"
             >
-              <div className="">
+              <div className="tracking-wider">
               APPLY
-            </div>
+              </div>
             </button>
           </div>
         </div>
@@ -295,6 +295,7 @@ const MenuView = (props) => {
               <span id="wrong_pass_alert"></span>
 
               <button
+                onClick={props.signUp}
                 className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-cerulean hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
                 id="signup"
                 type="submit"
