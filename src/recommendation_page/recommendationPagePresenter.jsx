@@ -27,7 +27,7 @@ const RecommendationPagePresenter = () => {
    * By Daniel
    */
   const handleGoToShoplist = () => {
-    navigate("/shoplist-test");
+    navigate("/shoplist-test", { state: "/recommendation" });
   };
 
   const handleSelectTab = (tab) => {

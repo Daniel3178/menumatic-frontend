@@ -11,6 +11,7 @@ const menuPage = createSlice({
             filter:false,
             passChange:false,
         },
+    
     },
     reducers: {
         setStateLogin: (state, action) => {

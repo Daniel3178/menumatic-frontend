@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // Importing necessary modules
 import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, done } from "../assets"; // Importing necessary assets
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 const FilterPageView = (props) => { // Creating a functional component FilterPageView with props
 
 
@@ -18,9 +18,7 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
 
     if (isSelected) {
       setIncludedItems([...includedItems, value]); // If checked, add to included items
-      // console.log(value + " isChecked");
     } else {
-      // console.log(value + " isUnChecked");
       setIncludedItems((prevData) => { // If unchecked, remove from included items
         return prevData.filter((id) => {
           return id !== value;
@@ -36,9 +34,7 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
 
     if (isSelected) {
       setExcludedItems([...excludedItems, value]); // If checked, add to excluded items
-      // console.log(value + " isChecked");
     } else {
-      // console.log(value + " isUnChecked");
       setExcludedItems((prevData) => { // If unchecked, remove from excluded items
         return prevData.filter((id) => {
           return id !== value;

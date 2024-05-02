@@ -5,7 +5,9 @@ import { generateShoplist,getRemovedItems, getAllItems, removeItem, restoreItem 
 import { getRecommendationList, getAffordableDishesList, getPopularDishesList,getSelectedTab, getQuickDishesList } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
 import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { getUserSavedRecipes } from "../store/spoonacularAPISlice";
+
 
 /**
  * ShoplistPagePresenter fetches and manages the state for the shopping list,
@@ -22,7 +24,8 @@ const ShoplistPagePresenter = () => {
   const quickDishes = useSelector(getQuickDishesList);
   const selectedTab = useSelector(getSelectedTab);
   const removedItems = useSelector(getRemovedItems);
-
+  const location = useLocation();
+  const userSavedRecipes = useSelector(getUserSavedRecipes);
 
   /**
  * @brief Handles saving meal plans to the database.
@@ -30,6 +33,19 @@ const ShoplistPagePresenter = () => {
  * @remarks The function assumes that the shoplist variable is defined and contains necessary meal information.
  */
 
+
+   const  whichPath = (props)=> {
+    console.log("WHICH PATH",props)
+    if (props.location.state === "/recommendation") {
+      const currentList = props.recommendationList;
+      return currentList;
+    } else if (
+      props.location.state === "/plan" 
+    ) {
+      const currentList = props.userList;
+      return currentList;
+    }
+  }
 
   const extractRecepies = (list) =>{
     // Array to store recipe objects
@@ -76,6 +92,7 @@ const ShoplistPagePresenter = () => {
         }));
         navigate("/")
         // window.location.reload();
+        // window.location.reload();
     }
     // Dispatching action to save the shoplist to the database
     // dispatch(saveShoplistToMenumaticDb(
@@ -93,18 +110,27 @@ const handleRestoreItem = (item) => {
 
   // Fetch and generate the shopping list when the component mounts or shoplist changes
   useEffect(() => {
+    let recommendationList =[]
     switch(selectedTab){
       case "Affordable":
-        dispatch(generateShoplist(affordableDishes))
+        recommendationList = affordableDishes;
+        // dispatch(generateShoplist(affordableDishes))
         break;
       case "Popular":
-        dispatch(generateShoplist(popularDishes))
+        recommendationList = popularDishes;
+        // dispatch(generateShoplist(popularDishes))
         break;
       case "Quick":
-        dispatch(generateShoplist(quickDishes))
+        recommendationList = quickDishes;
+        // dispatch(generateShoplist(quickDishes))
         break;
     }
-    // dispatch(generateShoplist(shoplist))
+    const currentList = whichPath({location:location,
+      recommendationList:recommendationList,
+      userList:userSavedRecipes
+    });
+    console.log("currentList",currentList)
+    dispatch(generateShoplist(currentList))
   }, [])
 
   return (
