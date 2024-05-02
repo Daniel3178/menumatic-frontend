@@ -9,6 +9,7 @@ const shoplistSlice = createSlice({
   reducers: {
     flushShoplist: (state, action) => {
       state.allItems = [];
+      state.removedItems = [];
     },
     generateShoplist: (state, action) => {
       console.log("generateShoplist SLICE", action.payload);
@@ -188,13 +189,11 @@ const shoplistSlice = createSlice({
         (item) => item.category === action.payload.category
       );
       if (index === -1) {
-        console.log("INDEX OF REMOVED not", index);
         tempRemovedItems.push({
           category: action.payload.category,
           ingredients: [action.payload],
         });
       } else {
-        console.log("INDEX OF REMOVED not", index);
         tempRemovedItems[index].ingredients.push(action.payload);
       }
       state.removedItems = tempRemovedItems;
@@ -247,13 +246,11 @@ const shoplistSlice = createSlice({
         (item) => item.category === action.payload.category
       );
       if (index === -1) {
-        console.log("INDEX OF REMOVED not", index);
         tempRemovedItems.push({
           category: action.payload.category,
           ingredients: [action.payload],
         });
       } else {
-        console.log("INDEX OF REMOVED not", index);
         tempRemovedItems[index].ingredients.push(action.payload);
       }
       state.allItems = tempRemovedItems;

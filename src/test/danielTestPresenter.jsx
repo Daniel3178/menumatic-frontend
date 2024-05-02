@@ -16,7 +16,21 @@ const DanielTestPresenter = () => {
   const handleGetRandomReceipt = () => {
     // console.log("Button Clicked");
     // dispatch(saveShoplistToMenumaticDb({userId: userId, data:{name: "test", ingredients: ["test1", "test2"]}}));
-    dispatch(fetchUserShopinglist({userId: userId}));
+    // dispatch(fetchUserShopinglist({userId: userId}));
+    const test = ['include-Vegetarian', 'include-Vegan', 'exclude-Egg', 'exclude-Shellfish']
+
+const includeList = [];
+const excludeList = [];
+
+test.forEach(item => {
+    const [type, value] = item.split('-');
+    if (type === 'include') {
+        includeList.push(value);
+    } else if (type === 'exclude') {
+        excludeList.push(value);
+    }
+});
+
   };
   return (
     <DanielTestView
