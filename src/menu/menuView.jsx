@@ -228,7 +228,7 @@ const MenuView = (props) => {
               )
             )}
           </ul>
-          <div className="flex justify-center mt-10 font-outfit tracing-wider text-whiteSmoke">
+          <div className="flex justify-center mt-10 font-outfit text-whiteSmoke">
             {/* Button to apply filters */}
             <button
               onClick={applyFilterButton}
@@ -236,9 +236,9 @@ const MenuView = (props) => {
               id="signup"
               type="submit"
             >
-              <div className="">
+              <div className="tracking-wider">
               APPLY
-            </div>
+              </div>
             </button>
           </div>
         </div>
