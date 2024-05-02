@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import PlanView from "./planView";
 import {
   getMenumaticAllList,
-  getMenumaticState,
+  getMenumaticState, fetchExcludedIngredients
 } from "../../store/menumaticServerAPISlice";
 import { searchBySpoonacularApiBulkAsync } from "../../store/spoonacularAPISlice";
 const PlanPresenter = () => {

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PlanListView from "./planListView";
 import { useNavigate } from "react-router-dom";
-import { getMenumaticAllList, getMenumaticState, fetchUserShopinglist } from "../../store/menumaticServerAPISlice";
+import { getMenumaticAllList, getMenumaticState, fetchUserShopinglist, fetchExcludedIngredients } from "../../store/menumaticServerAPISlice";
 import { setSelectedListId } from "./planListSlice";
 import { getUserId } from "../../signUp_page/userAccountSlice";
 
@@ -15,6 +15,7 @@ const PlanListPresenter = () => {
 
   const selectAndNavigateHandler = (weekId) => {
     dispatch(setSelectedListId(weekId));
+    dispatch(fetchExcludedIngredients(weekId))
     navigate("/plan");
   };
 

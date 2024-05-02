@@ -120,6 +120,26 @@ export const saveExcludedIngredients = createAsyncThunk(
   }
 );
 
+export const fetchExcludedIngredients = createAsyncThunk(
+  "menumaticServerApi/fetchExcludedIngredients",
+  async (info) => {
+    const customUrl = "http://localhost:8080/api/mealplan/excluded-ingredients/get/";
+    const mealplanId = info;
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'mealplan-id': mealplanId,
+      },
+    };
+    const response = await fetch(customUrl, options);
+    const data = await response.json();
+
+    return {mealplanId: mealplanId, ingredients: data};
+
+  }
+);
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/fetchUserShopinglist",
@@ -212,6 +232,7 @@ const menumaticServerApi = createSlice({
   initialState: {
     allList: [],
     userFoodPref:[],
+    excludedIngredient: {},
     state: "loading",
     selectedList: {
       listId: null,
@@ -246,6 +267,10 @@ const menumaticServerApi = createSlice({
       state.selectedList.recepies = action.payload;
     }).addCase(fetchUserRecepiesByListId.rejected, (state, action) => {
       state.state = "failed";
+    }).addCase(fetchExcludedIngredients.fulfilled, (state, action) => {
+      state.state = "ready";
+      state.excludedIngredient.mealplanId = action.payload.mealplanId;
+      state.excludedIngredient.ingredients = action.payload.ingredients;
     });
   },
 });
