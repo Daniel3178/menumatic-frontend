@@ -281,6 +281,7 @@ export const getMenumaticSavedRecipes = (state) =>
   state.menumaticServerApi.userSavedRecipes;
 export const getMenumaticSelecedList = (state) =>
   state.menumaticServerApi.selectedList;
+export const getExcludedIngredients = (state) => state.menumaticServerApi.excludedIngredient.ingredients;
 export const getMenumaticState = (state) => state.menumaticServerApi.state;
 export const { setSelectedListId, flushUserData, setMenumaticServerState } =
   menumaticServerApi.actions;

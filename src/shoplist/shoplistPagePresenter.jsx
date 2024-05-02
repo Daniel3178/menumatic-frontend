@@ -7,6 +7,7 @@ import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
 import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice"
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getUserSavedRecipes } from "../store/spoonacularAPISlice";
+import { getExcludedIngredients } from "../store/menumaticServerAPISlice";
 
 
 /**
@@ -26,6 +27,7 @@ const ShoplistPagePresenter = () => {
   const removedItems = useSelector(getRemovedItems);
   const location = useLocation();
   const userSavedRecipes = useSelector(getUserSavedRecipes);
+  const userExcludedIngredients = useSelector(getExcludedIngredients);
 
   /**
  * @brief Handles saving meal plans to the database.
@@ -34,16 +36,25 @@ const ShoplistPagePresenter = () => {
  */
 
 
-   const  whichPath = (props)=> {
+   const  handleOriginPath = (props)=> {
     console.log("WHICH PATH",props)
     if (props.location.state === "/recommendation") {
       const currentList = props.recommendationList;
-      return currentList;
+      dispatch(generateShoplist(currentList))
+      // return currentList;
     } else if (
       props.location.state === "/plan" 
     ) {
-      const currentList = props.userList;
-      return currentList;
+      userExcludedIngredients.map((ingr)=>{
+        allItems.map((category)=>{
+          category.ingredients.map((item)=>{
+            if(item.name === ingr){
+              dispatch(removeItem(item))
+            }
+          })
+        })
+      })
+      // return currentList;
     }
   }
 
@@ -114,23 +125,17 @@ const handleRestoreItem = (item) => {
     switch(selectedTab){
       case "Affordable":
         recommendationList = affordableDishes;
-        // dispatch(generateShoplist(affordableDishes))
         break;
       case "Popular":
         recommendationList = popularDishes;
-        // dispatch(generateShoplist(popularDishes))
         break;
       case "Quick":
         recommendationList = quickDishes;
-        // dispatch(generateShoplist(quickDishes))
         break;
     }
-    const currentList = whichPath({location:location,
+    handleOriginPath({location:location,
       recommendationList:recommendationList,
-      userList:userSavedRecipes
     });
-    console.log("currentList",currentList)
-    dispatch(generateShoplist(currentList))
   }, [])
 
   console.log(allItems)

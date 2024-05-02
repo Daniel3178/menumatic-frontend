@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { backGreen, backBlue, backBlack, close, done } from "../assets";
 import {Transition } from '@headlessui/react'
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 
 const MenuView = (props) => {
   

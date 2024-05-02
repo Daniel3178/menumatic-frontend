@@ -133,7 +133,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
         result: recipe
       })
     })
-
+    dispatch(generateShoplist(result))
 
 // console.log("Result Rebuilt", result)
     // dispatch(generateShoplist(result))
