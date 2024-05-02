@@ -117,22 +117,22 @@ const ShoplistPageView = (props) => {
         >
           <button
             onClick={() => props.removeItem(ingr)}
-            className=" border-2 border-black-300 h-6 w-6 rounded-[100px] font-bold text-whiteSmoke transition-all duration-700 ease-in-out hover:bg-yellowGreen"
+            className=" peer border-2 border-black-300 h-6 w-6 rounded-[100px] font-bold text-whiteSmoke transition-all duration-700 ease-in-out hover:bg-yellowGreen"
           >
-            Remove
+            
           </button>
-          <div className="flex flex-row ">
+          <div className="flex flex-row peer-hover:line-through">
             {ingr.measures.map((measure) => {
               
               return (
-                <div className="flex pr-[40px] justify-end">
-                  <div className="w-20">{parseFloat(measure.amount.toFixed(2))}</div>
+                <div className="flex pr-[40px] justify-end ">
+                  <div className="w-20">{measure.amount > 10 ? Math.round(measure.amount) : parseFloat(measure.amount.toFixed(2))}</div>
                   <div className="w-10">{measure.unit}</div>
                 </div>
               );
             })}
           </div>
-          <div className=" w-[30%] self-end text-start pl-[40px]">{ingr.name}</div>
+          <div className="peer-hover:line-through w-[40%] self-end text-start pl-[40px]">{ingr.name}</div>
         </div>
       ));
     } else if (ing.ingredients.length === 0) {
@@ -151,7 +151,7 @@ const ShoplistPageView = (props) => {
             onClick={() => props.restoreItem(ingr)}
             className=" border-2 border-yellowGreen bg-yellowGreen h-6 w-6 rounded-[100px] font-bold transition-all duration-700 ease-in-out hover:bg-white"
           >
-            Remove
+            
           </button>
           <div className="">
             {ingr.measures.map((measure, index) => {
