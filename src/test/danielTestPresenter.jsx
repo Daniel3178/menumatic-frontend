@@ -31,8 +31,6 @@ test.forEach(item => {
     }
 });
 
-console.log("Include List: ", includeList);
-console.log("Exclude List: ", excludeList);
   };
   return (
     <DanielTestView

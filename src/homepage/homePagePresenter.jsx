@@ -21,8 +21,8 @@ import {
 } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
-
-
+import {flushRecommendationList} from "../recommendation_page/recommendationPageSlice"
+import {flushShoplist} from "../shoplist/shoplistSlice"
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
   //TODO: Change objetcs[0] to apiResult in order to bring back the API functionality
