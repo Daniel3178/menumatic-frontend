@@ -136,7 +136,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
 
 
 // console.log("Result Rebuilt", result)
-    dispatch(generateShoplist(result))
+    // dispatch(generateShoplist(result))
     return result;
   }
 );
@@ -175,4 +175,5 @@ export const { popFirstRecipe, setSavedRecipesState } = spoonacularApi.actions;
 export const getApiResults = (state) => state.spoonacularApi.results;
 export const getApiResultsState = (state) => state.spoonacularApi.resultsState;
 export const getSavedRecipesState = (state) => state.spoonacularApi.savedRecipesState;
+export const getUserSavedRecipes = (state) => state.spoonacularApi.userSavedRecipes;
 export default spoonacularApi.reducer;
