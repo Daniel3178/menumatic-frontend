@@ -1,56 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { connectStorageEmulator } from "firebase/storage";
+import {calcPortionIngredients, normalizeCategoryIngredients,parseIngredients } from "./shoplistUtilities";
 
 const shoplistSlice = createSlice({
   name: "Shoplist",
   initialState: {
     allItems: [],
+    removedItems: [],
   },
   reducers: {
+    flushShoplist: (state, action) => {
+      state.allItems = [];
+      state.removedItems = [];
+    },
     generateShoplist: (state, action) => {
-      /**
-       * Takes an object meal: {{result}, portions}
-       * retrieves the data needed for creating the shopping list:
-       *    *portions: number of portions specified by user
-       *    *servings: number of servings for the recipe
-       *    *ingredients: array of ingredients for recipe from which following is retrieved
-       *        *nameClean: name of ingredient
-       *        *measures.metric.amount: amount of ingredient in metric
-       *        *measures.metric.unitShort: unit for the ingredient in metric
-       *
-       * calcAmount: calculates amount of each ingredient in order to get wanted amount of portions
-       * pushes stripped objects {name, amount, unit} into IngrArr (to be returned to next function)
-       *
-       * @param {Objct} meal - A meal object containing portions (number) and result (object), 
-       * where result includes serving details and a list of ingredients.
-       * @function
-       * @returns {Array<Object>} ingrArr - An array of objects, each representing an ingredient
-       * with its name, calculated amount, and unit.
-       *
-       */
-      const stripIngr = (meal) => {
-        const portions = meal.portions;
-        const servings = meal.result.servings;
-        const ingredients = meal.result.extendedIngredients;
-        const ingrArr = [];
-        for (let i = 0; i < ingredients.length; i++) {
-          let calcAmount = 0;
-          if (ingredients[i].measures.metric.amount > 0.1) {
-            calcAmount =
-              ingredients[i].measures.metric.amount * (portions / servings);
-          } else {
-            calcAmount = ingredients[i].measures.metric.amount;
-          }
-          ingrArr.push({
-            name: ingredients[i].nameClean,
-            amount: calcAmount,
-            unit: ingredients[i].measures.metric.unitShort,
-          });
-        }
-        return ingrArr;
-      };
-      console.log(stripIngr(action.payload[0]));
-
       /**
        * Updates the allItems state with the provided list of items. For each item in the input list,
        * the function checks if the item already exists in the state's allItems list. If an item exists,
@@ -62,33 +24,118 @@ const shoplistSlice = createSlice({
        * Each object in the array should have a name property (string) representing the item's name,
        * and an amount property (number) representing the quantity of the item.
        */
-
-      const updateAllItems = (props) => {
-        for (let i = 0; i < props.length; i++) {
-          let flag = -1;
-          for (let j = 0; j < state.allItems.length; j++) {
-            if (props[i].name === state.allItems[j].name) {
-              // console.log("!!DUPE FOUND!!" + props[i].name + " and " + state.allItems[j].name)
-              state.allItems[j].amount += props[i].amount;
-              flag = 1;
-            }
+      const updateOrAddItems = (props) => {
+        props.forEach(prop => {
+          const existingItemIndex = state.allItems.findIndex(item => item.name === prop.name);
+          if (existingItemIndex !== -1) {
+            state.allItems[existingItemIndex].amount += prop.amount;
+          } else {
+            state.allItems.push(prop);
           }
-          if (flag == -1) {
-            state.allItems.push(props[i]);
-          }
-        }
-        for (let i = 0; i < state.allItems.length; i++) {
-          let cur = state.allItems[i].amount;
-          state.allItems[i].amount = Math.ceil(cur * 10) / 10;
-        }
+        });
+        state.allItems.forEach(item => {
+          item.amount = Math.ceil(item.amount * 10) / 10;
+        });
       };
 
-      for (let i = 0; i < action.payload.length; i++) {
-        updateAllItems(stripIngr(action.payload[i]));
+      action.payload.forEach(item => {
+        updateOrAddItems(calcPortionIngredients(item));
+      });
+
+      const categorizedIngredients = [];
+      state.allItems.forEach((item) => {
+        const category = item.category;
+        const index = categorizedIngredients.findIndex(
+          (categorizedItem) => categorizedItem.category === category
+        );
+        if (index === -1) {
+          categorizedIngredients.push({
+            category: category,
+            ingredients: [item],
+          });
+        } else {
+          categorizedIngredients[index].ingredients.push(item);
+        }
+      });
+      categorizedIngredients.forEach((category) =>
+      normalizeCategoryIngredients(category)
+      );
+      state.allItems = categorizedIngredients;
+    },
+    removeItem: (state, action) => {
+      const tempItems = [];
+      state.allItems.forEach((category) => {
+        tempItems.push({
+          category: category.category,
+          ingredients: parseIngredients(category.ingredients),
+        });
+      });
+      tempItems.map((category) => {
+        category.ingredients = category.ingredients.filter(
+          (item) => item.name !== action.payload.name
+        );
+      });
+      state.allItems = tempItems;
+      const tempRemovedItems = [];
+      state.removedItems.forEach((category) => {
+        tempRemovedItems.push({
+          category: category.category,
+          ingredients: parseIngredients(category.ingredients),
+        });
+      });
+      const index = tempRemovedItems.findIndex(
+        (item) => item.category === action.payload.category
+      );
+      if (index === -1) {
+        tempRemovedItems.push({
+          category: action.payload.category,
+          ingredients: [action.payload],
+        });
+      } else {
+        tempRemovedItems[index].ingredients.push(action.payload);
       }
+      state.removedItems = tempRemovedItems;
+    },
+    restoreItem: (state, action) => {
+      const tempItems = [];
+      state.removedItems.forEach((category) => {
+        tempItems.push({
+          category: category.category,
+          ingredients: parseIngredients(category.ingredients),
+        });
+      });
+      tempItems.map((category) => {
+        category.ingredients = category.ingredients.filter(
+          (item) => item.name !== action.payload.name
+        );
+      });
+      state.removedItems = tempItems;
+      const tempRemovedItems = [];
+      state.allItems.forEach((category) => {
+        tempRemovedItems.push({
+          category: category.category,
+          ingredients: parseIngredients(category.ingredients),
+        });
+      });
+
+      const index = tempRemovedItems.findIndex(
+        (item) => item.category === action.payload.category
+      );
+      if (index === -1) {
+        tempRemovedItems.push({
+          category: action.payload.category,
+          ingredients: [action.payload],
+        });
+      } else {
+        tempRemovedItems[index].ingredients.push(action.payload);
+      }
+      state.allItems = tempRemovedItems;
     },
   },
 });
 export const getAllItems = (state) => state.shoplist.allItems;
-export const { generateShoplist } = shoplistSlice.actions;
+export const getRemovedItems = (state) => state.shoplist.removedItems;
+
+export const { generateShoplist, flushShoplist, removeItem, restoreItem } =
+  shoplistSlice.actions;
 export default shoplistSlice.reducer;
