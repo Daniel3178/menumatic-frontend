@@ -1,16 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import PlanPresenter from "./planPresenter";
-import { logo } from "../../assets";
+import { logo, backBlack } from "../../assets";
 
-const PlanView = ({ week, recipes, goToShoplist, state }) => {
+const PlanView = ({ week, recipes, goToShoplist, state, navigateBack }) => {
   if (state === "ready") {
 
     return (
+      
       <div className="flex-col w-[840px] font-outfit">
         <div className="flex justify-center w-444 h-102 mt-8 mb-16">
           <img src={logo} />
         </div>
+        <button className="text-whiteSmoke hover:shadow-xl"
+              onClick={() => navigateBack()} aria-label="go back">
+              <img src={backBlack} />
+            </button>
         <h1 className="text-center font-regular pb-10 text-cerulean">Recipes for {week}</h1>
         <div>
           <div className="mb-4 font-outfit text-2xl font-medium w-full flex items-center justify-center">

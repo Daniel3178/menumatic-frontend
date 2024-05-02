@@ -29,6 +29,10 @@ const PlanPresenter = () => {
     navigate("/shoplist-test", { state: "/plan" });
   };
 
+  const handleNavigateBack = () => {
+    navigate(-1);
+  }
+
   useEffect(() => {
     const allIds = [];
     allIds.push(
@@ -45,6 +49,7 @@ const PlanPresenter = () => {
       recipes={selectedWeekPlan.recipes}
       goToShoplist={handleGoToShoplist}
       state={menumaticServerState}
+      navigateBack={handleNavigateBack}
     />
   );
 };
