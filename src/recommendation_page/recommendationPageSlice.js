@@ -70,7 +70,6 @@ const recommendation = createSlice({
           break;
         }
         case "Popular": {
-          // console.log("popular dishes");
           state.popularDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;
@@ -79,7 +78,6 @@ const recommendation = createSlice({
           break;
         }
         case "Quick": {
-          // console.log("quick dishes")
           state.quickDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;
