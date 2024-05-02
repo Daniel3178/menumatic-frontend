@@ -9,77 +9,19 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
     const data = info.data;
     const excluded = info.excluded;
     const options = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'User-id': userId,
+        "Content-Type": "application/json",
+        "User-id": userId,
       },
       body: JSON.stringify(data),
     };
-
-    // console.log("MY STATE:",options)
-    try {
-      await fetch(url, options);
-      const mealplanId = 2;
-      console.log("EVERYTHING IS FINE")
-      // console.log("Response", response.state)
-      // if (!response.ok) {
-      //   throw new Error('Failed to post data');
-      // }
-      dispatch(saveExcluded({mealplanId: mealplanId, data: excludeItems}));
-      // const responseData = await response.json();
-      // console.log("Response:", responseData);
-      // console.log(responseData.data);
-
-      alert("Data saved successfully")
-      // return responseData;
-    }
-    catch (error) {
-      // console.log("Error:", error);
-      alert("Saving failed, server is down");
-      return error;
-    
-    }
-  }
-);
-
-
-export const saveExcluded = createAsyncThunk(
-  "menumaticServerApi/saveExcluded",
-  async (info) => {
-    const custUrl = "http://localhost:8080/api/mealplan/excluded-ingredients/";
-    const mealplanId = info.mealplanId;
-    const data = info.data;
-
-    const parseData = (list)=>{
-      const result = [];
-      list.map((item)=>{
-        result.push(
-          JSON.stringify(item)
-        )
-      });
-      return result;
-    }
-
-
-    console.log("DATA SENT TO EXCLUDED", data)
-    console.log("DATA SENT TO EXCLUDED PARSED", JSON.stringify(parseData( data)))
-    console.log("DATA SENT TO EXCLUDED MEALPLAN ID", mealplanId)
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'mealplan-Id': mealplanId,
-      },
-      body: JSON.stringify(parseData(data)),
-    };
-    console.log("MY STATE:",options)
-
+    console.log("MY STATE:", options);
     try {
       await fetch(custUrl, options);
       // console.log("Response", response.state)
       if (!response.ok) {
-        throw new Error('Failed to post data');
+        throw new Error("Failed to post data");
       }
       const responseData = await response.json();
       // console.log("Response:", responseData);
@@ -91,7 +33,6 @@ export const saveExcluded = createAsyncThunk(
       // console.log("Error:", error);
       alert("Saving failed, server is down");
       return error;
-    
     }
   }
 );
@@ -145,7 +86,27 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
       alert("Saving failed, server is down");
       return error;
     
+    }});
+export const deleteMealPlan = createAsyncThunk(
+  "menumaticServerApi/deleteMealPlan",
+  async ({ info }) => {
+    const userId = info.userId;
+    const mealPlanId = info.mealPlanId;
+    const options = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "User-id": userId,
+      },
+      body: JSON.stringify({ mealPlanId }),
+    };
+    console.log("Fetching user shopping list is CALLED");
+    // dispatch(setMenumaticServerState("loading"));
+    const response = await fetch(`${deleteUrl}`, options);
+    if (!response.ok) {
+      throw new Error("Failed to delete the meal plan.");
     }
+    return await response.json();
   }
 );
 
@@ -205,10 +166,10 @@ export const fetchUserShopinglist = createAsyncThunk(
     // console.log(info)
     // console.log(userId)
     const options = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'User-id': userId,
+        "Content-Type": "application/json",
+        "User-id": userId,
       },
     };
     console.log("Fetching user shopping list is CALLED");
@@ -239,11 +200,11 @@ export const fetchUserFoodPref = createAsyncThunk(
       },
     };
     console.log("Fetching user shopping list is CALLED");
-  // dispatch(setMenumaticServerState("loading"));    
+    // dispatch(setMenumaticServerState("loading"));
     const response = await fetch(customUrl, options);
 
     if (!response.ok) {
-      throw new Error('Failed to fetch user shopList');
+      throw new Error("Failed to fetch user shopList");
     }
     // console.log(response)
     return await response.json();
@@ -256,15 +217,14 @@ export const fetchUserFoodPref = createAsyncThunk(
 export const fetchUserRecepiesByListId = createAsyncThunk(
   "menumaticServerApi/fetchUserRecepiesByListId",
   async (info) => {
-
     const userId = info.userId;
     const listId = info.listId;
     const paramUrl = `https://localhost:8080?id=${listId}`;
     const options = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'User-id': userId,
+        "Content-Type": "application/json",
+        "User-id": userId,
       },
     };
 
@@ -279,10 +239,10 @@ const menumaticServerApi = createSlice({
     allList: [],
     userFoodPref:[],
     state: "loading",
-    selectedList:{
+    selectedList: {
       listId: null,
-      recepies:[]
-    }
+      recepies: [],
+    },
   },
 
   reducers: {
@@ -320,8 +280,11 @@ const menumaticServerApi = createSlice({
   },
 });
 export const getMenumaticAllList = (state) => state.menumaticServerApi.allList;
-export const getMenumaticSavedRecipes = (state) => state.menumaticServerApi.userSavedRecipes;
-export const getMenumaticSelecedList = (state) => state.menumaticServerApi.selectedList;
+export const getMenumaticSavedRecipes = (state) =>
+  state.menumaticServerApi.userSavedRecipes;
+export const getMenumaticSelecedList = (state) =>
+  state.menumaticServerApi.selectedList;
 export const getMenumaticState = (state) => state.menumaticServerApi.state;
-export const { setSelectedListId, flushUserData, setMenumaticServerState } = menumaticServerApi.actions;
+export const { setSelectedListId, flushUserData, setMenumaticServerState } =
+  menumaticServerApi.actions;
 export default menumaticServerApi.reducer;

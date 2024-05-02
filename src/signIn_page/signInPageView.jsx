@@ -9,7 +9,6 @@ const SignInPageView = (props) => {
 
   return (  
   <form className="w-full mt-10 flex justify-center items-center flex-col" onSubmit={handleSignInCB}>
-    
     <input
       className="m-1 p-2 w-64 h-12 border border-gray-300 rounded-md "
       type="email"
