@@ -5,7 +5,7 @@ import { useSelector} from 'react-redux';
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
 import { useNavigate } from 'react-router-dom';
 
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 const FilterPagePresenter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,7 +23,8 @@ const FilterPagePresenter = () => {
   }
 
   return (
-    <FilterPageView applyFilter={handleApplyFilter} cancel={handleCancel} 
+    <FilterPageView 
+    applyFilter={handleApplyFilter} cancel={handleCancel} 
     storedExcludeTags={storedExcludeTags}
     storedIncludeTags={storedIncludeTags}/>
   );

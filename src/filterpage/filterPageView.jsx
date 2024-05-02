@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // Importing necessary modules
 import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, done } from "../assets"; // Importing necessary assets
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 const FilterPageView = (props) => { // Creating a functional component FilterPageView with props
 
 

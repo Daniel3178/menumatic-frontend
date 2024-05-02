@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
 import MenuView from './menuView';
+
 import { getMenuStateBase,
   getMenuStateLogin,
   getMenuStateSignup,
   getMenuStateSettings,
   getMenuStateFilter,
   getMenuStatePassChange } from "./menuSlice";
+
 import { setStateLogin,
   setStateSignup,
   setStateSettings,
@@ -18,6 +19,10 @@ import { setStateLogin,
 
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
+
+import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import { saveIncludeTags, saveExcludeTags } from "../filterpage/filterPageSlice";
+
 
 const MenuPresenter = () => {
   const dispatch = useDispatch();
@@ -102,13 +107,27 @@ const MenuPresenter = () => {
 
 //*************SIGN UP STUFF*************
 
-const handleSignUp = (e) => {
-  e.preventDefault();
-  dispatch(signUpAsync({ email, password }));
-  setEmail("");
-  setPassword("");
-}
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    dispatch(signUpAsync({ email, password }));
+    setEmail("");
+    setPassword("");
+  }
 
+//************FILTER STUFF************
+
+const storedExcludeTags = useSelector(getExcludeTags)
+const storedIncludeTags = useSelector(getIncludeTags)
+
+  const handleApplyFilter = (includeTags, excludeTags) => {
+    dispatch(saveIncludeTags(includeTags))
+    dispatch(saveExcludeTags(excludeTags))
+    navigate("/")
+  }
+
+  const handleCancel = () => {
+    navigate("/")
+  }
 
 
   return (
@@ -143,6 +162,10 @@ const handleSignUp = (e) => {
       signOut ={handleSignOutACB}
 
       signUp={handleSignUp}
+
+      applyFilter={handleApplyFilter} cancel={handleCancel} 
+      storedExcludeTags={storedExcludeTags}
+      storedIncludeTags={storedIncludeTags}
     />
     );
 }
