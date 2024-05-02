@@ -11,7 +11,6 @@ const shoplistSlice = createSlice({
       state.allItems = [];
     },
     generateShoplist: (state, action) => {
-      console.log("generateShoplist SLICE", action.payload);
       /**
        * Takes an object meal: {{result}, portions}
        * retrieves the data needed for creating the shopping list:
@@ -123,14 +122,16 @@ const shoplistSlice = createSlice({
           const ingrIndex = newIngredients.findIndex(
             (newIngredient) => newIngredient.name === ingredient.name
           );
-          if (ingrIndex === -1) {
-            newIngredients.push({
-              category: ingredient.category,
-              name: ingredient.name,
-              measures: ingredient.measures,
-            });
-          } else {
-            newIngredients[ingrIndex].measures.push(ingredient.measures[0]);
+          if(!(ingredient.name == undefined && ingredient.measures == undefined)){
+            if (ingrIndex === -1) {
+              newIngredients.push({
+                category: ingredient.category,
+                name: ingredient.name,
+                measures: ingredient.measures,
+              });
+            } else {
+              newIngredients[ingrIndex].measures.push(ingredient.measures[0]);
+            }
           }
         });
         category.ingredients = newIngredients;

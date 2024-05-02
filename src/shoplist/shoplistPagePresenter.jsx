@@ -106,6 +106,7 @@ const handleRestoreItem = (item) => {
     // dispatch(generateShoplist(shoplist))
   }, [])
 
+  console.log(allItems)
   return (
     <ShoplistPageView
       allItems={allItems}

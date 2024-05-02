@@ -87,7 +87,7 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  const parseToStringArray = () => {
+  function parseToStringArray(){
     const resultArray = [];
     props.allItems.forEach((ingredient) => {
       resultArray.push(
@@ -97,7 +97,8 @@ const ShoplistPageView = (props) => {
     return resultArray;
   };
 
-  const showIngredientsRemove = (ing) => {
+  const showRemovableIngredients = (ing) => {
+    console.log(ing);
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
@@ -108,10 +109,11 @@ const ShoplistPageView = (props) => {
             onClick={() => props.removeItem(ingr)}
             className="border border-black bg-slate-500"
           >
-            Remov
+            Remove
           </button>
           <div className="flex flex-row ">
-            {ingr.measures.map((measure, index) => {
+            {ingr.measures.map((measure) => {
+              
               return (
                 <div className=" flex-row pr-[40px] ">{`${measure.amount.toFixed(
                   2
@@ -127,7 +129,7 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  const showIngredientsRestore = (ing) => {
+  const showRestorableIngredients = (ing) => {
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
@@ -138,7 +140,7 @@ const ShoplistPageView = (props) => {
             onClick={() => props.restoreItem(ingr)}
             className="border border-black bg-slate-500"
           >
-            Remov
+            Remove
           </button>
           <div className="flex flex-row ">
             {ingr.measures.map((measure, index) => {
@@ -157,7 +159,7 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  const renderIngredients = (list, shoIngr) => {
+  const renderIngredients = (list, showIngredientFunction) => {
     const conditionRender = (ingr) => {
       if (ingr.ingredients.length > 0) {
         return (
@@ -175,7 +177,7 @@ const ShoplistPageView = (props) => {
         {/* <h1 className="">{` Category : ${ingredientData.category}`}</h1> */}
         {conditionRender(ingredientData)}
         {/* {console.log(ingredientData)} */}
-        {shoIngr(ingredientData)}
+        {showIngredientFunction(ingredientData)}
       </div>
     ));
   };
@@ -227,9 +229,9 @@ const ShoplistPageView = (props) => {
             }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download PDF</button>
              */}
           </div>
-          {renderIngredients(props.allItems, showIngredientsRemove)}
+          {renderIngredients(props.allItems, showRemovableIngredients)}
           <h1>REMOVED ITEMS</h1>
-          {renderIngredients(props.removedItems, showIngredientsRestore)}
+          {renderIngredients(props.removedItems, showRestorableIngredients)}
         </div>
       );
     } else {
