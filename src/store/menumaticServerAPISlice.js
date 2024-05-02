@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const url = "http://localhost:8080/api/user/create/";
-const deleteUrl = 'http://130.229.176.192:8080/api/user/mealplans/delete';
+const deleteUrl = 'localhost:8080/api/user/mealplan/delete';
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
