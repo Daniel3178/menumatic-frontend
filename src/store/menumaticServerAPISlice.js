@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'http://130.229.176.192:8080/api/user/create/';
+import { connectStorageEmulator } from "firebase/storage";
+const url = 'http://localhost:8080/api/user/create/';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
@@ -15,15 +16,19 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
       },
       body: JSON.stringify(data),
     };
-    // console.log("MY STATE:",options)
+    console.log("MY STATE:",options)
+
     try {
       const response = await fetch(url, options);
       // console.log("Response", response.state)
+      console.log("Response", response);
       if (!response.ok) {
         throw new Error('Failed to post data');
       }
       const responseData = await response.json();
-      // console.log("Response:", responseData);
+      const {mealplan_id} = responseData;
+      console.log("Response:", mealplan_id);
+      dispatch(saveExcludedIngredients(mealplan_id));
       // console.log(responseData.data);
       alert("Data saved successfully")
       return responseData;
@@ -36,6 +41,35 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
     }
   }
 );
+
+export const saveExcludedIngredients = createAsyncThunk(
+  "menumaticServerApi/saveExcludedIngredients",
+  async (info) => {
+    // dispatch(setMenumaticServerState("loading"));
+    const customUrl = "http://localhost:8080/api/mealplan/excluded-ingredients/set/";
+    const mealplanId = info;
+    // console.log(info)
+    // console.log(userId)
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'mealplan-id': mealplanId,
+      },
+    };
+
+    // console.log("Fetching user shopping list is CALLED");
+  // dispatch(setMenumaticServerState("loading"));    
+    await fetch(customUrl, options);
+
+    // if (!response.ok) {
+    //   throw new Error('Failed to fetch user shopList');
+    // }
+    // console.log(response)
+    // return await response.json();
+  }
+);
+
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
