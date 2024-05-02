@@ -3,10 +3,15 @@ import { backGreen, backBlue, backBlack, close, done } from "../assets";
 import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 
 const MenuView = (props) => {
+
+  //********LOGIN FUNCTION*********
   const handleSignInCB = (e) => {
     e.preventDefault();
     props.signIn({ email: props.email, password: props.password });
   };
+
+
+  //********SIGNUP FUNCTION***********
 
   function validate_password() {
     let pass = document.getElementById("pass").value;
@@ -25,6 +30,8 @@ const MenuView = (props) => {
       document.getElementById("signup").disabled = false;
     }
   }
+
+  //*******FILTER FUNCTIONS*******
 
   const includeTags = ["Pescetarian", "Vegetarian", "Vegan", "Primal"]; // Array of tags that can be include
   const excludeTags = [
@@ -82,10 +89,47 @@ const MenuView = (props) => {
 
   }
 
+
+  //***********MENU VIEWS***********
+
+  const settingsMenu = () => {
+    if(props.stateSettings){
+      return(
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen font-outfit text-cerulean animate-slide-in">
+          <button
+            onClick={props.hideSettings}
+            className="justify-start ml-6 mt-6"
+          >
+            <img src={backBlue} />
+          </button>
+          <div className="flex place-content-center mt-10">
+          <button
+              className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+            >
+              <div className="place-content-center text-whiteSmoke text-lg font-outfit">
+                CHANGE PASSWORD
+              </div>
+            </button>
+          </div>
+          <div className="flex place-content-center mt-10">
+          <button
+              className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+            >
+              <div className="place-content-center text-whiteSmoke text-lg font-outfit">
+                DELETE ACCOUNT
+              </div>
+            </button>
+          </div>
+
+        </div>
+      )
+    }
+  }
+
   const filterMenu = () => {
     if (props.stateFilter) {
       return (
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen text-cerulean animate-slide-in">
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
           <button
             onClick={props.hideFilter}
             className="justify-start ml-6 mt-6"
@@ -184,15 +228,17 @@ const MenuView = (props) => {
               )
             )}
           </ul>
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center mt-10 font-outfit tracing-wider text-whiteSmoke">
             {/* Button to apply filters */}
             <button
               onClick={applyFilterButton}
-              className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-cerulean hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-cerulean hover:shadow-mid"
               id="signup"
               type="submit"
             >
+              <div className="">
               APPLY
+            </div>
             </button>
           </div>
         </div>
@@ -325,6 +371,7 @@ const MenuView = (props) => {
     if (props.isLoggedIn) {
       return (
         <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
+          {settingsMenu()}
           {filterMenu()}
           <div className="flex justify-center mt-6">
             <button
@@ -359,7 +406,10 @@ const MenuView = (props) => {
               </button>
             </div>
             <div>
-              <button className="mt-10 hover:underline">
+              <button 
+              className="mt-10 hover:underline"
+              onClick={props.showSettings}
+              >
                 Account settings
               </button>
             </div>
