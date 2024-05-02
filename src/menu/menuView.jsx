@@ -100,10 +100,10 @@ const MenuView = (props) => {
       return(
         <Transition
         show={props.stateSettings}
-        enter="transition-opacity duration-300"
+        enter="transition-opacity duration-150"
         enterFrom="opacity-0"
         enterTo="opacity-100"
-        leave="transition-opacity duration-300"
+        leave="transition-opacity duration-150"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
@@ -142,10 +142,10 @@ const MenuView = (props) => {
       return (
         <Transition
         show={props.stateFilter}
-        enter="transition-opacity duration-300"
+        enter="transition-opacity duration-150"
         enterFrom="opacity-0"
         enterTo="opacity-100"
-        leave="transition-opacity duration-300"
+        leave="transition-opacity"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
@@ -270,10 +270,10 @@ const MenuView = (props) => {
       return (
         <Transition
         show={props.stateSignup}
-        enter="transition-opacity duration-300"
+        enter="transition-opacity duration-150"
         enterFrom="opacity-0"
         enterTo="opacity-100"
-        leave="transition-opacity duration-300"
+        leave="transition-opacity duration-150"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
@@ -342,10 +342,10 @@ const MenuView = (props) => {
       return (
         <Transition
         show={props.stateLogin}
-        enter="transition-opacity duration-300"
+        enter="transition-opacity duration-150"
         enterFrom="opacity-0"
         enterTo="opacity-100"
-        leave="transition-opacity duration-300"
+        leave="transition-opacity duration-150"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
