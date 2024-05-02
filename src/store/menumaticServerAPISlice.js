@@ -1,32 +1,92 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const url = 'http://130.229.176.192:8080/api/user/create/';
+const url = 'http://localhost:8080/api/user/create/';
 
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
-  async (info) => {
+  async (info, {dispatch}) => {
     const userId = info.userId;
-    const data = info.data;
+    const shoplistData = info.data;
+    const excludeItems = info.excludeItems;
+    console.log("Save SHOPLIST MENUMATIC", userId)
+    console.log("Save SHOPLIST MENUMATIC", shoplistData)
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'User-id': userId,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(shoplistData),
+    };
+
+    // console.log("MY STATE:",options)
+    try {
+      await fetch(url, options);
+      const mealplanId = 2;
+      console.log("EVERYTHING IS FINE")
+      // console.log("Response", response.state)
+      // if (!response.ok) {
+      //   throw new Error('Failed to post data');
+      // }
+      dispatch(saveExcluded({mealplanId: mealplanId, data: excludeItems}));
+      // const responseData = await response.json();
+      // console.log("Response:", responseData);
+      // console.log(responseData.data);
+
+      alert("Data saved successfully")
+      // return responseData;
+    }
+    catch (error) {
+      // console.log("Error:", error);
+      alert("Saving failed, server is down");
+      return error;
+    
+    }
+  }
+);
+
+
+export const saveExcluded = createAsyncThunk(
+  "menumaticServerApi/saveExcluded",
+  async (info) => {
+    const custUrl = "http://localhost:8080/api/mealplan/excluded-ingredients/";
+    const mealplanId = info.mealplanId;
+    const data = info.data;
+
+    const parseData = (list)=>{
+      const result = [];
+      list.map((item)=>{
+        result.push(
+          JSON.stringify(item)
+        )
+      });
+      return result;
+    }
+
+
+    console.log("DATA SENT TO EXCLUDED", data)
+    console.log("DATA SENT TO EXCLUDED PARSED", JSON.stringify(parseData( data)))
+    console.log("DATA SENT TO EXCLUDED MEALPLAN ID", mealplanId)
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'mealplan-Id': mealplanId,
+      },
+      body: JSON.stringify(parseData(data)),
     };
     // console.log("MY STATE:",options)
     try {
-      const response = await fetch(url, options);
+      await fetch(custUrl, options);
       // console.log("Response", response.state)
-      if (!response.ok) {
-        throw new Error('Failed to post data');
-      }
-      const responseData = await response.json();
+      // if (!response.ok) {
+      //   throw new Error('Failed to post data');
+      // }
+      // const responseData = await response.json();
       // console.log("Response:", responseData);
       // console.log(responseData.data);
       alert("Data saved successfully")
-      return responseData;
+      // return responseData;
     }
     catch (error) {
       // console.log("Error:", error);
@@ -40,32 +100,49 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 export const saveFoodPrefToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveFoodPrefToMenumaticDb",
   async (info) => {
+    console.log(info)
     const userId = info.userId;
-    const data = [info.data];
+    const data = info.data;
+    console.log("Data sent to menumatic food prefernece is Called", data)
+    const parseData = (dataP) => {
+      const result = [];
+      console.log("Data sent to menumatic food prefernece", dataP)
+      dataP.includeTags.map((tag)=>{
+        result.push(`include-${tag}`);
+      });
+      dataP.excludeTags.map((tag)=>{
+        result.push(`exclude-${tag}`);
+      });
+      return result;
+    }
+    const newData = parseData(data);
+    console.log("Data sent to menumatic food prefernece USER ID ", userId)
+    console.log("Data sent to menumatic food prefernece PARSED", newData)
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'User-id': userId,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(newData),
     };
-    const customUrlUrl = 'http://130.229.176.192:8080/api/user'
+    // console.log( "Data sent to menumatic food prefernece", JSON.stringify(newData))
+    const custUrl = 'http://localhost:8080/api/food-preferences/set/'
     // console.log("MY STATE:",options)
     try {
-      const response = await fetch(customUrlUrl, options);
+      await fetch(custUrl, options);
       // console.log("Response", response.state)
-      if (!response.ok) {
-        throw new Error('Failed to post data');
-      }
-      const responseData = await response.json();
+      // if (!response.ok) {
+      //   throw new Error('Failed to post data');
+      // }
+      // const responseData = await response.json();
       // console.log("Response:", responseData);
       // console.log(responseData.data);
       alert("Data saved successfully")
-      return responseData;
+      // return responseData;
     }
     catch (error) {
-      // console.log("Error:", error);
+      console.log("Error HERE HERE:", error);
       alert("Saving failed, server is down");
       return error;
     
@@ -74,7 +151,7 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
 );
 
 export const fetchUserShopinglist = createAsyncThunk(
-  "menumaticServerApi/saveShoplistToMenumaticDb",
+  "menumaticServerApi/fetchUserShopinglist",
   async (info, {dispatch}) => {
     dispatch(setMenumaticServerState("loading"));
     const customUrl = "http://localhost:8080/api/user/mealplans/";
@@ -88,7 +165,33 @@ export const fetchUserShopinglist = createAsyncThunk(
         'User-id': userId,
       },
     };
+    console.log("Fetching user shopping list is CALLED");
+  // dispatch(setMenumaticServerState("loading"));    
+    const response = await fetch(customUrl, options);
 
+    if (!response.ok) {
+      throw new Error('Failed to fetch user shopList');
+    }
+    // console.log(response)
+    return await response.json();
+  }
+);
+
+export const fetchUserFoodPref = createAsyncThunk(
+  "menumaticServerApi/fetchUserFoodPref",
+  async (info, {dispatch}) => {
+    dispatch(setMenumaticServerState("loading"));
+    const customUrl = "http://localhost:8080/api/food-preferences/get/";
+    const userId = info;
+    // console.log(info)
+    // console.log(userId)
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-id': userId,
+      },
+    };
     console.log("Fetching user shopping list is CALLED");
   // dispatch(setMenumaticServerState("loading"));    
     const response = await fetch(customUrl, options);
@@ -128,6 +231,7 @@ const menumaticServerApi = createSlice({
   name: "spoonacularApi",
   initialState: {
     allList: [],
+    userFoodPref:[],
     state: "loading",
     selectedList:{
       listId: null,
@@ -153,6 +257,11 @@ const menumaticServerApi = createSlice({
       // console.log("FETCHING IS DONE")
       // console.log(action.payload)
       state.allList = action.payload;
+      state.state = "ready";
+    }).addCase(fetchUserFoodPref.fulfilled, (state, action) => {
+      // console.log("FETCHING IS DONE")
+      // console.log(action.payload)
+      state.userFoodPref = action.payload;
       state.state = "ready";
     }).addCase(fetchUserShopinglist.rejected, (state, action) => {
       // console.log("FETCHING IS FAILED")

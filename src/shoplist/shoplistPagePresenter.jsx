@@ -71,10 +71,11 @@ const ShoplistPagePresenter = () => {
           data: {
             planName: nameInput,
             recipes: resultRecipes
-          }
+          },
+          excludeItems: removedItems
         }));
         navigate("/")
-        window.location.reload();
+        // window.location.reload();
     }
     // Dispatching action to save the shoplist to the database
     // dispatch(saveShoplistToMenumaticDb(

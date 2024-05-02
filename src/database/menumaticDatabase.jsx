@@ -4,7 +4,6 @@ import {setSelectedListId} from '../listOfStoredPlansRelated/plan_list/planListS
 import { useDispatch } from 'react-redux'
 import { fetchUserRecepiesByListId, saveFoodPrefToMenumaticDb } from '../store/menumaticServerAPISlice'
 import { saveTags } from '../filterpage/filterPageSlice'
-import { save } from 'pdfkit'
 const MenumaticDatabase = () => {
 
 listenerMiddleware.startListening({
@@ -19,10 +18,10 @@ listenerMiddleware.startListening({
 listenerMiddleware.startListening({
     actionCreator: saveTags,
     effect: async (action, listenerApi) => {
-        console.log(action.payload)
+        console.log("Listenere middleware is called", action.payload)
         const userId = listenerApi.getState().userAccount.userId;
         try{
-            listenerApi.dispatch(saveFoodPrefToMenumaticDb({userId: userId, data:action.payload}));
+            listenerApi.dispatch(saveFoodPrefToMenumaticDb({userId: userId, data: action.payload}));
         }
         catch(e){
             alert("Error in saving food pref to menumatic db, server is down")

@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 import { useDispatch } from 'react-redux';
 import { signInCurrentUser, signOutCurrentUser } from '../signUp_page/userAccountSlice';
-import {flushUserData, fetchUserShopinglist} from '../store/menumaticServerAPISlice'
+import {flushUserData, fetchUserShopinglist, fetchUserFoodPref} from '../store/menumaticServerAPISlice'
 const FirebaseAuthentication = () => {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -16,7 +16,8 @@ const FirebaseAuthentication = () => {
                 userId: user.uid,
               })
             );
-             dispatch(fetchUserShopinglist(user.uid)) 
+             dispatch(fetchUserShopinglist(user.uid))
+             dispatch(fetchUserFoodPref(user.uid)) 
              //Note: uncomment this line if you want to fetch user shopping list from the server
             
           } else {
