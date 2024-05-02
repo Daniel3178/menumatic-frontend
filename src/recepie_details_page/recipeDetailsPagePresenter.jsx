@@ -11,13 +11,19 @@ const RecipeDetailsPagePresenter = () => {
   const selectedRecipe = objects[0];
   // console.log(selectedRecipe[0].analyzedInstructions)
 
+  const handleNavigateBack = () => {
+    navigate("/plan");
+  };
+
   // console.log("name ",selectedRecipe[0].name)
   return (
     <RecipeDetailsPageView
       name={selectedRecipe[0].title}
-      image={selectedRecipe[0].image}
+      image={"https://img.spoonacular.com/recipes/" + selectedRecipe[0].id + "-636x393." + selectedRecipe[0].imageType}
       ingredients={selectedRecipe[0].extendedIngredients}
       instructions={selectedRecipe[0].analyzedInstructions[0].steps}
+      navigateBack={handleNavigateBack}
+      
     />
   );
 };
