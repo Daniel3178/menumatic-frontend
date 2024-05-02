@@ -31,7 +31,7 @@ const PlanView = ({ week, recipes, goToShoplist, state }) => {
         <div className="flex w-full justify-end">
           <button
             className="w-[180px] h-[54px] bg-cerulean rounded-[100px] font-outfit font-base font-medium text-whiteSmoke shadow-mid"
-            // onClick={props.goToShoplist}
+            onClick={goToShoplist}
             role="button"
           >
             SHOPPING LIST
