@@ -9,6 +9,7 @@ const shoplistSlice = createSlice({
   reducers: {
     flushShoplist: (state, action) => {
       state.allItems = [];
+      state.removedItems = [];
     },
     generateShoplist: (state, action) => {
       console.log("generateShoplist SLICE", action.payload);
