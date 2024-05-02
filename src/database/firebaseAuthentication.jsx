@@ -9,7 +9,6 @@ const FirebaseAuthentication = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            // console.log("User is signed in");
             dispatch(
               signInCurrentUser({
                 email: user.email,
@@ -18,7 +17,6 @@ const FirebaseAuthentication = () => {
             );
              dispatch(fetchUserShopinglist(user.uid))
              dispatch(fetchUserFoodPref(user.uid)) 
-             //Note: uncomment this line if you want to fetch user shopping list from the server
             
           } else {
             dispatch(signOutCurrentUser());

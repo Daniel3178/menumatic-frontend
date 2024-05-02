@@ -66,7 +66,6 @@ const DishListComponent = (props) => {
           value={recipe.portionCount}
           onInput={(e) => {
             e.preventDefault();
-            console.log("e.target.value", e.target.value);
             props.updateCount({ id: recipe.id, portions: e.target.value, list: props.selectedTab });
           }
           }
