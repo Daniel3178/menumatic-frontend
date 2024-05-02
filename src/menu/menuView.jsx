@@ -367,7 +367,6 @@ const MenuView = (props) => {
   };
 
   const menuState = () => {
-    console.log(props);
     if (props.isLoggedIn) {
       return (
         <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">

@@ -97,7 +97,7 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  const parseToStringArray = () => {
+  function parseToStringArray(){
     const resultArray = [];
     props.allItems.forEach((ingredient) => {
       resultArray.push(
@@ -107,7 +107,8 @@ const ShoplistPageView = (props) => {
     return resultArray;
   };
 
-  const showIngredientsRemove = (ing) => {
+  const showRemovableIngredients = (ing) => {
+    console.log(ing);
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
@@ -118,9 +119,11 @@ const ShoplistPageView = (props) => {
             onClick={() => props.removeItem(ingr)}
             className=" border-2 border-black-300 h-6 w-6 rounded-[100px] font-bold text-whiteSmoke transition-all duration-700 ease-in-out hover:bg-yellowGreen"
           >
+            Remove
           </button>
-          <div className="">
-            {ingr.measures.map((measure, index) => {
+          <div className="flex flex-row ">
+            {ingr.measures.map((measure) => {
+              
               return (
                 <div className="flex pr-[40px] justify-end">
                   <div className="w-20">{parseFloat(measure.amount.toFixed(2))}</div>
@@ -137,7 +140,7 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  const showIngredientsRestore = (ing) => {
+  const showRestorableIngredients = (ing) => {
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
@@ -148,7 +151,7 @@ const ShoplistPageView = (props) => {
             onClick={() => props.restoreItem(ingr)}
             className=" border-2 border-yellowGreen bg-yellowGreen h-6 w-6 rounded-[100px] font-bold transition-all duration-700 ease-in-out hover:bg-white"
           >
-
+            Remove
           </button>
           <div className="">
             {ingr.measures.map((measure, index) => {
@@ -168,7 +171,7 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  const renderIngredients = (list, shoIngr) => {
+  const renderIngredients = (list, showIngredientFunction) => {
     const conditionRender = (ingr) => {
       if (ingr.ingredients.length > 0) {
         return (
@@ -184,7 +187,8 @@ const ShoplistPageView = (props) => {
     return list.map((ingredientData, index) => (
       <div key={index} className="flex flex-col border-b pb-2 w-[640px]">
         {conditionRender(ingredientData)}
-        {shoIngr(ingredientData)}
+        {/* {console.log(ingredientData)} */}
+        {showIngredientFunction(ingredientData)}
       </div>
     ));
   };
@@ -234,9 +238,9 @@ const ShoplistPageView = (props) => {
             }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download PDF</button>
              */}
           </div>
-          {renderIngredients(props.allItems, showIngredientsRemove)}
+          {renderIngredients(props.allItems, showRemovableIngredients)}
           <h1>REMOVED ITEMS</h1>
-          {renderIngredients(props.removedItems, showIngredientsRestore)}
+          {renderIngredients(props.removedItems, showRestorableIngredients)}
         </div>
       );
     } else {
