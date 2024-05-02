@@ -77,7 +77,7 @@ const ShoplistPageView = (props) => {
               className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
               id="exportPDF"
               type="exportPDF"
-              //onClick={generateShoppingListPDFLink(parseToStringArray())}
+            //onClick={generateShoppingListPDFLink(parseToStringArray())}
             >
               Export PDF
             </button>
@@ -102,24 +102,24 @@ const ShoplistPageView = (props) => {
       return ing.ingredients.map((ingr, index) => (
         <div
           key={index}
-          className="flex border border-red-500 flex-row items-center justify-between"
+          className="flex mb-2 flex-row items-center justify-between "
         >
           <button
             onClick={() => props.removeItem(ingr)}
-            className="border border-black bg-slate-500"
+            className=" bg-red-500 h-10 w-10 rounded-xl font-bold text-whiteSmoke "
           >
-            Remov
+            X
           </button>
-          <div className="flex flex-row ">
+          <div className="">
             {ingr.measures.map((measure, index) => {
               return (
-                <div className=" flex-row pr-[40px] ">{`${measure.amount.toFixed(
-                  2
-                )} ${measure.unit}`}</div>
+                <div className=" flex-row pr-[40px] ">
+                  {`${parseFloat(measure.amount.toFixed(2))
+                  } ${measure.unit}`}</div>
               );
             })}
           </div>
-          <div className="self-end text-start pl-[40px]">{ingr.name}</div>
+          <div className=" w-[30%] self-end text-start pl-[40px]">{ingr.name}</div>
         </div>
       ));
     } else if (ing.ingredients.length === 0) {
@@ -143,9 +143,13 @@ const ShoplistPageView = (props) => {
           <div className="flex flex-row ">
             {ingr.measures.map((measure, index) => {
               return (
-                <div className=" flex-row pr-[40px] ">{`${measure.amount.toFixed(
+                <>
+                <div className="flex-row pr-[40px] ">{measure.amount.toFixed(
                   2
-                )} ${measure.unit}`}</div>
+                )}</div>
+
+                <div className="flex-row pr-[40px]"> {measure.unit} </div>
+                </>
               );
             })}
           </div>
@@ -162,7 +166,7 @@ const ShoplistPageView = (props) => {
       if (ingr.ingredients.length > 0) {
         return (
           <div>
-            <h1 className="">{` Category : ${ingr.category}`}</h1>
+            <h1 className="h-3"></h1>
           </div>
         );
       } else {
@@ -171,10 +175,8 @@ const ShoplistPageView = (props) => {
     };
 
     return list.map((ingredientData, index) => (
-      <div key={index} className="flex flex-col border-b pb-2">
-        {/* <h1 className="">{` Category : ${ingredientData.category}`}</h1> */}
+      <div key={index} className="flex flex-col border-b pb-2 w-[640px]">
         {conditionRender(ingredientData)}
-        {/* {console.log(ingredientData)} */}
         {shoIngr(ingredientData)}
       </div>
     ));
@@ -240,7 +242,7 @@ const ShoplistPageView = (props) => {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 font-outfit">
       <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
       {renderTheIngredientList()}
       {overlay()}
