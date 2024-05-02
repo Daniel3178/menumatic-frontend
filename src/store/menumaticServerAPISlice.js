@@ -37,7 +37,7 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 
 export const deleteMealPlan = createAsyncThunk(
   "menumaticServerApi/deleteMealPlan",
-  async ( info ) => {
+  async ( info, {dispatch} ) => {
     const userId = info.userId;
     const mealPlanId = info.mealPlanId;
     console.log("STEP 1.5");
@@ -56,6 +56,7 @@ export const deleteMealPlan = createAsyncThunk(
     if (!response.ok) {
       throw new Error("Failed to delete the meal plan.");
     }
+    dispatch(fetchUserShopinglist(userId));
     return await response.json();
   }
 );
