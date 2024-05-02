@@ -375,11 +375,11 @@ const MenuView = (props) => {
           <div className="flex justify-center mt-6">
             <button
               onClick={props.signOut}
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-whiteSmoke text-bold hover:shadow-mid foucs:shadow-in w-36 h-14"
+              className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-              <div className="place-content-center text-gunmetal text-lg font-outfit">
+             
                 LOG OUT
-              </div>
+              
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
@@ -423,11 +423,11 @@ const MenuView = (props) => {
           <div className="flex justify-center mt-6">
             <button
               onClick={props.showLogin}
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-whiteSmoke text-bold hover:shadow-mid foucs:shadow-in w-36 h-14"
+              className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-              <div className="place-content-center center  text-gunmetal text-lg font-outfit">
+              
                 LOG IN
-              </div>
+              
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
