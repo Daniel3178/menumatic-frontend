@@ -5,9 +5,10 @@ const url = 'http://localhost:8080/api/user/create/';
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
-  async (info) => {
+  async (info, {dispatch}) => {
     const userId = info.userId;
     const data = info.data;
+    const excluded = info.excluded;
     const options = {
       method: 'POST',
       headers: {
@@ -28,7 +29,7 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
       const responseData = await response.json();
       const {mealplan_id} = responseData;
       console.log("Response:", mealplan_id);
-      dispatch(saveExcludedIngredients(mealplan_id));
+      dispatch(saveExcludedIngredients( {mealplanId:mealplan_id, excluded: excluded}));
       // console.log(responseData.data);
       alert("Data saved successfully")
       return responseData;
@@ -47,7 +48,27 @@ export const saveExcludedIngredients = createAsyncThunk(
   async (info) => {
     // dispatch(setMenumaticServerState("loading"));
     const customUrl = "http://localhost:8080/api/mealplan/excluded-ingredients/set/";
-    const mealplanId = info;
+    const mealplanId = info.mealplanId;
+    const data = info.excluded;
+
+    const extractIngredientsName = (ingr)=>{
+      const result =[];
+      console.log( "STATE OF INGRE",ingr)
+      ingr.map((each)=>{
+        console.log(each)
+        each.ingredients.map((ing) =>{
+          console.log(ing)
+          result.push(ing.name)
+        })
+      })
+      return result;
+    }
+    console.log("Saving excluded ingredients is CALLED BEFORE", data);
+    const ingredients = extractIngredientsName(data);
+    console.log("Saving excluded ingredients is CALLED AFTER", ingredients);
+
+
+
     // console.log(info)
     // console.log(userId)
     const options = {
@@ -56,17 +77,15 @@ export const saveExcludedIngredients = createAsyncThunk(
         'Content-Type': 'application/json',
         'mealplan-id': mealplanId,
       },
+      body: JSON.stringify(ingredients),
     };
-
-    // console.log("Fetching user shopping list is CALLED");
-  // dispatch(setMenumaticServerState("loading"));    
+  
+    console.log("Saving excluded ingredients is CALLED", mealplanId);
+    console.log("Saving excluded ingredients is CALLED", ingredients);
+    // data.map((each)=>console.log(each))
+    // console.log("Saving excluded ingredients is CALLED", info);
     await fetch(customUrl, options);
 
-    // if (!response.ok) {
-    //   throw new Error('Failed to fetch user shopList');
-    // }
-    // console.log(response)
-    // return await response.json();
   }
 );
 
