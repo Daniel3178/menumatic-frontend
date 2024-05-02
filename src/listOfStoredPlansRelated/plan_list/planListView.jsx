@@ -34,7 +34,6 @@ const PlanListView = (props) => {
 
     const handleDelete = (event, mealPlanId) => {
       event.stopPropagation(); // Prevent click event from bubbling up to the parent
-      console.log("STEP 1")
       dispatch(deleteMealPlan({ userId: props.userId, mealPlanId }));
     };
 

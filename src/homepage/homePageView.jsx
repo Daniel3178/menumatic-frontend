@@ -6,7 +6,7 @@ const ingredientsList = (items) => {
     <div className="ml-8 mr-4">
       <ul className="space-y-1 list-disc">
         {items.map((item, index) => (
-          <li key={index} className="font-outfit text-gunmetal">
+          <li key={index} className="font-outfit font-normal text-[18px] text-gunmetal">
             {item.nameClean}
           </li>
         ))}

@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const url = "http://localhost:8080/api/user/create/";
-const deleteUrl = 'http://localhost:8080/api/mealplan/delete/';
+const deleteUrl = 'http://130.229.176.192:8080/api/user/mealplans/delete';
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
-  async (info) => {
+  async (info, {dispatch}) => {
     const userId = info.userId;
     const data = info.data;
+    const excluded = info.excluded;
     const options = {
       method: "POST",
       headers: {
@@ -19,6 +20,7 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
     try {
       const response = await fetch(url, options);
       // console.log("Response", response.state)
+      console.log("Response", response);
       if (!response.ok) {
         throw new Error("Failed to post data");
       }
@@ -37,29 +39,73 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 
 export const deleteMealPlan = createAsyncThunk(
   "menumaticServerApi/deleteMealPlan",
-  async ( info, {dispatch} ) => {
+  async ({ info }) => {
     const userId = info.userId;
     const mealPlanId = info.mealPlanId;
-    console.log("STEP 1.5");
     const options = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         "User-id": userId,
       },
-      body: JSON.stringify({mealplanId:mealPlanId}),
+      body: JSON.stringify({ mealPlanId }),
     };
-    console.log("STEP2", userId, mealPlanId);
+    console.log("Fetching user shopping list is CALLED");
     // dispatch(setMenumaticServerState("loading"));
-    const response = await fetch(deleteUrl, options);
-    console.log("RESPONSE STEP", response)
+    const response = await fetch(`${deleteUrl}`, options);
     if (!response.ok) {
       throw new Error("Failed to delete the meal plan.");
     }
-    dispatch(fetchUserShopinglist(userId));
     return await response.json();
   }
 );
+
+export const saveExcludedIngredients = createAsyncThunk(
+  "menumaticServerApi/saveExcludedIngredients",
+  async (info) => {
+    // dispatch(setMenumaticServerState("loading"));
+    const customUrl = "http://localhost:8080/api/mealplan/excluded-ingredients/set/";
+    const mealplanId = info.mealplanId;
+    const data = info.excluded;
+
+    const extractIngredientsName = (ingr)=>{
+      const result =[];
+      console.log( "STATE OF INGRE",ingr)
+      ingr.map((each)=>{
+        console.log(each)
+        each.ingredients.map((ing) =>{
+          console.log(ing)
+          result.push(ing.name)
+        })
+      })
+      return result;
+    }
+    console.log("Saving excluded ingredients is CALLED BEFORE", data);
+    const ingredients = extractIngredientsName(data);
+    console.log("Saving excluded ingredients is CALLED AFTER", ingredients);
+
+
+
+    // console.log(info)
+    // console.log(userId)
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'mealplan-id': mealplanId,
+      },
+      body: JSON.stringify(ingredients),
+    };
+  
+    console.log("Saving excluded ingredients is CALLED", mealplanId);
+    console.log("Saving excluded ingredients is CALLED", ingredients);
+    // data.map((each)=>console.log(each))
+    // console.log("Saving excluded ingredients is CALLED", info);
+    await fetch(customUrl, options);
+
+  }
+);
+
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
