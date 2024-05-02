@@ -15,8 +15,9 @@ import backGreen from "./backGreen.svg"
 import closeBtn from "./closeBtn.svg"
 import backBlue from "./backBlue.svg"
 import backBlack from "./backBlack.svg"
+import trashCan from "./trash_can.svg"
 
-export {clock, closeBtn, thumbs_up, thumbs_down, info, info_i, close, tune, done, dislike_btn, like_btn, logo, clock_icon, noimage, backGreen, backBlue, backBlack}
+export {trashCan, clock, closeBtn, thumbs_up, thumbs_down, info, info_i, close, tune, done, dislike_btn, like_btn, logo, clock_icon, noimage, backGreen, backBlue, backBlack}
 
 
 

@@ -3,8 +3,8 @@ import "../../recommendation_page/RecepiesForAWeekViewCSS.css";
 import { useNavigate } from "react-router-dom";
 import { render } from "react-dom";
 import { useDispatch } from "react-redux";
-import { backBlack, logo, closeBtn } from "../../assets";
-import {deleteMealPlan} from "../../store/menumaticServerAPISlice";
+import { backBlack, logo, closeBtn, trashCan } from "../../assets";
+import { deleteMealPlan } from "../../store/menumaticServerAPISlice";
 
 const plansData = {
   result: [
@@ -40,38 +40,39 @@ const PlanListView = (props) => {
 
     return (
       <div className="flex flex-row">
-      <button className="bg-cerulean rounded-2xl my-4 px-4 shadow-xl w-[840px] h-[180px] content-center hover:brightness-75 hover:shadow-mid"
-        onClick={() => { props.selectAndNavigateToWeekPlan(list.planID) }}>
-        <div className="grid grid-cols-4 gap-4">
-          <div className="border-r border-whiteSmoke flex justify-center">
-            <div>
-              <p className="text-[24px] font-outfit font-medium text-whiteSmoke">week</p>
-              <p className="text-[64px] font-outfit font-bold text-whiteSmoke flex justify-center">{list.planID}</p>
+        <button className="bg-cerulean rounded-2xl my-4 px-4 shadow-xl w-[840px] h-[180px] content-center hover:brightness-75 hover:shadow-mid"
+          onClick={() => { props.selectAndNavigateToWeekPlan(list.planID) }}>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="border-r border-whiteSmoke flex justify-center">
+              <div>
+                <p className="text-[24px] font-outfit font-medium text-whiteSmoke">week</p>
+                <p className="text-[64px] font-outfit font-bold text-whiteSmoke flex justify-center">{list.planID}</p>
+              </div>
             </div>
-          </div>
-          <div>
-            {renderMeals(list.planRecipes.slice(0, 4))}
-          </div>
-          <div>
-            {renderMeals(list.planRecipes.slice(4, 7))}
-          </div>
-          <div className="relative">
-            {/*add remove button here*/}
+            <div>
+              {renderMeals(list.planRecipes.slice(0, 4))}
+            </div>
+            <div>
+              {renderMeals(list.planRecipes.slice(4, 7))}
+            </div>
+            <div className="relative">
+              {/*add remove button here*/}
 
-            
+
+            </div>
+
           </div>
 
-        </div>
+          {/* Possible iteration of the recipe names contained wtihin a plan. Make so all contents are displayed and possibly overflow to a new row. Until that this is implemented, make the line above's content conspicously large */}
+        </button>
 
-        {/* Possible iteration of the recipe names contained wtihin a plan. Make so all contents are displayed and possibly overflow to a new row. Until that this is implemented, make the line above's content conspicously large */}
-      </button>
-      <button className=" top-0 right-0 rounded-md hover:brightness-200"
-              onClick={(event) => handleDelete(event, list.planID)} aria-label="Delete meal plan">
-              <img src={closeBtn} />
-            </button>
+        <button className="ml-4 flex justify-center items-center rounded-md hover:brightness-200"
+          onClick={(event) => handleDelete(event, list.planID)} aria-label="Delete meal plan">
+          <img src={closeBtn} />
+        </button>
       </div>
 
-      
+
     );
   };
 
