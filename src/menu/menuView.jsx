@@ -295,6 +295,7 @@ const MenuView = (props) => {
               <span id="wrong_pass_alert"></span>
 
               <button
+                onClick={props.signUp}
                 className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-cerulean hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
                 id="signup"
                 type="submit"
