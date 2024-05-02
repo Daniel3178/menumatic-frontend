@@ -49,13 +49,16 @@ const ShoplistPageView = (props) => {
       );
     } else {
       return (
+        <div className="flex justify-between items-center w-full">
+        <div className="ml-2 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or export as PDF.</div>
         <button
-          className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white"
+          className="mr-2 p-1 w-40 h-12 rounded-[100px] text-lg bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
           id="save"
-          onClick={() => setShowOverlay(true)}
+          // onClick={() => setShowOverlay(true)}
         >
-          Save
+          EXPORT  PDF
         </button>
+        </div>
       );
     }
   };
