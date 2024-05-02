@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PlanPresenter from "./planPresenter";
 import { logo, backBlack } from "../../assets";
 
-const PlanView = ({ week, recipes, goToShoplist, state, navigateBack }) => {
+const PlanView = ({ week, recipes, goToShoplist, state, navigateBack, navigateToRecipe }) => {
   if (state === "ready") {
 
     return (
@@ -26,7 +26,7 @@ const PlanView = ({ week, recipes, goToShoplist, state, navigateBack }) => {
         </div>
 
         {recipes.map((recipe, index) => (
-          <div className='bg-cerulean mb-5 w-full h-[45px] rounded-small font-outfit text-whiteSmoke shadow-mid flex items-center justify-center' key={index}>
+          <div className='bg-cerulean mb-5 w-full h-[45px] rounded-small font-outfit text-whiteSmoke shadow-mid flex items-center justify-center' key={index} onClick={() => navigateToRecipe(recipe)}>
             <span className="text-center w-[10%]">{index + 1}</span>
             <span className="text-center w-[60%]">{recipe.name}</span>
             <span className="text-center w-[30%]">{recipe.portions}</span>

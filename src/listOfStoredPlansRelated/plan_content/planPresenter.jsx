@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSelectedListId } from "../plan_list/planListSlice"; // Ensure correct import paths
+import { setSelectedRecipe } from "./planSlice";
 import { useNavigate } from "react-router-dom";
 import PlanView from "./planView";
 import {
@@ -33,6 +34,12 @@ const PlanPresenter = () => {
     navigate(-1);
   }
 
+  const handleNavigateToRecipe = (recipe) => {
+    console.log("passed recipe", recipe)
+    dispatch(setSelectedRecipe(recipe))
+    navigate("/recipeDetails")
+  }
+
   useEffect(() => {
     const allIds = [];
     allIds.push(
@@ -50,6 +57,7 @@ const PlanPresenter = () => {
       goToShoplist={handleGoToShoplist}
       state={menumaticServerState}
       navigateBack={handleNavigateBack}
+      navigateToRecipe= {handleNavigateToRecipe}
     />
   );
 };
