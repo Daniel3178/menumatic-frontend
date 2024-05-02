@@ -2,12 +2,15 @@ import React from 'react';
 import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, dislike_btn, like_btn, logo, clock_icon, noimage } from "../assets";
 
 const ingredientsList = (items) => {
+  // Remove duplicates from item.nameClean
+  const uniqueIngredients = Array.from(new Set(items.map(item => item.nameClean)));
+
   return (
     <div className="ml-8 mr-4">
       <ul className="space-y-1 list-disc">
-        {items.map((item, index) => (
+        {uniqueIngredients.map((nameClean, index) => (
           <li key={index} className="font-outfit font-normal text-[18px] text-gunmetal">
-            {item.nameClean}
+            {nameClean}
           </li>
         ))}
       </ul>

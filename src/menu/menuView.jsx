@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { backGreen, backBlue, backBlack, close, done } from "../assets";
-import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
+import {Transition } from '@headlessui/react'
+import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
 
 const MenuView = (props) => {
+  
+
 
   //********LOGIN FUNCTION*********
   const handleSignInCB = (e) => {
@@ -98,9 +101,18 @@ const MenuView = (props) => {
   //***********MENU VIEWS***********
 
   const settingsMenu = () => {
-    if(props.stateSettings){
+  
       return(
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen font-outfit text-cerulean animate-slide-in">
+        <Transition
+        show={props.stateSettings}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen font-outfit text-cerulean">
           <button
             onClick={props.hideSettings}
             className="justify-start ml-6 mt-6"
@@ -125,15 +137,23 @@ const MenuView = (props) => {
               </div>
             </button>
           </div>
-
         </div>
+        </Transition>
       )
-    }
   }
 
   const filterMenu = () => {
-    if (props.stateFilter) {
+    
       return (
+        <Transition
+        show={props.stateFilter}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
           <button
             onClick={props.hideFilter}
@@ -233,7 +253,7 @@ const MenuView = (props) => {
               )
             )}
           </ul>
-          <div className="flex justify-center mt-10 font-outfit tracing-wider text-whiteSmoke">
+          <div className="flex justify-center mt-10 font-outfit text-whiteSmoke">
             {/* Button to apply filters */}
             <button
               onClick={applyFilterButton}
@@ -241,19 +261,27 @@ const MenuView = (props) => {
               id="signup"
               type="submit"
             >
-              <div className="">
+              <div className="tracking-wider">
               APPLY
-            </div>
+              </div>
             </button>
           </div>
         </div>
+        </Transition>
       );
-    }
   };
 
   const signupMenu = () => {
-    if (props.stateSignup) {
       return (
+        <Transition
+        show={props.stateSignup}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen animate-slide-in">
           <button
             onClick={props.hideSignup}
@@ -300,6 +328,7 @@ const MenuView = (props) => {
               <span id="wrong_pass_alert"></span>
 
               <button
+                onClick={props.signUp}
                 className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-cerulean hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
                 id="signup"
                 type="submit"
@@ -310,13 +339,21 @@ const MenuView = (props) => {
             </form>
           </div>
         </div>
+        </Transition>
       );
-    }
   };
 
   const loginMenu = () => {
-    if (props.stateLogin) {
       return (
+        <Transition
+        show={props.stateLogin}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-cerulean animate-slide-in">
           {signupMenu()}
           <button onClick={props.hideLogin} className="justify-start ml-6 mt-6">
@@ -367,12 +404,11 @@ const MenuView = (props) => {
             </div>
           </div>
         </div>
+        </Transition>
       );
-    }
   };
 
   const menuState = () => {
-    console.log(props);
     if (props.isLoggedIn) {
       return (
         <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
@@ -381,11 +417,11 @@ const MenuView = (props) => {
           <div className="flex justify-center mt-6">
             <button
               onClick={props.signOut}
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-whiteSmoke text-bold hover:shadow-mid foucs:shadow-in w-36 h-14"
+              className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-              <div className="place-content-center text-gunmetal text-lg font-outfit">
+             
                 LOG OUT
-              </div>
+              
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
@@ -429,11 +465,11 @@ const MenuView = (props) => {
           <div className="flex justify-center mt-6">
             <button
               onClick={props.showLogin}
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-whiteSmoke text-bold hover:shadow-mid foucs:shadow-in w-36 h-14"
+              className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-              <div className="place-content-center center  text-gunmetal text-lg font-outfit">
+              
                 LOG IN
-              </div>
+              
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
