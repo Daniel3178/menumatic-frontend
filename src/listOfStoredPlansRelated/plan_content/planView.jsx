@@ -26,7 +26,7 @@ const PlanView = ({ week, recipes, goToShoplist, state, navigateBack, navigateTo
         </div>
 
         {recipes.map((recipe, index) => (
-          <div className='bg-cerulean mb-5 w-full h-[45px] rounded-small font-outfit text-whiteSmoke shadow-mid flex items-center justify-center' key={index} onClick={() => navigateToRecipe(recipe)}>
+          <div className='bg-cerulean mb-5 w-full h-[45px] rounded-small font-outfit text-whiteSmoke shadow-mid flex items-center justify-center' key={index} onClick={() => navigateToRecipe(index)}>
             <span className="text-center w-[10%]">{index + 1}</span>
             <span className="text-center w-[60%]">{recipe.name}</span>
             <span className="text-center w-[30%]">{recipe.portions}</span>

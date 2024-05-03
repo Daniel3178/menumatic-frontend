@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 import { getSelectedRecipe } from "../listOfStoredPlansRelated/plan_content/planSlice";
 import RecipeDetailsPageView from "./recepieDetailsPageView";
+import { getUserSavedRecipes } from "../store/spoonacularAPISlice";
 
 const RecipeDetailsPagePresenter = () => {
-  const selectedRecipe = useSelector(getSelectedRecipe)
+  const selectedRecipes = useSelector(getUserSavedRecipes)
+  const recipeIndex = useSelector(getSelectedRecipe)
+  const selectedRecipe = selectedRecipes[recipeIndex]
   console.log("selected", selectedRecipe)
   const navigate = useNavigate();
   // const recommendationList = useSelector(getRecommendationList);
@@ -21,10 +24,10 @@ const RecipeDetailsPagePresenter = () => {
   // console.log("name ",selectedRecipe[0].name)
   return (
     <RecipeDetailsPageView
-      name={selectedRecipe.title}
-      image={"https://img.spoonacular.com/recipes/" + selectedRecipe.id + "-636x393." + selectedRecipe.imageType}
-      ingredients={selectedRecipe.extendedIngredients}
-      instructions={selectedRecipe.analyzedInstructions.steps}
+      name={selectedRecipe.result.title}
+      image={"https://img.spoonacular.com/recipes/" + selectedRecipe.result.id + "-636x393." + selectedRecipe.result.imageType}
+      ingredients={selectedRecipe.result.extendedIngredients}
+      instructions={selectedRecipe.result.analyzedInstructions[0].steps}
       navigateBack={handleNavigateBack}
       
     />
