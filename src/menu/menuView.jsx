@@ -1,8 +1,11 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { backGreen, backBlue, backBlack, close, done } from "../assets";
-import { getExcludeTags, getIncludeTags } from "../filterpage/filterPageSlice";
+import {Transition } from '@headlessui/react'
+import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 
 const MenuView = (props) => {
+  
+
 
   //********LOGIN FUNCTION*********
   const handleSignInCB = (e) => {
@@ -45,6 +48,11 @@ const MenuView = (props) => {
 
   const [includedItems, setIncludedItems] = useState(props.storedIncludeTags); // State hook for included items
   const [excludedItems, setExcludedItems] = useState(props.storedExcludeTags); // State hook for excluded items
+
+  useEffect(() => {
+    setIncludedItems(props.storedIncludeTags);
+    setExcludedItems(props.storedExcludeTags);
+  },[props.storedIncludeTags, props.storedExcludeTags])
 
   // Function to handle inclusion of tags
   function includeCheckboxHandler(event) {
@@ -93,9 +101,18 @@ const MenuView = (props) => {
   //***********MENU VIEWS***********
 
   const settingsMenu = () => {
-    if(props.stateSettings){
+  
       return(
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen font-outfit text-cerulean animate-slide-in">
+        <Transition
+        show={props.stateSettings}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen font-outfit text-cerulean">
           <button
             onClick={props.hideSettings}
             className="justify-start ml-6 mt-6"
@@ -120,15 +137,23 @@ const MenuView = (props) => {
               </div>
             </button>
           </div>
-
         </div>
+        </Transition>
       )
-    }
   }
 
   const filterMenu = () => {
-    if (props.stateFilter) {
+    
       return (
+        <Transition
+        show={props.stateFilter}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
           <button
             onClick={props.hideFilter}
@@ -242,13 +267,21 @@ const MenuView = (props) => {
             </button>
           </div>
         </div>
+        </Transition>
       );
-    }
   };
 
   const signupMenu = () => {
-    if (props.stateSignup) {
       return (
+        <Transition
+        show={props.stateSignup}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen animate-slide-in">
           <button
             onClick={props.hideSignup}
@@ -306,13 +339,21 @@ const MenuView = (props) => {
             </form>
           </div>
         </div>
+        </Transition>
       );
-    }
   };
 
   const loginMenu = () => {
-    if (props.stateLogin) {
       return (
+        <Transition
+        show={props.stateLogin}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-cerulean animate-slide-in">
           {signupMenu()}
           <button onClick={props.hideLogin} className="justify-start ml-6 mt-6">
@@ -363,8 +404,8 @@ const MenuView = (props) => {
             </div>
           </div>
         </div>
+        </Transition>
       );
-    }
   };
 
   const menuState = () => {

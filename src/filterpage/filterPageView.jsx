@@ -1,15 +1,17 @@
 import React, { useState } from 'react'; // Importing necessary modules
 import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, done } from "../assets"; // Importing necessary assets
-import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
+import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
 const FilterPageView = (props) => { // Creating a functional component FilterPageView with props
 
 
   const includeTags = ["Pescetarian", "Vegetarian", "Vegan", "Primal"]; // Array of tags that can be include
   const excludeTags = ["Gluten", "Egg", "Dairy", "Shellfish", "Peanut", "Tree Nut"]; // Array of tags that can be exclude
 
-  const [includedItems, setIncludedItems] = useState(props.storedIncludeTags); // State hook for included items
-  const [excludedItems, setExcludedItems] = useState(props.storedExcludeTags); // State hook for excluded items
-  
+  const [includedItems, setIncludedItems] = useState(...props.storedIncludeTags); // State hook for included items
+  const [excludedItems, setExcludedItems] = useState(...props.storedExcludeTags); // State hook for excluded items
+  console.log(props.storedIncludeTags);
+  console.log(props.storedExcludeTags);
+  console.log(includedItems);
 
   // Function to handle inclusion of tags
   function includeCheckboxHandler(event) {

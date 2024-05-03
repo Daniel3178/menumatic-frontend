@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { signInCurrentUser, signOutCurrentUser } from '../signUp_page/userAccountSlice';
 import {flushUserData, fetchUserShopinglist, fetchUserFoodPref} from '../store/menumaticServerAPISlice'
 const FirebaseAuthentication = () => {
+
+  //TODO: DEPRICATED
     const dispatch = useDispatch();
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {

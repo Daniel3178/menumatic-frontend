@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { saveTags } from "../menu/filterPageSlice";
 const url = "http://localhost:8080/api/user/create/";
 const deleteUrl = 'http://localhost:8080/api/mealplan/delete/';
+
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
@@ -58,7 +60,6 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
     const custUrl = 'http://localhost:8080/api/food-preferences/set/'
     try {
       await fetch(custUrl, options);
-      alert("Data saved successfully")
     }
     catch (error) {
       alert("Saving failed, server is down");
@@ -121,6 +122,26 @@ export const saveExcludedIngredients = createAsyncThunk(
   }
 );
 
+export const fetchExcludedIngredients = createAsyncThunk(
+  "menumaticServerApi/fetchExcludedIngredients",
+  async (info) => {
+    const customUrl = "http://localhost:8080/api/mealplan/excluded-ingredients/get/";
+    const mealplanId = info;
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'mealplan-id': mealplanId,
+      },
+    };
+    const response = await fetch(customUrl, options);
+    const data = await response.json();
+
+    return {mealplanId: mealplanId, ingredients: data};
+
+  }
+);
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/fetchUserShopinglist",
@@ -162,12 +183,27 @@ export const fetchUserFoodPref = createAsyncThunk(
         'User-id': userId,
       },
     };  
+
     const response = await fetch(customUrl, options);
+    const fetchedData = await response.json();
+
+    const includeList = [];
+    const excludeList = [];
+
+fetchedData.forEach(item => {
+    const [type, value] = item.split('-');
+    if (type === 'include') {
+        includeList.push(value);
+    } else if (type === 'exclude') {
+        excludeList.push(value);
+    }
+});
+dispatch(saveTags({includeTags: includeList, excludeTags: excludeList}));
 
     if (!response.ok) {
       throw new Error("Failed to fetch user shopList");
     }
-    return await response.json();
+    return await fetchedData;
   }
 );
 
@@ -198,6 +234,7 @@ const menumaticServerApi = createSlice({
   initialState: {
     allList: [],
     userFoodPref:[],
+    excludedIngredient: {},
     state: "loading",
     selectedList: {
       listId: null,
@@ -232,6 +269,10 @@ const menumaticServerApi = createSlice({
       state.selectedList.recepies = action.payload;
     }).addCase(fetchUserRecepiesByListId.rejected, (state, action) => {
       state.state = "failed";
+    }).addCase(fetchExcludedIngredients.fulfilled, (state, action) => {
+      state.state = "ready";
+      state.excludedIngredient.mealplanId = action.payload.mealplanId;
+      state.excludedIngredient.ingredients = action.payload.ingredients;
     });
   },
 });
@@ -240,6 +281,7 @@ export const getMenumaticSavedRecipes = (state) =>
   state.menumaticServerApi.userSavedRecipes;
 export const getMenumaticSelecedList = (state) =>
   state.menumaticServerApi.selectedList;
+export const getExcludedIngredients = (state) => state.menumaticServerApi.excludedIngredient.ingredients;
 export const getMenumaticState = (state) => state.menumaticServerApi.state;
 export const { setSelectedListId, flushUserData, setMenumaticServerState } =
   menumaticServerApi.actions;
