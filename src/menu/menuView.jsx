@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { backGreen, backBlue, backBlack, close, done } from "../assets";
+import { backGreen, backBlue, backBlack, close, done, menubtn } from "../assets";
 import {Transition } from '@headlessui/react'
 import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 
@@ -100,6 +100,16 @@ const MenuView = (props) => {
 
   //***********MENU VIEWS***********
 
+  const renderMenu = () => {
+    if(props.stateBase){
+      return(
+        <div className="absolute fixed top-0 right-0">
+        {menuState()}
+        </div>
+      )
+    }
+  }
+
   const settingsMenu = () => {
   
       return(
@@ -154,7 +164,7 @@ const MenuView = (props) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
+        <div className="relative overflow-scroll z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
           <button
             onClick={props.hideFilter}
             className="justify-start ml-6 mt-6"
@@ -459,7 +469,7 @@ const MenuView = (props) => {
       );
     } else if (props.isLoggedIn == false) {
       return (
-        <div className="static top-0 right-0 h-screen w-72 bg-cerulean">
+        <div className=" top-0 right-0 h-screen w-72 bg-cerulean">
           {filterMenu()}
           {loginMenu()}
           <div className="flex justify-center mt-6">
@@ -487,7 +497,22 @@ const MenuView = (props) => {
     }
   };
 
-  return <div className="fixed top-0 right-0 bg-cerulean">{menuState()}</div>;
+  return(
+    <div>
+      <div className="lg:hidden fixed top-0 right-0 ">
+        <button 
+        className="pt-12 pr-12"
+        onClick={props.showMenu}
+        >
+          <img src={menubtn}/>
+        </button>
+        {renderMenu()}
+      </div>
+      <div className="hidden lg:block fixed top-0 right-0 bg-cerulean">
+        {menuState()}
+      </div>
+    </div>
+  );
 };
 
 export default MenuView;

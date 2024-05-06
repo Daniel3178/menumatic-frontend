@@ -11,7 +11,9 @@ import { getMenuStateBase,
   getMenuStateFilter,
   getMenuStatePassChange } from "./menuSlice";
 
-import { setStateLogin,
+import { 
+  setStateBase,
+  setStateLogin,
   setStateSignup,
   setStateSettings,
   setStateFilter,
@@ -41,7 +43,11 @@ const MenuPresenter = () => {
   const stateSettings = useSelector(getMenuStateSettings)
   const stateFilter = useSelector(getMenuStateFilter)
   const statePassChange = useSelector(getMenuStatePassChange)
-  
+
+
+  const showMenu = () => {
+    dispatch(setStateBase(true))
+  }
   const showLogin = () => {
     dispatch(setStateLogin(true))
   };
@@ -58,7 +64,9 @@ const MenuPresenter = () => {
     dispatch(setStatePassChange(true))
   };
   
-  
+  const hideMenu = () => {
+    dispatch(setStateBase(false))
+  }
   const hideLogin = () => {
     dispatch(setStateLogin(false))
   };
@@ -142,12 +150,14 @@ const storedIncludeTags = useSelector(getIncludeTags)
       stateFilter={stateFilter}
       statePassChange={statePassChange}
 
+      showMenu={showMenu}
       showLogin={showLogin}
       showSignup={showSignup}
       showSettings={showSettings}
       showFilter={showFilter}
       showPassChange={showPassChange}
 
+      hideMenu={hideMenu}
       hideLogin={hideLogin}
       hideSignup={hideSignup}
       hideSettings={hideSettings}
