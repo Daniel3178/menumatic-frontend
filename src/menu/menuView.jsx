@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { backGreen, backBlue, backBlack, close, done } from "../assets";
-import {Transition } from '@headlessui/react'
-import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
+import { Transition } from '@headlessui/react'
+import { getExcludeTags, getIncludeTags, getMealsInPlan } from "./filterPageSlice";
 
 const MenuView = (props) => {
-  
+
 
 
   //********LOGIN FUNCTION*********
@@ -52,7 +52,7 @@ const MenuView = (props) => {
   useEffect(() => {
     setIncludedItems(props.storedIncludeTags);
     setExcludedItems(props.storedExcludeTags);
-  },[props.storedIncludeTags, props.storedExcludeTags])
+  }, [props.storedIncludeTags, props.storedExcludeTags])
 
   // Function to handle inclusion of tags
   function includeCheckboxHandler(event) {
@@ -91,9 +91,17 @@ const MenuView = (props) => {
     }
   }
 
+  const [mealsInPlanSliderValue, setMealsInPlanSliderValue] = useState(props.mealsInPlan);
+
+  const handleSliderChange = (event) => {
+    const newValue = parseInt(event.target.value);
+    setMealsInPlanSliderValue(newValue);
+  };
+
+
   const applyFilterButton = () => {
     props.hideFilter();
-    props.applyFilter(includedItems, excludedItems);
+    props.applyFilter(includedItems, excludedItems, mealsInPlanSliderValue);
 
   }
 
@@ -101,9 +109,9 @@ const MenuView = (props) => {
   //***********MENU VIEWS***********
 
   const settingsMenu = () => {
-  
-      return(
-        <Transition
+
+    return (
+      <Transition
         show={props.stateSettings}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -120,7 +128,7 @@ const MenuView = (props) => {
             <img src={backBlue} />
           </button>
           <div className="flex place-content-center mt-10">
-          <button
+            <button
               className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
@@ -129,7 +137,7 @@ const MenuView = (props) => {
             </button>
           </div>
           <div className="flex place-content-center mt-10">
-          <button
+            <button
               className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
@@ -138,14 +146,14 @@ const MenuView = (props) => {
             </button>
           </div>
         </div>
-        </Transition>
-      )
+      </Transition>
+    )
   }
 
   const filterMenu = () => {
-    
-      return (
-        <Transition
+
+    return (
+      <Transition
         show={props.stateFilter}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -253,6 +261,19 @@ const MenuView = (props) => {
               )
             )}
           </ul>
+          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">DISHES IN MEAL PLAN</h1>{" "}
+          <div className="flex-col justify-center items-center ">
+            <label for="myRange" class="block mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
+            <input
+              value={mealsInPlanSliderValue}
+              onChange={handleSliderChange}
+              type="range"
+              min="1"
+              max="7"
+              className="ml-5 w-[80%]"
+              id="myRange"
+            />
+          </div>
           <div className="flex justify-center mt-10 font-outfit text-whiteSmoke">
             {/* Button to apply filters */}
             <button
@@ -262,18 +283,18 @@ const MenuView = (props) => {
               type="submit"
             >
               <div className="tracking-wider">
-              APPLY
+                APPLY
               </div>
             </button>
           </div>
         </div>
-        </Transition>
-      );
+      </Transition>
+    );
   };
 
   const signupMenu = () => {
-      return (
-        <Transition
+    return (
+      <Transition
         show={props.stateSignup}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -339,13 +360,13 @@ const MenuView = (props) => {
             </form>
           </div>
         </div>
-        </Transition>
-      );
+      </Transition>
+    );
   };
 
   const loginMenu = () => {
-      return (
-        <Transition
+    return (
+      <Transition
         show={props.stateLogin}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -404,8 +425,8 @@ const MenuView = (props) => {
             </div>
           </div>
         </div>
-        </Transition>
-      );
+      </Transition>
+    );
   };
 
   const menuState = () => {
@@ -419,9 +440,9 @@ const MenuView = (props) => {
               onClick={props.signOut}
               className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-             
-                LOG OUT
-              
+
+              LOG OUT
+
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
@@ -447,9 +468,9 @@ const MenuView = (props) => {
               </button>
             </div>
             <div>
-              <button 
-              className="mt-10 hover:underline"
-              onClick={props.showSettings}
+              <button
+                className="mt-10 hover:underline"
+                onClick={props.showSettings}
               >
                 Account settings
               </button>
@@ -467,9 +488,9 @@ const MenuView = (props) => {
               onClick={props.showLogin}
               className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-              
-                LOG IN
-              
+
+              LOG IN
+
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
