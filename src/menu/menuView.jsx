@@ -1,16 +1,12 @@
 import { React, useEffect, useState } from "react";
-import {
-  backGreen,
-  backBlue,
-  backBlack,
-  close,
-  done,
-  menubtn,
-} from "../assets";
-import { Transition } from "@headlessui/react";
-import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
+import { backGreen, backBlue, backBlack, close, done, menubtn} from "../assets";
+import { Transition } from '@headlessui/react'
+import { getExcludeTags, getIncludeTags, getMealsInPlan } from "./filterPageSlice";
 
 const MenuView = (props) => {
+
+
+
   //********LOGIN FUNCTION*********
   const handleSignInCB = (e) => {
     e.preventDefault();
@@ -64,9 +60,9 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setIncludedItems([...includedItems, value]); // If checked, add to included items
-      // console.log(value + " isChecked");
+      // //console.log(value + " isChecked");
     } else {
-      // console.log(value + " isUnChecked");
+      // //console.log(value + " isUnChecked");
       setIncludedItems((prevData) => {
         // If unchecked, remove from included items
         return prevData.filter((id) => {
@@ -82,9 +78,9 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setExcludedItems([...excludedItems, value]); // If checked, add to excluded items
-      // console.log(value + " isChecked");
+      // //console.log(value + " isChecked");
     } else {
-      // console.log(value + " isUnChecked");
+      // //console.log(value + " isUnChecked");
       setExcludedItems((prevData) => {
         // If unchecked, remove from excluded items
         return prevData.filter((id) => {
@@ -94,11 +90,75 @@ const MenuView = (props) => {
     }
   }
 
-  const applyFilterButton = () => {
-    props.hideFilter();
-    props.applyFilter(includedItems, excludedItems);
+
+  const [mealsInPlanSliderValue, setMealsInPlanSliderValue] = useState(props.mealsInPlan);
+  useEffect(() => {
+    setMealsInPlanSliderValue(props.mealsInPlan)
+  },[props.mealsInPlan])
+
+
+  const handleSliderChange = (event) => {
+
+    const newValue = parseInt(event.target.value);
+    setMealsInPlanSliderValue(newValue);
   };
 
+
+  const applyFilterButton = () => {
+    props.hideFilter();
+    props.applyFilter(includedItems, excludedItems, mealsInPlanSliderValue);
+    //console.log("EXCLUDED",excludedItems)
+
+  }
+
+
+  const HandleDeleteAccount = (hProp) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    return(
+      <div className="">
+        <form className="flex flex-col" onSubmit={(e)=>{
+          e.preventDefault()
+          hProp.handleDeleteAccount({email: email, password: password})}}>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value={email} onChange={(e)=>
+          {
+            e.preventDefault()
+          setEmail(e.target.value)}} required></input>
+        <label for="password" >Password:</label>
+        <input type="password" value={password} onChange={(e)=> {
+          e.preventDefault()
+          setPassword(e.target.value)}} id="password" name="password" required></input>
+         <button type="submit" onClick={()=>{
+          console.log("delete account btn is clicked")
+         }} >Delete Account</button>
+        </form>
+      </div>
+    )
+  }
+
+  const HandleResetPassword = (hProp) => {
+    const [email, setEmail] = useState("");
+    return(
+      <div className="">
+        <form className="flex flex-col" onSubmit={(e)=>{
+          e.preventDefault()
+          hProp.handlePasswordReset({email: email})}}>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value={email} onChange={(e)=>
+          {
+            e.preventDefault()
+          setEmail(e.target.value)}} required></input>
+         <button type="submit" onClick={()=>{
+          console.log("reset password btn is clicked")
+         }} >Reset Password</button>
+        </form>
+      </div>
+    )
+  }
+
+  const [deleteAccountToggle, setDeleteAccountToggle] = useState(false);
+  const [passChangeToggle, setPassChangeToggle] = useState(false);
   //***********MENU VIEWS***********
 
   const renderMenu = () => {
@@ -125,19 +185,28 @@ const MenuView = (props) => {
           >
             <img src={backBlue} />
           </button>
-          <div className="flex place-content-center mt-10">
-            <button className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14">
+          <div className="flex flex-col items-center place-content-center mt-10">
+            <button
+              onClick={()=>setPassChangeToggle(!passChangeToggle)}
+              className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+            >
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
                 CHANGE PASSWORD
               </div>
             </button>
+            {passChangeToggle && <HandleResetPassword handlePasswordReset={props.resetPassword}/>}
           </div>
-          <div className="flex place-content-center mt-10">
-            <button className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14">
+          <div className="flex flex-col items-center place-content-center mt-10">
+          <button
+              onClick={()=>setDeleteAccountToggle(!deleteAccountToggle)}
+              className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+            >
+
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
                 DELETE ACCOUNT
               </div>
             </button>
+            {deleteAccountToggle && <HandleDeleteAccount handleDeleteAccount={props.deleteAccount}/>}
           </div>
         </div>
       </Transition>
@@ -256,6 +325,19 @@ const MenuView = (props) => {
               )
             )}
           </ul>
+          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">DISHES IN MEAL PLAN</h1>{" "}
+          <div className="flex-col justify-center items-center ">
+            <label htmlFor="myRange" className="block mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
+            <input
+              value={mealsInPlanSliderValue}
+              onChange={handleSliderChange}
+              type="range"
+              min="1"
+              max="7"
+              className="ml-5 w-[80%]"
+              id="myRange"
+            />
+          </div>
           <div className="flex justify-center mt-10 font-outfit text-whiteSmoke">
             {/* Button to apply filters */}
             <button

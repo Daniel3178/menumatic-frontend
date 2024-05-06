@@ -51,7 +51,7 @@ const HomePageView = (props) => {
     }
     //if result from api exists render image. This code can only be reached if previous if statement is not true
     if (props.apiResults) {
-      //console.log(props.apiResults)
+      ////console.log(props.apiResults)
       return (
         <div className="flex justify-center">
           <div className="w-405 h-540 rounded-large relative shadow-xl">

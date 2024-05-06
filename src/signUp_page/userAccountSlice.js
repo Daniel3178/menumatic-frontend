@@ -1,6 +1,44 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {auth} from "../config/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth,createUserWithEmailAndPassword, sendEmailVerification, signOut, deleteUser, reauthenticateWithCredential, EmailAuthCredential, EmailAuthProvider } from "firebase/auth";
+
+
+export const deleteUserAsync = createAsyncThunk(
+  "userAccountSlice/deleteUser",
+  async(payload) => {
+    try {
+      const {currentUser} = auth;
+      console.log(payload)
+      console.log("HELLO")
+      const credentials = EmailAuthProvider.credential(payload.email, payload.password);
+      console.log(credentials)
+      reauthenticateWithCredential(currentUser, credentials).then(async() => {
+        await signOut(auth).then(async() => {
+          await deleteUser(currentUser).then(() => {
+            console.log("User deleted. OK!");
+            window.location.reload();
+          }).catch((error) => {
+            // An error ocurred
+            // ...
+          });
+        }).catch((error) => {})
+
+      })
+
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
+// deleteUser(auth.currentUser).then(() => {
+//   // User deleted.
+// }).catch((error) => {
+//   // An error ocurred
+//   // ...
+// });
+
 
 export const signUpAsync = createAsyncThunk(
     "userAccountSlice/signUp",
@@ -10,11 +48,26 @@ export const signUpAsync = createAsyncThunk(
           auth,
           payload.email,
           payload.password
-        );
-        return {
-          email: userCredentials.user.email,
-          userId: userCredentials.user.uid,
-        };
+        ).then(async (userCredential) => {
+          const user = userCredential.user;
+         await sendEmailVerification(user).then(() => {
+          signOut(auth)
+          .then(() => {
+            // alert(`You've successfully signed out!`);
+            // console.log("User signed out after creating account!");
+            navigate("/");
+          })
+          .catch((err) => {
+            // console.log(err);
+          });
+         });
+         alert("Verification email sent! Please verify your email before logging in!");
+        });
+
+        // return {
+        //   email: userCredentials.user.email,
+        //   userId: userCredentials.user.uid,
+        // };
       } catch (error) {
         console.log(error.message);
         if (error.message === "Firebase: Error (auth/email-already-in-use).") {
@@ -53,11 +106,11 @@ export const signUpAsync = createAsyncThunk(
     extraReducers: (builder) => {
       builder.addCase(signUpAsync.fulfilled, (state, action) => {
         // console.log("extra reducer", action.payload.email, action.payload.userId)
-        state.email = action.payload.email;
-        state.userId = action.payload.userId;
+        // state.email = action.payload.email;
+        // state.userId = action.payload.userId;
         // console.log(state.email, state.userId);
         alert(
-          `You've successfully created an account! \nemail: ${action.payload.email}`
+          `You've successfully created an account!`
         );
       });
     },
