@@ -13,22 +13,25 @@ import SignUpPagePresenter from "./signUp_page/signUpPagePresenter";
 import SignInPagePresenter from "./signIn_page/signInPagePresenter";
 import RecipeDetailsPagePresenter from "./recepie_details_page/recipeDetailsPagePresenter";
 import MenuPresenter from "./menu/menuPresenter";
-import {logo, logoSmall} from "./assets"
+import { logo, logoSmall } from "./assets";
 // `path` contains the path for a current page. `element` contains the page to which the current page's redirect operations will lead.
 const App = () => {
   return (
     <BrowserRouter>
       <div className="flex justify-center">
         <div className="z-50">
-        <MenuPresenter />
-        
+          <MenuPresenter />
         </div>
         <div className="hidden lg:block absolute place-content-center w-444 h-102 mt-8 mb-8">
+          <a href="/">
             <img src={logo} />
-          </div>
+          </a>
+        </div>
         <div className="lg:hidden absolute place-content-start w-444 h-102 mt-8 mb-8">
+          <a href="/">
             <img src={logoSmall} />
-          </div>
+          </a>
+        </div>
         <div className=" mt-32 right-74">
           <Routes>
             <Route path="/pdf-test" element={<CreatePDFForm />} />
