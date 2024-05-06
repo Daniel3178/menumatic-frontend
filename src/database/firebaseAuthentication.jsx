@@ -10,17 +10,22 @@ const FirebaseAuthentication = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-          if (user) {
+          console.log("User: ", user)
+          const {email, uid, emailVerified} = user;
+
+          if (emailVerified) {
+            console.log("User verified!");
             dispatch(
               signInCurrentUser({
-                email: user.email,
-                userId: user.uid,
+                email: email,
+                userId: uid,
               })
             );
              dispatch(fetchUserShopinglist(user.uid))
              dispatch(fetchUserFoodPref(user.uid)) 
             
           } else {
+            console.log("User not verified or account not found!");
             dispatch(signOutCurrentUser());
             dispatch(flushUserData());
           }

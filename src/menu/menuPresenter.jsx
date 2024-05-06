@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getIsLoggedIn, getUserId, getUsername, getUserEmail, signUpAsync} from "../signUp_page/userAccountSlice"
+import { getIsLoggedIn, getUserId, getUsername, getUserEmail,deleteUserAsync, signUpAsync} from "../signUp_page/userAccountSlice"
 import MenuView from './menuView';
 
 import { getMenuStateBase,
@@ -17,11 +17,12 @@ import { setStateLogin,
   setStateFilter,
   setStatePassChange } from "./menuSlice";
 
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut,sendPasswordResetEmail } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 
 import { getExcludeTags, getIncludeTags, getMealsInPlan, saveMealsInPlan, saveTags } from "./filterPageSlice";
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
+import {deleteUser} from "../store/menumaticServerAPISlice"
 
 
 const MenuPresenter = () => {
@@ -103,6 +104,28 @@ const MenuPresenter = () => {
         }
     };
 
+  const handleDeleteAccount = (props) =>{
+    console.log("delete account")
+    console.log("DELETING USER FROM SERVER PROPS: ", props)
+    console.log("DELETING USER FROM SERVER uid: ", auth.currentUser.uid)
+    dispatch(deleteUser({userId: auth.currentUser.uid}))
+    dispatch(deleteUserAsync({email: props.email, password: props.password}))
+
+  }
+
+  const handlePasswordReset = (props)=> {
+    console.log("reset password")
+sendPasswordResetEmail(auth, props.email)
+  .then(() => {
+    // Password reset email sent!
+    // ..
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+  }
 
 
 //*************SIGN UP STUFF*************
@@ -163,6 +186,8 @@ const storedIncludeTags = useSelector(getIncludeTags)
       setPassword={setPassword}
       signIn ={handleSignInACB}
       signOut ={handleSignOutACB}
+      deleteAccount={handleDeleteAccount}
+      resetPassword={handlePasswordReset}
 
       signUp={handleSignUp}
 
