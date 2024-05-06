@@ -101,7 +101,12 @@ const MenuView = (props) => {
 
   const applyFilterButton = () => {
     props.hideFilter();
+<<<<<<< Updated upstream
     props.applyFilter(includedItems, excludedItems, mealsInPlanSliderValue);
+=======
+    props.applyFilter(includedItems, excludedItems);
+    console.log("EXCLUDED",excludedItems)
+>>>>>>> Stashed changes
 
   }
 
