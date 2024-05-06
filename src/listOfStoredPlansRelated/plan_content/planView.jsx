@@ -9,9 +9,6 @@ const PlanView = ({ week, recipes, goToShoplist, state, navigateBack, navigateTo
     return (
       
       <div className="flex-col w-[840px] font-outfit">
-        <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-          <img src={logo} />
-        </div>
         <button className="text-whiteSmoke hover:shadow-xl"
               onClick={() => navigateBack()} aria-label="go back">
               <img src={backBlack} />

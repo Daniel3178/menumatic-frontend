@@ -252,9 +252,6 @@ const ShoplistPageView = (props) => {
 
   return (
     <div className="container mx-auto p-4 font-outfit">
-      <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-          <img src={logo} />
-        </div>
       <h1 className="text-xxl text-gunmetal font-bold text-center mb-4">SHOPPING LIST</h1>
       {renderTheIngredientList()}
       {overlay()}

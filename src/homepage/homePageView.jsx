@@ -90,9 +90,6 @@ const HomePageView = (props) => {
     if (props.apiResultsState === "ready") {
       return (
         <div className="min-h-screen w-full">
-          <div className="flex justify-center w-444 h-102 mt-8 mb-8">
-            <img src={logo} />
-          </div>
           <div className='origin-top scale-75 2xl:scale-100'>
             <div>
               {conditionalRender()}
