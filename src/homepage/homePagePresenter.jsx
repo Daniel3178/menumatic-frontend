@@ -74,8 +74,8 @@ const HomePagePresenter = () => {
     }
     dispatch(incrementLikesCounter(apiResult[0]));
     dispatch(popFirstRecipe());
-    // console.log("homepage presenter")
-    // console.log(apiResult.recipes[0])
+    // //console.log("homepage presenter")
+    // //console.log(apiResult.recipes[0])
 
     //setCounter((counter + 1) % 15); // TODO: remove when api is working
 
@@ -109,12 +109,12 @@ const HomePagePresenter = () => {
 
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
-    console.log("USE EFFECT")
+    //console.log("USE EFFECT")
     // window.location.reload();
 dispatch(flushRecommendationList())
 dispatch(flushShoplist())
     if (apiResult.length == 0) {
-      // console.log("fetching")
+      // //console.log("fetching")
       dispatch(
         searchComplexBySpoonacularApiAsync({
           intolerances: excludeTags,

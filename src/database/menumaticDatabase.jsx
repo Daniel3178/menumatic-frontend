@@ -16,7 +16,7 @@ listenerMiddleware.startListening({
 listenerMiddleware.startListening({
     actionCreator: saveTags,
     effect: async (action, listenerApi) => {
-        console.log("Listenere middleware is called", action.payload)
+        ////console.log("Listenere middleware is called", action.payload)
         const userId = listenerApi.getState().userAccount.userId;
         try{
             listenerApi.dispatch(saveFoodPrefToMenumaticDb({userId: userId, data: action.payload}));

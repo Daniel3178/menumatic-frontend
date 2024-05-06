@@ -13,7 +13,7 @@ export const filterPage = createSlice({
                 paramsArray: [],
             }
         },
-        mealsInPlan: 7,
+        mealsInPlan: 10,
     },
     reducers: {
         saveIncludeTags: (state, action) => {
@@ -35,18 +35,18 @@ export const filterPage = createSlice({
             if (state.apiPrefs.excludeTags.paramsArray.length !== 0) {
                 state.apiPrefs.excludeTags.paramsArray.length = 0;
             }
+            //console.log("Setting food pref: ", action.payload.mealsInPlan)
             state.apiPrefs.includeTags.paramsArray.push(...action.payload.includeTags);
             state.apiPrefs.excludeTags.paramsArray.push(...action.payload.excludeTags);
+            state.mealsInPlan = parseInt(action.payload.mealsInPlan)
+            //console.log("saved pref: ", state.mealsInPlan)
         },
-        saveMealsInPlan: (state, action) => {
-            state.mealsInPlan = action.payload
-        }
     },
     });
 
     export default filterPage.reducer;
 
-    export const {saveIncludeTags, saveExcludeTags, saveTags, saveMealsInPlan} = filterPage.actions;
+    export const {saveIncludeTags, saveExcludeTags, saveTags} = filterPage.actions;
     export const getExcludeTags = (state) => state.filterPage.apiPrefs.excludeTags.paramsArray
     export const getIncludeTags = (state) => state.filterPage.apiPrefs.includeTags.paramsArray
     export const getMealsInPlan = (state) => state.filterPage.mealsInPlan
