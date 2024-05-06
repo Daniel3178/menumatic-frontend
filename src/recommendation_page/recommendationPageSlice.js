@@ -100,9 +100,10 @@ const recommendation = createSlice({
       if(state.recommendationList.length >15){
         state.recommendationList =[];
       }
+      console.log("recipe ", action.payload.recipe)
       state.recommendationList.push({
         portions: 1,
-        result: action.payload,
+        result: action.payload.recipe,
       });
     });
   },

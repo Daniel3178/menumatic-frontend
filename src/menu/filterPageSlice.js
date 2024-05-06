@@ -13,7 +13,7 @@ export const filterPage = createSlice({
                 paramsArray: [],
             }
         },
-        mealsInPlan: 10,
+        mealsInPlan: 7,
     },
     reducers: {
         saveIncludeTags: (state, action) => {

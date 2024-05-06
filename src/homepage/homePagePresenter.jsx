@@ -38,8 +38,8 @@ const HomePagePresenter = () => {
   const includeTags = useSelector(getIncludeTags);
   const apiResultsState = useSelector(getApiResultsState);
   const navigate = useNavigate();
-
   const mealsInPlan = useSelector(getMealsInPlan)
+  const likeLimit = mealsInPlan * 2
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
     if (apiResult.length < 6 && apiResult.length > 3) {
@@ -72,7 +72,7 @@ const HomePagePresenter = () => {
       dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
-    dispatch(incrementLikesCounter(apiResult[0]));
+    dispatch(incrementLikesCounter({recipe:apiResult[0], likeLimit: likeLimit}));
     dispatch(popFirstRecipe());
     // //console.log("homepage presenter")
     // //console.log(apiResult.recipes[0])
