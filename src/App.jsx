@@ -18,7 +18,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="flex flex-row">
-        <div className="">
+        <div className="z-50">
         <MenuPresenter />
         </div>
         <div className="right-74">

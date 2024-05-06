@@ -89,7 +89,7 @@ const HomePageView = (props) => {
   const renderHomePage = () => {
     if (props.apiResultsState === "ready") {
       return (
-        <div className="bg-smokeWhite min-h-screen w-full">
+        <div className="min-h-screen w-full">
           <div className="flex justify-center w-444 h-102 mt-8 mb-8">
             <img src={logo} />
           </div>
