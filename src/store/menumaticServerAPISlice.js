@@ -90,6 +90,28 @@ export const deleteMealPlan = createAsyncThunk(
     return await response.json();
   }
 );
+export const deleteUser = createAsyncThunk(
+  "menumaticServerApi/deleteMealPlan",
+  async ( info, {dispatch}) => {
+    const userId = info.userId;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "User-id": userId,
+      },
+    };
+
+    const deleteUserUrl = 'http://localhost:8080/api/user/delete/';
+    console.log("Fetching user shopping list is CALLED");
+    // dispatch(setMenumaticServerState("loading"));
+  
+    await fetch(deleteUserUrl, options);
+    if (!response.ok) {
+      throw new Error("Failed to delete the meal plan.");
+    }
+  }
+);
 
 export const saveExcludedIngredients = createAsyncThunk(
   "menumaticServerApi/saveExcludedIngredients",

@@ -22,6 +22,7 @@ import { auth } from '../config/firebaseConfig';
 
 import { getExcludeTags, getIncludeTags, saveTags } from "./filterPageSlice";
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
+import {deleteUser} from "../store/menumaticServerAPISlice"
 
 
 const MenuPresenter = () => {
@@ -105,8 +106,11 @@ const MenuPresenter = () => {
 
   const handleDeleteAccount = (props) =>{
     console.log("delete account")
-
+    console.log("DELETING USER FROM SERVER PROPS: ", props)
+    console.log("DELETING USER FROM SERVER uid: ", auth.currentUser.uid)
+    dispatch(deleteUser({userId: auth.currentUser.uid}))
     dispatch(deleteUserAsync({email: props.email, password: props.password}))
+
   }
 
   const handlePasswordReset = (props)=> {
