@@ -12,7 +12,7 @@ import {
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
-import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
+import { getExcludeTags, getIncludeTags, getMealsInPlan } from "../menu/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 import {
@@ -39,7 +39,7 @@ const HomePagePresenter = () => {
   const apiResultsState = useSelector(getApiResultsState);
   const navigate = useNavigate();
 
-
+  const mealsInPlan = useSelector(getMealsInPlan)
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
     if (apiResult.length < 6 && apiResult.length > 3) {
@@ -69,7 +69,7 @@ const HomePagePresenter = () => {
       );
     }
     if (likesCounter === 0) {
-      dispatch(sortLikedDishes());
+      dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
     dispatch(incrementLikesCounter(apiResult[0]));
