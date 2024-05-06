@@ -20,7 +20,7 @@ import { setStateLogin,
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 
-import { getExcludeTags, getIncludeTags, saveTags } from "./filterPageSlice";
+import { getExcludeTags, getIncludeTags, getMealsInPlan, saveMealsInPlan, saveTags } from "./filterPageSlice";
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
 
 
@@ -116,13 +116,16 @@ const MenuPresenter = () => {
 
 //************FILTER STUFF************
 
+const mealsInPlan = useSelector(getMealsInPlan)
+
 const storedExcludeTags = useSelector(getExcludeTags)
 const storedIncludeTags = useSelector(getIncludeTags)
 
-  const handleApplyFilter = (includeTags, excludeTags) => {
+  const handleApplyFilter = (includeTags, excludeTags, mealsInPlan) => {
     // dispatch(saveIncludeTags(includeTags))
     // dispatch(saveExcludeTags(excludeTags))
     dispatch(saveTags({includeTags: includeTags, excludeTags: excludeTags}))
+    dispatch(saveMealsInPlan(mealsInPlan))
     navigate("/")
   }
 
@@ -166,6 +169,7 @@ const storedIncludeTags = useSelector(getIncludeTags)
       applyFilter={handleApplyFilter} cancel={handleCancel} 
       storedExcludeTags={storedExcludeTags}
       storedIncludeTags={storedIncludeTags}
+      mealsInPlan={mealsInPlan}
     />
     );
 }
