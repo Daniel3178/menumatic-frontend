@@ -1,6 +1,6 @@
 import React from "react";
 import { generateShoplist } from "../../shoplist/shoplistSlice";
-import { generateShoppingListPDFLink } from "../../pdf/pdfgen_component";
+import { generateShoppingListPDFLink } from "../../pdf/CreateShoplistPDF";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

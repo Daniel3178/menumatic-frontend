@@ -110,7 +110,6 @@ export default PlanShoplistPageView = (props) => {
       {viewPdf ? pdfButtonCom() : null}
       {renderTheIngredientList()}
 
-      {console.log("[STATE2]")}
     </div>
   );
 };

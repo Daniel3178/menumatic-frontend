@@ -3,7 +3,7 @@ import HomePagePresenter from "./homepage/homePagePresenter";
 import FilterPagePresenter from "./filterpage/filterPagePresenter";
 import DanielTestPresenter from "./test/danielTestPresenter";
 import GustavTestPresenter from "./test/gustavTestPresenter";
-import CreatePDFForm from "./pdf/pdfgen_component";
+import CreatePDFForm from "./pdf/CreateShoplistPDF";
 import RecommendationPagePresenter from "./recommendation_page/recommendationPagePresenter";
 import ShoplistPagePresenter from "./shoplist/shoplistPagePresenter";
 // The elements related to stored plans
