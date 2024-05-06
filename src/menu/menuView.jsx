@@ -1,18 +1,21 @@
 import { React, useEffect, useState } from "react";
-import { backGreen, backBlue, backBlack, close, done, menubtn } from "../assets";
-import {Transition } from '@headlessui/react'
+import {
+  backGreen,
+  backBlue,
+  backBlack,
+  close,
+  done,
+  menubtn,
+} from "../assets";
+import { Transition } from "@headlessui/react";
 import { getExcludeTags, getIncludeTags } from "./filterPageSlice";
 
 const MenuView = (props) => {
-  
-
-
   //********LOGIN FUNCTION*********
   const handleSignInCB = (e) => {
     e.preventDefault();
     props.signIn({ email: props.email, password: props.password });
   };
-
 
   //********SIGNUP FUNCTION***********
 
@@ -52,7 +55,7 @@ const MenuView = (props) => {
   useEffect(() => {
     setIncludedItems(props.storedIncludeTags);
     setExcludedItems(props.storedExcludeTags);
-  },[props.storedIncludeTags, props.storedExcludeTags])
+  }, [props.storedIncludeTags, props.storedExcludeTags]);
 
   // Function to handle inclusion of tags
   function includeCheckboxHandler(event) {
@@ -94,26 +97,19 @@ const MenuView = (props) => {
   const applyFilterButton = () => {
     props.hideFilter();
     props.applyFilter(includedItems, excludedItems);
-
-  }
-
+  };
 
   //***********MENU VIEWS***********
 
   const renderMenu = () => {
-    if(props.stateBase){
-      return(
-        <div className="absolute fixed top-0 right-0">
-        {menuState()}
-        </div>
-      )
+    if (props.stateBase) {
+      return <div className="absolute fixed top-0 right-0">{menuState()}</div>;
     }
-  }
+  };
 
   const settingsMenu = () => {
-  
-      return(
-        <Transition
+    return (
+      <Transition
         show={props.stateSettings}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -130,32 +126,27 @@ const MenuView = (props) => {
             <img src={backBlue} />
           </button>
           <div className="flex place-content-center mt-10">
-          <button
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
-            >
+            <button className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14">
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
                 CHANGE PASSWORD
               </div>
             </button>
           </div>
           <div className="flex place-content-center mt-10">
-          <button
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
-            >
+            <button className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14">
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
                 DELETE ACCOUNT
               </div>
             </button>
           </div>
         </div>
-        </Transition>
-      )
-  }
+      </Transition>
+    );
+  };
 
   const filterMenu = () => {
-    
-      return (
-        <Transition
+    return (
+      <Transition
         show={props.stateFilter}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -171,7 +162,9 @@ const MenuView = (props) => {
           >
             <img src={backBlue} />
           </button>
-          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">FOOD PREFERENCE</h1>{" "}
+          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">
+            FOOD PREFERENCE
+          </h1>{" "}
           {/* Heading for food preference */}
           <ul>
             {" "}
@@ -271,19 +264,17 @@ const MenuView = (props) => {
               id="signup"
               type="submit"
             >
-              <div className="tracking-wider">
-              APPLY
-              </div>
+              <div className="tracking-wider">APPLY</div>
             </button>
           </div>
         </div>
-        </Transition>
-      );
+      </Transition>
+    );
   };
 
   const signupMenu = () => {
-      return (
-        <Transition
+    return (
+      <Transition
         show={props.stateSignup}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -349,13 +340,13 @@ const MenuView = (props) => {
             </form>
           </div>
         </div>
-        </Transition>
-      );
+      </Transition>
+    );
   };
 
   const loginMenu = () => {
-      return (
-        <Transition
+    return (
+      <Transition
         show={props.stateLogin}
         enter="transition-opacity duration-150"
         enterFrom="opacity-0"
@@ -414,8 +405,8 @@ const MenuView = (props) => {
             </div>
           </div>
         </div>
-        </Transition>
-      );
+      </Transition>
+    );
   };
 
   const menuState = () => {
@@ -424,14 +415,29 @@ const MenuView = (props) => {
         <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
           {settingsMenu()}
           {filterMenu()}
-          <div className="flex justify-center mt-6">
+
+          <div className="lg:hidden flex flex-row">
+            <div className="flex justify-start ml-6 mr-5">
+              <button onClick={props.hideMenu}>
+                <img src={backGreen} />
+              </button>
+            </div>
+
+            <div className="flex justify-center">
+              <button
+                onClick={props.signOut}
+                className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
+              >
+                LOG OUT
+              </button>
+            </div>
+          </div>
+          <div className="hidden lg:block justify-center ml-16">
             <button
               onClick={props.signOut}
               className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-             
-                LOG OUT
-              
+              LOG OUT
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
@@ -457,9 +463,9 @@ const MenuView = (props) => {
               </button>
             </div>
             <div>
-              <button 
-              className="mt-10 hover:underline"
-              onClick={props.showSettings}
+              <button
+                className="mt-10 hover:underline"
+                onClick={props.showSettings}
               >
                 Account settings
               </button>
@@ -469,17 +475,31 @@ const MenuView = (props) => {
       );
     } else if (props.isLoggedIn == false) {
       return (
-        <div className=" top-0 right-0 h-screen w-72 bg-cerulean">
+        <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
           {filterMenu()}
           {loginMenu()}
-          <div className="flex justify-center mt-6">
+          <div className="lg:hidden flex flex-row">
+            <div className="flex justify-start ml-6 mr-5">
+              <button onClick={props.hideMenu}>
+                <img src={backGreen} />
+              </button>
+            </div>
+
+            <div className="flex justify-center">
+              <button
+                onClick={props.showLogin}
+                className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
+              >
+                LOG IN
+              </button>
+            </div>
+          </div>
+          <div className="hidden lg:block justify-center ml-16">
             <button
               onClick={props.showLogin}
               className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
             >
-              
-                LOG IN
-              
+              LOG IN
             </button>
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
@@ -497,14 +517,11 @@ const MenuView = (props) => {
     }
   };
 
-  return(
+  return (
     <div>
       <div className="lg:hidden fixed top-0 right-0 ">
-        <button 
-        className="pt-12 pr-12"
-        onClick={props.showMenu}
-        >
-          <img src={menubtn}/>
+        <button className="pt-12 pr-12" onClick={props.showMenu}>
+          <img src={menubtn} />
         </button>
         {renderMenu()}
       </div>
