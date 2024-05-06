@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementLikesCounter } from "../homepage/homePageSlice";
 import { connectStorageEmulator } from "firebase/storage";
+import { useSelector } from "react-redux";
+import { getMealsInPlan } from "../menu/filterPageSlice";
 
 const recommendation = createSlice({
   name: "recommendation",
@@ -44,13 +46,14 @@ const recommendation = createSlice({
     },
     sortLikedDishes: (state, action) => {
       state.state = "loading";
+      const mealsInPlan = action.payload
       const testArr = [];
       state.recommendationList.map((item)=>{
         testArr.push(item);
       })
-      state.affordableDishesList.dishes.push(...testArr.sort((a, b) => a.result.pricePerServing - b.result.pricePerServing).slice(0,7));
-      state.popularDishesList.dishes.push(...testArr.sort((a, b) => b.result.spoonacularScore - a.result.spoonacularScore).slice(0,7));
-      state.quickDishesList.dishes.push(...testArr.sort((a, b) => a.result.readyInMinutes - b.result.readyInMinutes ).slice(0,7));
+      state.affordableDishesList.dishes.push(...testArr.sort((a, b) => a.result.pricePerServing - b.result.pricePerServing).slice(0,mealsInPlan));
+      state.popularDishesList.dishes.push(...testArr.sort((a, b) => b.result.spoonacularScore - a.result.spoonacularScore).slice(0,mealsInPlan));
+      state.quickDishesList.dishes.push(...testArr.sort((a, b) => a.result.readyInMinutes - b.result.readyInMinutes ).slice(0,mealsInPlan));
       state.state = "ready";
     },
     /*
