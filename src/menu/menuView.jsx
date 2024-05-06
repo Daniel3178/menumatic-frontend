@@ -185,8 +185,9 @@ const MenuView = (props) => {
             </button>
             {passChangeToggle && <HandleResetPassword handlePasswordReset={props.resetPassword}/>}
           </div>
-          <div className="flex place-content-center mt-10">
+          <div className="flex flex-col items-center place-content-center mt-10">
           <button
+              onClick={()=>setDeleteAccountToggle(!deleteAccountToggle)}
               className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
 
