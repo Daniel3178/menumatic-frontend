@@ -17,7 +17,7 @@ import MenuPresenter from "./menu/menuPresenter";
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="flex flex-row">
+      <div className="flex justify-center">
         <div className="z-50">
         <MenuPresenter />
         </div>
