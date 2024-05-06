@@ -61,9 +61,9 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setIncludedItems([...includedItems, value]); // If checked, add to included items
-      // console.log(value + " isChecked");
+      // //console.log(value + " isChecked");
     } else {
-      // console.log(value + " isUnChecked");
+      // //console.log(value + " isUnChecked");
       setIncludedItems((prevData) => {
         // If unchecked, remove from included items
         return prevData.filter((id) => {
@@ -79,9 +79,9 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setExcludedItems([...excludedItems, value]); // If checked, add to excluded items
-      // console.log(value + " isChecked");
+      // //console.log(value + " isChecked");
     } else {
-      // console.log(value + " isUnChecked");
+      // //console.log(value + " isUnChecked");
       setExcludedItems((prevData) => {
         // If unchecked, remove from excluded items
         return prevData.filter((id) => {
@@ -91,9 +91,15 @@ const MenuView = (props) => {
     }
   }
 
+
   const [mealsInPlanSliderValue, setMealsInPlanSliderValue] = useState(props.mealsInPlan);
+  useEffect(() => {
+    setMealsInPlanSliderValue(props.mealsInPlan)
+  },[props.mealsInPlan])
+
 
   const handleSliderChange = (event) => {
+
     const newValue = parseInt(event.target.value);
     setMealsInPlanSliderValue(newValue);
   };
@@ -101,12 +107,8 @@ const MenuView = (props) => {
 
   const applyFilterButton = () => {
     props.hideFilter();
-<<<<<<< Updated upstream
     props.applyFilter(includedItems, excludedItems, mealsInPlanSliderValue);
-=======
-    props.applyFilter(includedItems, excludedItems);
-    console.log("EXCLUDED",excludedItems)
->>>>>>> Stashed changes
+    //console.log("EXCLUDED",excludedItems)
 
   }
 
@@ -268,7 +270,7 @@ const MenuView = (props) => {
           </ul>
           <h1 className="font-outfit font-bold text-lg ml-6 mt-6">DISHES IN MEAL PLAN</h1>{" "}
           <div className="flex-col justify-center items-center ">
-            <label for="myRange" class="block mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
+            <label htmlFor="myRange" className="block mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
             <input
               value={mealsInPlanSliderValue}
               onChange={handleSliderChange}

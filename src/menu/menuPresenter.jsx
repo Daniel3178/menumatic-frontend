@@ -20,7 +20,7 @@ import { setStateLogin,
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 
-import { getExcludeTags, getIncludeTags, getMealsInPlan, saveMealsInPlan, saveTags } from "./filterPageSlice";
+import { getExcludeTags, getIncludeTags, getMealsInPlan, saveTags } from "./filterPageSlice";
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
 
 
@@ -84,7 +84,7 @@ const MenuPresenter = () => {
       signOut(auth)
       
       .catch((err) => {
-        // console.log(err);
+        // //console.log(err);
       });
 
   }
@@ -98,7 +98,7 @@ const MenuPresenter = () => {
           setEmail("");
           setPassword("");
         } catch (error) {
-          // console.log(error);
+          // //console.log(error);
           alert("Incorrect username or password");
         }
     };
@@ -124,8 +124,8 @@ const storedIncludeTags = useSelector(getIncludeTags)
   const handleApplyFilter = (includeTags, excludeTags, mealsInPlan) => {
     // dispatch(saveIncludeTags(includeTags))
     // dispatch(saveExcludeTags(excludeTags))
-    dispatch(saveTags({includeTags: includeTags, excludeTags: excludeTags}))
-    dispatch(saveMealsInPlan(mealsInPlan))
+    //console.log("MEALSINPLAN: ", mealsInPlan)
+    dispatch(saveTags({includeTags: includeTags, excludeTags: excludeTags, mealsInPlan: mealsInPlan}))
     navigate("/")
   }
 
