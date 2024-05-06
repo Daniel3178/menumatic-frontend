@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getIsLoggedIn, getUserId, getUsername, getUserEmail, signUpAsync} from "../signUp_page/userAccountSlice"
+import { getIsLoggedIn, getUserId, getUsername, getUserEmail,deleteUserAsync, signUpAsync} from "../signUp_page/userAccountSlice"
 import MenuView from './menuView';
 
 import { getMenuStateBase,
@@ -103,6 +103,12 @@ const MenuPresenter = () => {
         }
     };
 
+  const handleDeleteAccount = (props) =>{
+    console.log("delete account")
+
+    dispatch(deleteUserAsync({email: props.email, password: props.password}))
+  }
+
 
 
 //*************SIGN UP STUFF*************
@@ -160,6 +166,7 @@ const storedIncludeTags = useSelector(getIncludeTags)
       setPassword={setPassword}
       signIn ={handleSignInACB}
       signOut ={handleSignOutACB}
+      deleteAccount={handleDeleteAccount}
 
       signUp={handleSignUp}
 
