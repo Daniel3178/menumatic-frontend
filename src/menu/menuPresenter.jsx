@@ -17,7 +17,7 @@ import { setStateLogin,
   setStateFilter,
   setStatePassChange } from "./menuSlice";
 
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut,sendPasswordResetEmail } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 
 import { getExcludeTags, getIncludeTags, saveTags } from "./filterPageSlice";
@@ -109,6 +109,19 @@ const MenuPresenter = () => {
     dispatch(deleteUserAsync({email: props.email, password: props.password}))
   }
 
+  const handlePasswordReset = (props)=> {
+    console.log("reset password")
+sendPasswordResetEmail(auth, props.email)
+  .then(() => {
+    // Password reset email sent!
+    // ..
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+  }
 
 
 //*************SIGN UP STUFF*************
@@ -167,6 +180,7 @@ const storedIncludeTags = useSelector(getIncludeTags)
       signIn ={handleSignInACB}
       signOut ={handleSignOutACB}
       deleteAccount={handleDeleteAccount}
+      resetPassword={handlePasswordReset}
 
       signUp={handleSignUp}
 
