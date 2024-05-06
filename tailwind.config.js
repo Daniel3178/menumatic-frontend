@@ -11,6 +11,7 @@ export default {
       }),
       width: {
         '405': '405px',
+        '640': '640px',
       },
       height: {
         '540': '540px',
