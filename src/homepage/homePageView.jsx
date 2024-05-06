@@ -1,5 +1,5 @@
 import React from 'react';
-import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, dislike_btn, like_btn, logo, clock_icon, noimage } from "../assets";
+import {dislike_btn, like_btn, clock_icon, noimage } from "../assets";
 
 const ingredientsList = (items) => {
   // Remove duplicates from item.nameClean
