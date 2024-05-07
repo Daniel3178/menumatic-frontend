@@ -60,16 +60,16 @@ const HomePageView = (props) => {
                 currentTarget.onerror = null;
                 currentTarget.src = noimage;
               }} />
-            <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large min-w-405 lg:h-[25%] h-[27%]">
-              <div className='pt-3 pl-2 lg:pl-4'>
+            <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large min-w-405 xl:h-[25%] h-[27%]">
+              <div className='pt-3 pl-2 xl:pl-4'>
                 <p className="text-whiteSmoke font-outfit text-xl lg:text-3xl font-medium truncate">{props.apiResults[0].title}</p>
               </div>
-              <div className='absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-2 lg:p-4'>
+              <div className='absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-2 xl:p-4'>
                 <div className='flex space-x-2 items-center'>
                   <div className='mt-2 ml-2 flex text-whiteSmoke'>
-                    <img src={clock_icon} className="lg:size-12 pb-2" />
+                    <img src={clock_icon} className="xl:size-12 pb-2" />
                   </div>
-                  <div className='text-whiteSmoke font-outfit text-lg lg:text-2xl font-thin'>
+                  <div className='text-whiteSmoke font-outfit text-lg xl:text-2xl font-thin'>
                     {props.apiResults[0].readyInMinutes} min
                   </div>
                 </div>
