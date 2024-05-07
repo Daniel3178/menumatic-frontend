@@ -18,7 +18,7 @@ const ShoplistPageView = (props) => {
 
   const PDFDownloadButton = () => {
     return (
-      <div className="bg-blue-500 w-[150px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <div className="mr-2 p-3 w-40 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
         {generateShoppingListPDFLink(props.allItems)}
       </div>
     );
@@ -58,7 +58,7 @@ const ShoplistPageView = (props) => {
     } else {
       return (
         <div className="flex justify-between items-center w-full">
-        <div className="ml-2 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or export as PDF.</div>
+        <div className="ml-2 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or download as PDF.</div>
         {PDFDownloadButton()}
         </div>
       );
