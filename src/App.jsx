@@ -22,7 +22,7 @@ const App = () => {
         <div className="z-50">
           <MenuPresenter />
         </div>
-        <div className="hidden lg:block absolute place-content-center w-444 h-102 mt-8 mb-8">
+        <div className="hidden lg:block absolute place-content-center w-444 h-102 mt-8 mb-8 pr-72">
           <a href="/">
             <img src={logo} />
           </a>
