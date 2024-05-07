@@ -121,7 +121,7 @@ const HomePageView = (props) => {
   }
 
   return (
-    <div>
+    <div className='lg:pr-72'>
       {renderHomePage()}
     </div>
   );
