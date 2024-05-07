@@ -630,7 +630,7 @@ const MenuView = (props) => {
     <div>
       <div className="lg:hidden fixed top-0 right-0 pt-12 pr-12">
         <div className="">
-        <button className="p-2 rounded-[10px]" onClick={props.showMenu}>
+        <button className="p-2" onClick={props.showMenu}>
           <img src={menubtn} />
         </button>
         {renderMenu()}
