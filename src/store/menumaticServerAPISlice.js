@@ -212,7 +212,7 @@ export const fetchUserFoodPref = createAsyncThunk(
 
     const includeList = [];
     const excludeList = [];
-    let mealsInPlan = 0;
+    let mealsInPlan = 7;
 
 fetchedData.forEach(item => {
     const [type, value] = item.split('-');
