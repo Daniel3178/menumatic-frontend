@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
+import { generateShoppingListPDFLink } from "../pdf/CreateShoplistPDF";
 import { logo } from "../assets";
 
 /**
@@ -14,6 +14,14 @@ const ShoplistPageView = (props) => {
 
   const handleNameInputChange = (event) => {
     setNameInput(event.target.value);
+  };
+
+  const PDFDownloadButton = () => {
+    return (
+      <div className="bg-blue-500 w-[150px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        {generateShoppingListPDFLink(props.allItems)}
+      </div>
+    );
   };
 
   /**
@@ -51,13 +59,7 @@ const ShoplistPageView = (props) => {
       return (
         <div className="flex justify-between items-center w-full">
         <div className="ml-2 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or export as PDF.</div>
-        <button
-          className="mr-2 p-1 w-40 h-12 rounded-[100px] text-lg bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
-          id="save"
-          // onClick={() => setShowOverlay(true)}
-        >
-          EXPORT  PDF
-        </button>
+        {PDFDownloadButton()}
         </div>
       );
     }
@@ -87,7 +89,7 @@ const ShoplistPageView = (props) => {
               className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
               id="exportPDF"
               type="exportPDF"
-            //onClick={generateShoppingListPDFLink(parseToStringArray())}
+              onClick={function(){ generateShoppingListPDFLink(transformallItemsIntoStringArray(props.allItems))} }
             >
               Export PDF
             </button>
@@ -97,18 +99,7 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  function parseToStringArray(){
-    const resultArray = [];
-    props.allItems.forEach((ingredient) => {
-      resultArray.push(
-        `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`
-      );
-    });
-    return resultArray;
-  };
-
   const showRemovableIngredients = (ing) => {
-    console.log(ing);
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
@@ -191,17 +182,6 @@ const ShoplistPageView = (props) => {
         {showIngredientFunction(ingredientData)}
       </div>
     ));
-  };
-
-  /**
-   * Generates a button component for PDF download
-   */
-  const pdfButtonCom = () => {
-    return (
-      <div className="bg-blue-500 w-[150px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        {generateShoppingListPDFLink(parseToStringArray())}
-      </div>
-    );
   };
 
   /**
