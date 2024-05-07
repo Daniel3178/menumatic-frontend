@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PlanPresenter from "./planPresenter";
 import { logo, backBlack } from "../../assets";
 
-const PlanView = ({ week, recipes, goToShoplist, state, navigateBack, navigateToRecipe }) => {
+const PlanView = ({ meal, recipes, goToShoplist, state, navigateBack, navigateToRecipe }) => {
   if (state === "ready") {
 
     return (
@@ -13,7 +13,7 @@ const PlanView = ({ week, recipes, goToShoplist, state, navigateBack, navigateTo
               onClick={() => navigateBack()} aria-label="go back">
               <img src={backBlack} />
             </button>
-        <h1 className="text-center font-regular pb-10 text-cerulean">Recipes for {week}</h1>
+        <h1 className="text-center font-regular pb-10 text-cerulean">Recipes for {meal}</h1>
         <div>
           <div className="mb-4 font-outfit text-2xl font-medium w-full flex items-center justify-center">
             <span className="text-center w-[10%]">Day</span>
@@ -45,7 +45,7 @@ const PlanView = ({ week, recipes, goToShoplist, state, navigateBack, navigateTo
   else if (state === "loading") {
     return (
       <div>
-        <h1 className="text-center font-bold py-4">Recipes for {week}</h1>
+        <h1 className="text-center font-bold py-4">Recipes for {meal}</h1>
         <h1 className="text-center font-bold py-4">Loading...</h1>
       </div>
     )
