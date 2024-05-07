@@ -25,6 +25,7 @@ import { auth } from '../config/firebaseConfig';
 import { getExcludeTags, getIncludeTags, getMealsInPlan, saveTags } from "./filterPageSlice";
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
 import {deleteUser} from "../store/menumaticServerAPISlice"
+import{flushSpoonacularResults} from "../store/spoonacularAPISlice"
 
 
 const MenuPresenter = () => {
