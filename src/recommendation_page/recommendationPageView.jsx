@@ -12,9 +12,9 @@ const RecommendationPageView = (props) => {
 
     <button
       className={`
-    mr-1 p-1 h-[80px] rounded-large bg-cerulean font-medium text-lg font-outfit text-whiteSmoke shadow-xl hover:shadow-mid
-    transition-all duration-500 
-    ${selectedTab === tabName ? "w-[200px] bg-yellowGreen" : "w-[180px]"} 
+    mr-1 p-1 h-10 lg:h-16 w-20 lg:w-32  rounded-large bg-cerulean text-sm lg:text-lg font-outfit text-whiteSmoke shadow-xl hover:shadow-mid
+    transition-all duration-500
+    ${selectedTab === tabName ? "bg-yellowGreen" : ""} 
   `}
       onClick={() => onClick(tabName)}
     >
@@ -25,7 +25,7 @@ const RecommendationPageView = (props) => {
   // navigation bar with buttons for each recommendation category
   const navBar = () => {
     return (
-      <div className="pb-4 justify-start items-center w-full">
+      <div className="pb-4 items-center w-full">
         <NavButton
           selectedTab={props.selectedTab}
           tabName="Popular"
@@ -38,7 +38,7 @@ const RecommendationPageView = (props) => {
         />
         <NavButton
           selectedTab={props.selectedTab}
-          tabName="Affordable"
+          tabName="Cheap"
           onClick={props.setSelectTab}
         />
       </div>
@@ -46,12 +46,11 @@ const RecommendationPageView = (props) => {
   };
 
   const renderRecommendationTable = (listOfMeals) => (
-    <div className="flex min-h-screen w-full top-0 right-0 bottom-0 left-0">
-      <div className="w-full">
-        <div className="justify-center items-center">
+    <div className="h-screen w-screen top-0 right-0 bottom-0 left-0">
+        <div className="justify-center items-center pl-10">
           {navBar()}
         </div>
-        <div className="shrink justify-center items-center ">
+        <div className="w-screen justify-center items-center pl-10 pr-10 lg:pr-80">
           <DishListComponent
             listOfMeals={listOfMeals}
             updateCount={props.updateCount}
@@ -59,7 +58,6 @@ const RecommendationPageView = (props) => {
             selectedTab={props.selectedTab}
           />
         </div>
-      </div>
     </div>
   );
 
@@ -73,7 +71,7 @@ const RecommendationPageView = (props) => {
       // console.log("Quick dishes", props.selectedTab)
       return renderRecommendationTable(props.quickDishes);
     }
-    case "Affordable": {
+    case "Cheap": {
       // console.log("Affordable dishes", props.selectedTab)
       return renderRecommendationTable(props.affordableDishes);
     }

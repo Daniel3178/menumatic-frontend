@@ -142,16 +142,16 @@ const DishListComponent = (props) => {
     <div className="flex-col justify-end w-full ">
 
 
-      <div className="font-outfit text-2xl font-medium w-full flex items-center justify-center">
-        <span className="text-center pb-6 w-[10%]">Day</span>
-        <span className="text-center pb-6 w-[60%]">Meal</span>
-        <span className="text-center pb-6 w-[10%]">Price</span>
-        <span className="text-center pb-6 w-[20%]">Portions</span>
+      <div className="font-outfit text-base font-medium w-full flex items-center justify-center">
+        <span className="text-center pb-4 w-[10%]">Day</span>
+        <span className="text-center pb-4 w-[60%]">Meal</span>
+        <span className="text-center pb-4 w-[10%]">Price</span>
+        <span className="text-center pb-4 w-[20%]">Portions</span>
       </div>
       {renderList()}
       <div className="flex w-full justify-end"> 
       <button
-        className="w-[180px] h-[54px] bg-cerulean rounded-[100px] font-outfit font-base font-medium text-whiteSmoke shadow-mid"
+        className="w-40 h-12 bg-cerulean rounded-[100px] font-outfit font-base font-medium text-whiteSmoke shadow-mid"
         onClick={props.goToShoplist}
         role="button"
       >
