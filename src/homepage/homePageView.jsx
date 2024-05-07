@@ -89,7 +89,7 @@ const HomePageView = (props) => {
   const renderHomePage = () => {
     if (props.apiResultsState === "ready") {
       return (
-        <div className="w-[75%] h-full">
+        <div className="w-[75%] h-[80%]">
           
             <div>
               {conditionalRender()}
@@ -121,7 +121,7 @@ const HomePageView = (props) => {
   }
 
   return (
-    <div className='flex justify-center h-4/5 w-screen lg:pr-72'>
+    <div className='flex justify-center h-[80%] w-screen lg:pr-72'>
       {renderHomePage()}
     </div>
   );
