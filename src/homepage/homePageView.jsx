@@ -1,5 +1,5 @@
 import React from 'react';
-import { clock, thumbs_up, thumbs_down, info, close, info_i, tune, dislike_btn, like_btn, logo, clock_icon, noimage } from "../assets";
+import {dislike_btn, like_btn, clock_icon, noimage } from "../assets";
 
 const ingredientsList = (items) => {
   // Remove duplicates from item.nameClean
@@ -51,7 +51,7 @@ const HomePageView = (props) => {
     }
     //if result from api exists render image. This code can only be reached if previous if statement is not true
     if (props.apiResults) {
-      //console.log(props.apiResults)
+      ////console.log(props.apiResults)
       return (
         <div className="flex justify-center">
           <div className="w-405 h-540 rounded-large relative shadow-xl">
@@ -89,12 +89,9 @@ const HomePageView = (props) => {
   const renderHomePage = () => {
     if (props.apiResultsState === "ready") {
       return (
-        <div className="bg-smokeWhite min-h-screen w-full">
-          <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-            <img src={logo} />
-          </div>
-          <div className='w-[405px]'>
-            <div className=''>
+        <div className="min-h-screen w-full">
+          <div className='origin-top scale-75 2xl:scale-100'>
+            <div>
               {conditionalRender()}
             </div>
             <div className="flex space-x-20 justify-center mt-8">

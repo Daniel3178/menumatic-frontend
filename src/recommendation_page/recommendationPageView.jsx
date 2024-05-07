@@ -25,7 +25,7 @@ const RecommendationPageView = (props) => {
   // navigation bar with buttons for each recommendation category
   const navBar = () => {
     return (
-      <div className="flex pb-4 justify-start items-center w-full">
+      <div className="pb-4 justify-start items-center w-full">
         <NavButton
           selectedTab={props.selectedTab}
           tabName="Popular"
@@ -46,15 +46,12 @@ const RecommendationPageView = (props) => {
   };
 
   const renderRecommendationTable = (listOfMeals) => (
-    <div className="bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
-      <div className="w-[840px] mr-10 ml-10">
-        <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-          <img src={logo} />
-        </div>
-        <div className="flex justify-center items-center">
+    <div className="flex min-h-screen w-full top-0 right-0 bottom-0 left-0">
+      <div className="w-full">
+        <div className="justify-center items-center">
           {navBar()}
         </div>
-        <div className="flex justify-center items-center ">
+        <div className="shrink justify-center items-center ">
           <DishListComponent
             listOfMeals={listOfMeals}
             updateCount={props.updateCount}

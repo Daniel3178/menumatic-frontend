@@ -46,6 +46,7 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
       dataP.excludeTags.map((tag)=>{
         result.push(`exclude-${tag}`);
       });
+      result.push((`mealsInPlan-${dataP.mealsInPlan}`))
       return result;
     }
     const newData = parseData(data);
@@ -88,6 +89,28 @@ export const deleteMealPlan = createAsyncThunk(
     }
     dispatch(fetchUserShopinglist(userId));
     return await response.json();
+  }
+);
+export const deleteUser = createAsyncThunk(
+  "menumaticServerApi/deleteMealPlan",
+  async ( info, {dispatch}) => {
+    const userId = info.userId;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "User-id": userId,
+      },
+    };
+
+    const deleteUserUrl = 'http://localhost:8080/api/user/delete/';
+    console.log("Fetching user shopping list is CALLED");
+    // dispatch(setMenumaticServerState("loading"));
+  
+    await fetch(deleteUserUrl, options);
+    if (!response.ok) {
+      throw new Error("Failed to delete the meal plan.");
+    }
   }
 );
 
@@ -189,6 +212,7 @@ export const fetchUserFoodPref = createAsyncThunk(
 
     const includeList = [];
     const excludeList = [];
+    let mealsInPlan = 7;
 
 fetchedData.forEach(item => {
     const [type, value] = item.split('-');
@@ -196,9 +220,12 @@ fetchedData.forEach(item => {
         includeList.push(value);
     } else if (type === 'exclude') {
         excludeList.push(value);
+    }else if (type === 'mealsInPlan'){
+        mealsInPlan = value;
     }
 });
-dispatch(saveTags({includeTags: includeList, excludeTags: excludeList}));
+dispatch(saveTags({includeTags: includeList, excludeTags: excludeList, mealsInPlan: mealsInPlan}));
+//console.log("FETCHED FOOD PREF")
 
     if (!response.ok) {
       throw new Error("Failed to fetch user shopList");
@@ -263,7 +290,7 @@ const menumaticServerApi = createSlice({
       state.userFoodPref = action.payload;
       state.state = "ready";
     }).addCase(fetchUserShopinglist.rejected, (state, action) => {
-      // console.log("FETCHING IS FAILED")
+      // //console.log("FETCHING IS FAILED")
       state.state = "failed";
     }).addCase(fetchUserRecepiesByListId.fulfilled, (state, action) => {
       state.selectedList.recepies = action.payload;

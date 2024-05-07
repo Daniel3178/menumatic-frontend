@@ -12,7 +12,7 @@ import {
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
-import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
+import { getExcludeTags, getIncludeTags, getMealsInPlan } from "../menu/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 import {
@@ -38,8 +38,8 @@ const HomePagePresenter = () => {
   const includeTags = useSelector(getIncludeTags);
   const apiResultsState = useSelector(getApiResultsState);
   const navigate = useNavigate();
-
-
+  const mealsInPlan = useSelector(getMealsInPlan)
+  const likeLimit = mealsInPlan * 2
   const handleGetRandomReceipt = () => {
     // setCounter((counter + 1) % 15)  //TODO: remove when api is working
     if (apiResult.length < 6 && apiResult.length > 3) {
@@ -69,13 +69,13 @@ const HomePagePresenter = () => {
       );
     }
     if (likesCounter === 0) {
-      dispatch(sortLikedDishes());
+      dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
-    dispatch(incrementLikesCounter(apiResult[0]));
+    dispatch(incrementLikesCounter({recipe:apiResult[0], likeLimit: likeLimit}));
     dispatch(popFirstRecipe());
-    // console.log("homepage presenter")
-    // console.log(apiResult.recipes[0])
+    // //console.log("homepage presenter")
+    // //console.log(apiResult.recipes[0])
 
     //setCounter((counter + 1) % 15); // TODO: remove when api is working
 
@@ -109,12 +109,12 @@ const HomePagePresenter = () => {
 
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
-    console.log("USE EFFECT")
+    //console.log("USE EFFECT")
     // window.location.reload();
 dispatch(flushRecommendationList())
 dispatch(flushShoplist())
     if (apiResult.length == 0) {
-      // console.log("fetching")
+      // //console.log("fetching")
       dispatch(
         searchComplexBySpoonacularApiAsync({
           intolerances: excludeTags,
