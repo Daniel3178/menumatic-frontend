@@ -12,7 +12,7 @@ const RecommendationPageView = (props) => {
 
     <button
       className={`
-    mr-1 p-1 h-10 lg:h-16 w-20 lg:w-32  rounded-large bg-cerulean text-sm lg:text-lg font-outfit text-whiteSmoke shadow-xl hover:shadow-mid
+    mr-1 p-1 h-10 lg:h-16 w-20 lg:w-32 rounded-large bg-cerulean text-sm lg:text-lg font-outfit text-whiteSmoke shadow-xl hover:shadow-mid
     transition-all duration-500
     ${selectedTab === tabName ? "bg-yellowGreen" : ""} 
   `}
@@ -46,11 +46,12 @@ const RecommendationPageView = (props) => {
   };
 
   const renderRecommendationTable = (listOfMeals) => (
-    <div className="h-screen w-screen top-0 right-0 bottom-0 left-0">
-        <div className="justify-center items-center pl-10">
+    <div className="flex justify-center h-screen w-screen top-0 right-0 bottom-0 left-0">
+      <div>
+        <div className="items-center pl-4">
           {navBar()}
         </div>
-        <div className="w-screen justify-center items-center pl-10 pr-10 lg:pr-80">
+        <div className="w-screen max-w-[1440px] pl-4 lg:pl-8 pr-4 lg:pr-80">
           <DishListComponent
             listOfMeals={listOfMeals}
             updateCount={props.updateCount}
@@ -58,6 +59,7 @@ const RecommendationPageView = (props) => {
             selectedTab={props.selectedTab}
           />
         </div>
+      </div>
     </div>
   );
 

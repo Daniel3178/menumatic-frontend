@@ -34,11 +34,11 @@ const DishListComponent = (props) => {
       <div className='bg-cerulean mb-5 w-full h-[45px] rounded-small font-outfit text-whiteSmoke shadow-mid flex items-center justify-center'>
 
         <span className="text-center w-[10%]"> {recipe.dayOfTheMeal}</span>
-        <span className="text-center w-[60%] whitespace-nowrap truncate truncate-hover">{recipe.dish}</span>
+        <span className="text-center w-[55%] whitespace-nowrap truncate truncate-hover">{recipe.dish}</span>
         <span className="text-center w-[10%]">{recipe.priceLevel}</span>
-        <span className="text-center w-[20%]">
+        <span className="text-center w-[25%]">
         <div className="py-2 px-3 inline-block">
-      <div className="flex items-center gap-x-1.5">
+      <div className="flex items-center gap-x-1.0">
         <button
           type="button"
           className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md bg-gunmetal text-whiteSmoke shadow-sm hover:opacity-90"
@@ -69,7 +69,7 @@ const DishListComponent = (props) => {
             props.updateCount({ id: recipe.id, portions: e.target.value, list: props.selectedTab });
           }
           }
-          className="p-0 w-6 bg-transparent border-0 text-whiteSmoke text-center focus:ring-0 "
+          className="p-0 w-4 bg-transparent border-0 text-whiteSmoke text-center focus:ring-0 "
           
         />
         <button
@@ -144,9 +144,9 @@ const DishListComponent = (props) => {
 
       <div className="font-outfit text-base font-medium w-full flex items-center justify-center">
         <span className="text-center pb-4 w-[10%]">Day</span>
-        <span className="text-center pb-4 w-[60%]">Meal</span>
+        <span className="text-center pb-4 w-[55%]">Meal</span>
         <span className="text-center pb-4 w-[10%]">Price</span>
-        <span className="text-center pb-4 w-[20%]">Portions</span>
+        <span className="text-center pb-4 w-[25%]">Portions</span>
       </div>
       {renderList()}
       <div className="flex w-full justify-end"> 
