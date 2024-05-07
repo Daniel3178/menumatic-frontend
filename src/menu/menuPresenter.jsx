@@ -25,6 +25,7 @@ import { auth } from '../config/firebaseConfig';
 import { getExcludeTags, getIncludeTags, getMealsInPlan, saveTags } from "./filterPageSlice";
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
 import {deleteUser} from "../store/menumaticServerAPISlice"
+import{flushSpoonacularResults} from "../store/spoonacularAPISlice"
 
 
 const MenuPresenter = () => {
@@ -113,22 +114,25 @@ const MenuPresenter = () => {
     };
 
   const handleDeleteAccount = (props) =>{
-    console.log("delete account")
-    console.log("DELETING USER FROM SERVER PROPS: ", props)
-    console.log("DELETING USER FROM SERVER uid: ", auth.currentUser.uid)
+    // console.log("delete account")
+    // console.log("DELETING USER FROM SERVER PROPS: ", props)
+    // console.log("DELETING USER FROM SERVER uid: ", auth.currentUser.uid)
     dispatch(deleteUser({userId: auth.currentUser.uid}))
     dispatch(deleteUserAsync({email: props.email, password: props.password}))
 
   }
 
-  const handlePasswordReset = (props)=> {
-    console.log("reset password")
+  const handlePasswordReset = async (props)=>  {
 sendPasswordResetEmail(auth, props.email)
   .then(() => {
     // Password reset email sent!
+    alert("Password reset email sent to THEN: ", props.email)
     // ..
   })
   .catch((error) => {
+    // console.log("Password reset email sent to CATCH: ", error.message)
+    // console.log("Password reset email sent to CATCH: ", error.code)
+    // alert("Password reset email sent to CATCH: ", error.code)
     const errorCode = error.code;
     const errorMessage = error.message;
     // ..

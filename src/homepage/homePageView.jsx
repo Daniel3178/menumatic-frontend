@@ -40,7 +40,7 @@ const HomePageView = (props) => {
               {ingredientsList(props.apiResults[0].extendedIngredients)}
             </div>
 
-            <div className="flex absolute bottom-0 w-405 justify-end mb-4">
+            <div className="flex absolute bottom-0 min-w-405 right-0 mb-4">
               <button onClick={props.toggleInfoView} className="tracking-wider mr-2 flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-bold hover:shadow-mid foucs:shadow-in w-32 h-12">
                 VIEW LESS
               </button>
@@ -60,7 +60,7 @@ const HomePageView = (props) => {
                 currentTarget.onerror = null;
                 currentTarget.src = noimage;
               }} />
-            <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large w-405 h-130">
+            <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large min-w-405 h-130">
               <div className='mt-2 ml-2'>
                 <p className="text-whiteSmoke font-outfit text-[32px] font-medium truncate">{props.apiResults[0].title}</p>
               </div>
@@ -89,8 +89,8 @@ const HomePageView = (props) => {
   const renderHomePage = () => {
     if (props.apiResultsState === "ready") {
       return (
-        <div className="min-h-screen w-full">
-          <div className='origin-top scale-75 2xl:scale-100'>
+        <div className="w-screen">
+          <div className='origin-top scale-75 2xl:scale-100 overflow-hidden'>
             <div>
               {conditionalRender()}
             </div>
@@ -121,7 +121,7 @@ const HomePageView = (props) => {
   }
 
   return (
-    <div>
+    <div className='lg:pr-72'>
       {renderHomePage()}
     </div>
   );

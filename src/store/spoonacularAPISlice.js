@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { options } from "../config/spoonacularApiConfig";
 import { generateShoplist } from "../shoplist/shoplistSlice";
+import { set } from "firebase/database";
 
 function buildURL(baseURL, params) {
   //console.log("Entering build url")
@@ -151,12 +152,19 @@ const spoonacularApi = createSlice({
 
   },
   reducers: {
+    setResultsState: (state, action) => {
+      state.resultsState = action.payload;
+    }
+    ,
     popFirstRecipe: (state, action) => {
       state.results.shift();
     },
     setSavedRecipesState: (state, action) => {
       state.savedRecipesState = action.payload;
     },
+    flushSpoonacularResults: (state, action) => {
+      state.results = [];
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(searchBySpoonacularApiAsync.fulfilled, (state, action) => {
@@ -171,7 +179,7 @@ const spoonacularApi = createSlice({
       state.resultsState = "ready";})
   },
 });
-export const { popFirstRecipe, setSavedRecipesState } = spoonacularApi.actions;
+export const {setResultsState, popFirstRecipe, setSavedRecipesState,flushSpoonacularResults } = spoonacularApi.actions;
 export const getApiResults = (state) => state.spoonacularApi.results;
 export const getApiResultsState = (state) => state.spoonacularApi.resultsState;
 export const getSavedRecipesState = (state) => state.spoonacularApi.savedRecipesState;

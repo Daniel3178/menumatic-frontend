@@ -13,9 +13,9 @@ const PlanListPresenter = () => {
   const userId = useSelector(getUserId);
   const menumaticServerState = useSelector(getMenumaticState);
 
-  const selectAndNavigateHandler = (weekId) => {
-    dispatch(setSelectedListId(weekId));
-    dispatch(fetchExcludedIngredients(weekId))
+  const selectAndNavigateHandler = (mealPlanID) => {
+    dispatch(setSelectedListId(mealPlanID));
+    dispatch(fetchExcludedIngredients(mealPlanID))
     navigate("/plan");
   };
 
@@ -36,7 +36,7 @@ const PlanListPresenter = () => {
     <PlanListView
     serverState = {menumaticServerState}
       allLists={allList}
-      selectAndNavigateToWeekPlan={selectAndNavigateHandler}
+      selectAndNavigateToMealPlan={selectAndNavigateHandler}
       userId={userId}
       navigateBack={handleNavigateBack}
       

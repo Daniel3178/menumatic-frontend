@@ -327,14 +327,14 @@ const MenuView = (props) => {
           </ul>
           <h1 className="font-outfit font-bold text-lg ml-6 mt-6">DISHES IN MEAL PLAN</h1>{" "}
           <div className="flex-col justify-center items-center ">
-            <label htmlFor="myRange" className="block mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
+            <label htmlFor="myRange" className="block ml-6 mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
             <input
               value={mealsInPlanSliderValue}
               onChange={handleSliderChange}
               type="range"
               min="1"
               max="7"
-              className="ml-5 w-[80%]"
+              className="ml-5 w-4/5 h-1 cursor-pointer bg-whiteSmoke border-none shadow-none accent-cerulean thumb-cerulean"
               id="myRange"
             />
           </div>
@@ -426,7 +426,30 @@ const MenuView = (props) => {
     );
   };
 
+  const RenderForgotPass = (hProp) => {
+    const [email, setEmail] = useState("");
+    return (
+          <div className="">
+            <form className="flex flex-col" onSubmit={(e)=>{
+              e.preventDefault()
+              }}>
+            <label for="email">Email:</label>
+            <input className=" text-black" type="email" id="email" name="email" value={email} onChange={(e)=>
+              {
+                e.preventDefault()
+              setEmail(e.target.value)}} required></input>
+             <button onClick={()=>{
+              hProp.handlePasswordReset({email: email})
+             }} >Reset Password</button>
+            </form>
+          </div>
+        )
+      }
+
+      const [forgotPassToggle, setForgotPassToggle] = useState(false);
+
   const loginMenu = () => {
+
     return (
       <Transition
         show={props.stateLogin}
@@ -474,6 +497,10 @@ const MenuView = (props) => {
                 >
                   LOG IN
                 </button>
+                <button onClick={()=>setForgotPassToggle(!forgotPassToggle)} className="py-4">
+                  Forgot password?
+                </button>
+                {forgotPassToggle && <RenderForgotPass handlePasswordReset={props.resetPassword}/>}
                 Don't have an account?
                 <button
                   onClick={props.showSignup}
