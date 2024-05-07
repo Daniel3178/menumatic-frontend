@@ -35,11 +35,9 @@ export const filterPage = createSlice({
             if (state.apiPrefs.excludeTags.paramsArray.length !== 0) {
                 state.apiPrefs.excludeTags.paramsArray.length = 0;
             }
-            //console.log("Setting food pref: ", action.payload.mealsInPlan)
             state.apiPrefs.includeTags.paramsArray.push(...action.payload.includeTags);
             state.apiPrefs.excludeTags.paramsArray.push(...action.payload.excludeTags);
             state.mealsInPlan = parseInt(action.payload.mealsInPlan)
-            //console.log("saved pref: ", state.mealsInPlan)
         },
     },
     });
