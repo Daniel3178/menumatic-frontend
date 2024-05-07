@@ -628,11 +628,13 @@ const MenuView = (props) => {
 
   return (
     <div>
-      <div className="lg:hidden fixed top-0 right-0 ">
-        <button className="pt-12 pr-12" onClick={props.showMenu}>
+      <div className="lg:hidden fixed top-0 right-0 pt-12 pr-12">
+        <div className="">
+        <button className="p-2 rounded-[10px]" onClick={props.showMenu}>
           <img src={menubtn} />
         </button>
         {renderMenu()}
+      </div>
       </div>
       <div className="hidden lg:block fixed top-0 right-0 bg-cerulean">
         {menuState()}
