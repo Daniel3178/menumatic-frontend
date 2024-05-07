@@ -327,14 +327,14 @@ const MenuView = (props) => {
           </ul>
           <h1 className="font-outfit font-bold text-lg ml-6 mt-6">DISHES IN MEAL PLAN</h1>{" "}
           <div className="flex-col justify-center items-center ">
-            <label htmlFor="myRange" className="block mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
+            <label htmlFor="myRange" className="block ml-6 mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
             <input
               value={mealsInPlanSliderValue}
               onChange={handleSliderChange}
               type="range"
               min="1"
               max="7"
-              className="ml-5 w-[80%]"
+              className="ml-5 w-4/5 h-1 cursor-pointer bg-whiteSmoke border-none shadow-none accent-cerulean thumb-cerulean"
               id="myRange"
             />
           </div>
