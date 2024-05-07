@@ -36,7 +36,7 @@ const ShoplistPageView = (props) => {
             />
           </div>
           <button
-            className="mr-2 p-1 w-40 h-12 rounded-[100px] text-[1rem] bg-yellowGreen transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
+            className="mr-2 p-3 w-40 h-12 rounded-[100px] text-[1rem] bg-yellowGreen transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
             id="save"
             onClick={() => props.saveMealPlan(nameInput)}
           >
@@ -52,7 +52,7 @@ const ShoplistPageView = (props) => {
         <div className="flex justify-between items-center w-full">
         <div className="ml-2 pr-4 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or export as PDF.</div>
         <button
-          className="mr-2 p-1 w-50 h-12 rounded-[100px] text-[1rem] bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
+          className="mr-2 p-3 w-40 text-nowrap h-12 rounded-[100px] text-[1rem] bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
           id="save"
           // onClick={() => setShowOverlay(true)}
         >
