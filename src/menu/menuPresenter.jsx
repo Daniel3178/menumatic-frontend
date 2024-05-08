@@ -45,6 +45,7 @@ const MenuPresenter = () => {
   const navigateToRecommendation = () => {
     dispatch(sortLikedDishes(mealsInPlan))
     navigate("/recommendation");
+    dispatch(hideRecommendBtn)
   };
 
   const isLoggedIn = useSelector(getIsLoggedIn)
