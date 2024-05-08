@@ -9,9 +9,6 @@ const FilterPageView = (props) => { // Creating a functional component FilterPag
 
   const [includedItems, setIncludedItems] = useState(...props.storedIncludeTags); // State hook for included items
   const [excludedItems, setExcludedItems] = useState(...props.storedExcludeTags); // State hook for excluded items
-  //console.log(props.storedIncludeTags);
-  //console.log(props.storedExcludeTags);
-  //console.log(includedItems);
 
   // Function to handle inclusion of tags
   function includeCheckboxHandler(event) {

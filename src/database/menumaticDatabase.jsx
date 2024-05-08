@@ -3,17 +3,11 @@ import { listenerMiddleware } from "../store/store";
 import { setSelectedListId } from "../listOfStoredPlansRelated/plan_list/planListSlice";
 import { useDispatch } from "react-redux";
 import {
-  fetchUserRecepiesByListId,
   saveFoodPrefToMenumaticDb,
 } from "../store/menumaticServerAPISlice";
-import { saveTags } from "../menu/filterPageSlice";
-import { flushSpoonacularResults, searchComplexBySpoonacularApiAsync,setResultsState } from "../store/spoonacularAPISlice";
+import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
+import { flushSpoonacularResults, searchComplexBySpoonacularApiAsync,searchComplexBySpoonacularApiAsyncFoodPref,setResultsState } from "../store/spoonacularAPISlice";
 const MenumaticDatabase = () => {
-  //TODO: DEPRICATED
-  listenerMiddleware.startListening({
-    actionCreator: setSelectedListId,
-    effect: async (action, listenerApi) => {},
-  });
 
   listenerMiddleware.startListening({
     actionCreator: saveTags,
@@ -25,10 +19,26 @@ const MenumaticDatabase = () => {
             saveFoodPrefToMenumaticDb({ userId: userId, data: action.payload })
           );
         }
-        listenerApi.dispatch(setResultsState("loading"));
-        listenerApi.dispatch(flushSpoonacularResults());
+        console.log("Complex search is called by listener")
         listenerApi.dispatch(
-            searchComplexBySpoonacularApiAsync({
+            searchComplexBySpoonacularApiAsyncFoodPref({
+              intolerances: action.payload.excludeTags,
+              diet: action.payload.includeTags,
+            })
+          );
+      } catch (e) {
+        alert("Error in saving food pref to menumatic db, server is down");
+      }
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: saveTagsByServer,
+    effect: async (action, listenerApi) => {
+      try {
+        console.log("Complex search is called by listener")
+        listenerApi.dispatch(
+            searchComplexBySpoonacularApiAsyncFoodPref({
               intolerances: action.payload.excludeTags,
               diet: action.payload.includeTags,
             })
