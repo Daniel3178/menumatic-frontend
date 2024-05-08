@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getApiResults,
   searchBySpoonacularApiAsync,
-  searchComplexBySpoonacularApiAsync
+  searchComplexBySpoonacularApiAsync,
+  searchComplexBySpoonacularApiAsyncFoodPref,
 } from "../store/spoonacularAPISlice";
 import {
   incrementLikesCounter,
@@ -12,7 +13,11 @@ import {
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
-import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
+import {
+  getExcludeTags,
+  getIncludeTags,
+  getMealsInPlan,
+} from "../menu/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 import {
@@ -20,29 +25,32 @@ import {
   popFirstRecipe,
 } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
-import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
-import {flushRecommendationList} from "../recommendation_page/recommendationPageSlice"
-import {flushShoplist} from "../shoplist/shoplistSlice"
-const HomePagePresenter = () => {
-  //TODO: uncomment dispatch functions to work with the API
-  //TODO: Change objetcs[0] to apiResult in order to bring back the API functionality
-  //TODO: uncomment apiResult to work with the API
+import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice";
+import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
+import { flushShoplist } from "../shoplist/shoplistSlice";
+import {getMenumaticStates, setUserFoodPrefState} from "../store/menumaticServerAPISlice";
+// import {getApiResultsState} from "../store/spoonacularAPISlice";
 
-  const [counter, setCounter] = useState(0);
+const HomePagePresenter = () => {
 
   const dispatch = useDispatch();
   const apiResult = useSelector(getApiResults);
-  const likesCounter = useSelector(getLikesCounter); //TODO: remove when api is working
+  const likesCounter = useSelector(getLikesCounter); 
   const showInfo = useSelector(getShowInfo);
   const excludeTags = useSelector(getExcludeTags);
   const includeTags = useSelector(getIncludeTags);
   const apiResultsState = useSelector(getApiResultsState);
   const navigate = useNavigate();
+  const mealsInPlan = useSelector(getMealsInPlan);
+  const likeLimit = mealsInPlan * 2;
+  const userStatus = useSelector(getIsLoggedIn);
 
+
+  const {allListState, userFoodPrefState, excludedIngredientState} = useSelector(getMenumaticStates);
+  
 
   const handleGetRandomReceipt = () => {
-    // setCounter((counter + 1) % 15)  //TODO: remove when api is working
-    if (apiResult.length < 6 && apiResult.length > 3) {
+    if (apiResult.length < 6) {
       dispatch(
         searchComplexBySpoonacularApiAsync({
           intolerances: excludeTags,
@@ -69,15 +77,13 @@ const HomePagePresenter = () => {
       );
     }
     if (likesCounter === 0) {
-      dispatch(sortLikedDishes());
+      dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
-    dispatch(incrementLikesCounter(apiResult[0]));
+    dispatch(
+      incrementLikesCounter({ recipe: apiResult[0], likeLimit: likeLimit })
+    );
     dispatch(popFirstRecipe());
-    // console.log("homepage presenter")
-    // console.log(apiResult.recipes[0])
-
-    //setCounter((counter + 1) % 15); // TODO: remove when api is working
 
     //If info view is active, go back to photo view after like.
     if (showInfo) {
@@ -97,51 +103,31 @@ const HomePagePresenter = () => {
     dispatch(toggleInfoView());
   };
 
-
-  // const [reloadOnce, setReloadOnce] = useState(true);
-
-  // useEffect(() => {
-  //   if (reloadOnce) {
-  //     window.location.reload();
-  //     setReloadOnce(false);
-  //   }
-  // }, [reloadOnce]);
-
   // Necessary for presenting a dish before user has pressed like the first time.
   useEffect(() => {
-    console.log("USE EFFECT")
-    // window.location.reload();
-dispatch(flushRecommendationList())
-dispatch(flushShoplist())
-    if (apiResult.length == 0) {
-      // console.log("fetching")
-      dispatch(
-        searchComplexBySpoonacularApiAsync({
-          intolerances: excludeTags,
-          diet: includeTags,
-        })
-      );
-    }
-            // window.location.reload();
+    dispatch(flushRecommendationList());
+    dispatch(flushShoplist());
+    
   }, []);
+
 
   return (
     <div>
       <HomePageView
-      apiResults={apiResult}
-      apiResultsState={apiResultsState}
-      getRandomReceipt={handleGetRandomReceipt}
-      sendLike={handleLike}
-      toggleInfoView={handleToggleInfoView}
-      navigateToFilterPage={handleNavigateToFilterPage}
-      navigateToPlanList={handleNavigateToPlanList}
-      info={showInfo}
-    />
+        apiResults={apiResult}
+        apiResultsState={apiResultsState}
+        getRandomReceipt={handleGetRandomReceipt}
+        sendLike={handleLike}
+        toggleInfoView={handleToggleInfoView}
+        navigateToFilterPage={handleNavigateToFilterPage}
+        navigateToPlanList={handleNavigateToPlanList}
+        info={showInfo}
 
-    
+
+        userStatus= {userStatus}
+        foodPrefState={userFoodPrefState}
+      />
     </div>
-
-    
   );
 };
 

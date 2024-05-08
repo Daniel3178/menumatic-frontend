@@ -1,5 +1,5 @@
 import React from "react";
-import "../../recommendation_page/RecepiesForAWeekViewCSS.css";
+import "../../recommendation_page/RecepiesForAMealViewCSS.css";
 import { useNavigate } from "react-router-dom";
 import { render } from "react-dom";
 import { useDispatch } from "react-redux";
@@ -24,12 +24,11 @@ const PlanListView = (props) => {
     });
   };
   const RecepiePlanOverviewRow = (list) => {
-    // Potentially make `id={props.dayOfTheWeek}` into one where `props.dayOfWeek` is provides the week names. Will nonetheless have to take into account a calendar..
-    // console.log("list", list)
-    // console.log("list.planRecipes", list.planRecipes)
+    // Potentially make `id={props.dayOfTheMeal}` into one where `props.dayOfMeal` is provides the meal names. Will nonetheless have to take into account a calendar..
+
 
     const handleNavigate = () => {
-      props.selectAndNavigateToWeekPlan(list.planID);
+      props.selectAndNavigateToMealPlan(list.planID);
     };
 
     const handleDelete = (event, mealPlanId) => {
@@ -40,11 +39,11 @@ const PlanListView = (props) => {
     return (
       <div className="flex flex-row">
         <button className="bg-cerulean rounded-2xl my-4 px-4 shadow-xl w-[840px] h-[180px] content-center hover:brightness-75 hover:shadow-mid"
-          onClick={() => { props.selectAndNavigateToWeekPlan(list.planID) }}>
+          onClick={() => { props.selectAndNavigateToMealPlan(list.planID) }}>
           <div className="grid grid-cols-4 gap-4">
             <div className="border-r border-whiteSmoke flex justify-center">
               <div>
-                <p className="text-[24px] font-outfit font-medium text-whiteSmoke">week</p>
+                <p className="text-[24px] font-outfit font-medium text-whiteSmoke">meal</p>
                 <p className="text-[64px] font-outfit font-bold text-whiteSmoke flex justify-center">{list.planID}</p>
               </div>
             </div>
@@ -98,11 +97,8 @@ const PlanListView = (props) => {
   }
   else if (props.serverState === "ready") {
     return (
-      <div className="bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
+      <div className="pt-32 bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
         <div className="w-[840px] mr-10 ml-10">
-          <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-            <img src={logo} />
-          </div>
           <div>
             <button className="text-whiteSmoke hover:shadow-xl"
               onClick={() => props.navigateBack()} aria-label="go back">
@@ -110,7 +106,7 @@ const PlanListView = (props) => {
             </button>
           </div>
           <div>
-            <p className="text-[48px] font-outfit font-bold text-gunmetal tracking-wider">WEEK PLANS</p>
+            <p className="text-[48px] font-outfit font-bold text-gunmetal tracking-wider">MEAL PLANS</p>
           </div>
           <div>
             {renderList()}

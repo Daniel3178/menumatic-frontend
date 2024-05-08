@@ -4,7 +4,7 @@ const menuPage = createSlice({
     name: "menuPage",
     initialState: {
         menuState:{
-            base:true,
+            base:false,
             login:false,
             signup:false,
             settings:false,
@@ -14,6 +14,9 @@ const menuPage = createSlice({
     
     },
     reducers: {
+        setStateBase: (state, action) => {
+            state.menuState.base = action.payload;
+        },
         setStateLogin: (state, action) => {
             state.menuState.login = action.payload;
         },
@@ -41,4 +44,4 @@ const menuPage = createSlice({
     
 
     export default menuPage.reducer;
-    export const {menuState, setStateLogin, setStateSignup, setStateSettings, setStateFilter, setStatePassChange} = menuPage.actions;
+    export const {menuState, setStateBase, setStateLogin, setStateSignup, setStateSettings, setStateFilter, setStatePassChange} = menuPage.actions;

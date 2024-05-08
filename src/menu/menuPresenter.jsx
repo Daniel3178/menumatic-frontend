@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getIsLoggedIn, getUserId, getUsername, getUserEmail, signUpAsync} from "../signUp_page/userAccountSlice"
+import { getIsLoggedIn, getUserId, getUsername, getUserEmail,deleteUserAsync, signUpAsync} from "../signUp_page/userAccountSlice"
 import MenuView from './menuView';
 
 import { getMenuStateBase,
@@ -11,17 +11,21 @@ import { getMenuStateBase,
   getMenuStateFilter,
   getMenuStatePassChange } from "./menuSlice";
 
-import { setStateLogin,
+import { 
+  setStateBase,
+  setStateLogin,
   setStateSignup,
   setStateSettings,
   setStateFilter,
   setStatePassChange } from "./menuSlice";
 
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut,sendPasswordResetEmail } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
 
-import { getExcludeTags, getIncludeTags, saveTags } from "./filterPageSlice";
+import { getExcludeTags, getIncludeTags, getMealsInPlan, saveTags } from "./filterPageSlice";
 import { saveIncludeTags, saveExcludeTags } from "./filterPageSlice";
+import {deleteUser} from "../store/menumaticServerAPISlice"
+import{flushSpoonacularResults} from "../store/spoonacularAPISlice"
 
 
 const MenuPresenter = () => {
@@ -41,7 +45,11 @@ const MenuPresenter = () => {
   const stateSettings = useSelector(getMenuStateSettings)
   const stateFilter = useSelector(getMenuStateFilter)
   const statePassChange = useSelector(getMenuStatePassChange)
-  
+
+
+  const showMenu = () => {
+    dispatch(setStateBase(true))
+  }
   const showLogin = () => {
     dispatch(setStateLogin(true))
   };
@@ -58,7 +66,9 @@ const MenuPresenter = () => {
     dispatch(setStatePassChange(true))
   };
   
-  
+  const hideMenu = () => {
+    dispatch(setStateBase(false))
+  }
   const hideLogin = () => {
     dispatch(setStateLogin(false))
   };
@@ -84,7 +94,7 @@ const MenuPresenter = () => {
       signOut(auth)
       
       .catch((err) => {
-        // console.log(err);
+        // //console.log(err);
       });
 
   }
@@ -98,11 +108,36 @@ const MenuPresenter = () => {
           setEmail("");
           setPassword("");
         } catch (error) {
-          // console.log(error);
+          // //console.log(error);
           alert("Incorrect username or password");
         }
     };
 
+  const handleDeleteAccount = (props) =>{
+    // console.log("delete account")
+    // console.log("DELETING USER FROM SERVER PROPS: ", props)
+    // console.log("DELETING USER FROM SERVER uid: ", auth.currentUser.uid)
+    dispatch(deleteUser({userId: auth.currentUser.uid}))
+    dispatch(deleteUserAsync({email: props.email, password: props.password}))
+
+  }
+
+  const handlePasswordReset = async (props)=>  {
+sendPasswordResetEmail(auth, props.email)
+  .then(() => {
+    // Password reset email sent!
+    alert("Password reset email sent to THEN: ", props.email)
+    // ..
+  })
+  .catch((error) => {
+    // console.log("Password reset email sent to CATCH: ", error.message)
+    // console.log("Password reset email sent to CATCH: ", error.code)
+    // alert("Password reset email sent to CATCH: ", error.code)
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+  }
 
 
 //*************SIGN UP STUFF*************
@@ -116,13 +151,16 @@ const MenuPresenter = () => {
 
 //************FILTER STUFF************
 
+const mealsInPlan = useSelector(getMealsInPlan)
+
 const storedExcludeTags = useSelector(getExcludeTags)
 const storedIncludeTags = useSelector(getIncludeTags)
 
-  const handleApplyFilter = (includeTags, excludeTags) => {
+  const handleApplyFilter = (includeTags, excludeTags, mealsInPlan) => {
     // dispatch(saveIncludeTags(includeTags))
     // dispatch(saveExcludeTags(excludeTags))
-    dispatch(saveTags({includeTags: includeTags, excludeTags: excludeTags}))
+    //console.log("MEALSINPLAN: ", mealsInPlan)
+    dispatch(saveTags({includeTags: includeTags, excludeTags: excludeTags, mealsInPlan: mealsInPlan}))
     navigate("/")
   }
 
@@ -142,12 +180,14 @@ const storedIncludeTags = useSelector(getIncludeTags)
       stateFilter={stateFilter}
       statePassChange={statePassChange}
 
+      showMenu={showMenu}
       showLogin={showLogin}
       showSignup={showSignup}
       showSettings={showSettings}
       showFilter={showFilter}
       showPassChange={showPassChange}
 
+      hideMenu={hideMenu}
       hideLogin={hideLogin}
       hideSignup={hideSignup}
       hideSettings={hideSettings}
@@ -160,12 +200,15 @@ const storedIncludeTags = useSelector(getIncludeTags)
       setPassword={setPassword}
       signIn ={handleSignInACB}
       signOut ={handleSignOutACB}
+      deleteAccount={handleDeleteAccount}
+      resetPassword={handlePasswordReset}
 
       signUp={handleSignUp}
 
       applyFilter={handleApplyFilter} cancel={handleCancel} 
       storedExcludeTags={storedExcludeTags}
       storedIncludeTags={storedIncludeTags}
+      mealsInPlan={mealsInPlan}
     />
     );
 }

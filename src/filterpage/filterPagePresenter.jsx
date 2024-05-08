@@ -13,8 +13,6 @@ const FilterPagePresenter = () => {
   const storedIncludeTags = useSelector(getIncludeTags)
 
   const handleApplyFilter = (includeTags, excludeTags) => {
-    // dispatch(saveIncludeTags(includeTags))
-    // dispatch(saveExcludeTags(excludeTags))
     dispatch(saveTags({includeTags: includeTags, excludeTags: excludeTags}))
     navigate("/")
   }

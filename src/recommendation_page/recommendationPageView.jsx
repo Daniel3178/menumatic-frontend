@@ -1,5 +1,5 @@
 import React from "react";
-import "./RecepiesForAWeekViewCSS.css";
+import "./RecepiesForAMealViewCSS.css";
 import { useNavigate } from "react-router-dom";
 import DishListComponent from "./dishListComponent";
 import { logo } from "../assets";
@@ -12,9 +12,9 @@ const RecommendationPageView = (props) => {
 
     <button
       className={`
-    mr-1 p-1 h-[80px] rounded-large bg-cerulean font-medium text-lg font-outfit text-whiteSmoke shadow-xl hover:shadow-mid
-    transition-all duration-500 
-    ${selectedTab === tabName ? "w-[200px] bg-yellowGreen" : "w-[180px]"} 
+    mr-1 p-1 h-10 lg:h-16 w-20 lg:w-32 rounded-large bg-cerulean text-sm lg:text-lg font-outfit text-whiteSmoke shadow-xl hover:shadow-mid
+    transition-all duration-500
+    ${selectedTab === tabName ? "bg-yellowGreen" : ""} 
   `}
       onClick={() => onClick(tabName)}
     >
@@ -25,7 +25,7 @@ const RecommendationPageView = (props) => {
   // navigation bar with buttons for each recommendation category
   const navBar = () => {
     return (
-      <div className="flex pb-4 justify-start items-center w-full">
+      <div className="pb-4 items-center w-full">
         <NavButton
           selectedTab={props.selectedTab}
           tabName="Popular"
@@ -38,7 +38,7 @@ const RecommendationPageView = (props) => {
         />
         <NavButton
           selectedTab={props.selectedTab}
-          tabName="Affordable"
+          tabName="Cheap"
           onClick={props.setSelectTab}
         />
       </div>
@@ -46,15 +46,12 @@ const RecommendationPageView = (props) => {
   };
 
   const renderRecommendationTable = (listOfMeals) => (
-    <div className="bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
-      <div className="w-[840px] mr-10 ml-10">
-        <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-          <img src={logo} />
-        </div>
-        <div className="flex justify-center items-center">
+    <div className="pt-32 flex justify-center h-screen w-screen top-0 right-0 bottom-0 left-0">
+      <div>
+        <div className="items-center pl-4">
           {navBar()}
         </div>
-        <div className="flex justify-center items-center ">
+        <div className="w-screen max-w-[1440px] pl-4 lg:pl-8 pr-4 lg:pr-80">
           <DishListComponent
             listOfMeals={listOfMeals}
             updateCount={props.updateCount}
@@ -76,7 +73,7 @@ const RecommendationPageView = (props) => {
       // console.log("Quick dishes", props.selectedTab)
       return renderRecommendationTable(props.quickDishes);
     }
-    case "Affordable": {
+    case "Cheap": {
       // console.log("Affordable dishes", props.selectedTab)
       return renderRecommendationTable(props.affordableDishes);
     }

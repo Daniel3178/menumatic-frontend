@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { generateShoppingListPDFLink } from "../pdf/pdfgen_component";
+import { generateShoppingListPDFLink } from "../pdf/CreateShoplistPDF";
 import { logo } from "../assets";
 
 /**
@@ -16,6 +16,14 @@ const ShoplistPageView = (props) => {
     setNameInput(event.target.value);
   };
 
+  const PDFDownloadButton = () => {
+    return (
+      <div className="mr-2 p-3 w-40 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
+        {generateShoppingListPDFLink(props.allItems)}
+      </div>
+    );
+  };
+
   /**
    * Renders a save button.
    * If the user is logged in the button sends the meal plan to the server to be stored, it also render an input box for assigning a name to the plan.
@@ -28,7 +36,7 @@ const ShoplistPageView = (props) => {
           <div className="ml-2 flex-col justify-between w-full">
             <div className="text-[12px] font-normal text-cerulean">shopping list name</div>
             <input
-              className="h-8  border-b-[2px] border-yellowGreen text-gunmetal font-semibold outline-none"
+              className="h-8  border-b-[2px] border-yellowGreen text-gunmetal font-semibold outline-none max-w-[70%] bg-whiteSmoke"
               type="text"
               id="nameInput"
               value={nameInput}
@@ -36,7 +44,7 @@ const ShoplistPageView = (props) => {
             />
           </div>
           <button
-            className="mr-2 p-1 w-40 h-12 rounded-[100px] text-lg bg-yellowGreen transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
+            className="mr-2 p-3 w-40 h-12 rounded-[100px] text-[1rem] bg-yellowGreen transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
             id="save"
             onClick={() => props.saveMealPlan(nameInput)}
           >
@@ -50,14 +58,8 @@ const ShoplistPageView = (props) => {
     } else {
       return (
         <div className="flex justify-between items-center w-full">
-        <div className="ml-2 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or export as PDF.</div>
-        <button
-          className="mr-2 p-1 w-40 h-12 rounded-[100px] text-lg bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium"
-          id="save"
-          // onClick={() => setShowOverlay(true)}
-        >
-          EXPORT  PDF
-        </button>
+        <div className="ml-2 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or download as PDF.</div>
+        {PDFDownloadButton()}
         </div>
       );
     }
@@ -87,7 +89,7 @@ const ShoplistPageView = (props) => {
               className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
               id="exportPDF"
               type="exportPDF"
-            //onClick={generateShoppingListPDFLink(parseToStringArray())}
+              onClick={function(){ generateShoppingListPDFLink(transformallItemsIntoStringArray(props.allItems))} }
             >
               Export PDF
             </button>
@@ -97,42 +99,31 @@ const ShoplistPageView = (props) => {
     }
   };
 
-  function parseToStringArray(){
-    const resultArray = [];
-    props.allItems.forEach((ingredient) => {
-      resultArray.push(
-        `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`
-      );
-    });
-    return resultArray;
-  };
-
   const showRemovableIngredients = (ing) => {
-    console.log(ing);
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
           key={index}
-          className="flex mb-2 flex-row items-center justify-between "
+          className="flex w-full mb-2 flex-row items-center justify-between "
         >
           <button
             onClick={() => props.removeItem(ingr)}
-            className=" peer border-2 border-black-300 h-6 w-6 rounded-[100px] font-bold text-whiteSmoke transition-all duration-700 ease-in-out hover:bg-yellowGreen"
+            className=" peer border-2 border-black-300 h-6 aspect-square rounded-[100px] font-bold text-whiteSmoke transition-all duration-700 ease-in-out hover:bg-yellowGreen"
           >
             
           </button>
-          <div className="flex flex-row peer-hover:line-through">
+          <div className="flex w-full   flex-row peer-hover:line-through">
             {ingr.measures.map((measure) => {
               
               return (
-                <div className="flex pr-[40px] justify-end ">
-                  <div className="w-20">{measure.amount > 10 ? Math.round(measure.amount) : parseFloat(measure.amount.toFixed(2))}</div>
-                  <div className="w-10">{measure.unit}</div>
+                <div className="flex  w-full  ">
+                  <div className="w-[50%] self-start text-center">{measure.amount > 10 ? Math.round(measure.amount) : parseFloat(measure.amount.toFixed(2))}</div>
+                  <div className="w-[50%] self-end pl-1">{measure.unit}</div>
                 </div>
               );
             })}
           </div>
-          <div className="peer-hover:line-through w-[40%] self-end text-start pl-[40px]">{ingr.name}</div>
+          <div className="peer-hover:line-through w-[65%] max-w-[180px] self-end text-start  ">{ingr.name}</div>
         </div>
       ));
     } else if (ing.ingredients.length === 0) {
@@ -145,25 +136,25 @@ const ShoplistPageView = (props) => {
       return ing.ingredients.map((ingr, index) => (
         <div
           key={index}
-          className="flex mb-2 flex-row items-center justify-between text-gray-500"
+          className="flex w-full items-center justify-between flex-row text-gray-500"
         >
           <button
             onClick={() => props.restoreItem(ingr)}
-            className=" border-2 border-yellowGreen bg-yellowGreen h-6 w-6 rounded-[100px] font-bold transition-all duration-700 ease-in-out hover:bg-white"
+            className=" border-2 border-yellowGreen bg-yellowGreen h-6 aspect-square rounded-[100px] font-bold transition-all duration-700 ease-in-out hover:bg-white"
           >
             
           </button>
-          <div className="">
+          
             {ingr.measures.map((measure, index) => {
               return (
-                <div className="flex pr-[40px] justify-end ">
-                  <div className="w-20">{parseFloat(measure.amount.toFixed(2))}</div>
-                  <div className="w-10">{measure.unit}</div>
+                <div className="flex w-full   flex-row ">
+                  <div className="w-[50%]  self-start text-center">{measure.amount > 10 ? Math.round(measure.amount) : parseFloat(measure.amount.toFixed(2))}</div>
+                  <div className="w-[50%] self-end pl-1">{measure.unit}</div>
                 </div>
               );
             })}
-          </div>
-          <div className=" w-[30%] self-end text-start pl-[40px]">{ingr.name}</div>
+          
+          <div className=" w-[65%] max-w-[180px] self-end text-start ">{ingr.name}</div>
         </div>
       ));
     } else if (ing.ingredients.length === 0) {
@@ -185,23 +176,12 @@ const ShoplistPageView = (props) => {
     };
 
     return list.map((ingredientData, index) => (
-      <div key={index} className="flex flex-col border-b pb-2 w-[640px]">
+      <div key={index} className="flex flex-col border-b pb-2 w-[100%]">
         {conditionRender(ingredientData)}
         {/* {console.log(ingredientData)} */}
         {showIngredientFunction(ingredientData)}
       </div>
     ));
-  };
-
-  /**
-   * Generates a button component for PDF download
-   */
-  const pdfButtonCom = () => {
-    return (
-      <div className="bg-blue-500 w-[150px] h-[50px] mt-4 mb-6 justify-center items-center  flex hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        {generateShoppingListPDFLink(parseToStringArray())}
-      </div>
-    );
   };
 
   /**
@@ -220,12 +200,9 @@ const ShoplistPageView = (props) => {
     if (props.allItems.length > 0) {
       return (
         <div className="w-full">
-          <div className="flex items-center  justify-between border-b pb-2">
-            <div className=" " >
-
-            </div>
+          <div className="flex items-center w-full justify-between border-b pb-2">
             <div
-              className=" flex flex-row justify-between font-bold fon items-center w-[100%] "
+              className=" flex flex-row justify-between font-bold fon items-center w-full "
 
             >
 
@@ -251,13 +228,10 @@ const ShoplistPageView = (props) => {
   }
 
   return (
-    <div className="container mx-auto p-4 font-outfit">
-      <div className="flex justify-center w-444 h-102 mt-8 mb-16">
-          <img src={logo} />
-        </div>
+    <div className="pt-32 p-4 font-outfit w-screen max-w-[1080px] min-w-[350px] lg:pl-8  lg:pr-80 ">
       <h1 className="text-xxl text-gunmetal font-bold text-center mb-4">SHOPPING LIST</h1>
       {renderTheIngredientList()}
-      {overlay()}
+      {/* {overlay()} */}
     </div>
   );
 };

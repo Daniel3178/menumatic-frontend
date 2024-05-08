@@ -1,28 +1,30 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSelectedListId } from "../plan_list/planListSlice"; // Ensure correct import paths
+import { setSelectedRecipe } from "./planSlice";
 import { useNavigate } from "react-router-dom";
 import PlanView from "./planView";
 import {
   getMenumaticAllList,
-  getMenumaticState, fetchExcludedIngredients
+  getMenumaticStates, fetchExcludedIngredients
 } from "../../store/menumaticServerAPISlice";
 import { searchBySpoonacularApiBulkAsync } from "../../store/spoonacularAPISlice";
+import { memoryLruGarbageCollector } from "firebase/firestore";
 const PlanPresenter = () => {
   const navigate = useNavigate();
   const selectedListId = useSelector(getSelectedListId); // Retrieve the selected list ID from Redux state
-  const allList = useSelector(getMenumaticAllList);
-  const menumaticServerState = useSelector(getMenumaticState);
+  const userAllList = useSelector(getMenumaticAllList);
+  const {allListState, userFoodPrefState, excludedIngredientState} = useSelector(getMenumaticStates);
   const dummyData = [
-    { id: 1, week: "W1", recipes: ["Chicken Salad", "Beef Stew"] },
-    { id: 2, week: "W2", recipes: ["Fish Tacos", "Pork Ribs"] },
+    { id: 1, memoryLruGarbageCollector: "W1", recipes: ["Chicken Salad", "Beef Stew"] },
+    { id: 2, memoryLruGarbageCollector: "W2", recipes: ["Fish Tacos", "Pork Ribs"] },
   ];
   const dispatch = useDispatch();
-  // Find the selected week plan based on selectedListId
-  const selectedWeekPlan = allList.find((plan) => plan.id === selectedListId);
-  // console.log("TESTING DANA ", selectedWeekPlan);
-  if (!selectedWeekPlan) {
-    return <div>No week selected or week does not exist.</div>;
+  // Find the selected meal plan based on selectedListId
+  const selectedMealPlan = userAllList.find((plan) => plan.id === selectedListId);
+  // console.log("TESTING DANA ", selectedMealPlan);
+  if (!selectedMealPlan) {
+    return <div>No meal plan selected or meal plan does not exist.</div>;
   }
 
   const handleGoToShoplist = () => {
@@ -33,10 +35,16 @@ const PlanPresenter = () => {
     navigate(-1);
   }
 
+  const handleNavigateToRecipe = (recipe) => {
+    console.log("passed recipe", recipe)
+    dispatch(setSelectedRecipe(recipe))
+    navigate("/recipeDetails")
+  }
+
   useEffect(() => {
     const allIds = [];
     allIds.push(
-      selectedWeekPlan.recipes.map((recipe) => {
+      selectedMealPlan.recipes.map((recipe) => {
         return { id: recipe.id, portions: recipe.portions };
       })
     );
@@ -45,11 +53,12 @@ const PlanPresenter = () => {
 
   return (
     <PlanView
-      week={selectedWeekPlan.name}
-      recipes={selectedWeekPlan.recipes}
+      meal={selectedMealPlan.name}
+      recipes={selectedMealPlan.recipes}
       goToShoplist={handleGoToShoplist}
-      state={menumaticServerState}
+      state={allListState}
       navigateBack={handleNavigateBack}
+      navigateToRecipe= {handleNavigateToRecipe}
     />
   );
 };

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { saveTags } from "../menu/filterPageSlice";
+import { saveTags,saveTagsByServer } from "../menu/filterPageSlice";
 const url = "http://localhost:8080/api/user/create/";
 const deleteUrl = 'http://localhost:8080/api/mealplan/delete/';
 
@@ -46,6 +46,7 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
       dataP.excludeTags.map((tag)=>{
         result.push(`exclude-${tag}`);
       });
+      result.push((`mealsInPlan-${dataP.mealsInPlan}`))
       return result;
     }
     const newData = parseData(data);
@@ -88,6 +89,28 @@ export const deleteMealPlan = createAsyncThunk(
     }
     dispatch(fetchUserShopinglist(userId));
     return await response.json();
+  }
+);
+export const deleteUser = createAsyncThunk(
+  "menumaticServerApi/deleteMealPlan",
+  async ( info, {dispatch}) => {
+    const userId = info.userId;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "User-id": userId,
+      },
+    };
+
+    const deleteUserUrl = 'http://localhost:8080/api/user/delete/';
+    console.log("Fetching user shopping list is CALLED");
+    // dispatch(setMenumaticServerState("loading"));
+  
+    await fetch(deleteUserUrl, options);
+    if (!response.ok) {
+      throw new Error("Failed to delete the meal plan.");
+    }
   }
 );
 
@@ -146,7 +169,7 @@ export const fetchExcludedIngredients = createAsyncThunk(
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/fetchUserShopinglist",
   async (info, {dispatch}) => {
-    dispatch(setMenumaticServerState("loading"));
+    // dispatch(setMenumaticServerState("loading"));
     const customUrl = "http://localhost:8080/api/user/mealplans/";
     const userId = info;
     // console.log(info)
@@ -173,7 +196,7 @@ export const fetchUserShopinglist = createAsyncThunk(
 export const fetchUserFoodPref = createAsyncThunk(
   "menumaticServerApi/fetchUserFoodPref",
   async (info, {dispatch}) => {
-    dispatch(setMenumaticServerState("loading"));
+    // dispatch(setMenumaticServerState("loading"));
     const customUrl = "http://localhost:8080/api/food-preferences/get/";
     const userId = info;
     const options = {
@@ -189,6 +212,7 @@ export const fetchUserFoodPref = createAsyncThunk(
 
     const includeList = [];
     const excludeList = [];
+    let mealsInPlan = 7;
 
 fetchedData.forEach(item => {
     const [type, value] = item.split('-');
@@ -196,9 +220,12 @@ fetchedData.forEach(item => {
         includeList.push(value);
     } else if (type === 'exclude') {
         excludeList.push(value);
+    }else if (type === 'mealsInPlan'){
+        mealsInPlan = value;
     }
 });
-dispatch(saveTags({includeTags: includeList, excludeTags: excludeList}));
+dispatch(saveTagsByServer({includeTags: includeList, excludeTags: excludeList, mealsInPlan: mealsInPlan}));
+//console.log("FETCHED FOOD PREF")
 
     if (!response.ok) {
       throw new Error("Failed to fetch user shopList");
@@ -210,24 +237,24 @@ dispatch(saveTags({includeTags: includeList, excludeTags: excludeList}));
 /**
  * [deprecated]
  */
-export const fetchUserRecepiesByListId = createAsyncThunk(
-  "menumaticServerApi/fetchUserRecepiesByListId",
-  async (info) => {
-    const userId = info.userId;
-    const listId = info.listId;
-    const paramUrl = `https://localhost:8080?id=${listId}`;
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "User-id": userId,
-      },
-    };
+// export const fetchUserRecepiesByListId = createAsyncThunk(
+//   "menumaticServerApi/fetchUserRecepiesByListId",
+//   async (info) => {
+//     const userId = info.userId;
+//     const listId = info.listId;
+//     const paramUrl = `https://localhost:8080?id=${listId}`;
+//     const options = {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "User-id": userId,
+//       },
+//     };
 
-    const response = await fetch(paramUrl, options);
-    return await response.json();
-  }
-);
+//     const response = await fetch(paramUrl, options);
+//     return await response.json();
+//   }
+// );
 
 const menumaticServerApi = createSlice({
   name: "spoonacularApi",
@@ -235,14 +262,18 @@ const menumaticServerApi = createSlice({
     allList: [],
     userFoodPref:[],
     excludedIngredient: {},
-    state: "loading",
+    state: {
+      allListState: "loading",
+      userFoodPrefState: "loading",
+      excludedIngredientState: "loading",
+    },
     selectedList: {
       listId: null,
       recepies: [],
     },
   },
 
-  reducers: {
+  reducers: { // It should be fixed
     setMenumaticServerState: (state, action) => {
       state.state = action.payload;
     },
@@ -254,23 +285,33 @@ const menumaticServerApi = createSlice({
       state.selectedList.listId = null;
       state.selectedList.recepies = [];
     },
+    setUserFoodPrefState: (state, action) => {
+      state.state.userFoodPrefState = action.payload;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchUserShopinglist.fulfilled, (state, action) => {
+    builder.addCase(fetchUserShopinglist.pending, (state, action)=>{
+      state.state.allListState = "loading";
+    }).addCase(fetchUserShopinglist.fulfilled, (state, action) => {
       state.allList = action.payload;
-      state.state = "ready";
+      state.state.allListState = "ready";
+    }).addCase(fetchUserShopinglist.rejected, (state, action) => {
+      state.state.allListState = "failed";
+    }).addCase(fetchUserFoodPref.pending, (state, action) => {
+      state.state.userFoodPrefState = "loading";
     }).addCase(fetchUserFoodPref.fulfilled, (state, action) => {
       state.userFoodPref = action.payload;
-      state.state = "ready";
-    }).addCase(fetchUserShopinglist.rejected, (state, action) => {
-      // console.log("FETCHING IS FAILED")
-      state.state = "failed";
-    }).addCase(fetchUserRecepiesByListId.fulfilled, (state, action) => {
-      state.selectedList.recepies = action.payload;
-    }).addCase(fetchUserRecepiesByListId.rejected, (state, action) => {
-      state.state = "failed";
+      state.state.userFoodPrefState = "ready";
+    }).addCase(fetchUserFoodPref.rejected, (state, action) => {
+      state.state.userFoodPrefState = "failed";
+    }).addCase(fetchExcludedIngredients.pending, (state, action) => {
+      state.state.excludedIngredientState = "loading";
     }).addCase(fetchExcludedIngredients.fulfilled, (state, action) => {
-      state.state = "ready";
+      state.state.excludedIngredientState = "ready";
+      state.excludedIngredient.mealplanId = action.payload.mealplanId;
+      state.excludedIngredient.ingredients = action.payload.ingredients;
+    }).addCase(fetchExcludedIngredients.rejected, (state, action) => {
+      state.state.excludedIngredientState = "failed";
       state.excludedIngredient.mealplanId = action.payload.mealplanId;
       state.excludedIngredient.ingredients = action.payload.ingredients;
     });
@@ -282,7 +323,7 @@ export const getMenumaticSavedRecipes = (state) =>
 export const getMenumaticSelecedList = (state) =>
   state.menumaticServerApi.selectedList;
 export const getExcludedIngredients = (state) => state.menumaticServerApi.excludedIngredient.ingredients;
-export const getMenumaticState = (state) => state.menumaticServerApi.state;
-export const { setSelectedListId, flushUserData, setMenumaticServerState } =
+export const getMenumaticStates = (state) => state.menumaticServerApi.state;
+export const { setSelectedListId,setUserFoodPrefState, flushUserData, setMenumaticServerState } =
   menumaticServerApi.actions;
 export default menumaticServerApi.reducer;

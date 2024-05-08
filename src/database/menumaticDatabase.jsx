@@ -1,31 +1,53 @@
-import React from 'react'
-import { listenerMiddleware } from '../store/store'
-import {setSelectedListId} from '../listOfStoredPlansRelated/plan_list/planListSlice'
-import { useDispatch } from 'react-redux'
-import { fetchUserRecepiesByListId, saveFoodPrefToMenumaticDb } from '../store/menumaticServerAPISlice'
-import { saveTags } from '../menu/filterPageSlice'
+import React from "react";
+import { listenerMiddleware } from "../store/store";
+import { setSelectedListId } from "../listOfStoredPlansRelated/plan_list/planListSlice";
+import { useDispatch } from "react-redux";
+import {
+  saveFoodPrefToMenumaticDb,
+} from "../store/menumaticServerAPISlice";
+import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
+import { flushSpoonacularResults, searchComplexBySpoonacularApiAsync,searchComplexBySpoonacularApiAsyncFoodPref,setResultsState } from "../store/spoonacularAPISlice";
 const MenumaticDatabase = () => {
 
-//TODO: DEPRICATED    
-listenerMiddleware.startListening({
-    actionCreator: setSelectedListId,
-    effect: async (action, listenerApi) => {
-    }
-});
-
-listenerMiddleware.startListening({
+  listenerMiddleware.startListening({
     actionCreator: saveTags,
     effect: async (action, listenerApi) => {
-        console.log("Listenere middleware is called", action.payload)
-        const userId = listenerApi.getState().userAccount.userId;
-        try{
-            listenerApi.dispatch(saveFoodPrefToMenumaticDb({userId: userId, data: action.payload}));
+      const userId = listenerApi.getState().userAccount.userId;
+      try {
+        if (userId) {
+          listenerApi.dispatch(
+            saveFoodPrefToMenumaticDb({ userId: userId, data: action.payload })
+          );
         }
-        catch(e){
-            alert("Error in saving food pref to menumatic db, server is down")
-        }
-}});
+        console.log("Complex search is called by listener")
+        listenerApi.dispatch(
+            searchComplexBySpoonacularApiAsyncFoodPref({
+              intolerances: action.payload.excludeTags,
+              diet: action.payload.includeTags,
+            })
+          );
+      } catch (e) {
+        alert("Error in saving food pref to menumatic db, server is down");
+      }
+    },
+  });
 
-}
+  listenerMiddleware.startListening({
+    actionCreator: saveTagsByServer,
+    effect: async (action, listenerApi) => {
+      try {
+        console.log("Complex search is called by listener")
+        listenerApi.dispatch(
+            searchComplexBySpoonacularApiAsyncFoodPref({
+              intolerances: action.payload.excludeTags,
+              diet: action.payload.includeTags,
+            })
+          );
+      } catch (e) {
+        alert("Error in saving food pref to menumatic db, server is down");
+      }
+    },
+  });
+};
 
-export default MenumaticDatabase
+export default MenumaticDatabase;
