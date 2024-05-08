@@ -664,7 +664,7 @@ const MenuView = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex bg-gunmetal bg-opacity-50 mt-10 ml-4 w-64 rounded-[20px] font-outfit text-whiteSmoke text-semiBold">
+          <div className="flex mt-10 ml-4 w-64 font-outfit text-whiteSmoke text-semiBold">
             <Transition
               show={props.stateRecommendBtn}
               enter="transition-opacity duration-150"
@@ -674,7 +674,7 @@ const MenuView = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="flex-col border-2 border-whiteSmoke h-30 w-full">
+              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-whiteSmoke rounded-[20px] h-30 w-full">
                 <div className="flex-col text-center justify-center">
                   <div className=" text-base mb-2 mt-2 leading-4">
                     Your {props.mealsInPlan} liked dishes are available!
@@ -735,7 +735,7 @@ const MenuView = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex bg-gunmetal bg-opacity-50 mt-10 ml-4 w-64 rounded-[20px] font-outfit text-whiteSmoke text-semiBold">
+          <div className="flex mt-10 ml-4 w-64 font-outfit text-whiteSmoke text-semiBold">
             <Transition
               show={props.stateRecommendBtn}
               enter="transition-opacity duration-150"
@@ -745,7 +745,7 @@ const MenuView = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="flex-col border-2 border-whiteSmoke h-30 w-full">
+              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-whiteSmoke rounded-[20px] h-30 w-full">
                 <div className="flex-col text-center justify-center">
                   <div className=" text-base mb-2 mt-2 leading-4">
                     Your {props.mealsInPlan} liked dishes are available!
@@ -780,7 +780,6 @@ const MenuView = (props) => {
           </div>
         </button>
         {renderMenu()}
-      </div>
       </div>
       <div className="hidden lg:block fixed top-0 right-0 bg-cerulean">
         {menuState()}
