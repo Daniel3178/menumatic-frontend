@@ -25,8 +25,7 @@ const PlanListView = (props) => {
   };
   const RecepiePlanOverviewRow = (list) => {
     // Potentially make `id={props.dayOfTheMeal}` into one where `props.dayOfMeal` is provides the meal names. Will nonetheless have to take into account a calendar..
-    // console.log("list", list)
-    // console.log("list.planRecipes", list.planRecipes)
+
 
     const handleNavigate = () => {
       props.selectAndNavigateToMealPlan(list.planID);
