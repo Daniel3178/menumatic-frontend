@@ -677,10 +677,10 @@ const MenuView = (props) => {
               <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-whiteSmoke rounded-[20px] h-30 w-full">
                 <div className="flex-col text-center justify-center">
                   <div className=" text-base mb-2 mt-2 leading-4">
-                    Your {props.mealsInPlan} liked dishes are available!
+                    Your first {props.mealsInPlan} liked dishes are available!
                   </div>
-                  <div className="leading-4 text-[13px] mb-2">
-                    Or keep swiping for a more varied recommendation.
+                  <div className="leading-4 text-[13px] ml-2 mr-2 mb-2">
+                    You can also keep swiping for a more varied recommendation.
                   </div>
                 </div>
                 <div className="flex justify-center mb-2">
