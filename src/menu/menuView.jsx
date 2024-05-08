@@ -672,7 +672,7 @@ const MenuView = (props) => {
                 </div>
               </Transition>
             </div>
-            <div className="flex bg-gunmetal mr-6 rounded-[20px]">
+            <div className="flex bg-gunmetal bg-opacity-50 mr-6 rounded-[20px]">
               <Transition
                 show={props.stateRecommendBtn}
                 enter="transition-opacity duration-150"
@@ -682,21 +682,20 @@ const MenuView = (props) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="mt-2 ml-2 w-52">
-                  <div className="flex justify-start text-sm mb-4">
+                <div className="ml-2 h-26 w-56">
+                  <div className="flex justify-start text-[12px] mb-2 mt-2 leading-4">
                     Your {props.mealsInPlan} liked dishes are available!
-                    <br />
                   </div>
-                  <div className="flex justify-end text-sm mb-2">
-                      <div className="mr-4">
-                        Keep swiping for a more varied recommendation!
+                  <div className="flex justify-end text-[12px]">
+                      <div className="leading-4">
+                        Keep swiping for a more varied recommendation.
                       </div>
-                      <div className="">
-                        <button className="border-whiteSmoke border-2 h-10 w-16 rounded-[15px] text-sm">
+                    </div>
+                    <div className="flex justify-end pb-2">
+                        <button className="bg-gunmetal bg-opacity-70 h-6 w-16 rounded-[15px] text-smokeWhite text-sm hover:bg-gradient-to-tr hover:from-gold hover:to-white hover:text-gunmetal">
                           Got it!
                         </button>
                       </div>
-                    </div>
                 </div>
               </Transition>
             </div>
