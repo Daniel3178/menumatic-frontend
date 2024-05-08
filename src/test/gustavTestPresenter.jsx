@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
 
 import {
-    getApiResults,
   searchBySpoonacularApiBulkAsync,
   searchBySpoonacularApiAsync
 } from "../store/spoonacularAPISlice";

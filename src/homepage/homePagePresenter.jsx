@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import HomePageView from "./homePageView";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getApiResults,
   searchBySpoonacularApiAsync,
   searchComplexBySpoonacularApiAsync,
+  getRandomSearchPromise,
+  getBulkSearchPromise,
+  getComplexSearchPromise,
 } from "../store/spoonacularAPISlice";
 import {
   incrementLikesCounter,
@@ -20,7 +22,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 import {
-  getApiResultsState,
   popFirstRecipe,
 } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
@@ -34,23 +35,20 @@ import { setStateRecommendBtn, setStateRecommendDialog } from "../menu/menuSlice
 const HomePagePresenter = () => {
 
   const dispatch = useDispatch();
-  const apiResult = useSelector(getApiResults);
   const likesCounter = useSelector(getLikesCounter); 
   const showInfo = useSelector(getShowInfo);
   const excludeTags = useSelector(getExcludeTags);
   const includeTags = useSelector(getIncludeTags);
-  const apiResultsState = useSelector(getApiResultsState);
   const navigate = useNavigate();
   const mealsInPlan = useSelector(getMealsInPlan);
   const likeLimit = mealsInPlan * 2;
-  const userStatus = useSelector(getIsLoggedIn);
 
+  const {data: complexSearchResult, state: complexSearchState} = useSelector(getComplexSearchPromise);
 
-  const {allListState, userFoodPrefState, excludedIngredientState} = useSelector(getMenumaticStates);
   
 
   const handleGetRandomReceipt = () => {
-    if (apiResult.length < 6) {
+    if (complexSearchResult.length < 6) {
       dispatch(
         searchComplexBySpoonacularApiAsync({
           intolerances: excludeTags,
@@ -69,7 +67,7 @@ const HomePagePresenter = () => {
 
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
-    if (apiResult.length < 6 && apiResult.length > 3) {
+    if (complexSearchResult.length < 6 && complexSearchResult.length > 3) {
       dispatch(
         searchComplexBySpoonacularApiAsync({
           intolerances: excludeTags,
@@ -88,15 +86,9 @@ const HomePagePresenter = () => {
     }
     
 
-    dispatch(incrementLikesCounter({recipe:apiResult[0], likeLimit: likeLimit}));
+    dispatch(incrementLikesCounter({recipe:complexSearchResult[0], likeLimit: likeLimit}));
     dispatch(popFirstRecipe());
   
-    // //console.log("homepage presenter")
-    // //console.log(apiResult.recipes[0])
-
-    //setCounter((counter + 1) % 15); // TODO: remove when api is working
-
-    //If info view is active, go back to photo view after like.
     if (showInfo) {
       dispatch(toggleInfoView());
     }
@@ -125,8 +117,8 @@ const HomePagePresenter = () => {
   return (
     <div>
       <HomePageView
-      apiResults={apiResult}
-      apiResultsState={apiResultsState}
+      apiResults={complexSearchResult}
+      apiResultsState={complexSearchState}
       getRandomReceipt={handleGetRandomReceipt}
       sendLike={handleLike}
       toggleInfoView={handleToggleInfoView}
@@ -136,8 +128,6 @@ const HomePagePresenter = () => {
       likesCounter={likesCounter}
       mealsInPlan={mealsInPlan}
 
-      userStatus= {userStatus}
-      foodPrefState={userFoodPrefState}
     />
     </div>
   );

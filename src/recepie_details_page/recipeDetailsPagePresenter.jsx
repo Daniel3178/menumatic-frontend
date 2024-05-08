@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
 import { getSelectedRecipe } from "../listOfStoredPlansRelated/plan_content/planSlice";
 import RecipeDetailsPageView from "./recepieDetailsPageView";
-import { getUserSavedRecipes } from "../store/spoonacularAPISlice";
 import {getUserCurrentRecipes} from "../store/menumaticServerAPISlice";
 
 const RecipeDetailsPagePresenter = () => {

@@ -4,7 +4,7 @@ import {
   saveFoodPrefToMenumaticDb,setSelectedList
 } from "../store/menumaticServerAPISlice";
 import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
-import { flushSpoonacularResults, searchBySpoonacularApiBulkAsync ,searchComplexBySpoonacularApiAsync,setResultsState } from "../store/spoonacularAPISlice";
+import { flushSpoonacularResults, searchBySpoonacularApiBulkAsync ,searchComplexBySpoonacularApiAsync } from "../store/spoonacularAPISlice";
 const MenumaticDatabase = () => {
 
 

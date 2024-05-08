@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { options } from "../config/spoonacularApiConfig";
-import { generateShoplist } from "../shoplist/shoplistSlice";
 import {spoonacularComplexSearchBaseURL,spoonacularRandomSearchBaseURL,spoonacularBulkSearchBaseURL } from "./APIConstants";
 
 
@@ -72,7 +71,6 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
 export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiBulkAsync",
   async (props, { dispatch }) => {
-    // const copyProp = props[0];
 
     const ids = props.map(recipe => recipe.id);
 
@@ -94,7 +92,6 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
       result: recipe,
     }));
 
-    // dispatch(generateShoplist(result));
     return {apiData: jsonResponse, userData: result};
   }
 );
@@ -104,11 +101,6 @@ const spoonacularApi = createSlice({
   initialState: {
 
     // new
-    randomSearchPromise:{
-      data: [],
-      state: "loading",
-      error: null,
-    },
     complexSearchPromise:{
       data: [],
       state: "loading",
@@ -119,80 +111,82 @@ const spoonacularApi = createSlice({
       state: "loading",
       error: null,
     },
-
-    results: [],
-    resultsState: "loading",
-    savedRecipesState: "loading",
-    userSavedRecipes: [],
+    randomSearchPromise:{
+      data: [],
+      state: "loading",
+      error: null,
+    },
   },
   reducers: {
-    setResultsState: (state, action) => {
-      state.resultsState = action.payload;
-    },
     popFirstRecipe: (state, action) => {
-      state.results.shift();
-    },
-    setSavedRecipesState: (state, action) => {
-      state.savedRecipesState = action.payload;
+      state.complexSearchPromise.data.shift();
     },
     flushSpoonacularResults: (state, action) => {
-      state.results = [];
+      state.complexSearchPromise = {
+        data: [],
+        state: "loading",
+        error: null,
+      };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(searchBySpoonacularApiAsync.pending, (state, action) => {
-        state.resultsState = "loading";
+        state.randomSearchPromise.state = "loading";
       })
       .addCase(searchBySpoonacularApiAsync.fulfilled, (state, action) => {
-        state.results.push(...action.payload.recipes);
-        state.resultsState = "ready";
+        state.randomSearchPromise.data.push(...action.payload.recipes);
+        state.randomSearchPromise.state = "ready";
       })
       .addCase(searchBySpoonacularApiAsync.rejected, (state, action) => {
-        state.resultsState = "failed";
+        state.randomSearchPromise.state = "failed";
       })
       .addCase(searchBySpoonacularApiBulkAsync.pending, (state, action) => {
-        state.savedRecipesState = "loading";
+        state.bulkSearchPromise.state = "loading";
       })
       .addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
         const {apiData} = action.payload;
-        state.userSavedRecipes= apiData;
-        state.savedRecipesState = "ready";
+        state.bulkSearchPromise.data = apiData;
+        state.bulkSearchPromise.state = "ready";
       })
       .addCase(searchBySpoonacularApiBulkAsync.rejected, (state, action) => {
-        state.userSavedRecipes = "failed";
+        state.bulkSearchPromise.state = "failed";
       })
       .addCase(searchComplexBySpoonacularApiAsync.pending, (state, action) => {
-        state.resultsState = "loading";
+        state.complexSearchPromise.state = "loading";
       })
       .addCase(
         searchComplexBySpoonacularApiAsync.fulfilled,
         (state, action) => {
           const {results, saveOptOverwrite} = action.payload;
           if(saveOptOverwrite){
-            state.results = results;
+            state.complexSearchPromise.data = results;
           }
           else{
-            state.results.push(...results);
+            state.complexSearchPromise.data.push(...results);
           }
-          state.resultsState = "ready";
+          state.complexSearchPromise.state = "ready";
         }
       )
       .addCase(searchComplexBySpoonacularApiAsync.rejected, (state, action) => {
-        state.resultsState = "failed";
+        state.complexSearchPromise.state = "failed";
       });
   },
 });
 export const {
-  setResultsState,
   popFirstRecipe,
-  setSavedRecipesState,
   flushSpoonacularResults,
 } = spoonacularApi.actions;
-export const getApiResults = (state) => state.spoonacularApi.results;
-export const getApiResultsState = (state) => state.spoonacularApi.resultsState;
-export const getSavedRecipesState = (state) =>
-  state.spoonacularApi.savedRecipesState;
-export const getUserSavedRecipes = (state) =>
-  state.spoonacularApi.userSavedRecipes;
+
+// new 
+export const getRandomSearchPromise = (state) => state.spoonacularApi.randomSearchPromise;
+export const getComplexSearchPromise = (state) => state.spoonacularApi.complexSearchPromise;
+export const getBulkSearchPromise = (state) => state.spoonacularApi.bulkSearchPromise;
+
+// export const getApiResults = (state) => state.spoonacularApi.results;
+// export const getApiResultsState = (state) => state.spoonacularApi.resultsState;
+// export const getSavedRecipesState = (state) =>
+//   state.spoonacularApi.savedRecipesState;
+// export const getUserSavedRecipes = (state) =>
+//   state.spoonacularApi.userSavedRecipes;
 export default spoonacularApi.reducer;
