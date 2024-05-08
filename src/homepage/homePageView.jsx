@@ -42,7 +42,7 @@ const HomePageView = (props) => {
           </div>
 
           <div className="absolute bottom-0 right-0 pr-2 pb-4">
-            <button onClick={props.toggleInfoView} className="tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in w-28 h-10">
+            <button onClick={props.toggleInfoView} className="tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10">
               VIEW LESS
             </button>
           </div>
@@ -60,7 +60,7 @@ const HomePageView = (props) => {
               currentTarget.onerror = null;
               currentTarget.src = noimage;
             }} />
-          <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large min-w-405 h-[27%]">
+          <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large h-[27%]">
             <div className='pt-3 pl-2'>
               <p className="text-whiteSmoke font-outfit text-xl lg:text-3xl font-medium truncate">{props.apiResults[0].title}</p>
             </div>
@@ -74,7 +74,7 @@ const HomePageView = (props) => {
                 </div>
               </div>
               <div className='items-center flex justify-end'>
-                <button onClick={props.toggleInfoView} className="tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in w-28 h-10">
+                <button onClick={props.toggleInfoView} className="tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10">
                   VIEW MORE
                 </button>
               </div>
@@ -89,19 +89,19 @@ const HomePageView = (props) => {
   const renderHomePage = () => {
     if (props.apiResultsState === "ready") {
       return (
-        <div className="h-dvh pt-32">
-          <div className='h-full max-h-[750px]'>
+        <div className="h-svh w-screen pt-32 flex items-center justify-center">
+          <div className='h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4'>
             <div className='flex justify-center h-[80%]'>
-              <div className="max-h-[540px] w-[90%] aspect-[3/4] rounded-large relative shadow-xl">
+              <div className="max-h-[540px] rounded-large relative shadow-xl">
                 {conditionalRender()}
               </div>
             </div>
-            <div className="h-[20%] flex space-x-12 place-content-evenly justify-center p-2">
-              <button onClick={props.getRandomReceipt} className="rounded-full shadow-xl hover:shadow-mid foucs:shadow-in">
-                <img className="h-full" src={dislike_btn} />
+            <div className="h-[20%] flex justify-center p-2">
+              <button onClick={props.getRandomReceipt} className="w-1/2 flex justify-center">
+                <img className="h-full rounded-full shadow-xl hover:shadow-mid foucs:shadow-in" src={dislike_btn} />
               </button>
-              <button onClick={props.sendLike} className="rounded-full shadow-xl hover:shadow-mid foucs:shadow-in">
-                <img className="h-full" src={like_btn} />
+              <button onClick={props.sendLike} className="w-1/2 flex justify-center">
+                <img className="h-full rounded-full shadow-xl hover:shadow-mid foucs:shadow-in" src={like_btn} />
               </button>
             </div>
           </div>
