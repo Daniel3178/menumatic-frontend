@@ -1,0 +1,3 @@
+export const spoonacularComplexSearchBaseURL ="https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch";
+export const spoonacularRandomSearchBaseURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=10&include-tags=dinner";
+export const spoonacularBulkSearchBaseURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=";

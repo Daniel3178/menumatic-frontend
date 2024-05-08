@@ -1,54 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { options } from "../config/spoonacularApiConfig";
 import { generateShoplist } from "../shoplist/shoplistSlice";
-import { set } from "firebase/database";
+import {spoonacularComplexSearchBaseURL,spoonacularRandomSearchBaseURL,spoonacularBulkSearchBaseURL } from "./APIConstants";
 
-function buildURL(baseURL, params) {
-  //console.log("Entering build url")
-  // Use map to create an array of parameter strings
-  const paramStrings = params.map((param) => `${param.key}=${param.value}`);
-  //console.log("paramStrings: ", paramStrings)
-  // Join the parameter strings with '&' to form the query string
-  let queryString = paramStrings.join("&");
-  //console.log("querystring: ", queryString)
-
-  // Concatenate the base URL with the query string
-  let fullURL = `${baseURL}?${queryString}`;
-  //console.log("full url: ", fullURL)
-  // Return the full URL
-  return fullURL;
-}
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
 
 export const searchBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiAsync",
   async (props) => {
-    const excludeTags = props.excludeTags;
-    const includeTags = props.includeTags;
 
-    let customUrl =
-      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=10&include-tags=dinner";
+    const {excludeTags, includeTags} = props;
+    const customUrl = spoonacularRandomSearchBaseURL;
 
     if (includeTags.length) {
-      let includeString = includeTags.join();
-      customUrl = customUrl.concat(",", includeString);
+      const includeString = includeTags.join();
+      customUrl.concat(",", includeString);
     }
 
     if (excludeTags.length) {
-      let substring = "&exclude-tags=";
-      let excludeString = substring.concat(excludeTags.join());
-      customUrl = customUrl.concat(excludeString);
+      const substring = "&exclude-tags=";
+      const excludeString = substring.concat(excludeTags.join());
+      customUrl.concat(excludeString);
     }
 
-    customUrl = customUrl.toLowerCase();
-
-    // console.log(customUrl)
-
+    customUrl.toLowerCase();
     const response = await fetch(customUrl, options);
-    // console.log("response", response)
     return response.json();
   }
 );
@@ -57,17 +32,21 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
 export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchComplexBySpoonacularApiAsync",
   async (props) => {
-    //console.log("search recipes")
-    console.log("spoonacular request", props)
-    const diet = props.diet.join();
-    //console.log("diets joined")
-    const intolerances = props.intolerances.join();
-    //console.log("intolerances joined")
 
-    let baseUrl =
-      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch";
+    const {diet, intolerances, saveOptOverwrite} = props;
 
-    let params = [
+    const buildURL = (baseURL, params) => {
+      const paramStrings = params.map((param) => `${param.key}=${param.value}`);
+      const queryString = paramStrings.join("&");
+      const fullURL = `${baseURL}?${queryString}`;
+      return fullURL;
+    }
+
+    const getRandomInt = (max) => {
+      return Math.floor(Math.random() * max);
+    }
+
+    const params = [
       { key: "query", value: "" },
       { key: "type", value: "main%20course" },
       { key: "instructionsRequired", value: "true" },
@@ -79,102 +58,42 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
       { key: "limitLicense", value: "false" },
       { key: "offset", value: getRandomInt(900) },
       { key: "maxReadyTime", value: 90 },
-      { key: "diet", value: diet },
-      { key: "intolerances", value: intolerances },
+      { key: "diet", value: diet.join() },
+      { key: "intolerances", value: intolerances.join() },
     ];
-    //console.log("before build url")
-    const generatedUrl = buildURL(baseUrl, params);
-
-    // dispatch(setResultsState("loading"));
-    //console.log("API url: ", generatedUrl)
+    const generatedUrl = buildURL(spoonacularComplexSearchBaseURL, params);
     const response = await fetch(generatedUrl, options);
-    //console.log("Response: ", response)
     const jsonResponse = await response.json();
-    //console.log(jsonResponse)
-    const customResponse = jsonResponse.results;
-    //console.log(customResponse)
-    return customResponse;
-  }
-);
-
-//new
-export const searchComplexBySpoonacularApiAsyncFoodPref = createAsyncThunk(
-  "spoonacularApi/searchComplexBySpoonacularApiAsyncFoodPref",
-  async (props) => {
-    //console.log("search recipes")
-    console.log("SPOONACULAR REQUEST NEW", props)
-    const diet = props.diet.join();
-    //console.log("diets joined")
-    const intolerances = props.intolerances.join();
-    //console.log("intolerances joined")
-
-    let baseUrl =
-      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch";
-
-    let params = [
-      { key: "query", value: "" },
-      { key: "type", value: "main%20course" },
-      { key: "instructionsRequired", value: "true" },
-      { key: "fillIngredients", value: "true" },
-      { key: "addRecipeInformation", value: "true" },
-      { key: "ignorePantry", value: "true" },
-      { key: "sort", value: "popularity" },
-      { key: "number", value: "10" },
-      { key: "limitLicense", value: "false" },
-      { key: "offset", value: getRandomInt(900) },
-      { key: "maxReadyTime", value: 90 },
-      { key: "diet", value: diet },
-      { key: "intolerances", value: intolerances },
-    ];
-    //console.log("before build url")
-    const generatedUrl = buildURL(baseUrl, params);
-
-    // dispatch(setResultsState("loading"));
-    //console.log("API url: ", generatedUrl)
-    const response = await fetch(generatedUrl, options);
-    //console.log("Response: ", response)
-    const jsonResponse = await response.json();
-    //console.log(jsonResponse)
-    const customResponse = jsonResponse.results;
-    //console.log(customResponse)
-    return customResponse;
+    
+    return {results:jsonResponse.results, saveOptOverwrite: saveOptOverwrite};
   }
 );
 
 export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiBulkAsync",
   async (props, { dispatch }) => {
-    //  dispatch(setSavedRecipesState("loading"));
-    // console.log(props)
     const copyProp = props[0];
-    // console.log("PROPS", copyProp)
-    const ids = [];
-    copyProp.map((recipe) => ids.push(recipe.id));
-    let customUrl =
-      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=";
-    let recipeIdString = ids.join();
-    customUrl = customUrl.concat(recipeIdString);
 
-    const response = await fetch(customUrl, options);
+    const ids = copyProp.map(recipe => recipe.id);
+
+    const customUrl = spoonacularBulkSearchBaseURL;
+    const recipeIdString = ids.join();
+    const fullUrl = customUrl.concat(recipeIdString);
+
+    const response = await fetch(fullUrl, options);
     const jsonResponse = await response.json();
-    const result = [];
 
-    const findPoriont = (id) => {
-      for (let i = 0; i < copyProp.length; i++) {
-        if (copyProp[i].id === id) {
-          // console.log("FOUND PORTION", copyProp[i].id)
-          // console.log("FOUND PORTION", copyProp[i].id)
-          return copyProp[i].portions;
-        }
-      }
+    const findPortion = (id) => {
+      const portion = copyProp.find(item => item.id === id);
+      return portion ? portion.portions : undefined;
     };
 
-    jsonResponse.map((recipe) => {
-      result.push({
-        portions: findPoriont(recipe.id),
-        result: recipe,
-      });
-    });
+
+    const result = jsonResponse.map(recipe => ({
+      portions: findPortion(recipe.id),
+      result: recipe,
+    }));
+
     dispatch(generateShoplist(result));
     return result;
   }
@@ -231,24 +150,17 @@ const spoonacularApi = createSlice({
         searchComplexBySpoonacularApiAsync.fulfilled,
         (state, action) => {
           console.log("RESPONSE FROM API ", action.payload)
-          state.results.push(...action.payload);
+          const {results, saveOptOverwrite} = action.payload;
+          if(saveOptOverwrite){
+            state.results = [...results];
+          }
+          else{
+            state.results.push(...results);
+          }
           state.resultsState = "ready";
         }
       )
       .addCase(searchComplexBySpoonacularApiAsync.rejected, (state, action) => {
-        state.resultsState = "failed";
-      }).addCase(searchComplexBySpoonacularApiAsyncFoodPref.pending, (state, action) => {
-        state.resultsState = "loading";
-      })
-      .addCase(
-        searchComplexBySpoonacularApiAsyncFoodPref.fulfilled,
-        (state, action) => {
-          console.log("RESPONSE FROM API ", action.payload)
-          state.results = [...action.payload];
-          state.resultsState = "ready";
-        }
-      )
-      .addCase(searchComplexBySpoonacularApiAsyncFoodPref.rejected, (state, action) => {
         state.resultsState = "failed";
       });
   },

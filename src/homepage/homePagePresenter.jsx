@@ -5,7 +5,6 @@ import {
   getApiResults,
   searchBySpoonacularApiAsync,
   searchComplexBySpoonacularApiAsync,
-  searchComplexBySpoonacularApiAsyncFoodPref,
 } from "../store/spoonacularAPISlice";
 import {
   incrementLikesCounter,

@@ -21,6 +21,8 @@ const FirebaseAuthentication = () => {
   const excludeIngr = useSelector(getExcludeTags);
   const includeIngr = useSelector(getIncludeTags);
 
+  //TODO: when server is not available, there is an issue with calling spoonacualr.
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log("User: ", user);

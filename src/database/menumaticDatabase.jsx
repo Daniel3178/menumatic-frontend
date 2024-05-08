@@ -6,7 +6,7 @@ import {
   saveFoodPrefToMenumaticDb,
 } from "../store/menumaticServerAPISlice";
 import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
-import { flushSpoonacularResults, searchComplexBySpoonacularApiAsync,searchComplexBySpoonacularApiAsyncFoodPref,setResultsState } from "../store/spoonacularAPISlice";
+import { flushSpoonacularResults, searchComplexBySpoonacularApiAsync,setResultsState } from "../store/spoonacularAPISlice";
 const MenumaticDatabase = () => {
 
   listenerMiddleware.startListening({
@@ -21,9 +21,10 @@ const MenumaticDatabase = () => {
         }
         console.log("Complex search is called by listener")
         listenerApi.dispatch(
-            searchComplexBySpoonacularApiAsyncFoodPref({
+            searchComplexBySpoonacularApiAsync({
               intolerances: action.payload.excludeTags,
               diet: action.payload.includeTags,
+              saveOptOverwrite: true
             })
           );
       } catch (e) {
@@ -38,9 +39,10 @@ const MenumaticDatabase = () => {
       try {
         console.log("Complex search is called by listener")
         listenerApi.dispatch(
-            searchComplexBySpoonacularApiAsyncFoodPref({
+            searchComplexBySpoonacularApiAsync({
               intolerances: action.payload.excludeTags,
               diet: action.payload.includeTags,
+              saveOptOverwrite: true
             })
           );
       } catch (e) {
