@@ -112,7 +112,7 @@ const HomePageView = (props) => {
           <div className='h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4'>
             <div className='h-[80%] w-full relative'>
               {props.apiResults.slice(1,2).map((recipe) =>
-                <TinderCard className="h-full w-full absolute z-10" swipeThreshold={5} key={props.apiResults} onSwipe={(dir) => swiped(dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
+                <TinderCard className="h-full w-full absolute z-10" swipeRequirementType={'position'} swipeThreshold={100} key={props.apiResults} onSwipe={(dir) => swiped(dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
                   <div className='flex justify-center h-full'>
 
                     <div className="rounded-large w-full">
@@ -123,7 +123,7 @@ const HomePageView = (props) => {
                 </TinderCard>
               ).reverse()}
               {props.apiResults.slice(0,1).map((recipe) =>
-                <TinderCard className="h-full w-full absolute z-10" swipeThreshold={5} key={props.apiResults} onSwipe={(dir) => swiped(dir, dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
+                <TinderCard className="h-full w-full absolute z-10" swipeRequirementType={'position'} swipeThreshold={100} key={props.apiResults} onSwipe={(dir) => swiped(dir, dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
                   <div className='flex justify-center h-full'>
 
                     <div className="w-full rounded-large shadow-xl transition-all duration-1000">
