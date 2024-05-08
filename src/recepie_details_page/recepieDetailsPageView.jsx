@@ -46,7 +46,7 @@ const RecipeDetailsPageView = (props) => {
   };
 
   return (
-    <div className="flex w-screen lg:pl-8 lg:pr-80 justify-center">
+    <div className="pt-32 flex w-screen lg:pl-8 lg:pr-80 justify-center">
       <div className=" pr-4 pl-4 max-w-[840px]">
         <div>
           <button className="text-whiteSmoke hover:shadow-xl"

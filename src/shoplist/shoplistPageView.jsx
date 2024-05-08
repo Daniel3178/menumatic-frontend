@@ -228,7 +228,7 @@ const ShoplistPageView = (props) => {
   }
 
   return (
-    <div className="p-4 font-outfit w-screen max-w-[1080px] min-w-[350px] lg:pl-8  lg:pr-80 ">
+    <div className="pt-32 p-4 font-outfit w-screen max-w-[1080px] min-w-[350px] lg:pl-8  lg:pr-80 ">
       <h1 className="text-xxl text-gunmetal font-bold text-center mb-4">SHOPPING LIST</h1>
       {renderTheIngredientList()}
       {/* {overlay()} */}

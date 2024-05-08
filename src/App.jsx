@@ -32,7 +32,7 @@ const App = () => {
             <img src={logoSmall} />
           </a>
         </div>
-        <div className=" mt-32 right-74">
+        <div className="">
           <Routes>
             <Route path="/pdf-test" element={<CreatePDFForm />} />
             <Route path="/daniel-test" element={<DanielTestPresenter />} />

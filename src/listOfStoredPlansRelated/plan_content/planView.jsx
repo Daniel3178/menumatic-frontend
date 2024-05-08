@@ -8,12 +8,12 @@ const PlanView = ({ meal, recipes, goToShoplist, state, navigateBack, navigateTo
 
     return (
       
-      <div className="flex-col w-[840px] font-outfit">
+      <div className="pt-32 flex-col justify-center w-screen max-w-[1440px] font-outfit pr-8 lg:pr-80 pl-8">
         <button className="text-whiteSmoke hover:shadow-xl"
               onClick={() => navigateBack()} aria-label="go back">
               <img src={backBlack} />
             </button>
-        <h1 className="text-center font-regular pb-10 text-cerulean">Recipes for {meal}</h1>
+        <h1 className="text-center text-xl font-regular pb-10 text-gunmetal">Recipes for {meal}</h1>
         <div>
           <div className="mb-4 font-outfit text-2xl font-medium w-full flex items-center justify-center">
             <span className="text-center w-[10%]">Day</span>
@@ -25,7 +25,7 @@ const PlanView = ({ meal, recipes, goToShoplist, state, navigateBack, navigateTo
         {recipes.map((recipe, index) => (
           <div className='bg-cerulean mb-5 w-full h-[45px] rounded-small font-outfit text-whiteSmoke shadow-mid flex items-center justify-center' key={index} onClick={() => navigateToRecipe(index)}>
             <span className="text-center w-[10%]">{index + 1}</span>
-            <span className="text-center w-[60%]">{recipe.name}</span>
+            <span className="text-center truncate w-[60%]">{recipe.name}</span>
             <span className="text-center w-[30%]">{recipe.portions}</span>
           </div>
         ))}

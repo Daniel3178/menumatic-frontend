@@ -781,6 +781,7 @@ const MenuView = (props) => {
         </button>
         {renderMenu()}
       </div>
+      </div>
       <div className="hidden lg:block fixed top-0 right-0 bg-cerulean">
         {menuState()}
       </div>
