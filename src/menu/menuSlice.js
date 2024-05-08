@@ -10,6 +10,7 @@ const menuPage = createSlice({
             settings:false,
             filter:false,
             passChange:false,
+            recommendBtn:false,
         },
     
     },
@@ -32,6 +33,9 @@ const menuPage = createSlice({
         setStatePassChange: (state, action) => {
             state.menuState.passChange = action.payload;
         },
+        setStateRecommendBtn: (state, action) => {
+            state.menuState.recommendBtn = action.payload;
+        }
         
     },
     });
@@ -41,7 +45,8 @@ const menuPage = createSlice({
     export const getMenuStateSettings = (state) => state.menu.menuState.settings;
     export const getMenuStateFilter = (state) => state.menu.menuState.filter;
     export const getMenuStatePassChange = (state) => state.menu.menuState.passChange;
+    export const getMenuStateRecommendBtn = (state) => state.menu.menuState.recommendBtn;
     
 
     export default menuPage.reducer;
-    export const {menuState, setStateBase, setStateLogin, setStateSignup, setStateSettings, setStateFilter, setStatePassChange} = menuPage.actions;
+    export const {menuState, setStateBase, setStateLogin, setStateSignup, setStateSettings, setStateFilter, setStatePassChange, setStateRecommendBtn} = menuPage.actions;

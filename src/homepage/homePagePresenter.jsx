@@ -23,6 +23,8 @@ import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice"
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
 import {flushRecommendationList} from "../recommendation_page/recommendationPageSlice"
 import {flushShoplist} from "../shoplist/shoplistSlice"
+import { setStateRecommendBtn } from "../menu/menuSlice";
+import MenuView from "../menu/menuView";
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
   //TODO: Change objetcs[0] to apiResult in order to bring back the API functionality
@@ -57,6 +59,7 @@ const HomePagePresenter = () => {
       dispatch(toggleInfoView());
     }
   };
+  
 
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
@@ -72,8 +75,15 @@ const HomePagePresenter = () => {
       dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
+    
+    if(likesCounter == mealsInPlan){
+      dispatch(setStateRecommendBtn(true))
+    }
+    
+
     dispatch(incrementLikesCounter({recipe:apiResult[0], likeLimit: likeLimit}));
     dispatch(popFirstRecipe());
+  
     // //console.log("homepage presenter")
     // //console.log(apiResult.recipes[0])
 
@@ -136,9 +146,9 @@ dispatch(flushShoplist())
       navigateToFilterPage={handleNavigateToFilterPage}
       navigateToPlanList={handleNavigateToPlanList}
       info={showInfo}
+      likesCounter={likesCounter}
+      mealsInPlan={mealsInPlan}
     />
-
-    
     </div>
 
     

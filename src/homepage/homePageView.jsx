@@ -1,5 +1,7 @@
 import React from 'react';
 import {dislike_btn, like_btn, clock_icon, noimage } from "../assets";
+import { getLikesCounter } from './homePageSlice';
+import { getMealsInPlan } from '../menu/filterPageSlice';
 
 const ingredientsList = (items) => {
   // Remove duplicates from item.nameClean

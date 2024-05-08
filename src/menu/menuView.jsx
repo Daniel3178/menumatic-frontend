@@ -579,6 +579,26 @@ const MenuView = (props) => {
                 Account settings
               </button>
             </div>
+            <div>
+              <Transition
+                show={props.stateRecommendBtn}
+                enter="transition-opacity duration-150"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="flex justify-center">
+                  <button
+                    onClick={props.navigateToRecommendation}
+                    className="mt-4 mb-4 p-1 w-40 h- rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
+                  >
+                    VIEW RECOMMENDATION
+                  </button>
+                </div>
+              </Transition>
+            </div>
           </div>
         </div>
       );
