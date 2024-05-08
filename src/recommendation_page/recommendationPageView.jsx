@@ -46,7 +46,7 @@ const RecommendationPageView = (props) => {
   };
 
   const renderRecommendationTable = (listOfMeals) => (
-    <div className="flex justify-center h-screen w-screen top-0 right-0 bottom-0 left-0">
+    <div className="pt-32 flex justify-center h-screen w-screen top-0 right-0 bottom-0 left-0">
       <div>
         <div className="items-center pl-4">
           {navBar()}
