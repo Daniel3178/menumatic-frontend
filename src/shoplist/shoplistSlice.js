@@ -12,6 +12,19 @@ const shoplistSlice = createSlice({
       state.allItems = [];
       state.removedItems = [];
     },
+    setData: (state, action) => {
+      console.log("LOADING DATA FROM LOCAL, SHOPLIST: ", action.payload.allItems)
+      state.allItems = action.payload.allItems;
+      action.payload.allItems.map((element)=>{
+        const ingredients = [];
+        element.ingredients.map((item)=>{
+          ingredients.push(item);
+        })
+        console.log("INGREDIENTS: ", ingredients)
+        state.allItems.push({category: element.category, ingredients: [...ingredients]});
+      })
+      state.removedItems = action.payload.removedItems;
+    },
     generateShoplist: (state, action) => {
       /**
        * Updates the allItems state with the provided list of items. For each item in the input list,
@@ -61,6 +74,7 @@ const shoplistSlice = createSlice({
       normalizeCategoryIngredients(category)
       );
       state.allItems = categorizedIngredients;
+      state.removedItems = [];
     },
     removeItem: (state, action) => {
       const tempItems = [];
@@ -136,6 +150,6 @@ const shoplistSlice = createSlice({
 export const getAllItems = (state) => state.shoplist.allItems;
 export const getRemovedItems = (state) => state.shoplist.removedItems;
 
-export const { generateShoplist, flushShoplist, removeItem, restoreItem } =
+export const { generateShoplist,setData, flushShoplist, removeItem, restoreItem } =
   shoplistSlice.actions;
 export default shoplistSlice.reducer;

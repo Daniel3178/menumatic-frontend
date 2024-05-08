@@ -75,8 +75,6 @@ const PlanListView = (props) => {
   };
 
   function renderList() {
-    // console.log("renderList")
-    // console.log("allList", props.allLists)
     return props.allLists.map((planData, index) => {
       // console.log("planData", planData)
       return (

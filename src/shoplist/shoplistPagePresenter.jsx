@@ -18,7 +18,7 @@ import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice";
 import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getExcludedIngredients } from "../store/menumaticServerAPISlice";
-
+import { useState } from "react";
 /**
  * ShoplistPagePresenter fetches and manages the state for the shopping list,
  * and renders the ShoplistPageView component.
@@ -26,7 +26,15 @@ import { getExcludedIngredients } from "../store/menumaticServerAPISlice";
 const ShoplistPagePresenter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const allItems = useSelector(getAllItems);
+  const allItemsRedux = useSelector(getAllItems);
+
+  const [allItems, setAllItems] = useState(allItemsRedux)
+
+  useEffect(() => {
+    setAllItems(allItemsRedux);
+    console.log("UPDATING ALLITEMS: " , allItemsRedux)
+  },[allItemsRedux]);
+
   const isLoggedIn = useSelector(getIsLoggedIn);
   const userId = useSelector(getUserId);
   const affordableDishes = useSelector(getAffordableDishesList);
@@ -46,7 +54,10 @@ const ShoplistPagePresenter = () => {
   const handleOriginPath = (props) => {
     if (props.location.state === "/recommendation") {
       const currentList = props.recommendationList;
-      dispatch(generateShoplist(currentList));
+      // if(allItems.length === 0){
+        console.log("GENERATING SHOP LIST currentList", currentList)
+        dispatch(generateShoplist(currentList));
+      // }
     } else if (props.location.state === "/plan") {
       userExcludedIngredients.map((ingr) => {
         allItems.map((category) => {
