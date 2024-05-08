@@ -9,10 +9,10 @@ const ingredientsList = (items) => {
   const uniqueIngredients = Array.from(new Set(items.map(item => item.nameClean)));
 
   return (
-    <div className="ml-8 mr-4">
+    <div className="pl-8 pr-4">
       <ul className="space-y-1 list-disc">
         {uniqueIngredients.map((nameClean, index) => (
-          <li key={index} className="font-outfit font-normal text-[18px] text-gunmetal">
+          <li key={index} className="font-outfit font-normal text-sm text-gunmetal">
             {nameClean}
           </li>
         ))}
@@ -28,22 +28,21 @@ const HomePageView = (props) => {
 
   const [lastDirection, setLastDirection] = useState()
 
-  const swiped = (direction, nameToDelete) => {
-    console.log('removing: ' + nameToDelete)
+  const swiped = (direction) => {
     setLastDirection(direction)
     if (direction === 'left') {
       props.getRandomReceipt()
-      
+
     } else if (direction === 'right') {
       props.sendLike()
     }
   }
 
   const outOfFrame = (name) => {
-    console.log(name + ' left the screen!')
+    
   }
 
-  const conditionalRender = () => {
+  const conditionalRender = (recipe) => {
 
 
     //if info has been toggled the infopage is shown.
@@ -53,12 +52,12 @@ const HomePageView = (props) => {
         <div className="flex bg-vanilla h-full w-full rounded-large relative shadow-xl">
 
 
-          <div className='p-2'>
+          <div className='p-2 w-full h-full'>
             <div className=''>
-              <p className="text-gunmetal text-wrap font-outfit text-[24px] font-medium">{props.apiResults[0].title}</p>
+              <p className="h-[30%] text-gunmetal truncate text-wrap font-outfit text-base font-medium">{recipe.title}</p>
             </div>
             <div className="h-[70%] overflow-auto">
-              {ingredientsList(props.apiResults[0].extendedIngredients)}
+              {ingredientsList(recipe.extendedIngredients)}
             </div>
           </div>
 
@@ -72,18 +71,17 @@ const HomePageView = (props) => {
     }
     //if result from api exists render image. This code can only be reached if previous if statement is not true
     if (props.apiResults) {
-      ////console.log(props.apiResults)
       return (
 
         <div className='w-full h-full'>
-          <img src={"https://img.spoonacular.com/recipes/" + props.apiResults[0].id + "-636x393." + props.apiResults[0].imageType} className="object-cover h-full w-full rounded-large"
+          <img src={"https://img.spoonacular.com/recipes/" + recipe.id + "-636x393." + recipe.imageType} className="object-cover h-full w-full rounded-large"
             onError={({ currentTarget }) => {
               currentTarget.onerror = null;
               currentTarget.src = noimage;
             }} />
           <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large h-[27%]">
             <div className='pt-3 pl-2'>
-              <p className="text-whiteSmoke font-outfit text-xl lg:text-3xl font-medium truncate">{props.apiResults[0].title}</p>
+              <p className="text-whiteSmoke font-outfit text-xl lg:text-3xl font-medium truncate">{recipe.title}</p>
             </div>
             <div className='absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-2'>
               <div className='flex space-x-2 items-center'>
@@ -91,7 +89,7 @@ const HomePageView = (props) => {
                   <img src={clock_icon} className="pb-2" />
                 </div>
                 <div className='text-whiteSmoke font-outfit text-lg font-thin'>
-                  {props.apiResults[0].readyInMinutes} min
+                  {recipe.readyInMinutes} min
                 </div>
               </div>
               <div className='items-center flex justify-end'>
@@ -111,18 +109,31 @@ const HomePageView = (props) => {
     if (props.apiResultsState === "ready") {
       return (
         <div className="h-svh overflow-hidden w-screen pt-32 flex items-center justify-center">
-
           <div className='h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4'>
-        
-            <TinderCard className="h-[80%] w-full" swipeThreshold={10} key={props.apiResults} onSwipe={(dir) => swiped(dir, dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
-              <div className='flex justify-center h-full'>
+            <div className='h-[80%] w-full relative'>
+              {props.apiResults.slice(1,2).map((recipe) =>
+                <TinderCard className="h-full w-full absolute z-10" swipeThreshold={5} key={props.apiResults} onSwipe={(dir) => swiped(dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
+                  <div className='flex justify-center h-full'>
 
-                <div className="max-h-[540px] rounded-large relative shadow-xl">
-                  {conditionalRender()}
-                </div>
+                    <div className="rounded-large w-full">
+                      {conditionalRender(recipe)}
+                    </div>
 
-              </div>
-            </TinderCard>
+                  </div>
+                </TinderCard>
+              ).reverse()}
+              {props.apiResults.slice(0,1).map((recipe) =>
+                <TinderCard className="h-full w-full absolute z-10" swipeThreshold={5} key={props.apiResults} onSwipe={(dir) => swiped(dir, dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
+                  <div className='flex justify-center h-full'>
+
+                    <div className="w-full rounded-large shadow-xl transition-all duration-1000">
+                      {conditionalRender(recipe)}
+                    </div>
+
+                  </div>
+                </TinderCard>
+              ).reverse()}
+            </div>
             <div className="h-[20%] flex justify-center p-2">
               <button onClick={props.getRandomReceipt} className="w-1/2 flex justify-center">
                 <img className="h-full rounded-full shadow-xl hover:shadow-mid foucs:shadow-in" src={dislike_btn} />
