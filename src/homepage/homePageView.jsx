@@ -1,6 +1,8 @@
 import React from 'react';
 import { dislike_btn, like_btn, clock_icon, noimage } from "../assets";
 
+import TinderCard from 'react-tinder-card'
+
 const ingredientsList = (items) => {
   // Remove duplicates from item.nameClean
   const uniqueIngredients = Array.from(new Set(items.map(item => item.nameClean)));
@@ -22,6 +24,15 @@ const HomePageView = (props) => {
 
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
   //conditionalRender either renders the info view for the current dish, or the photo for the current dish.
+
+  const onSwipe = (direction) => {
+    console.log('You swiped: ' + direction)
+  }
+
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + ' left the screen')
+  }
+
   const conditionalRender = () => {
 
 
@@ -42,7 +53,7 @@ const HomePageView = (props) => {
           </div>
 
           <div className="absolute bottom-0 right-0 pr-2 pb-4">
-            <button onClick={props.toggleInfoView} className="tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10">
+            <button onClick={props.toggleInfoView} className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10">
               VIEW LESS
             </button>
           </div>
@@ -74,7 +85,7 @@ const HomePageView = (props) => {
                 </div>
               </div>
               <div className='items-center flex justify-end'>
-                <button onClick={props.toggleInfoView} className="tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10">
+                <button onClick={props.toggleInfoView} className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10">
                   VIEW MORE
                 </button>
               </div>
@@ -89,13 +100,19 @@ const HomePageView = (props) => {
   const renderHomePage = () => {
     if (props.apiResultsState === "ready") {
       return (
-        <div className="h-svh w-screen pt-32 flex items-center justify-center">
+        <div className="h-svh overflow-hidden w-screen pt-32 flex items-center justify-center">
+
           <div className='h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4'>
-            <div className='flex justify-center h-[80%]'>
-              <div className="max-h-[540px] rounded-large relative shadow-xl">
-                {conditionalRender()}
+
+            <TinderCard className="h-[80%] w-full" swipeThreshold={10} onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')}>
+              <div className='flex justify-center h-full'>
+
+                <div className="max-h-[540px] rounded-large relative shadow-xl">
+                  {conditionalRender()}
+                </div>
+
               </div>
-            </div>
+            </TinderCard>
             <div className="h-[20%] flex justify-center p-2">
               <button onClick={props.getRandomReceipt} className="w-1/2 flex justify-center">
                 <img className="h-full rounded-full shadow-xl hover:shadow-mid foucs:shadow-in" src={dislike_btn} />
