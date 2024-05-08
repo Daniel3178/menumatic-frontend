@@ -45,7 +45,7 @@ const RecipeDetailsPageView = (props) => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="pt-32 flex justify-center">
       <div>
         <div>
           <button className="text-whiteSmoke hover:shadow-xl"

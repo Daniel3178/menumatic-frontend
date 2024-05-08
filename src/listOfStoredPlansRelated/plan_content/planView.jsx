@@ -8,7 +8,7 @@ const PlanView = ({ meal, recipes, goToShoplist, state, navigateBack, navigateTo
 
     return (
       
-      <div className="flex-col justify-center w-screen max-w-[1440px] font-outfit pr-8 lg:pr-80 pl-8">
+      <div className="pt-32 flex-col justify-center w-screen max-w-[1440px] font-outfit pr-8 lg:pr-80 pl-8">
         <button className="text-whiteSmoke hover:shadow-xl"
               onClick={() => navigateBack()} aria-label="go back">
               <img src={backBlack} />

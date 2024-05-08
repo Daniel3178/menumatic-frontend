@@ -98,7 +98,7 @@ const PlanListView = (props) => {
   }
   else if (props.serverState === "ready") {
     return (
-      <div className="bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
+      <div className="pt-32 bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
         <div className="w-[840px] mr-10 ml-10">
           <div>
             <button className="text-whiteSmoke hover:shadow-xl"

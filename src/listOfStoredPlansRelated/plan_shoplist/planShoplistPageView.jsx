@@ -114,7 +114,7 @@ const navigate = useNavigate();
   if(props.state === "ready"){
 
     return (
-      <div className="container mx-auto p-4">
+      <div className="pt-32 container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Shopping List</h1>
       {renderTheIngredientList()}
 
