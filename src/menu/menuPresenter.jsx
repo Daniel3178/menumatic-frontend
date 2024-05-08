@@ -9,7 +9,9 @@ import { getMenuStateBase,
   getMenuStateSignup,
   getMenuStateSettings,
   getMenuStateFilter,
-  getMenuStatePassChange } from "./menuSlice";
+  getMenuStatePassChange,
+  getMenuStateRecommendBtn, 
+  getMenuStateRecommendDialog} from "./menuSlice";
 
 import { 
   setStateBase,
@@ -17,7 +19,10 @@ import {
   setStateSignup,
   setStateSettings,
   setStateFilter,
-  setStatePassChange } from "./menuSlice";
+  setStatePassChange,
+  setStateRecommendBtn } from "./menuSlice";
+
+import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
 
 import { signInWithEmailAndPassword, signOut,sendPasswordResetEmail } from "firebase/auth";
 import { auth } from '../config/firebaseConfig';
@@ -37,6 +42,12 @@ const MenuPresenter = () => {
     navigate("/plan_list");
   };
 
+  const navigateToRecommendation = () => {
+    dispatch(sortLikedDishes(mealsInPlan))
+    navigate("/recommendation");
+    dispatch(hideRecommendBtn)
+  };
+
   const isLoggedIn = useSelector(getIsLoggedIn)
   
   const stateBase = useSelector(getMenuStateBase)
@@ -45,6 +56,8 @@ const MenuPresenter = () => {
   const stateSettings = useSelector(getMenuStateSettings)
   const stateFilter = useSelector(getMenuStateFilter)
   const statePassChange = useSelector(getMenuStatePassChange)
+  const stateRecommendBtn = useSelector(getMenuStateRecommendBtn)
+  const stateRecommendDialog = useSelector(getMenuStateRecommendDialog)
 
 
   const showMenu = () => {
@@ -65,6 +78,13 @@ const MenuPresenter = () => {
   const showPassChange = () => {
     dispatch(setStatePassChange(true))
   };
+  const showRecommendBtn = () => {
+    dispatch(setStateRecommendBtn(true))
+  };
+  const showRecommendDialog = () => {
+    dispatch(setStateRecommendBtn(true))
+  };
+
   
   const hideMenu = () => {
     dispatch(setStateBase(false))
@@ -83,6 +103,12 @@ const MenuPresenter = () => {
   };
   const hidePassChange = () => {
     dispatch(setStatePassChange(false))
+  };
+  const hideRecommendBtn = () => {
+    dispatch(setStateRecommendBtn(false))
+  };
+  const hideRecommendDialog = () => {
+    dispatch(setStateRecommendBtn(false))
   };
 
 //**************LOG IN STUFF**************
@@ -156,6 +182,8 @@ const mealsInPlan = useSelector(getMealsInPlan)
 const storedExcludeTags = useSelector(getExcludeTags)
 const storedIncludeTags = useSelector(getIncludeTags)
 
+
+
   const handleApplyFilter = (includeTags, excludeTags, mealsInPlan) => {
     // dispatch(saveIncludeTags(includeTags))
     // dispatch(saveExcludeTags(excludeTags))
@@ -171,6 +199,7 @@ const storedIncludeTags = useSelector(getIncludeTags)
   return (
     <MenuView
       navigateToPlanList={navigateToPlanList}
+      navigateToRecommendation={navigateToRecommendation}
       isLoggedIn={isLoggedIn}
 
       stateBase={stateBase}
@@ -179,6 +208,8 @@ const storedIncludeTags = useSelector(getIncludeTags)
       stateSettings={stateSettings}
       stateFilter={stateFilter}
       statePassChange={statePassChange}
+      stateRecommendBtn={stateRecommendBtn}
+      stateRecommendDialog={stateRecommendDialog}
 
       showMenu={showMenu}
       showLogin={showLogin}
@@ -186,6 +217,8 @@ const storedIncludeTags = useSelector(getIncludeTags)
       showSettings={showSettings}
       showFilter={showFilter}
       showPassChange={showPassChange}
+      showRecommendBtn={showRecommendBtn}
+      showRecommendDialog={showRecommendDialog}
 
       hideMenu={hideMenu}
       hideLogin={hideLogin}
@@ -193,6 +226,8 @@ const storedIncludeTags = useSelector(getIncludeTags)
       hideSettings={hideSettings}
       hideFilter={hideFilter}
       hidePassChange={hidePassChange}
+      hideRecommendBtn={hideRecommendBtn}
+      hideRecommendDialog={hideRecommendDialog}
 
       email={email}
       setEmail={setEmail}

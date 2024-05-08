@@ -29,6 +29,7 @@ import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice";
 import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
 import { flushShoplist } from "../shoplist/shoplistSlice";
 import {getMenumaticStates, setUserFoodPrefState} from "../store/menumaticServerAPISlice";
+import { setStateRecommendBtn, setStateRecommendDialog } from "../menu/menuSlice";
 // import {getApiResultsState} from "../store/spoonacularAPISlice";
 
 const HomePagePresenter = () => {
@@ -65,6 +66,7 @@ const HomePagePresenter = () => {
       dispatch(toggleInfoView());
     }
   };
+  
 
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
@@ -80,10 +82,20 @@ const HomePagePresenter = () => {
       dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
-    dispatch(
-      incrementLikesCounter({ recipe: apiResult[0], likeLimit: likeLimit })
-    );
+    
+    if(likesCounter == mealsInPlan){
+      dispatch(setStateRecommendBtn(true))
+      dispatch(setStateRecommendDialog(true))
+    }
+    
+
+    dispatch(incrementLikesCounter({recipe:apiResult[0], likeLimit: likeLimit}));
     dispatch(popFirstRecipe());
+  
+    // //console.log("homepage presenter")
+    // //console.log(apiResult.recipes[0])
+
+    //setCounter((counter + 1) % 15); // TODO: remove when api is working
 
     //If info view is active, go back to photo view after like.
     if (showInfo) {
@@ -114,19 +126,20 @@ const HomePagePresenter = () => {
   return (
     <div>
       <HomePageView
-        apiResults={apiResult}
-        apiResultsState={apiResultsState}
-        getRandomReceipt={handleGetRandomReceipt}
-        sendLike={handleLike}
-        toggleInfoView={handleToggleInfoView}
-        navigateToFilterPage={handleNavigateToFilterPage}
-        navigateToPlanList={handleNavigateToPlanList}
-        info={showInfo}
+      apiResults={apiResult}
+      apiResultsState={apiResultsState}
+      getRandomReceipt={handleGetRandomReceipt}
+      sendLike={handleLike}
+      toggleInfoView={handleToggleInfoView}
+      navigateToFilterPage={handleNavigateToFilterPage}
+      navigateToPlanList={handleNavigateToPlanList}
+      info={showInfo}
+      likesCounter={likesCounter}
+      mealsInPlan={mealsInPlan}
 
-
-        userStatus= {userStatus}
-        foodPrefState={userFoodPrefState}
-      />
+      userStatus= {userStatus}
+      foodPrefState={userFoodPrefState}
+    />
     </div>
   );
 };
