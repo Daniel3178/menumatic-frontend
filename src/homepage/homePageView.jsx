@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react'
 import { dislike_btn, like_btn, clock_icon, noimage } from "../assets";
 
 import TinderCard from 'react-tinder-card'
@@ -25,12 +26,21 @@ const HomePageView = (props) => {
   // TODO: Change apiResults[0] to apiResults.recipes[0] accross the file to work with the API
   //conditionalRender either renders the info view for the current dish, or the photo for the current dish.
 
-  const onSwipe = (direction) => {
-    console.log('You swiped: ' + direction)
+  const [lastDirection, setLastDirection] = useState()
+
+  const swiped = (direction, nameToDelete) => {
+    console.log('removing: ' + nameToDelete)
+    setLastDirection(direction)
+    if (direction === 'left') {
+      props.getRandomReceipt()
+      
+    } else if (direction === 'right') {
+      props.sendLike()
+    }
   }
 
-  const onCardLeftScreen = (myIdentifier) => {
-    console.log(myIdentifier + ' left the screen')
+  const outOfFrame = (name) => {
+    console.log(name + ' left the screen!')
   }
 
   const conditionalRender = () => {
@@ -103,8 +113,8 @@ const HomePageView = (props) => {
         <div className="h-svh overflow-hidden w-screen pt-32 flex items-center justify-center">
 
           <div className='h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4'>
-
-            <TinderCard className="h-[80%] w-full" swipeThreshold={10} onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')}>
+        
+            <TinderCard className="h-[80%] w-full" swipeThreshold={10} key={props.apiResults} onSwipe={(dir) => swiped(dir, dir)} onCardLeftScreen={() => outOfFrame(props.apiResults)}>
               <div className='flex justify-center h-full'>
 
                 <div className="max-h-[540px] rounded-large relative shadow-xl">
