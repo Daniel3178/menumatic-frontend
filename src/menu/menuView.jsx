@@ -211,6 +211,17 @@ const MenuView = (props) => {
     }
   };
 
+  const menuPing = () => {
+    if (props.stateRecommendBtn) {
+      return (
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+          <span class="inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+        </span>
+      );
+    }
+  };
+
   const settingsMenu = () => {
     return (
       <Transition
@@ -608,7 +619,7 @@ const MenuView = (props) => {
             <div className="flex justify-center">
               <button
                 onClick={props.signOut}
-                className="mt-4 mb-4 p-1 w-40 h-12 rounded-[0px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
+                className="mt-4 mb-4 p-1 w-40 h-12 rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
               >
                 LOG OUT
               </button>
@@ -652,38 +663,37 @@ const MenuView = (props) => {
                 Account settings
               </button>
             </div>
-            
           </div>
           <div className="flex bg-gunmetal bg-opacity-50 mt-10 ml-4 w-64 rounded-[20px] font-outfit text-whiteSmoke text-semiBold">
-              <Transition
-                show={props.stateRecommendBtn}
-                enter="transition-opacity duration-150"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="flex-col ml-2 h-30 w-full">
-                  <div className="flex-col text-center justify-center mr-4">
-                    <div className=" text-base mb-2 mt-2 leading-4">
-                      Your {props.mealsInPlan} liked dishes are available!
-                    </div>              
-                    <div className="leading-4 text-[13px] mb-2">
-                        Or keep swiping for a more varied recommendation.
-                    </div>
+            <Transition
+              show={props.stateRecommendBtn}
+              enter="transition-opacity duration-150"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-150"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="flex-col border-2 border-whiteSmoke h-30 w-full">
+                <div className="flex-col text-center justify-center">
+                  <div className=" text-base mb-2 mt-2 leading-4">
+                    Your {props.mealsInPlan} liked dishes are available!
                   </div>
-                    <div className="flex justify-center mr-4 mb-2">
-                      <button 
-                      className="h-14 w-44 rounded-[20px] bg-gunmetal hover:border-0 hover:bg-gradient-to-tr hover:from-gold hover:to-white bg-opacity-70 tracking-wider hover:text-gunmetal hover:shadow-mid text-whiteSmoke text-sm"
-                      onClick={props.navigateToRecommendation}
-                      >
-                        VIEW RECOMMENDATION
-                      </button>
-                    </div>
+                  <div className="leading-4 text-[13px] mb-2">
+                    Or keep swiping for a more varied recommendation.
+                  </div>
                 </div>
-              </Transition>
-            </div>
+                <div className="flex justify-center mb-2">
+                  <button
+                    className="h-14 w-44 rounded-[20px] bg-whiteSmoke hover:bg-gradient-to-tr hover:from-gold hover:to-white tracking-wider hover:text-gunmetal hover:shadow-mid text-gunmetal text-sm"
+                    onClick={props.navigateToRecommendation}
+                  >
+                    VIEW RECOMMENDATION
+                  </button>
+                </div>
+              </div>
+            </Transition>
+          </div>
         </div>
       );
     } else if (props.isLoggedIn == false) {
@@ -726,35 +736,35 @@ const MenuView = (props) => {
             </div>
           </div>
           <div className="flex bg-gunmetal bg-opacity-50 mt-10 ml-4 w-64 rounded-[20px] font-outfit text-whiteSmoke text-semiBold">
-              <Transition
-                show={props.stateRecommendBtn}
-                enter="transition-opacity duration-150"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="flex-col ml-2 h-30 w-full">
-                  <div className="flex-col text-center justify-center mr-4">
-                    <div className=" text-base mb-2 mt-2 leading-4">
-                      Your {props.mealsInPlan} liked dishes are available!
-                    </div>              
-                    <div className="leading-4 text-[13px] mb-2">
-                        Or keep swiping for a more varied recommendation.
-                    </div>
+            <Transition
+              show={props.stateRecommendBtn}
+              enter="transition-opacity duration-150"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-150"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="flex-col border-2 border-whiteSmoke h-30 w-full">
+                <div className="flex-col text-center justify-center">
+                  <div className=" text-base mb-2 mt-2 leading-4">
+                    Your {props.mealsInPlan} liked dishes are available!
                   </div>
-                    <div className="flex justify-center mr-4 mb-2">
-                      <button 
-                      className="h-14 w-44 rounded-[20px] bg-gunmetal hover:border-0 hover:bg-gradient-to-tr hover:from-gold hover:to-white bg-opacity-70 tracking-wider hover:text-gunmetal hover:shadow-mid text-whiteSmoke text-sm"
-                      onClick={props.navigateToRecommendation}
-                      >
-                        VIEW RECOMMENDATION
-                      </button>
-                    </div>
+                  <div className="leading-4 text-[13px] mb-2">
+                    Or keep swiping for a more varied recommendation.
+                  </div>
                 </div>
-              </Transition>
-            </div>
+                <div className="flex justify-center mb-2">
+                  <button
+                    className="h-14 w-44 rounded-[20px] bg-whiteSmoke hover:bg-gradient-to-tr hover:from-gold hover:to-white tracking-wider hover:text-gunmetal hover:shadow-mid text-gunmetal text-sm"
+                    onClick={props.navigateToRecommendation}
+                  >
+                    VIEW RECOMMENDATION
+                  </button>
+                </div>
+              </div>
+            </Transition>
+          </div>
         </div>
       );
     }
@@ -763,8 +773,11 @@ const MenuView = (props) => {
   return (
     <div>
       <div className="lg:hidden fixed top-0 right-0 ">
-        <button className="pt-12 pr-12" onClick={props.showMenu}>
+        <button className="mt-12 mr-12" onClick={props.showMenu}>
+          <div>
+            {menuPing()}
           <img src={menubtn} />
+          </div>
         </button>
         {renderMenu()}
       </div>
