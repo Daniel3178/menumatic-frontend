@@ -1,13 +1,24 @@
 import React from "react";
 import { listenerMiddleware } from "../store/store";
-import { setSelectedListId } from "../listOfStoredPlansRelated/plan_list/planListSlice";
-import { useDispatch } from "react-redux";
 import {
-  saveFoodPrefToMenumaticDb,
+  saveFoodPrefToMenumaticDb,setSelectedList
 } from "../store/menumaticServerAPISlice";
 import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
-import { flushSpoonacularResults, searchComplexBySpoonacularApiAsync,setResultsState } from "../store/spoonacularAPISlice";
+import { flushSpoonacularResults, searchBySpoonacularApiBulkAsync ,searchComplexBySpoonacularApiAsync,setResultsState } from "../store/spoonacularAPISlice";
 const MenumaticDatabase = () => {
+
+
+listenerMiddleware.startListening({
+  actionCreator: setSelectedList,
+  effect: async(action, listenerApi) => {
+    const allUserList = listenerApi.getState().menumaticServerApi.userAllListPromise.data;
+    const selectedList = allUserList.find((list) => list.id === action.payload.id);
+    const allIds = selectedList.recipes.map((recipe) => {
+      return { id: recipe.id, portions: recipe.portions };
+    });
+    listenerApi.dispatch(searchBySpoonacularApiBulkAsync(allIds))
+  }
+});
 
   listenerMiddleware.startListening({
     actionCreator: saveTags,

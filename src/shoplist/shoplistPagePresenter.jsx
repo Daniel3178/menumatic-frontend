@@ -5,6 +5,8 @@ import {
   generateShoplist,
   getRemovedItems,
   getAllItems,
+  getGeneralShoplist,
+  getUserShoplistPromise,
   removeItem,
   restoreItem,
 } from "./shoplistSlice";
@@ -27,6 +29,9 @@ const ShoplistPagePresenter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const allItems = useSelector(getAllItems);
+
+  const {allItems: allItemsGeneral, removedItems: removedItemsGeneral} = useSelector(getGeneralShoplist);
+
   const isLoggedIn = useSelector(getIsLoggedIn);
   const userId = useSelector(getUserId);
   const affordableDishes = useSelector(getAffordableDishesList);
@@ -99,7 +104,7 @@ const ShoplistPagePresenter = () => {
           planName: nameInput,
           recipes: resultRecipes,
         },
-        excluded: removedItems,
+        excluded: removedItemsGeneral,
       })
     );
     navigate("/");
@@ -138,16 +143,16 @@ const ShoplistPagePresenter = () => {
     });
   }, []);
 
-  console.log(allItems);
+  console.log(allItemsGeneral);
   return (
     <ShoplistPageView
-      allItems={allItems}
+      allItems={allItemsGeneral}
       isLoggedIn={isLoggedIn}
       saveMealPlan={handleSaveMealPlan}
       navigateToLogin={handleNavigateToLogIn}
       removeItem={handleRemoveItem}
       restoreItem={handleRestoreItem}
-      removedItems={removedItems}
+      removedItems={removedItemsGeneral}
       // generatePDF = {handleGeneratePDF}
     />
   );

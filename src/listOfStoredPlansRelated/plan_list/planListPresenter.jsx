@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import PlanListView from "./planListView";
 import { useNavigate } from "react-router-dom";
 import { getMenumaticAllList, getMenumaticStates, fetchUserShopinglist, fetchExcludedIngredients } from "../../store/menumaticServerAPISlice";
-import { setSelectedListId } from "./planListSlice";
 import { getUserId } from "../../signUp_page/userAccountSlice";
+import {setSelectedList} from "../../store/menumaticServerAPISlice";
 
 const PlanListPresenter = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const PlanListPresenter = () => {
   const {allListState, userFoodPrefState, excludedIngredientState} = useSelector(getMenumaticStates);
 
   const selectAndNavigateHandler = (mealPlanID) => {
-    dispatch(setSelectedListId(mealPlanID));
+    dispatch(setSelectedList({id: mealPlanID}));
     dispatch(fetchExcludedIngredients(mealPlanID))
     navigate("/plan");
   };

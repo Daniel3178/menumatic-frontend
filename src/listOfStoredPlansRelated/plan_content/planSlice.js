@@ -12,9 +12,6 @@ const planSlice = createSlice({
     selectedRecipe: null
   },
   reducers: {
-    setSelectedListId: (state, action) => {
-      state.selectedListId = action.payload;
-    },
     setSelectedRecipe: (state, action) => {
       state.selectedRecipe = action.payload;
       console.log("payload", action.payload)
@@ -23,7 +20,7 @@ const planSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setSelectedListId, setSelectedRecipe} = planSlice.actions;
+export const { setSelectedRecipe} = planSlice.actions;
 
 /**
  * Purpose: Returns the selected list ID from the state

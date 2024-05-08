@@ -5,9 +5,10 @@ import { objects } from "../assets/constObjects";
 import { getSelectedRecipe } from "../listOfStoredPlansRelated/plan_content/planSlice";
 import RecipeDetailsPageView from "./recepieDetailsPageView";
 import { getUserSavedRecipes } from "../store/spoonacularAPISlice";
+import {getUserCurrentRecipes} from "../store/menumaticServerAPISlice";
 
 const RecipeDetailsPagePresenter = () => {
-  const selectedRecipes = useSelector(getUserSavedRecipes)
+  const selectedRecipes = useSelector(getUserCurrentRecipes)
   const recipeIndex = useSelector(getSelectedRecipe)
   const selectedRecipe = selectedRecipes[recipeIndex]
   console.log("selected", selectedRecipe)

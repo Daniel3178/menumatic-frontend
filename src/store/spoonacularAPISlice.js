@@ -72,9 +72,9 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
 export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiBulkAsync",
   async (props, { dispatch }) => {
-    const copyProp = props[0];
+    // const copyProp = props[0];
 
-    const ids = copyProp.map(recipe => recipe.id);
+    const ids = props.map(recipe => recipe.id);
 
     const customUrl = spoonacularBulkSearchBaseURL;
     const recipeIdString = ids.join();
@@ -84,7 +84,7 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     const jsonResponse = await response.json();
 
     const findPortion = (id) => {
-      const portion = copyProp.find(item => item.id === id);
+      const portion = props.find(item => item.id === id);
       return portion ? portion.portions : undefined;
     };
 
@@ -94,14 +94,32 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
       result: recipe,
     }));
 
-    dispatch(generateShoplist(result));
-    return result;
+    // dispatch(generateShoplist(result));
+    return {apiData: jsonResponse, userData: result};
   }
 );
 
 const spoonacularApi = createSlice({
   name: "spoonacularApi",
   initialState: {
+
+    // new
+    randomSearchPromise:{
+      data: [],
+      state: "loading",
+      error: null,
+    },
+    complexSearchPromise:{
+      data: [],
+      state: "loading",
+      error: null,
+    },
+    bulkSearchPromise:{
+      data: [],
+      state: "loading",
+      error: null,
+    },
+
     results: [],
     resultsState: "loading",
     savedRecipesState: "loading",
@@ -137,7 +155,8 @@ const spoonacularApi = createSlice({
         state.savedRecipesState = "loading";
       })
       .addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
-        state.userSavedRecipes.push(...action.payload);
+        const {apiData} = action.payload;
+        state.userSavedRecipes= apiData;
         state.savedRecipesState = "ready";
       })
       .addCase(searchBySpoonacularApiBulkAsync.rejected, (state, action) => {
@@ -149,10 +168,9 @@ const spoonacularApi = createSlice({
       .addCase(
         searchComplexBySpoonacularApiAsync.fulfilled,
         (state, action) => {
-          console.log("RESPONSE FROM API ", action.payload)
           const {results, saveOptOverwrite} = action.payload;
           if(saveOptOverwrite){
-            state.results = [...results];
+            state.results = results;
           }
           else{
             state.results.push(...results);
