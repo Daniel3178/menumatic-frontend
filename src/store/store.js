@@ -18,10 +18,10 @@ export const store = configureStore({
     recommendation: recommendationSlice,
     filterPage: filterPageSlice,
     userAccount: userAccountSlice,
-    planList: planListSlice,
-    menumaticServerApi: menumaticServerAPISlice,
+    // planList: planListSlice,
     plan: planSlice,
-    menu: menuSlice
+    menu: menuSlice,
+    menumaticServerApi: menumaticServerAPISlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),

@@ -7,8 +7,6 @@ const initialState = {
 const planSlice = createSlice({
   name: "plan",
   initialState: {
-    selectedListId: null,
-    allRecipes: [],
     selectedRecipe: null
   },
   reducers: {
