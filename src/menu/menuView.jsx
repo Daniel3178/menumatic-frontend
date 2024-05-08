@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { backGreen, backBlue, backBlack, close, done, menubtn} from "../assets";
-import { Transition } from '@headlessui/react'
+import { Transition, Dialog } from '@headlessui/react'
 import { getExcludeTags, getIncludeTags, getMealsInPlan } from "./filterPageSlice";
 
 const MenuView = (props) => {
@@ -579,7 +579,7 @@ const MenuView = (props) => {
                 Account settings
               </button>
             </div>
-            <div>
+            <div className="pr-6 pt-10 lg:pt-20">
               <Transition
                 show={props.stateRecommendBtn}
                 enter="transition-opacity duration-150"
@@ -592,9 +592,9 @@ const MenuView = (props) => {
                 <div className="flex justify-center">
                   <button
                     onClick={props.navigateToRecommendation}
-                    className="mt-4 mb-4 p-1 w-40 h- rounded-[100px] bg-whiteSmoke hover:shadow-mid text-gunmetal text-lg font-outfit"
+                    className="w-62 h-20 rounded-[20px] animate-bounce bg-gradient-to-tr from-gold to-white hover:shadow-mid text-gunmetal text-lg font-outfit"
                   >
-                    VIEW RECOMMENDATION
+                    VIEW RECOMMENDATIONS
                   </button>
                 </div>
               </Transition>

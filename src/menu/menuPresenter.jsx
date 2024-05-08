@@ -10,7 +10,8 @@ import { getMenuStateBase,
   getMenuStateSettings,
   getMenuStateFilter,
   getMenuStatePassChange,
-  getMenuStateRecommendBtn } from "./menuSlice";
+  getMenuStateRecommendBtn, 
+  getMenuStateRecommendDialog} from "./menuSlice";
 
 import { 
   setStateBase,
@@ -55,6 +56,7 @@ const MenuPresenter = () => {
   const stateFilter = useSelector(getMenuStateFilter)
   const statePassChange = useSelector(getMenuStatePassChange)
   const stateRecommendBtn = useSelector(getMenuStateRecommendBtn)
+  const stateRecommendDialog = useSelector(getMenuStateRecommendDialog)
 
 
   const showMenu = () => {
@@ -78,6 +80,10 @@ const MenuPresenter = () => {
   const showRecommendBtn = () => {
     dispatch(setStateRecommendBtn(true))
   };
+  const showRecommendDialog = () => {
+    dispatch(setStateRecommendBtn(true))
+  };
+
   
   const hideMenu = () => {
     dispatch(setStateBase(false))
@@ -98,6 +104,9 @@ const MenuPresenter = () => {
     dispatch(setStatePassChange(false))
   };
   const hideRecommendBtn = () => {
+    dispatch(setStateRecommendBtn(false))
+  };
+  const hideRecommendDialog = () => {
     dispatch(setStateRecommendBtn(false))
   };
 
@@ -199,6 +208,7 @@ const storedIncludeTags = useSelector(getIncludeTags)
       stateFilter={stateFilter}
       statePassChange={statePassChange}
       stateRecommendBtn={stateRecommendBtn}
+      stateRecommendDialog={stateRecommendDialog}
 
       showMenu={showMenu}
       showLogin={showLogin}
@@ -207,6 +217,7 @@ const storedIncludeTags = useSelector(getIncludeTags)
       showFilter={showFilter}
       showPassChange={showPassChange}
       showRecommendBtn={showRecommendBtn}
+      showRecommendDialog={showRecommendDialog}
 
       hideMenu={hideMenu}
       hideLogin={hideLogin}
@@ -215,6 +226,7 @@ const storedIncludeTags = useSelector(getIncludeTags)
       hideFilter={hideFilter}
       hidePassChange={hidePassChange}
       hideRecommendBtn={hideRecommendBtn}
+      hideRecommendDialog={hideRecommendDialog}
 
       email={email}
       setEmail={setEmail}

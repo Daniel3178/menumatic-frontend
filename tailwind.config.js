@@ -31,6 +31,7 @@ export default {
         gunmetal: '#172E3B',
         vanilla: '#FFEAAE',
         whiteSmoke: '#F5F5F5',
+        gold: '#BF9B30',
       },
       boxShadow: {
         'xl': '0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 10px 10px -5px rgba(0, 0, 0, 0.04)',

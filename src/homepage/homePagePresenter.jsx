@@ -23,7 +23,7 @@ import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice"
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice"
 import {flushRecommendationList} from "../recommendation_page/recommendationPageSlice"
 import {flushShoplist} from "../shoplist/shoplistSlice"
-import { setStateRecommendBtn } from "../menu/menuSlice";
+import { setStateRecommendBtn, setStateRecommendDialog } from "../menu/menuSlice";
 import MenuView from "../menu/menuView";
 const HomePagePresenter = () => {
   //TODO: uncomment dispatch functions to work with the API
@@ -78,6 +78,7 @@ const HomePagePresenter = () => {
     
     if(likesCounter == mealsInPlan){
       dispatch(setStateRecommendBtn(true))
+      dispatch(setStateRecommendDialog(true))
     }
     
 
