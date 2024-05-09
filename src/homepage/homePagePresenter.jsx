@@ -21,21 +21,23 @@ import {
 } from "../menu/filterPageSlice";
 import { useNavigate } from "react-router-dom";
 import { objects } from "../assets/constObjects";
-import {
-  popFirstRecipe,
-} from "../store/spoonacularAPISlice";
+import { popFirstRecipe } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice";
-import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
-import { flushShoplist } from "../shoplist/shoplistSlice";
-import {getMenumaticStates, setUserFoodPrefState} from "../store/menumaticServerAPISlice";
-import { setStateRecommendBtn, setStateRecommendDialog } from "../menu/menuSlice";
+// import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
+import {
+  getMenumaticStates,
+  setUserFoodPrefState,
+} from "../store/menumaticServerAPISlice";
+import {
+  setStateRecommendBtn,
+  setStateRecommendDialog,
+} from "../menu/menuSlice";
 // import {getApiResultsState} from "../store/spoonacularAPISlice";
 
 const HomePagePresenter = () => {
-
   const dispatch = useDispatch();
-  const likesCounter = useSelector(getLikesCounter); 
+  const likesCounter = useSelector(getLikesCounter);
   const showInfo = useSelector(getShowInfo);
   const excludeTags = useSelector(getExcludeTags);
   const includeTags = useSelector(getIncludeTags);
@@ -43,9 +45,9 @@ const HomePagePresenter = () => {
   const mealsInPlan = useSelector(getMealsInPlan);
   const likeLimit = mealsInPlan * 2;
 
-  const {data: complexSearchResult, state: complexSearchState} = useSelector(getComplexSearchPromise);
-
-  
+  const { data: complexSearchResult, state: complexSearchState } = useSelector(
+    getComplexSearchPromise
+  );
 
   const handleGetRandomReceipt = () => {
     if (complexSearchResult.length < 6) {
@@ -63,7 +65,6 @@ const HomePagePresenter = () => {
       dispatch(toggleInfoView());
     }
   };
-  
 
   const handleLike = () => {
     //dispatch(addToReocemmendationList(apiResult.recipes[0]))
@@ -79,16 +80,20 @@ const HomePagePresenter = () => {
       dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
-    
-    if(likesCounter == mealsInPlan){
-      dispatch(setStateRecommendBtn(true))
-      dispatch(setStateRecommendDialog(true))
-    }
-    
 
-    dispatch(incrementLikesCounter({recipe:complexSearchResult[0], likeLimit: likeLimit}));
+    if (likesCounter == mealsInPlan) {
+      dispatch(setStateRecommendBtn(true));
+      dispatch(setStateRecommendDialog(true));
+    }
+
+    dispatch(
+      incrementLikesCounter({
+        recipe: complexSearchResult[0],
+        likeLimit: likeLimit,
+      })
+    );
     dispatch(popFirstRecipe());
-  
+
     if (showInfo) {
       dispatch(toggleInfoView());
     }
@@ -107,28 +112,24 @@ const HomePagePresenter = () => {
   };
 
   // Necessary for presenting a dish before user has pressed like the first time.
-  useEffect(() => {
-    dispatch(flushRecommendationList());
-    dispatch(flushShoplist());
-    
-  }, []);
-
+  // useEffect(() => {
+  //   dispatch(flushRecommendationList());
+  // }, []);
 
   return (
     <div>
       <HomePageView
-      apiResults={complexSearchResult}
-      apiResultsState={complexSearchState}
-      getRandomReceipt={handleGetRandomReceipt}
-      sendLike={handleLike}
-      toggleInfoView={handleToggleInfoView}
-      navigateToFilterPage={handleNavigateToFilterPage}
-      navigateToPlanList={handleNavigateToPlanList}
-      info={showInfo}
-      likesCounter={likesCounter}
-      mealsInPlan={mealsInPlan}
-
-    />
+        apiResults={complexSearchResult}
+        apiResultsState={complexSearchState}
+        getRandomReceipt={handleGetRandomReceipt}
+        sendLike={handleLike}
+        toggleInfoView={handleToggleInfoView}
+        navigateToFilterPage={handleNavigateToFilterPage}
+        navigateToPlanList={handleNavigateToPlanList}
+        info={showInfo}
+        likesCounter={likesCounter}
+        mealsInPlan={mealsInPlan}
+      />
     </div>
   );
 };

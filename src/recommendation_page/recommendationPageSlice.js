@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementLikesCounter } from "../homepage/homePageSlice";
-import { connectStorageEmulator } from "firebase/storage";
-import { useSelector } from "react-redux";
-import { getMealsInPlan } from "../menu/filterPageSlice";
+import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice";
 
 const recommendation = createSlice({
   name: "recommendation",
@@ -10,17 +8,17 @@ const recommendation = createSlice({
     recommendationList: [],
     state: "loading",
     selectedTab: "Popular",
-    affordableDishesList:{
-      name: "Affordable",
-      dishes: []
+    affordableDishesList: {
+      name: "Cheap",
+      dishes: [],
     },
-    popularDishesList:{
+    popularDishesList: {
       name: "Popular",
-      dishes: []
+      dishes: [],
     },
-    quickDishesList:{
+    quickDishesList: {
       name: "Quick",
-      dishes: []
+      dishes: [],
     },
   },
   reducers: {
@@ -35,25 +33,37 @@ const recommendation = createSlice({
       state.recommendationList.push({ count: 1, result: action.payload });
     },
 
-    flushRecommendationList: (state) => {
-      state.recommendationList = [];
-      state.affordableDishesList.dishes = [];
-      state.popularDishesList.dishes = [];
-      state.quickDishesList.dishes = [];
-    },
+    // flushRecommendationList: (state) => {
+    //   state.recommendationList = [];
+    //   state.affordableDishesList.dishes = [];
+    //   state.popularDishesList.dishes = [];
+    //   state.quickDishesList.dishes = [];
+    // },
     setSelectedTab: (state, action) => {
       state.selectedTab = action.payload;
     },
     sortLikedDishes: (state, action) => {
       state.state = "loading";
-      const mealsInPlan = action.payload
+      const mealsInPlan = action.payload;
       const testArr = [];
-      state.recommendationList.map((item)=>{
+      state.recommendationList.map((item) => {
         testArr.push(item);
-      })
-      state.affordableDishesList.dishes.push(...testArr.sort((a, b) => a.result.pricePerServing - b.result.pricePerServing).slice(0,mealsInPlan));
-      state.popularDishesList.dishes.push(...testArr.sort((a, b) => b.result.spoonacularScore - a.result.spoonacularScore).slice(0,mealsInPlan));
-      state.quickDishesList.dishes.push(...testArr.sort((a, b) => a.result.readyInMinutes - b.result.readyInMinutes ).slice(0,mealsInPlan));
+      });
+      state.affordableDishesList.dishes.push(
+        ...testArr
+          .sort((a, b) => a.result.pricePerServing - b.result.pricePerServing)
+          .slice(0, mealsInPlan)
+      );
+      state.popularDishesList.dishes.push(
+        ...testArr
+          .sort((a, b) => b.result.spoonacularScore - a.result.spoonacularScore)
+          .slice(0, mealsInPlan)
+      );
+      state.quickDishesList.dishes.push(
+        ...testArr
+          .sort((a, b) => a.result.readyInMinutes - b.result.readyInMinutes)
+          .slice(0, mealsInPlan)
+      );
       state.state = "ready";
     },
     /*
@@ -64,7 +74,7 @@ const recommendation = createSlice({
      */
     updateCount: (state, action) => {
       switch (action.payload.list) {
-        case "Affordable": {
+        case "Cheap": {
           state.affordableDishesList.dishes.map((item) => {
             if (item.result.id === action.payload.id) {
               item.portions = action.payload.portions;
@@ -96,16 +106,23 @@ const recommendation = createSlice({
    * recommendation list.
    */
   extraReducers: (builder) => {
-    builder.addCase(incrementLikesCounter, (state, action) => {
-      if(state.recommendationList.length >15){
-        state.recommendationList =[];
-      }
-      console.log("recipe ", action.payload.recipe)
-      state.recommendationList.push({
-        portions: 1,
-        result: action.payload.recipe,
+    builder
+      .addCase(incrementLikesCounter, (state, action) => {
+        if (state.recommendationList.length > 15) {
+          state.recommendationList = [];
+        }
+        console.log("recipe ", action.payload.recipe);
+        state.recommendationList.push({
+          portions: 1,
+          result: action.payload.recipe,
+        });
+      })
+      .addCase(saveShoplistToMenumaticDb.fulfilled, (state, action) => {
+        state.recommendationList = [];
+        state.affordableDishesList.dishes = [];
+        state.popularDishesList.dishes = [];
+        state.quickDishesList.dishes = [];
       });
-    });
   },
 });
 
@@ -113,18 +130,39 @@ const recommendation = createSlice({
  * Purpose: Takes the actions retrieved from the recommendation slice and sets them to fixed variables.
  * Export reducers in the slice
  */
-export const { addToReocemmendationList,flushRecommendationList, setSelectedTab,updateCount, sortLikedDishes } = recommendation.actions;
+export const {
+  addToReocemmendationList,
+  // flushRecommendationList,
+  setSelectedTab,
+  updateCount,
+  sortLikedDishes,
+} = recommendation.actions;
 /**
  * Purpose: Returns the recommendationList from the state
  * @param {*} state: the store
  */
 export const getRecommendationList = (state) =>
   state.recommendation.recommendationList;
-export const getSelectedTab = (state) => state.recommendation.selectedTab;
+// export const getSelectedTab = (state) => state.recommendation.selectedTab;
 export const getAffordableDishesList = (state) =>
   state.recommendation.affordableDishesList.dishes;
 export const getQuickDishesList = (state) =>
   state.recommendation.quickDishesList.dishes;
 export const getPopularDishesList = (state) =>
   state.recommendation.popularDishesList.dishes;
+
+// new
+export const getSelectedTab = (state) => {
+  switch (state.recommendation.selectedTab) {
+    case "Popular":
+      return state.recommendation.popularDishesList;
+    case "Cheap":
+      return state.recommendation.affordableDishesList;
+    case "Quick":
+      return state.recommendation.quickDishesList;
+    default:
+      return state.recommendation.popularDishesList;
+  }
+};
+
 export default recommendation.reducer;

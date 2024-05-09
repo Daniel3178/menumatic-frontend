@@ -71,28 +71,30 @@ export const parseIngredients = (ingredients) => {
   }));
 };
 
-export const generateShopListUtil = (props) =>{
-  const {payload} = props;
+export const generateShopListUtil = (props) => {
+  const { payload } = props;
   console.log("payload in custom func", payload);
   const tempItems = [];
   const updateOrAddItems = (props) => {
-    props.forEach(prop => {
-      const existingItemIndex = tempItems.findIndex(item => item.name === prop.name);
+    props.forEach((prop) => {
+      const existingItemIndex = tempItems.findIndex(
+        (item) => item.name === prop.name
+      );
       if (existingItemIndex !== -1) {
         tempItems[existingItemIndex].amount += prop.amount;
       } else {
         tempItems.push(prop);
       }
     });
-    tempItems.forEach(item => {
+    tempItems.forEach((item) => {
       item.amount = Math.ceil(item.amount * 10) / 10;
     });
   };
 
-  payload.forEach(item => {
+  payload.forEach((item) => {
     updateOrAddItems(calcPortionIngredients(item));
   });
-  console.log("tempItems", tempItems)
+  console.log("tempItems", tempItems);
 
   const categorizedIngredients = [];
   tempItems.forEach((item) => {
@@ -110,14 +112,13 @@ export const generateShopListUtil = (props) =>{
     }
   });
   categorizedIngredients.forEach((category) =>
-  normalizeCategoryIngredients(category)
+    normalizeCategoryIngredients(category)
   );
   return categorizedIngredients;
-}
+};
 
-export const removeItemUtil = (prop) =>{
-
-  const {payload, allItems, removedItems} = prop;
+export const removeItemUtil = (prop) => {
+  const { payload, allItems, removedItems } = prop;
 
   const resultAllItem = [];
   allItems.forEach((category) => {
@@ -131,7 +132,6 @@ export const removeItemUtil = (prop) =>{
       (item) => item.name !== payload.name
     );
   });
-  // state.allItems = tempItems;
   const resultRemovedItem = [];
   removedItems.forEach((category) => {
     resultRemovedItem.push({
@@ -150,43 +150,42 @@ export const removeItemUtil = (prop) =>{
   } else {
     resultRemovedItem[index].ingredients.push(payload);
   }
-  return {allItems: resultAllItem, removedItems: resultRemovedItem};
-}
+  return { allItems: resultAllItem, removedItems: resultRemovedItem };
+};
 
-export const restoreItemUtil = (prop) =>{
-  const {payload, allItems, removedItems} = prop;
+export const restoreItemUtil = (prop) => {
+  const { payload, allItems, removedItems } = prop;
   const resultRemovedItems = [];
   removedItems.forEach((category) => {
     resultRemovedItems.push({
-          category: category.category,
-          ingredients: parseIngredients(category.ingredients),
-        });
-      });
-      resultRemovedItems.map((category) => {
-        category.ingredients = category.ingredients.filter(
-          (item) => item.name !== payload.name
-        );
-      });
-      // state.removedItems = tempItems;
-      const resultAllItems = [];
-      allItems.forEach((category) => {
-        resultAllItems.push({
-          category: category.category,
-          ingredients: parseIngredients(category.ingredients),
-        });
-      });
+      category: category.category,
+      ingredients: parseIngredients(category.ingredients),
+    });
+  });
+  resultRemovedItems.map((category) => {
+    category.ingredients = category.ingredients.filter(
+      (item) => item.name !== payload.name
+    );
+  });
+  const resultAllItems = [];
+  allItems.forEach((category) => {
+    resultAllItems.push({
+      category: category.category,
+      ingredients: parseIngredients(category.ingredients),
+    });
+  });
 
-      const index = resultAllItems.findIndex(
-        (item) => item.category === payload.category
-      );
-      if (index === -1) {
-        resultAllItems.push({
-          category: payload.category,
-          ingredients: [payload],
-        });
-      } else {
-        resultAllItems[index].ingredients.push(payload);
-      }
+  const index = resultAllItems.findIndex(
+    (item) => item.category === payload.category
+  );
+  if (index === -1) {
+    resultAllItems.push({
+      category: payload.category,
+      ingredients: [payload],
+    });
+  } else {
+    resultAllItems[index].ingredients.push(payload);
+  }
 
-      return {allItems: resultAllItems, removedItems: resultRemovedItems};
-}
+  return { allItems: resultAllItems, removedItems: resultRemovedItems };
+};
