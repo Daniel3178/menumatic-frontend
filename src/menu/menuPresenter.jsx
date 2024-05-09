@@ -5,7 +5,7 @@ import {
   getIsLoggedIn,
   deleteUserAsync,
   signUpAsync,
-} from "../signUp_page/userAccountSlice";
+} from "./userAccountSlice";
 import MenuView from "./menuView";
 
 import {
@@ -30,7 +30,6 @@ import {
 } from "./menuSlice";
 
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
-import { signOutCurrentUser } from "../signUp_page/userAccountSlice";
 import {
   signInWithEmailAndPassword,
   signOut,

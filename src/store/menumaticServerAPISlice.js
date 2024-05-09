@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const url = "http://localhost:8080/api/user/create/";
 const deleteUrl = "http://localhost:8080/api/mealplan/delete/";
 import { searchBySpoonacularApiBulkAsync } from "../store/spoonacularAPISlice";
-import { signOutCurrentUser } from "../signUp_page/userAccountSlice";
+import { signOutCurrentUser } from "../menu/userAccountSlice";
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",

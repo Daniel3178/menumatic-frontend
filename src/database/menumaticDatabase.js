@@ -1,4 +1,3 @@
-import React from "react";
 import { listenerMiddleware } from "../store/store";
 import {
   fetchUserFoodPref,
@@ -15,7 +14,7 @@ import {
 import { deleteMealPlan, deleteList } from "../store/menumaticServerAPISlice";
 import { popFirstRecipe } from "../store/spoonacularAPISlice";
 import { incrementLikesCounter } from "../homepage/homePageSlice";
-import { signInCurrentUser } from "../signUp_page/userAccountSlice";
+import { signInCurrentUser } from "../menu/userAccountSlice";
 
 const MenumaticDatabase = () => {
   listenerMiddleware.startListening({

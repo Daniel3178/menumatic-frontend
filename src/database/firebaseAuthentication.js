@@ -1,23 +1,15 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   signInCurrentUser,
   signOutCurrentUser,
-} from "../signUp_page/userAccountSlice";
-import { searchComplexBySpoonacularApiAsync } from "../store/spoonacularAPISlice";
-import {
-  fetchUserShopinglist,
-  fetchUserFoodPref,
-} from "../store/menumaticServerAPISlice";
-import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
+} from "../menu/userAccountSlice";
 import { fetchLocalFoodPref } from "./localStorage";
 import { saveTags } from "../menu/filterPageSlice";
 const FirebaseAuthentication = () => {
   const dispatch = useDispatch();
-  const excludeIngr = useSelector(getExcludeTags);
-  const includeIngr = useSelector(getIncludeTags);
 
   //TODO: when server is not available, there is an issue with calling spoonacualr.
 
@@ -32,29 +24,15 @@ const FirebaseAuthentication = () => {
               userId: uid,
             })
           );
-          // dispatch(fetchUserShopinglist(user.uid));
-          // dispatch(fetchUserFoodPref(user.uid));
         } else {
           dispatch(signOutCurrentUser());
           const { excludeTags, includeTags, mealsInPlan } =
             fetchLocalFoodPref();
           dispatch(saveTags({ excludeTags, includeTags, mealsInPlan }));
-          // dispatch(
-          //   searchComplexBySpoonacularApiAsync({
-          //     intolerances: excludeIngr,
-          //     diet: includeIngr,
-          //   })
-          // );
         }
       } else {
         const { excludeTags, includeTags, mealsInPlan } = fetchLocalFoodPref();
         dispatch(saveTags({ excludeTags, includeTags, mealsInPlan }));
-        // dispatch(
-        //   searchComplexBySpoonacularApiAsync({
-        //     intolerances: excludeIngr,
-        //     diet: includeIngr,
-        //   })
-        // );
       }
     });
   }, []);

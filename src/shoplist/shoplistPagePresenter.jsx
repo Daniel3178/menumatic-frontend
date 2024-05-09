@@ -10,11 +10,9 @@ import {
   restoreUserItem,
 } from "./shoplistSlice";
 import { getSelectedTab } from "../recommendation_page/recommendationPageSlice";
-import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice";
+import { getIsLoggedIn, getUserId } from "../menu/userAccountSlice";
 import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getExcludedIngredients } from "../store/menumaticServerAPISlice";
-
 /**
  * ShoplistPagePresenter fetches and manages the state for the shopping list,
  * and renders the ShoplistPageView component.
@@ -97,7 +95,6 @@ const ShoplistPagePresenter = () => {
       restoreItem={handleRestoreItem}
       saveMealPlan={handleSaveMealPlan}
       navigateToLogin={handleNavigateToLogIn}
-      // generatePDF = {handleGeneratePDF}
     />
   );
 };

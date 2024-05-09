@@ -1,6 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import PlanPresenter from "./planPresenter";
 import { logo, backBlack } from "../../assets";
 
 const PlanView = ({

@@ -1,4 +1,3 @@
-import React from "react";
 import { listenerMiddleware } from "../store/store";
 import { generateShoplist } from "../shoplist/shoplistSlice";
 import { removeItem, restoreItem } from "../shoplist/shoplistSlice";
@@ -9,7 +8,6 @@ import { useEffect } from "react";
 import { setData } from "../shoplist/shoplistSlice";
 import { setSelectedTab } from "../recommendation_page/recommendationPageSlice";
 import { loadLocalData } from "../recommendation_page/recommendationPageSlice";
-// import { setSelectedList } from "../../store/menumaticServerAPISlice";
 const getExcludeTags = () => {
   return JSON.parse(localStorage.getItem("exclude-tags")) || [];
 };
@@ -42,10 +40,6 @@ const getLocalQuickDishes = () => {
   return JSON.parse(localStorage.getItem("quick-dishes")) || [];
 };
 
-// const getLocalSelectedList = () => {
-//   return JSON.parse(localStorage.getItem("selected-list")) || [];
-// }
-
 export const fetchLocalFoodPref = () => {
   const excludeTags = getExcludeTags();
   const includeTags = getIncludeTags();
@@ -63,14 +57,6 @@ const LocalStorage = () => {
       localStorage.setItem("meals-in-plan", JSON.stringify(mealsInPlan));
     },
   });
-
-  // listenerMiddleware.startListening({
-  //   actionCreator: setSelectedList,
-  //   effect: async (action, listenerApi) => {
-  //     const selectedList = action.payload;
-  //     localStorage.setItem("selected-list", JSON.stringify(selectedList));
-  //   },
-  // });
 
   listenerMiddleware.startListening({
     actionCreator: generateShoplist,

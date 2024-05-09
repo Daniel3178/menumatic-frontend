@@ -21,16 +21,6 @@ const recommendation = createSlice({
     },
   },
   reducers: {
-    /**
-     * [deprecated]
-     * adds dish to recommendationList
-     * @param {*} state: state of the slice
-     * @param {*} action: a dish object to be added to recommendationList
-     * by Daniel
-     */
-    addToReocemmendationList: (state, action) => {
-      state.recommendationList.push({ count: 1, result: action.payload });
-    },
     loadLocalData: (state, action) => {
       state.affordableDishesList.dishes = action.payload.affordable;
       state.popularDishesList.dishes = action.payload.popular;
@@ -133,13 +123,8 @@ const recommendation = createSlice({
  * Purpose: Takes the actions retrieved from the recommendation slice and sets them to fixed variables.
  * Export reducers in the slice
  */
-export const {
-  addToReocemmendationList,
-  setSelectedTab,
-  updateCount,
-  sortLikedDishes,
-  loadLocalData,
-} = recommendation.actions;
+export const { setSelectedTab, updateCount, sortLikedDishes, loadLocalData } =
+  recommendation.actions;
 /**
  * Purpose: Returns the recommendationList from the state
  * @param {*} state: the store

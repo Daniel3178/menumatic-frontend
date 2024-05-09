@@ -21,10 +21,6 @@ const RecommendationPagePresenter = () => {
     );
   };
 
-  /**
-   * Handles request to go to shoplist page
-   * By Daniel
-   */
   const handleGoToShoplist = () => {
     dispatch(generateShoplist(selectedTabDishes));
     navigate("/shoplist-test", { state: "/recommendation" });

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PlanListView from "./planListView";
 import { useNavigate } from "react-router-dom";
 import { getUserAllListPromise } from "../../store/menumaticServerAPISlice";
-import { getUserId } from "../../signUp_page/userAccountSlice";
+import { getUserId } from "../../menu/userAccountSlice";
 import { setSelectedList } from "../../store/menumaticServerAPISlice";
 import { deleteList } from "../../store/menumaticServerAPISlice";
 

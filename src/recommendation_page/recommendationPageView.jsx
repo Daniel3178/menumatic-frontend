@@ -1,6 +1,5 @@
 import React from "react";
 import "./RecepiesForAMealViewCSS.css";
-import { useNavigate } from "react-router-dom";
 import DishListComponent from "./dishListComponent";
 import { logo } from "../assets";
 

@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  selectedListId: null,
-};
-
 const planSlice = createSlice({
   name: "plan",
   initialState: {
