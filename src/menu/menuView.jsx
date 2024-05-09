@@ -1,12 +1,15 @@
 import { React, useEffect, useState } from "react";
-import { backGreen, backBlue, backBlack, close, done, menubtn} from "../assets";
-import { Transition } from '@headlessui/react'
-import { getExcludeTags, getIncludeTags, getMealsInPlan } from "./filterPageSlice";
+import {
+  backGreen,
+  backBlue,
+  backBlack,
+  close,
+  done,
+  menubtn,
+} from "../assets";
+import { Transition, Dialog } from "@headlessui/react";
 
 const MenuView = (props) => {
-
-
-
   //********LOGIN FUNCTION*********
   const handleSignInCB = (e) => {
     e.preventDefault();
@@ -60,9 +63,7 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setIncludedItems([...includedItems, value]); // If checked, add to included items
-      // //console.log(value + " isChecked");
     } else {
-      // //console.log(value + " isUnChecked");
       setIncludedItems((prevData) => {
         // If unchecked, remove from included items
         return prevData.filter((id) => {
@@ -78,9 +79,7 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setExcludedItems([...excludedItems, value]); // If checked, add to excluded items
-      // //console.log(value + " isChecked");
     } else {
-      // //console.log(value + " isUnChecked");
       setExcludedItems((prevData) => {
         // If unchecked, remove from excluded items
         return prevData.filter((id) => {
@@ -90,72 +89,107 @@ const MenuView = (props) => {
     }
   }
 
-
-  const [mealsInPlanSliderValue, setMealsInPlanSliderValue] = useState(props.mealsInPlan);
+  const [mealsInPlanSliderValue, setMealsInPlanSliderValue] = useState(
+    props.mealsInPlan
+  );
   useEffect(() => {
-    setMealsInPlanSliderValue(props.mealsInPlan)
-  },[props.mealsInPlan])
-
+    setMealsInPlanSliderValue(props.mealsInPlan);
+  }, [props.mealsInPlan]);
 
   const handleSliderChange = (event) => {
-
     const newValue = parseInt(event.target.value);
     setMealsInPlanSliderValue(newValue);
   };
 
-
   const applyFilterButton = () => {
     props.hideFilter();
     props.applyFilter(includedItems, excludedItems, mealsInPlanSliderValue);
-    //console.log("EXCLUDED",excludedItems)
-
-  }
-
+  };
 
   const HandleDeleteAccount = (hProp) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    return(
+    return (
       <div className="">
-        <form className="flex flex-col" onSubmit={(e)=>{
-          e.preventDefault()
-          hProp.handleDeleteAccount({email: email, password: password})}}>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value={email} onChange={(e)=>
-          {
-            e.preventDefault()
-          setEmail(e.target.value)}} required></input>
-        <label for="password" >Password:</label>
-        <input type="password" value={password} onChange={(e)=> {
-          e.preventDefault()
-          setPassword(e.target.value)}} id="password" name="password" required></input>
-         <button type="submit" onClick={()=>{
-          console.log("delete account btn is clicked")
-         }} >Delete Account</button>
+        <form
+          className="flex flex-col"
+          onSubmit={(e) => {
+            e.preventDefault();
+            hProp.handleDeleteAccount({ email: email, password: password });
+          }}
+        >
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => {
+              e.preventDefault();
+              setEmail(e.target.value);
+            }}
+            required
+          ></input>
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => {
+              e.preventDefault();
+              setPassword(e.target.value);
+            }}
+            id="password"
+            name="password"
+            required
+          ></input>
+          <button
+            type="submit"
+            onClick={() => {
+              console.log("delete account btn is clicked");
+            }}
+          >
+            Delete Account
+          </button>
         </form>
       </div>
-    )
-  }
+    );
+  };
 
   const HandleResetPassword = (hProp) => {
     const [email, setEmail] = useState("");
-    return(
+    return (
       <div className="">
-        <form className="flex flex-col" onSubmit={(e)=>{
-          e.preventDefault()
-          hProp.handlePasswordReset({email: email})}}>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value={email} onChange={(e)=>
-          {
-            e.preventDefault()
-          setEmail(e.target.value)}} required></input>
-         <button type="submit" onClick={()=>{
-          console.log("reset password btn is clicked")
-         }} >Reset Password</button>
+        <form
+          className="flex flex-col"
+          onSubmit={(e) => {
+            e.preventDefault();
+            hProp.handlePasswordReset({ email: email });
+          }}
+        >
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => {
+              e.preventDefault();
+              setEmail(e.target.value);
+            }}
+            required
+          ></input>
+          <button
+            type="submit"
+            onClick={() => {
+              console.log("reset password btn is clicked");
+            }}
+          >
+            Reset Password
+          </button>
         </form>
       </div>
-    )
-  }
+    );
+  };
 
   const [deleteAccountToggle, setDeleteAccountToggle] = useState(false);
   const [passChangeToggle, setPassChangeToggle] = useState(false);
@@ -164,6 +198,17 @@ const MenuView = (props) => {
   const renderMenu = () => {
     if (props.stateBase) {
       return <div className="absolute fixed top-0 right-0">{menuState()}</div>;
+    }
+  };
+
+  const menuPing = () => {
+    if (props.stateRecommendBtn) {
+      return (
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+          <span class="inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+        </span>
+      );
     }
   };
 
@@ -187,26 +232,29 @@ const MenuView = (props) => {
           </button>
           <div className="flex flex-col items-center place-content-center mt-10">
             <button
-              onClick={()=>setPassChangeToggle(!passChangeToggle)}
+              onClick={() => setPassChangeToggle(!passChangeToggle)}
               className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
                 CHANGE PASSWORD
               </div>
             </button>
-            {passChangeToggle && <HandleResetPassword handlePasswordReset={props.resetPassword}/>}
+            {passChangeToggle && (
+              <HandleResetPassword handlePasswordReset={props.resetPassword} />
+            )}
           </div>
           <div className="flex flex-col items-center place-content-center mt-10">
-          <button
-              onClick={()=>setDeleteAccountToggle(!deleteAccountToggle)}
+            <button
+              onClick={() => setDeleteAccountToggle(!deleteAccountToggle)}
               className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
-
               <div className="place-content-center text-whiteSmoke text-lg font-outfit">
                 DELETE ACCOUNT
               </div>
             </button>
-            {deleteAccountToggle && <HandleDeleteAccount handleDeleteAccount={props.deleteAccount}/>}
+            {deleteAccountToggle && (
+              <HandleDeleteAccount handleDeleteAccount={props.deleteAccount} />
+            )}
           </div>
         </div>
       </Transition>
@@ -325,16 +373,23 @@ const MenuView = (props) => {
               )
             )}
           </ul>
-          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">DISHES IN MEAL PLAN</h1>{" "}
+          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">
+            DISHES IN MEAL PLAN
+          </h1>{" "}
           <div className="flex-col justify-center items-center ">
-            <label htmlFor="myRange" className="block mb-2 text-sm font-outfit self-center ml-5">{mealsInPlanSliderValue}</label>
+            <label
+              htmlFor="myRange"
+              className="block ml-6 mb-2 text-sm font-outfit self-center ml-5"
+            >
+              {mealsInPlanSliderValue}
+            </label>
             <input
               value={mealsInPlanSliderValue}
               onChange={handleSliderChange}
               type="range"
               min="1"
               max="7"
-              className="ml-5 w-[80%]"
+              className="ml-5 w-4/5 h-1 cursor-pointer bg-whiteSmoke border-none shadow-none accent-cerulean thumb-cerulean"
               id="myRange"
             />
           </div>
@@ -426,6 +481,43 @@ const MenuView = (props) => {
     );
   };
 
+  const RenderForgotPass = (hProp) => {
+    const [email, setEmail] = useState("");
+    return (
+      <div className="">
+        <form
+          className="flex flex-col"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <label for="email">Email:</label>
+          <input
+            className=" text-black"
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => {
+              e.preventDefault();
+              setEmail(e.target.value);
+            }}
+            required
+          ></input>
+          <button
+            onClick={() => {
+              hProp.handlePasswordReset({ email: email });
+            }}
+          >
+            Reset Password
+          </button>
+        </form>
+      </div>
+    );
+  };
+
+  const [forgotPassToggle, setForgotPassToggle] = useState(false);
+
   const loginMenu = () => {
     return (
       <Transition
@@ -474,6 +566,15 @@ const MenuView = (props) => {
                 >
                   LOG IN
                 </button>
+                <button
+                  onClick={() => setForgotPassToggle(!forgotPassToggle)}
+                  className="py-4"
+                >
+                  Forgot password?
+                </button>
+                {forgotPassToggle && (
+                  <RenderForgotPass handlePasswordReset={props.resetPassword} />
+                )}
                 Don't have an account?
                 <button
                   onClick={props.showSignup}
@@ -553,6 +654,36 @@ const MenuView = (props) => {
               </button>
             </div>
           </div>
+          <div className="flex mt-10 ml-4 w-64 font-outfit text-whiteSmoke text-semiBold">
+            <Transition
+              show={props.stateRecommendBtn}
+              enter="transition-opacity duration-150"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-150"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-whiteSmoke rounded-[20px] h-30 w-full">
+                <div className="flex-col text-center justify-center">
+                  <div className=" text-base mb-2 mt-2 leading-4">
+                    Your first {props.mealsInPlan} liked dishes are available!
+                  </div>
+                  <div className="leading-4 text-[13px] ml-2 mr-2 mb-2">
+                    You can also keep swiping for a more varied recommendation.
+                  </div>
+                </div>
+                <div className="flex justify-center mb-2">
+                  <button
+                    className="h-14 w-44 rounded-[20px] bg-whiteSmoke hover:bg-gradient-to-tr hover:from-gold hover:to-white tracking-wider hover:text-gunmetal hover:shadow-mid text-gunmetal text-sm"
+                    onClick={props.navigateToRecommendation}
+                  >
+                    VIEW RECOMMENDATION
+                  </button>
+                </div>
+              </div>
+            </Transition>
+          </div>
         </div>
       );
     } else if (props.isLoggedIn == false) {
@@ -594,6 +725,36 @@ const MenuView = (props) => {
               </button>
             </div>
           </div>
+          <div className="flex mt-10 ml-4 w-64 font-outfit text-whiteSmoke text-semiBold">
+            <Transition
+              show={props.stateRecommendBtn}
+              enter="transition-opacity duration-150"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-150"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-whiteSmoke rounded-[20px] h-30 w-full">
+                <div className="flex-col text-center justify-center">
+                  <div className=" text-base mb-2 mt-2 leading-4">
+                    Your {props.mealsInPlan} liked dishes are available!
+                  </div>
+                  <div className="leading-4 text-[13px] mb-2">
+                    Or keep swiping for a more varied recommendation.
+                  </div>
+                </div>
+                <div className="flex justify-center mb-2">
+                  <button
+                    className="h-14 w-44 rounded-[20px] bg-whiteSmoke hover:bg-gradient-to-tr hover:from-gold hover:to-white tracking-wider hover:text-gunmetal hover:shadow-mid text-gunmetal text-sm"
+                    onClick={props.navigateToRecommendation}
+                  >
+                    VIEW RECOMMENDATION
+                  </button>
+                </div>
+              </div>
+            </Transition>
+          </div>
         </div>
       );
     }
@@ -602,8 +763,11 @@ const MenuView = (props) => {
   return (
     <div>
       <div className="lg:hidden fixed top-0 right-0 ">
-        <button className="pt-12 pr-12" onClick={props.showMenu}>
-          <img src={menubtn} />
+        <button className="mt-12 mr-12" onClick={props.showMenu}>
+          <div>
+            {menuPing()}
+            <img src={menubtn} />
+          </div>
         </button>
         {renderMenu()}
       </div>

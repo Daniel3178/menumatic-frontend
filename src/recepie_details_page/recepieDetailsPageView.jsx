@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import { backBlack, logo } from "../assets";
 
 const RecipeDetailsPageView = (props) => {
@@ -8,9 +7,15 @@ const RecipeDetailsPageView = (props) => {
       return (
         <div key={index} className="w-full flex justify-between items-center">
           <div className="flex justify-between flex-row">
-            <p className="text-[16px] font-outfit font-bold text-gunmetal">{Math.ceil(ingredient.measures.metric.amount)}</p>
-            <p className="text-[16px] px-1 font-outfit font-bold text-gunmetal">{ingredient.measures.metric.unitShort}</p>
-            <p className="text-[16px] px-2 font-outfit font-regular text-gunmetal">{ingredient.nameClean}</p>
+            <p className="text-base font-outfit font-bold text-gunmetal">
+              {Math.ceil(ingredient.measures.metric.amount)}
+            </p>
+            <p className="text-base px-1 font-outfit font-bold text-gunmetal">
+              {ingredient.measures.metric.unitShort}
+            </p>
+            <p className="text-base px-2 font-outfit font-regular text-gunmetal">
+              {ingredient.nameClean}
+            </p>
           </div>
         </div>
       );
@@ -19,14 +24,19 @@ const RecipeDetailsPageView = (props) => {
   const renderIntroSection = () => {
     return (
       <div>
-        <div className="w-full flex flex-row">
-          <div className="w-1/2">{renderIngredients(props.ingredients)}</div>
-          <div className="w-1/2">
+        <div className="w-full flex flex-col lg:flex-row ">
+          <div className="hidden lg:block text-nowrap pr-20">
+            {renderIngredients(props.ingredients)}
+          </div>
+          <div className="w-full mb-8 ">
             <img
               src={props.image}
               alt="recepie"
-              className="w-full object-cover h-full rounded-2xl"
+              className="object-cover h-full rounded-2xl"
             />
+          </div>
+          <div className=" lg:hidden w-full ">
+            {renderIngredients(props.ingredients)}
           </div>
         </div>
       </div>
@@ -36,33 +46,43 @@ const RecipeDetailsPageView = (props) => {
   const renderInstructionsSteps = (steps) => {
     return steps.map((step, index) => {
       return (
-        <div key={index} className="w-full flex flex-col-2 gap-4">
-          <p className="text-[16px] font-outfit font-bold text-gunmetal">{step.number}</p>
-          <p className="text-[16px] font-outfit font-regular text-gunmetal">{step.step}</p>
+        <div key={index} className="w-full flex flex-col-2 gap-4 mt-4">
+          <p className="text-base font-outfit font-bold text-gunmetal">
+            {step.number}
+          </p>
+          <p className="text-base font-outfit font-regular text-gunmetal">
+            {step.step}
+          </p>
         </div>
       );
     });
   };
 
   return (
-    <div className="bg-smokeWhite min-h-screen w-full top-0 right-0 bottom-0 left-0 flex justify-center">
-    <div className="w-[840px] mr-10 ml-10">
-      <div>
-        <button className="text-whiteSmoke hover:shadow-xl"
-          onClick={() => props.navigateBack()} aria-label="go back">
-          <img src={backBlack} />
-        </button>
+    <div className="pt-32 flex w-screen lg:pl-8 lg:pr-80 justify-center">
+      <div className=" pr-4 pl-4 max-w-[840px]">
+        <div>
+          <button
+            className="text-whiteSmoke hover:shadow-xl"
+            onClick={() => props.navigateBack()}
+            aria-label="go back"
+          >
+            <img src={backBlack} />
+          </button>
+        </div>
+        <div>
+          <p className="mb-8 text-3xl md:text-5xl font-outfit font-bold text-gunmetal tracking-wider">
+            {props.name}
+          </p>
+        </div>
+        <div>
+          {renderIntroSection()}
+          <div className="mt-8 mb-8">
+            {renderInstructionsSteps(props.instructions)}
+          </div>
+        </div>
       </div>
-      <div>
-        <p className="mb-8 text-[48px] font-outfit font-bold text-gunmetal tracking-wider">{props.name}</p>
-      </div>
-      <div>
-      {renderIntroSection()}
-      <div className="mt-20">{renderInstructionsSteps(props.instructions)}</div>
     </div>
-    </div>
-  </div>
-    
   );
 };
 

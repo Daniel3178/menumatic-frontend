@@ -1,141 +1,163 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {calcPortionIngredients, normalizeCategoryIngredients,parseIngredients } from "./shoplistUtilities";
+import {
+  generateShopListUtil,
+  restoreItemUtil,
+  removeItemUtil,
+} from "./shoplistUtilities";
+
+import { searchBySpoonacularApiBulkAsync } from "../store/spoonacularAPISlice";
+import {
+  saveShoplistToMenumaticDb,
+  fetchExcludedIngredients,
+} from "../store/menumaticServerAPISlice";
 
 const shoplistSlice = createSlice({
   name: "Shoplist",
   initialState: {
-    allItems: [],
-    removedItems: [],
+    generalShoplist: {
+      allItems: [],
+      removedItems: [],
+    },
+    userShoplistPromise: {
+      data: JSON.parse(localStorage.getItem("userShoplistData")) || {
+        allItems: [],
+        removedItems: [],
+      },
+      state: "loading",
+      error: null,
+    },
   },
   reducers: {
     flushShoplist: (state, action) => {
       state.allItems = [];
       state.removedItems = [];
     },
-    generateShoplist: (state, action) => {
-      /**
-       * Updates the allItems state with the provided list of items. For each item in the input list,
-       * the function checks if the item already exists in the state's allItems list. If an item exists,
-       * it increments the item's amount by the amount specified in the input list. If the item does not
-       * exist, it is added to the allItems list. After processing all items, it rounds the amount
-       * of each item in the allItems list to the nearest tenth.
-       *
-       * @param {Array<Object>} props - An array of item objects to be added or updated in the allItems list.
-       * Each object in the array should have a name property (string) representing the item's name,
-       * and an amount property (number) representing the quantity of the item.
-       */
-      const updateOrAddItems = (props) => {
-        props.forEach(prop => {
-          const existingItemIndex = state.allItems.findIndex(item => item.name === prop.name);
-          if (existingItemIndex !== -1) {
-            state.allItems[existingItemIndex].amount += prop.amount;
-          } else {
-            state.allItems.push(prop);
-          }
-        });
-        state.allItems.forEach(item => {
-          item.amount = Math.ceil(item.amount * 10) / 10;
-        });
-      };
-
-      action.payload.forEach(item => {
-        updateOrAddItems(calcPortionIngredients(item));
-      });
-
-      const categorizedIngredients = [];
-      state.allItems.forEach((item) => {
-        const category = item.category;
-        const index = categorizedIngredients.findIndex(
-          (categorizedItem) => categorizedItem.category === category
-        );
-        if (index === -1) {
-          categorizedIngredients.push({
-            category: category,
-            ingredients: [item],
-          });
-        } else {
-          categorizedIngredients[index].ingredients.push(item);
-        }
-      });
-      categorizedIngredients.forEach((category) =>
-      normalizeCategoryIngredients(category)
+    setData: (state, action) => {
+      console.log(
+        "LOADING DATA FROM LOCAL, SHOPLIST: ",
+        action.payload.allItems
       );
-      state.allItems = categorizedIngredients;
+      // state.generalShoplist.allItems = action.payload.allItems;
+      action.payload.allItems.map((element) => {
+        const ingredients = [];
+        element.ingredients.map((item) => {
+          ingredients.push(item);
+        });
+        console.log("INGREDIENTS: ", ingredients);
+        state.generalShoplist.allItems.push({
+          category: element.category,
+          ingredients: [...ingredients],
+        });
+      });
+      state.generalShoplist.removedItems = action.payload.removedItems;
+    },
+    generateShoplist: (state, action) => {
+      const categorizedIngredients = generateShopListUtil({
+        payload: action.payload,
+      });
+      state.generalShoplist.allItems = categorizedIngredients;
     },
     removeItem: (state, action) => {
-      const tempItems = [];
-      state.allItems.forEach((category) => {
-        tempItems.push({
-          category: category.category,
-          ingredients: parseIngredients(category.ingredients),
-        });
+      const { allItems, removedItems } = removeItemUtil({
+        payload: action.payload,
+        allItems: state.generalShoplist.allItems,
+        removedItems: state.generalShoplist.removedItems,
       });
-      tempItems.map((category) => {
-        category.ingredients = category.ingredients.filter(
-          (item) => item.name !== action.payload.name
-        );
-      });
-      state.allItems = tempItems;
-      const tempRemovedItems = [];
-      state.removedItems.forEach((category) => {
-        tempRemovedItems.push({
-          category: category.category,
-          ingredients: parseIngredients(category.ingredients),
-        });
-      });
-      const index = tempRemovedItems.findIndex(
-        (item) => item.category === action.payload.category
-      );
-      if (index === -1) {
-        tempRemovedItems.push({
-          category: action.payload.category,
-          ingredients: [action.payload],
-        });
-      } else {
-        tempRemovedItems[index].ingredients.push(action.payload);
-      }
-      state.removedItems = tempRemovedItems;
+      state.generalShoplist.removedItems = removedItems;
+      state.generalShoplist.allItems = allItems;
     },
     restoreItem: (state, action) => {
-      const tempItems = [];
-      state.removedItems.forEach((category) => {
-        tempItems.push({
-          category: category.category,
-          ingredients: parseIngredients(category.ingredients),
-        });
+      const { allItems, removedItems } = restoreItemUtil({
+        payload: action.payload,
+        allItems: state.allItems,
+        removedItems: state.removedItems,
       });
-      tempItems.map((category) => {
-        category.ingredients = category.ingredients.filter(
-          (item) => item.name !== action.payload.name
-        );
-      });
-      state.removedItems = tempItems;
-      const tempRemovedItems = [];
-      state.allItems.forEach((category) => {
-        tempRemovedItems.push({
-          category: category.category,
-          ingredients: parseIngredients(category.ingredients),
-        });
-      });
+      state.generalShoplist.allItems = allItems;
+      state.generalShoplist.removedItems = removedItems;
+    },
 
-      const index = tempRemovedItems.findIndex(
-        (item) => item.category === action.payload.category
-      );
-      if (index === -1) {
-        tempRemovedItems.push({
-          category: action.payload.category,
-          ingredients: [action.payload],
-        });
-      } else {
-        tempRemovedItems[index].ingredients.push(action.payload);
-      }
-      state.allItems = tempRemovedItems;
+    removeUserItem: (state, action) => {
+      const { allItems, removedItems } = removeItemUtil({
+        payload: action.payload,
+        allItems: state.userShoplistPromise.data.allItems,
+        removedItems: state.userShoplistPromise.data.removedItems,
+      });
+      state.userShoplistPromise.data.allItems = allItems;
+      state.userShoplistPromise.data.removedItems = removedItems;
+    },
+    restoreUserItem: (state, action) => {
+      const { allItems, removedItems } = restoreItemUtil({
+        payload: action.payload,
+        allItems: state.userShoplistPromise.data.allItems,
+        removedItems: state.userShoplistPromise.data.removedItems,
+      });
+      state.userShoplistPromise.data.allItems = allItems;
+      state.userShoplistPromise.data.removedItems = removedItems;
     },
   },
-});
-export const getAllItems = (state) => state.shoplist.allItems;
-export const getRemovedItems = (state) => state.shoplist.removedItems;
+  extraReducers: (builder) => {
+    builder
+      .addCase(searchBySpoonacularApiBulkAsync.pending, (state, action) => {
+        state.userShoplistPromise.state = "loading";
+      })
+      .addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
+        const { userData } = action.payload;
+        state.userShoplistPromise.data.allItems = generateShopListUtil({
+          payload: userData,
+        });
+        state.userShoplistPromise.state = "ready";
+      })
+      .addCase(searchBySpoonacularApiBulkAsync.rejected, (state, action) => {
+        state.userShoplistPromise.state = "failed";
+      })
+      .addCase(saveShoplistToMenumaticDb.fulfilled, (state, action) => {
+        state.userShoplistPromise.data.allItems = [];
+        state.userShoplistPromise.data.removedItems = [];
+        state.generalShoplist.allItems = [];
+        state.generalShoplist.removedItems = [];
 
-export const { generateShoplist, flushShoplist, removeItem, restoreItem } =
-  shoplistSlice.actions;
+        localStorage.removeItem("userShoplistData");
+        localStorage.removeItem("shoplist");
+      })
+      .addCase(fetchExcludedIngredients.fulfilled, (state, action) => {
+        const { ingredients } = action.payload;
+        state.userShoplistPromise.data.removedItems = [];
+        const copyAllItems = state.userShoplistPromise.data.allItems;
+        ingredients.map((ingr) => {
+          copyAllItems.map((category) => {
+            category.ingredients.map((item) => {
+              if (item.name === ingr) {
+                const { allItems, removedItems } = removeItemUtil({
+                  payload: item,
+                  allItems: state.userShoplistPromise.data.allItems,
+                  removedItems: state.userShoplistPromise.data.removedItems,
+                });
+                state.userShoplistPromise.data.allItems = allItems;
+                state.userShoplistPromise.data.removedItems = removedItems;
+              }
+            });
+          });
+        });
+
+        localStorage.setItem(
+          "userShoplistData",
+          JSON.stringify(state.userShoplistPromise.data)
+        );
+      });
+  },
+});
+
+// new
+export const getUserShoplistPromise = (state) =>
+  state.shoplist.userShoplistPromise;
+export const getGeneralShoplist = (state) => state.shoplist.generalShoplist;
+
+export const {
+  generateShoplist,
+  removeUserItem,
+  restoreUserItem,
+  removeItem,
+  restoreItem,
+  setData,
+} = shoplistSlice.actions;
 export default shoplistSlice.reducer;

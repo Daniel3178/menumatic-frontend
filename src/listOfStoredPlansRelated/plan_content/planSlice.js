@@ -1,29 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  selectedListId: null,
-};
-
 const planSlice = createSlice({
   name: "plan",
   initialState: {
-    selectedListId: null,
-    allRecipes: [],
-    selectedRecipe: null
+    selectedRecipe: JSON.parse(localStorage.getItem("selectedRecipe")) || null,
   },
   reducers: {
-    setSelectedListId: (state, action) => {
-      state.selectedListId = action.payload;
-    },
     setSelectedRecipe: (state, action) => {
       state.selectedRecipe = action.payload;
-      console.log("payload", action.payload)
-    }
+
+      localStorage.setItem("selectedRecipe", JSON.stringify(action.payload));
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setSelectedListId, setSelectedRecipe} = planSlice.actions;
+export const { setSelectedRecipe } = planSlice.actions;
 
 /**
  * Purpose: Returns the selected list ID from the state
