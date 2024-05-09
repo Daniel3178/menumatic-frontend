@@ -12,6 +12,8 @@ import {
   fetchUserFoodPref,
 } from "../store/menumaticServerAPISlice";
 import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
+import { fetchLocalFoodPref } from "./localStorage";
+import { saveTags } from "../menu/filterPageSlice";
 const FirebaseAuthentication = () => {
   const dispatch = useDispatch();
   const excludeIngr = useSelector(getExcludeTags);
@@ -30,24 +32,29 @@ const FirebaseAuthentication = () => {
               userId: uid,
             })
           );
-          dispatch(fetchUserShopinglist(user.uid));
-          dispatch(fetchUserFoodPref(user.uid));
+          // dispatch(fetchUserShopinglist(user.uid));
+          // dispatch(fetchUserFoodPref(user.uid));
         } else {
           dispatch(signOutCurrentUser());
-          dispatch(
-            searchComplexBySpoonacularApiAsync({
-              intolerances: excludeIngr,
-              diet: includeIngr,
-            })
-          );
+          const { excludeTags, includeTags, mealsInPlan } =
+            fetchLocalFoodPref();
+          dispatch(saveTags({ excludeTags, includeTags, mealsInPlan }));
+          // dispatch(
+          //   searchComplexBySpoonacularApiAsync({
+          //     intolerances: excludeIngr,
+          //     diet: includeIngr,
+          //   })
+          // );
         }
       } else {
-        dispatch(
-          searchComplexBySpoonacularApiAsync({
-            intolerances: excludeIngr,
-            diet: includeIngr,
-          })
-        );
+        const { excludeTags, includeTags, mealsInPlan } = fetchLocalFoodPref();
+        dispatch(saveTags({ excludeTags, includeTags, mealsInPlan }));
+        // dispatch(
+        //   searchComplexBySpoonacularApiAsync({
+        //     intolerances: excludeIngr,
+        //     diet: includeIngr,
+        //   })
+        // );
       }
     });
   }, []);

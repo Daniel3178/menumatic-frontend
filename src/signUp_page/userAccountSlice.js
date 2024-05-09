@@ -92,6 +92,11 @@ const userAccountSlice = createSlice({
       state.userId = null;
       state.isLoggedIn = false;
       state.status = "Signed out";
+
+      localStorage.removeItem("exclude-tags");
+      localStorage.removeItem("include-tags");
+      localStorage.removeItem("meals-in-plan");
+      localStorage.removeItem("userShoplistData");
     },
   },
   extraReducers: (builder) => {

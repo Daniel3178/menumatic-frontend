@@ -19,7 +19,7 @@ const shoplistSlice = createSlice({
       removedItems: [],
     },
     userShoplistPromise: {
-      data: {
+      data: JSON.parse(localStorage.getItem("userShoplistData")) || {
         allItems: [],
         removedItems: [],
       },
@@ -37,19 +37,19 @@ const shoplistSlice = createSlice({
         "LOADING DATA FROM LOCAL, SHOPLIST: ",
         action.payload.allItems
       );
-      state.allItems = action.payload.allItems;
+      // state.generalShoplist.allItems = action.payload.allItems;
       action.payload.allItems.map((element) => {
         const ingredients = [];
         element.ingredients.map((item) => {
           ingredients.push(item);
         });
         console.log("INGREDIENTS: ", ingredients);
-        state.allItems.push({
+        state.generalShoplist.allItems.push({
           category: element.category,
           ingredients: [...ingredients],
         });
       });
-      state.removedItems = action.payload.removedItems;
+      state.generalShoplist.removedItems = action.payload.removedItems;
     },
     generateShoplist: (state, action) => {
       const categorizedIngredients = generateShopListUtil({
@@ -115,6 +115,9 @@ const shoplistSlice = createSlice({
         state.userShoplistPromise.data.removedItems = [];
         state.generalShoplist.allItems = [];
         state.generalShoplist.removedItems = [];
+
+        localStorage.removeItem("userShoplistData");
+        localStorage.removeItem("shoplist");
       })
       .addCase(fetchExcludedIngredients.fulfilled, (state, action) => {
         const { ingredients } = action.payload;
@@ -135,6 +138,11 @@ const shoplistSlice = createSlice({
             });
           });
         });
+
+        localStorage.setItem(
+          "userShoplistData",
+          JSON.stringify(state.userShoplistPromise.data)
+        );
       });
   },
 });
@@ -150,5 +158,6 @@ export const {
   restoreUserItem,
   removeItem,
   restoreItem,
+  setData,
 } = shoplistSlice.actions;
 export default shoplistSlice.reducer;

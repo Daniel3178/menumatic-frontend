@@ -46,21 +46,21 @@ const recommendation = createSlice({
       state.recommendationList.map((item) => {
         testArr.push(item);
       });
-      state.affordableDishesList.dishes.push(
+      state.affordableDishesList.dishes = [
         ...testArr
           .sort((a, b) => a.result.pricePerServing - b.result.pricePerServing)
-          .slice(0, mealsInPlan)
-      );
-      state.popularDishesList.dishes.push(
+          .slice(0, mealsInPlan),
+      ];
+      state.popularDishesList.dishes = [
         ...testArr
           .sort((a, b) => b.result.spoonacularScore - a.result.spoonacularScore)
-          .slice(0, mealsInPlan)
-      );
-      state.quickDishesList.dishes.push(
+          .slice(0, mealsInPlan),
+      ];
+      state.quickDishesList.dishes = [
         ...testArr
           .sort((a, b) => a.result.readyInMinutes - b.result.readyInMinutes)
-          .slice(0, mealsInPlan)
-      );
+          .slice(0, mealsInPlan),
+      ];
       state.state = "ready";
     },
     /*
@@ -118,6 +118,13 @@ const recommendation = createSlice({
         state.affordableDishesList.dishes = [];
         state.popularDishesList.dishes = [];
         state.quickDishesList.dishes = [];
+
+        localStorage.removeItem("affordable-dishes");
+        localStorage.removeItem("popular-dishes");
+        localStorage.removeItem("quick-dishes");
+        localStorage.removeItem("shoplist");
+        localStorage.removeItem("removed-items");
+        localStorage.removeItem("selected-tab");
       });
   },
 });
@@ -131,6 +138,7 @@ export const {
   setSelectedTab,
   updateCount,
   sortLikedDishes,
+  loadLocalData,
 } = recommendation.actions;
 /**
  * Purpose: Returns the recommendationList from the state

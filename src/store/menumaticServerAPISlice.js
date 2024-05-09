@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { saveTagsByServer } from "../menu/filterPageSlice";
 const url = "http://localhost:8080/api/user/create/";
 const deleteUrl = "http://localhost:8080/api/mealplan/delete/";
 import { searchBySpoonacularApiBulkAsync } from "../store/spoonacularAPISlice";
@@ -211,18 +210,16 @@ export const fetchUserFoodPref = createAsyncThunk(
         mealsInPlan = value;
       }
     });
-    dispatch(
-      saveTagsByServer({
-        includeTags: includeList,
-        excludeTags: excludeList,
-        mealsInPlan: mealsInPlan,
-      })
-    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch user shopList");
     }
-    return await fetchedData;
+    return {
+      rawData: fetchedData,
+      includeTags: includeList,
+      excludeTags: excludeList,
+      mealNum: mealsInPlan,
+    };
   }
 );
 
@@ -235,7 +232,7 @@ const menumaticServerApi = createSlice({
       error: null,
     },
     userCurrentRecipesPromise: {
-      data: [],
+      data: JSON.parse(localStorage.getItem("userCurrentRecipes")) || [],
       state: "loading",
       error: null,
     },
@@ -252,7 +249,7 @@ const menumaticServerApi = createSlice({
       state: "loading",
       error: null,
     },
-    selectedList: {},
+    selectedList: JSON.parse(localStorage.getItem("selectedList")) || {},
   },
 
   reducers: {
@@ -272,6 +269,7 @@ const menumaticServerApi = createSlice({
       } else {
         state.selectedList = { id: id, name: "", recepies: [] };
       }
+      localStorage.setItem("selectedList", JSON.stringify(state.selectedList));
     },
   },
   extraReducers: (builder) => {
@@ -290,7 +288,7 @@ const menumaticServerApi = createSlice({
         state.userFoodPrefPromise.state = "loading";
       })
       .addCase(fetchUserFoodPref.fulfilled, (state, action) => {
-        state.userFoodPrefPromise.data = action.payload;
+        state.userFoodPrefPromise.data = action.payload.rawData;
         state.userFoodPrefPromise.state = "ready";
       })
       .addCase(fetchUserFoodPref.rejected, (state, action) => {
@@ -315,6 +313,7 @@ const menumaticServerApi = createSlice({
       .addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
         const { userData } = action.payload;
         state.userCurrentRecipesPromise.data = userData;
+        localStorage.setItem("userCurrentRecipes", JSON.stringify(userData));
         state.userCurrentRecipesPromise.state = "ready";
       })
       .addCase(searchBySpoonacularApiBulkAsync.rejected, (state, action) => {

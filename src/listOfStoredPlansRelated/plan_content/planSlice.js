@@ -7,11 +7,13 @@ const initialState = {
 const planSlice = createSlice({
   name: "plan",
   initialState: {
-    selectedRecipe: null,
+    selectedRecipe: JSON.parse(localStorage.getItem("selectedRecipe")) || null,
   },
   reducers: {
     setSelectedRecipe: (state, action) => {
       state.selectedRecipe = action.payload;
+
+      localStorage.setItem("selectedRecipe", JSON.stringify(action.payload));
     },
   },
 });

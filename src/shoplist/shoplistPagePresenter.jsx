@@ -26,7 +26,7 @@ const ShoplistPagePresenter = () => {
   const { allItems: allItemsGeneral, removedItems: removedItemsGeneral } =
     useSelector(getGeneralShoplist);
   const {
-    data: { allItems: allItemsReduxUser, removedItems: removedItemsUser },
+    data: { allItems: allItemsUser, removedItems: removedItemsUser },
   } = useSelector(getUserShoplistPromise);
 
   const isLoggedIn = useSelector(getIsLoggedIn);

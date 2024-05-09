@@ -1,6 +1,8 @@
 import React from "react";
 import { listenerMiddleware } from "../store/store";
 import {
+  fetchUserFoodPref,
+  fetchUserShopinglist,
   fetchExcludedIngredients,
   saveFoodPrefToMenumaticDb,
   setSelectedList,
@@ -13,8 +15,26 @@ import {
 import { deleteMealPlan, deleteList } from "../store/menumaticServerAPISlice";
 import { popFirstRecipe } from "../store/spoonacularAPISlice";
 import { incrementLikesCounter } from "../homepage/homePageSlice";
+import { signInCurrentUser } from "../signUp_page/userAccountSlice";
 
 const MenumaticDatabase = () => {
+  listenerMiddleware.startListening({
+    actionCreator: signInCurrentUser,
+    effect: async (action, listenerApi) => {
+      const userId = action.payload.userId;
+      await listenerApi.dispatch(fetchUserShopinglist(userId));
+      await listenerApi.dispatch(fetchUserFoodPref(userId));
+      listenerApi.dispatch(
+        searchComplexBySpoonacularApiAsync({
+          intolerances:
+            listenerApi.getState().filterPage.apiPrefs.excludeTags.paramsArray,
+          diet: listenerApi.getState().filterPage.apiPrefs.includeTags
+            .paramsArray,
+        })
+      );
+    },
+  });
+
   listenerMiddleware.startListening({
     actionCreator: deleteList,
     effect: async (action, listenerApi) => {

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { fetchUserFoodPref } from "../store/menumaticServerAPISlice";
 export const filterPage = createSlice({
   name: "filterPage",
   initialState: {
@@ -58,6 +58,19 @@ export const filterPage = createSlice({
       );
       state.mealsInPlan = parseInt(action.payload.mealsInPlan);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserFoodPref.fulfilled, (state, action) => {
+        const { excludeTags, includeTags, mealNum } = action.payload;
+        state.apiPrefs.includeTags.paramsArray = includeTags;
+        state.apiPrefs.excludeTags.paramsArray = excludeTags;
+        state.mealsInPlan = mealNum;
+      })
+      .addCase(fetchUserFoodPref.rejected, (state, action) => {
+        state.apiPrefs.includeTags.paramsArray = [];
+        state.apiPrefs.excludeTags.paramsArray = [];
+      });
   },
 });
 

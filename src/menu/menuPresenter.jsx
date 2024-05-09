@@ -30,7 +30,7 @@ import {
 } from "./menuSlice";
 
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
-
+import { signOutCurrentUser } from "../signUp_page/userAccountSlice";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -126,7 +126,12 @@ const MenuPresenter = () => {
   const [password, setPassword] = useState("");
 
   const handleSignOutACB = () => {
-    signOut(auth).catch((err) => {});
+    signOut(auth)
+      .then(() => {
+        window.location.reload();
+        navigate("/");
+      })
+      .catch((err) => {});
   };
   const handleSignInACB = async (credentials) => {
     try {

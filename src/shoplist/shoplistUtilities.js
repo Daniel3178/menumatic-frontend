@@ -18,7 +18,7 @@
  * with its name, calculated amount, and unit.
  *
  */
-export const calcPortionIngredients = (meal) => {
+const calcPortionIngredients = (meal) => {
   const {
     portions,
     result: { servings, extendedIngredients: ingredients },
@@ -42,7 +42,7 @@ export const calcPortionIngredients = (meal) => {
   return ingrArr;
 };
 
-export const normalizeCategoryIngredients = (category) => {
+const normalizeCategoryIngredients = (category) => {
   const newIngredients = [];
   category.ingredients.forEach((ingredient) => {
     const ingrIndex = newIngredients.findIndex(
@@ -63,7 +63,7 @@ export const normalizeCategoryIngredients = (category) => {
   category.ingredients = newIngredients;
 };
 
-export const parseIngredients = (ingredients) => {
+const parseIngredients = (ingredients) => {
   return ingredients.map((ingr) => ({
     category: ingr.category,
     name: ingr.name,

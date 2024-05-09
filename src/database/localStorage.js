@@ -2,45 +2,58 @@ import React from "react";
 import { listenerMiddleware } from "../store/store";
 import { generateShoplist } from "../shoplist/shoplistSlice";
 import { removeItem, restoreItem } from "../shoplist/shoplistSlice";
-import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
-import { setSelectedListId } from "../listOfStoredPlansRelated/plan_list/planListSlice";
+import { saveTags } from "../menu/filterPageSlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setData } from "../shoplist/shoplistSlice";
+import { setSelectedTab } from "../recommendation_page/recommendationPageSlice";
 import { loadLocalData } from "../recommendation_page/recommendationPageSlice";
+// import { setSelectedList } from "../../store/menumaticServerAPISlice";
+const getExcludeTags = () => {
+  return JSON.parse(localStorage.getItem("exclude-tags")) || [];
+};
+const getIncludeTags = () => {
+  return JSON.parse(localStorage.getItem("include-tags")) || [];
+};
+const getMealsInPlan = () => {
+  return JSON.parse(localStorage.getItem("meals-in-plan")) || 7;
+};
+
+const getLocalShoplist = () => {
+  return JSON.parse(localStorage.getItem("shoplist")) || [];
+};
+
+const getLocalRemovedItems = () => {
+  return JSON.parse(localStorage.getItem("removed-items")) || [];
+};
+
+const getLocalSelectedTab = () => {
+  return JSON.parse(localStorage.getItem("selected-tab")) || "Popular";
+};
+
+const getLocalAffordableDishes = () => {
+  return JSON.parse(localStorage.getItem("affordable-dishes")) || [];
+};
+const getLocalPopularDishes = () => {
+  return JSON.parse(localStorage.getItem("popular-dishes")) || [];
+};
+const getLocalQuickDishes = () => {
+  return JSON.parse(localStorage.getItem("quick-dishes")) || [];
+};
+
+// const getLocalSelectedList = () => {
+//   return JSON.parse(localStorage.getItem("selected-list")) || [];
+// }
+
+export const fetchLocalFoodPref = () => {
+  const excludeTags = getExcludeTags();
+  const includeTags = getIncludeTags();
+  const mealsInPlan = getMealsInPlan();
+  return { excludeTags, includeTags, mealsInPlan };
+};
+
 const LocalStorage = () => {
-  const getExcludeTags = () => {
-    return JSON.parse(localStorage.getItem("exclude-tags")) || [];
-  };
-  const getIncludeTags = () => {
-    return JSON.parse(localStorage.getItem("include-tags")) || [];
-  };
-  const getMealsInPlan = () => {
-    return JSON.parse(localStorage.getItem("meals-in-plan")) || 7;
-  };
-
-  const getLocalShoplist = () => {
-    return JSON.parse(localStorage.getItem("shoplist")) || [];
-  };
-
-  const getLocalRemovedItems = () => {
-    return JSON.parse(localStorage.getItem("removed-items")) || [];
-  };
-
-  const getLocalSelectedListId = () => {
-    return JSON.parse(localStorage.getItem("selected-list-id")) || "";
-  };
-  const getLocalAffordableDishes = () => {
-    return JSON.parse(localStorage.getItem("affordable-dishes")) || [];
-  };
-  const getLocalPopularDishes = () => {
-    return JSON.parse(localStorage.getItem("popular-dishes")) || [];
-  };
-  const getLocalQuickDishes = () => {
-    return JSON.parse(localStorage.getItem("quick-dishes")) || [];
-  };
-
   listenerMiddleware.startListening({
     actionCreator: saveTags,
     effect: async (action, listenerApi) => {
@@ -51,30 +64,41 @@ const LocalStorage = () => {
     },
   });
 
-  listenerMiddleware.startListening({
-    actionCreator: saveTagsByServer,
-    effect: async (action, listenerApi) => {
-      const { excludeTags, includeTags, mealsInPlan } = action.payload;
-      localStorage.setItem("include-tags", JSON.stringify(includeTags));
-      localStorage.setItem("exclude-tags", JSON.stringify(excludeTags));
-      localStorage.setItem("meals-in-plan", JSON.stringify(mealsInPlan));
-    },
-  });
+  // listenerMiddleware.startListening({
+  //   actionCreator: setSelectedList,
+  //   effect: async (action, listenerApi) => {
+  //     const selectedList = action.payload;
+  //     localStorage.setItem("selected-list", JSON.stringify(selectedList));
+  //   },
+  // });
 
   listenerMiddleware.startListening({
     actionCreator: generateShoplist,
     effect: async (action, listenerApi) => {
-      const allItems = listenerApi.getState().shoplist.allItems;
-      const removedItems = listenerApi.getState().shoplist.removedItems;
+      console.log("Listening to generatedShoplist action");
+      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const removedItems =
+        listenerApi.getState().shoplist.generalShoplist.removedItems;
       localStorage.setItem("shoplist", JSON.stringify(allItems));
       localStorage.setItem("removed-items", JSON.stringify(removedItems));
     },
   });
 
   listenerMiddleware.startListening({
+    actionCreator: setSelectedTab,
+    effect: async (action, listenerApi) => {
+      const selectedTab = action.payload;
+      localStorage.setItem("selected-tab", JSON.stringify(selectedTab));
+    },
+  });
+
+  listenerMiddleware.startListening({
     actionCreator: removeItem,
     effect: async (action, listenerApi) => {
-      const removedItems = listenerApi.getState().shoplist.removedItems;
+      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const removedItems =
+        listenerApi.getState().shoplist.generalShoplist.removedItems;
+      localStorage.setItem("shoplist", JSON.stringify(allItems));
       localStorage.setItem("removed-items", JSON.stringify(removedItems));
     },
   });
@@ -82,8 +106,9 @@ const LocalStorage = () => {
   listenerMiddleware.startListening({
     actionCreator: restoreItem,
     effect: async (action, listenerApi) => {
-      const allItems = listenerApi.getState().shoplist.allItems;
-      const removedItems = listenerApi.getState().shoplist.removedItems;
+      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const removedItems =
+        listenerApi.getState().shoplist.generalShoplist.removedItems;
       localStorage.setItem("shoplist", JSON.stringify(allItems));
       localStorage.setItem("removed-items", JSON.stringify(removedItems));
     },
@@ -108,29 +133,18 @@ const LocalStorage = () => {
     },
   });
 
-  listenerMiddleware.startListening({
-    actionCreator: setSelectedListId,
-    effect: async (action, listenerApi) => {
-      localStorage.setItem("selected-list-id", JSON.stringify(action.payload));
-    },
-  });
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchLocalData = async () => {
-      const excludeTags = getExcludeTags();
-      const includeTags = getIncludeTags();
-      const mealsInPlan = getMealsInPlan();
       const shoplist = getLocalShoplist();
       const removedItems = getLocalRemovedItems();
-      const selectedListId = getLocalSelectedListId();
       const affordableDishes = getLocalAffordableDishes();
       const popularDishes = getLocalPopularDishes();
       const quickDishes = getLocalQuickDishes();
-      dispatch(saveTags({ excludeTags, includeTags, mealsInPlan }));
+      const selectedTab = getLocalSelectedTab();
       dispatch(setData({ allItems: shoplist, removedItems: removedItems }));
-      dispatch(setSelectedListId(selectedListId));
+      dispatch(setSelectedTab(selectedTab));
       dispatch(
         loadLocalData({
           affordable: affordableDishes,
