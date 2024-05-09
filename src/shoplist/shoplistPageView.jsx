@@ -34,7 +34,9 @@ const ShoplistPageView = (props) => {
       return (
         <div className="flex justify-between  w-full">
           <div className="ml-2 flex-col justify-between w-full">
-            <div className="text-[12px] font-normal text-cerulean">shopping list name</div>
+            <div className="text-[12px] font-normal text-cerulean">
+              shopping list name
+            </div>
             <input
               className="h-8  border-b-[2px] border-yellowGreen text-gunmetal font-semibold outline-none max-w-[70%] bg-whiteSmoke"
               type="text"
@@ -51,15 +53,14 @@ const ShoplistPageView = (props) => {
             SAVE
           </button>
         </div>
-
-
-
       );
     } else {
       return (
         <div className="flex justify-between items-center w-full">
-        <div className="ml-2 text-base font-normal text-cerulean">Log in to save the meal plan in Menumatic, or download as PDF.</div>
-        {PDFDownloadButton()}
+          <div className="ml-2 text-base font-normal text-cerulean">
+            Log in to save the meal plan in Menumatic, or download as PDF.
+          </div>
+          {PDFDownloadButton()}
         </div>
       );
     }
@@ -89,7 +90,11 @@ const ShoplistPageView = (props) => {
               className="m-1 p-1 w-40 h-12 border border-gray-500 rounded-md bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
               id="exportPDF"
               type="exportPDF"
-              onClick={function(){ generateShoppingListPDFLink(transformallItemsIntoStringArray(props.allItems))} }
+              onClick={function () {
+                generateShoppingListPDFLink(
+                  transformallItemsIntoStringArray(props.allItems)
+                );
+              }}
             >
               Export PDF
             </button>
@@ -103,31 +108,34 @@ const ShoplistPageView = (props) => {
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
-          key={index}
+          key={`shop${index}`}
           className="flex w-full mb-2 flex-row items-center justify-between "
         >
           <button
             onClick={() => props.removeItem(ingr)}
             className=" peer border-2 border-black-300 h-6 aspect-square rounded-[100px] font-bold text-whiteSmoke transition-all duration-700 ease-in-out hover:bg-yellowGreen"
-          >
-            
-          </button>
+          ></button>
           <div className="flex w-full   flex-row peer-hover:line-through">
-            {ingr.measures.map((measure) => {
-              
+            {ingr.measures.map((measure, index) => {
               return (
-                <div className="flex  w-full  ">
-                  <div className="w-[50%] self-start text-center">{measure.amount > 10 ? Math.round(measure.amount) : parseFloat(measure.amount.toFixed(2))}</div>
+                <div className="flex  w-full  " key={`shoplis${index}`}>
+                  <div className="w-[50%] self-start text-center">
+                    {measure.amount > 10
+                      ? Math.round(measure.amount)
+                      : parseFloat(measure.amount.toFixed(2))}
+                  </div>
                   <div className="w-[50%] self-end pl-1">{measure.unit}</div>
                 </div>
               );
             })}
           </div>
-          <div className="peer-hover:line-through w-[65%] max-w-[180px] self-end text-start  ">{ingr.name}</div>
+          <div className="peer-hover:line-through w-[65%] max-w-[180px] self-end text-start  ">
+            {ingr.name}
+          </div>
         </div>
       ));
     } else if (ing.ingredients.length === 0) {
-      return <div></div>;
+      return <> </>;
     }
   };
 
@@ -135,30 +143,37 @@ const ShoplistPageView = (props) => {
     if (ing.ingredients.length > 0) {
       return ing.ingredients.map((ingr, index) => (
         <div
-          key={index}
+          key={`ingr${index}`}
           className="flex w-full items-center justify-between flex-row text-gray-500"
         >
           <button
             onClick={() => props.restoreItem(ingr)}
             className=" border-2 border-yellowGreen bg-yellowGreen h-6 aspect-square rounded-[100px] font-bold transition-all duration-700 ease-in-out hover:bg-white"
-          >
-            
-          </button>
-          
-            {ingr.measures.map((measure, index) => {
-              return (
-                <div className="flex w-full   flex-row ">
-                  <div className="w-[50%]  self-start text-center">{measure.amount > 10 ? Math.round(measure.amount) : parseFloat(measure.amount.toFixed(2))}</div>
-                  <div className="w-[50%] self-end pl-1">{measure.unit}</div>
+          ></button>
+
+          {ingr.measures.map((measure, index) => {
+            return (
+              <div
+                className="flex w-full   flex-row "
+                key={`ingredient${index}`}
+              >
+                <div className="w-[50%]  self-start text-center">
+                  {measure.amount > 10
+                    ? Math.round(measure.amount)
+                    : parseFloat(measure.amount.toFixed(2))}
                 </div>
-              );
-            })}
-          
-          <div className=" w-[65%] max-w-[180px] self-end text-start ">{ingr.name}</div>
+                <div className="w-[50%] self-end pl-1">{measure.unit}</div>
+              </div>
+            );
+          })}
+
+          <div className=" w-[65%] max-w-[180px] self-end text-start ">
+            {ingr.name}
+          </div>
         </div>
       ));
     } else if (ing.ingredients.length === 0) {
-      return <div></div>;
+      return <></>;
     }
   };
 
@@ -201,11 +216,7 @@ const ShoplistPageView = (props) => {
       return (
         <div className="w-full">
           <div className="flex items-center w-full justify-between border-b pb-2">
-            <div
-              className=" flex flex-row justify-between font-bold fon items-center w-full "
-
-            >
-
+            <div className=" flex flex-row justify-between font-bold fon items-center w-full ">
               {renderSaveButton()}
               {/* {pdfButtonCom()} */}
             </div>
@@ -229,7 +240,9 @@ const ShoplistPageView = (props) => {
 
   return (
     <div className="pt-32 p-4 font-outfit w-screen max-w-[1080px] min-w-[350px] lg:pl-8  lg:pr-80 ">
-      <h1 className="text-xxl text-gunmetal font-bold text-center mb-4">SHOPPING LIST</h1>
+      <h1 className="text-xxl text-gunmetal font-bold text-center mb-4">
+        SHOPPING LIST
+      </h1>
       {renderTheIngredientList()}
       {/* {overlay()} */}
     </div>

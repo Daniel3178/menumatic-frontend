@@ -5,7 +5,6 @@ import homePageSlice from "../homepage/homePageSlice";
 import shoplistSlice from "../shoplist/shoplistSlice";
 import filterPageSlice from "../menu/filterPageSlice";
 import userAccountSlice from "../signUp_page/userAccountSlice";
-import planListSlice from "../listOfStoredPlansRelated/plan_list/planListSlice";
 import planSlice from "../listOfStoredPlansRelated/plan_content/planSlice";
 import menumaticServerAPISlice from "./menumaticServerAPISlice";
 import menuSlice from "../menu/menuSlice";
@@ -18,7 +17,6 @@ export const store = configureStore({
     recommendation: recommendationSlice,
     filterPage: filterPageSlice,
     userAccount: userAccountSlice,
-    // planList: planListSlice,
     plan: planSlice,
     menu: menuSlice,
     menumaticServerApi: menumaticServerAPISlice,

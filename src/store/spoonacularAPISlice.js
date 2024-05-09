@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { options } from "../config/spoonacularApiConfig";
-import {spoonacularComplexSearchBaseURL,spoonacularRandomSearchBaseURL,spoonacularBulkSearchBaseURL } from "./APIConstants";
-
+import {
+  spoonacularComplexSearchBaseURL,
+  spoonacularRandomSearchBaseURL,
+  spoonacularBulkSearchBaseURL,
+} from "./APIConstants";
 
 export const searchBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiAsync",
   async (props) => {
-
-    const {excludeTags, includeTags} = props;
+    const { excludeTags, includeTags } = props;
     const customUrl = spoonacularRandomSearchBaseURL;
 
     if (includeTags.length) {
@@ -31,19 +33,18 @@ export const searchBySpoonacularApiAsync = createAsyncThunk(
 export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
   "spoonacularApi/searchComplexBySpoonacularApiAsync",
   async (props) => {
-
-    const {diet, intolerances, saveOptOverwrite} = props;
+    const { diet, intolerances, saveOptOverwrite } = props;
 
     const buildURL = (baseURL, params) => {
       const paramStrings = params.map((param) => `${param.key}=${param.value}`);
       const queryString = paramStrings.join("&");
       const fullURL = `${baseURL}?${queryString}`;
       return fullURL;
-    }
+    };
 
     const getRandomInt = (max) => {
       return Math.floor(Math.random() * max);
-    }
+    };
 
     const params = [
       { key: "query", value: "" },
@@ -63,16 +64,18 @@ export const searchComplexBySpoonacularApiAsync = createAsyncThunk(
     const generatedUrl = buildURL(spoonacularComplexSearchBaseURL, params);
     const response = await fetch(generatedUrl, options);
     const jsonResponse = await response.json();
-    
-    return {results:jsonResponse.results, saveOptOverwrite: saveOptOverwrite};
+
+    return {
+      results: jsonResponse.results,
+      saveOptOverwrite: saveOptOverwrite,
+    };
   }
 );
 
 export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
   "spoonacularApi/searchBySpoonacularApiBulkAsync",
   async (props, { dispatch }) => {
-
-    const ids = props.map(recipe => recipe.id);
+    const ids = props.map((recipe) => recipe.id);
 
     const customUrl = spoonacularBulkSearchBaseURL;
     const recipeIdString = ids.join();
@@ -82,36 +85,34 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
     const jsonResponse = await response.json();
 
     const findPortion = (id) => {
-      const portion = props.find(item => item.id === id);
+      const portion = props.find((item) => item.id === id);
       return portion ? portion.portions : undefined;
     };
 
-
-    const result = jsonResponse.map(recipe => ({
+    const result = jsonResponse.map((recipe) => ({
       portions: findPortion(recipe.id),
       result: recipe,
     }));
 
-    return {apiData: jsonResponse, userData: result};
+    return { apiData: jsonResponse, userData: result };
   }
 );
 
 const spoonacularApi = createSlice({
   name: "spoonacularApi",
   initialState: {
-
     // new
-    complexSearchPromise:{
+    complexSearchPromise: {
       data: [],
       state: "loading",
       error: null,
     },
-    bulkSearchPromise:{
+    bulkSearchPromise: {
       data: [],
       state: "loading",
       error: null,
     },
-    randomSearchPromise:{
+    randomSearchPromise: {
       data: [],
       state: "loading",
       error: null,
@@ -145,7 +146,7 @@ const spoonacularApi = createSlice({
         state.bulkSearchPromise.state = "loading";
       })
       .addCase(searchBySpoonacularApiBulkAsync.fulfilled, (state, action) => {
-        const {apiData} = action.payload;
+        const { apiData } = action.payload;
         state.bulkSearchPromise.data = apiData;
         state.bulkSearchPromise.state = "ready";
       })
@@ -158,11 +159,10 @@ const spoonacularApi = createSlice({
       .addCase(
         searchComplexBySpoonacularApiAsync.fulfilled,
         (state, action) => {
-          const {results, saveOptOverwrite} = action.payload;
-          if(saveOptOverwrite){
+          const { results, saveOptOverwrite } = action.payload;
+          if (saveOptOverwrite) {
             state.complexSearchPromise.data = results;
-          }
-          else{
+          } else {
             state.complexSearchPromise.data.push(...results);
           }
           state.complexSearchPromise.state = "ready";
@@ -173,20 +173,15 @@ const spoonacularApi = createSlice({
       });
   },
 });
-export const {
-  popFirstRecipe,
-  flushSpoonacularResults,
-} = spoonacularApi.actions;
+export const { popFirstRecipe, flushSpoonacularResults } =
+  spoonacularApi.actions;
 
-// new 
-export const getRandomSearchPromise = (state) => state.spoonacularApi.randomSearchPromise;
-export const getComplexSearchPromise = (state) => state.spoonacularApi.complexSearchPromise;
-export const getBulkSearchPromise = (state) => state.spoonacularApi.bulkSearchPromise;
+// new
+export const getRandomSearchPromise = (state) =>
+  state.spoonacularApi.randomSearchPromise;
+export const getComplexSearchPromise = (state) =>
+  state.spoonacularApi.complexSearchPromise;
+export const getBulkSearchPromise = (state) =>
+  state.spoonacularApi.bulkSearchPromise;
 
-// export const getApiResults = (state) => state.spoonacularApi.results;
-// export const getApiResultsState = (state) => state.spoonacularApi.resultsState;
-// export const getSavedRecipesState = (state) =>
-//   state.spoonacularApi.savedRecipesState;
-// export const getUserSavedRecipes = (state) =>
-//   state.spoonacularApi.userSavedRecipes;
 export default spoonacularApi.reducer;

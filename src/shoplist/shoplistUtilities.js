@@ -73,7 +73,6 @@ export const parseIngredients = (ingredients) => {
 
 export const generateShopListUtil = (props) => {
   const { payload } = props;
-  console.log("payload in custom func", payload);
   const tempItems = [];
   const updateOrAddItems = (props) => {
     props.forEach((prop) => {
@@ -94,7 +93,6 @@ export const generateShopListUtil = (props) => {
   payload.forEach((item) => {
     updateOrAddItems(calcPortionIngredients(item));
   });
-  console.log("tempItems", tempItems);
 
   const categorizedIngredients = [];
   tempItems.forEach((item) => {

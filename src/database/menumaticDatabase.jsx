@@ -10,8 +10,68 @@ import {
   searchBySpoonacularApiBulkAsync,
   searchComplexBySpoonacularApiAsync,
 } from "../store/spoonacularAPISlice";
+import { deleteMealPlan, deleteList } from "../store/menumaticServerAPISlice";
+import { popFirstRecipe } from "../store/spoonacularAPISlice";
+import { incrementLikesCounter } from "../homepage/homePageSlice";
 
 const MenumaticDatabase = () => {
+  listenerMiddleware.startListening({
+    actionCreator: deleteList,
+    effect: async (action, listenerApi) => {
+      try {
+        const userId = listenerApi.getState().userAccount.userId;
+        if (userId) {
+          listenerApi.dispatch(
+            deleteMealPlan({
+              userId: userId,
+              mealPlanId: action.payload.listId,
+            })
+          );
+        }
+      } catch (e) {
+        alert("Error in deleting list, server is down");
+      }
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: popFirstRecipe,
+    effect: async (action, listenerApi) => {
+      const complexSearchResult =
+        listenerApi.getState().spoonacularApi.complexSearchPromise.data;
+      if (complexSearchResult.length < 6) {
+        listenerApi.dispatch(
+          searchComplexBySpoonacularApiAsync({
+            intolerances:
+              listenerApi.getState().filterPage.apiPrefs.excludeTags
+                .paramsArray,
+            diet: listenerApi.getState().filterPage.apiPrefs.includeTags
+              .paramsArray,
+          })
+        );
+      }
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: incrementLikesCounter,
+    effect: async (action, listenerApi) => {
+      const complexSearchResult =
+        listenerApi.getState().spoonacularApi.complexSearchPromise.data;
+      if (complexSearchResult.length < 6 && complexSearchResult.length > 3) {
+        listenerApi.dispatch(
+          searchComplexBySpoonacularApiAsync({
+            intolerances:
+              listenerApi.getState().menu.filterPage.apiPrefs.excludeTags
+                .paramsArray,
+            diet: listenerApi.getState().menu.filterPage.apiPrefs.includeTags
+              .paramsArray,
+          })
+        );
+      }
+    },
+  });
+
   listenerMiddleware.startListening({
     actionCreator: setSelectedList,
     effect: async (action, listenerApi) => {
@@ -41,7 +101,6 @@ const MenumaticDatabase = () => {
             saveFoodPrefToMenumaticDb({ userId: userId, data: action.payload })
           );
         }
-        console.log("Complex search is called by listener");
         listenerApi.dispatch(
           searchComplexBySpoonacularApiAsync({
             intolerances: action.payload.excludeTags,
@@ -59,7 +118,6 @@ const MenumaticDatabase = () => {
     actionCreator: saveTagsByServer,
     effect: async (action, listenerApi) => {
       try {
-        console.log("Complex search is called by listener");
         listenerApi.dispatch(
           searchComplexBySpoonacularApiAsync({
             intolerances: action.payload.excludeTags,

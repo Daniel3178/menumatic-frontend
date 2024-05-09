@@ -6,7 +6,6 @@ const recommendation = createSlice({
   name: "recommendation",
   initialState: {
     recommendationList: [],
-    state: "loading",
     selectedTab: "Popular",
     affordableDishesList: {
       name: "Cheap",
@@ -32,13 +31,6 @@ const recommendation = createSlice({
     addToReocemmendationList: (state, action) => {
       state.recommendationList.push({ count: 1, result: action.payload });
     },
-
-    // flushRecommendationList: (state) => {
-    //   state.recommendationList = [];
-    //   state.affordableDishesList.dishes = [];
-    //   state.popularDishesList.dishes = [];
-    //   state.quickDishesList.dishes = [];
-    // },
     setSelectedTab: (state, action) => {
       state.selectedTab = action.payload;
     },
@@ -111,7 +103,6 @@ const recommendation = createSlice({
         if (state.recommendationList.length > 15) {
           state.recommendationList = [];
         }
-        console.log("recipe ", action.payload.recipe);
         state.recommendationList.push({
           portions: 1,
           result: action.payload.recipe,
@@ -132,7 +123,6 @@ const recommendation = createSlice({
  */
 export const {
   addToReocemmendationList,
-  // flushRecommendationList,
   setSelectedTab,
   updateCount,
   sortLikedDishes,
@@ -143,7 +133,6 @@ export const {
  */
 export const getRecommendationList = (state) =>
   state.recommendation.recommendationList;
-// export const getSelectedTab = (state) => state.recommendation.selectedTab;
 export const getAffordableDishesList = (state) =>
   state.recommendation.affordableDishesList.dishes;
 export const getQuickDishesList = (state) =>

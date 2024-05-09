@@ -36,11 +36,11 @@ const RecommendationPagePresenter = () => {
 
   return (
     <RecommendationPageView
-      goToShoplist={handleGoToShoplist}
-      updateCount={handleUpdateCount}
-      setSelectTab={handleSelectTab}
-      currentDishes={selectedTabDishes}
       currentTabName={selectedTabName}
+      currentDishes={selectedTabDishes}
+      setSelectTab={handleSelectTab}
+      updateCount={handleUpdateCount}
+      goToShoplist={handleGoToShoplist}
     />
   );
 };

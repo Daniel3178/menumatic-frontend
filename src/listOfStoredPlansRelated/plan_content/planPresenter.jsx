@@ -4,15 +4,15 @@ import { setSelectedRecipe } from "./planSlice";
 import { useNavigate } from "react-router-dom";
 import PlanView from "./planView";
 import {
-  getMenumaticSelecedList,getUserAllListPromise
+  getMenumaticSelecedList,
+  getUserAllListPromise,
 } from "../../store/menumaticServerAPISlice";
-
 
 const PlanPresenter = () => {
   const navigate = useNavigate();
-  const selectedList = useSelector(getMenumaticSelecedList); 
+  const selectedList = useSelector(getMenumaticSelecedList);
 
-  const {state: allListState} = useSelector(getUserAllListPromise);
+  const { state: allListState } = useSelector(getUserAllListPromise);
 
   const dispatch = useDispatch();
 
@@ -22,22 +22,21 @@ const PlanPresenter = () => {
 
   const handleNavigateBack = () => {
     navigate(-1);
-  }
+  };
 
   const handleNavigateToRecipe = (recipe) => {
-    // console.log("passed recipe", recipe)
-    dispatch(setSelectedRecipe(recipe))
-    navigate("/recipeDetails")
-  }
+    dispatch(setSelectedRecipe(recipe));
+    navigate("/recipeDetails");
+  };
 
   return (
     <PlanView
+      state={allListState}
       meal={selectedList.name}
       recipes={selectedList.recipes}
       goToShoplist={handleGoToShoplist}
-      state={allListState}
       navigateBack={handleNavigateBack}
-      navigateToRecipe= {handleNavigateToRecipe}
+      navigateToRecipe={handleNavigateToRecipe}
     />
   );
 };

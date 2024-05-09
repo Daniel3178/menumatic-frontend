@@ -81,22 +81,21 @@ const ShoplistPagePresenter = () => {
     navigate("/signin");
   };
 
-  console.log(allItemsGeneral);
   return (
     <ShoplistPageView
-      allItems={
-        location.state === "/recommendation" ? allItemsGeneral : allItemsUser
-      }
-      isLoggedIn={isLoggedIn}
-      saveMealPlan={handleSaveMealPlan}
-      navigateToLogin={handleNavigateToLogIn}
-      removeItem={handleRemoveItem}
-      restoreItem={handleRestoreItem}
       removedItems={
         location.state === "/recommendation"
           ? removedItemsGeneral
           : removedItemsUser
       }
+      allItems={
+        location.state === "/recommendation" ? allItemsGeneral : allItemsUser
+      }
+      isLoggedIn={isLoggedIn}
+      removeItem={handleRemoveItem}
+      restoreItem={handleRestoreItem}
+      saveMealPlan={handleSaveMealPlan}
+      navigateToLogin={handleNavigateToLogIn}
       // generatePDF = {handleGeneratePDF}
     />
   );
