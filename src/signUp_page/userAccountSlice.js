@@ -1,125 +1,110 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {auth} from "../config/firebaseConfig";
-import { getAuth,createUserWithEmailAndPassword, sendEmailVerification, signOut, deleteUser, reauthenticateWithCredential, EmailAuthCredential, EmailAuthProvider } from "firebase/auth";
-
+import { auth } from "../config/firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 
 export const deleteUserAsync = createAsyncThunk(
   "userAccountSlice/deleteUser",
-  async(payload) => {
+  async (payload) => {
     try {
-      const {currentUser} = auth;
-      console.log(payload)
-      console.log("HELLO")
-      const credentials = EmailAuthProvider.credential(payload.email, payload.password);
-      console.log(credentials)
-      reauthenticateWithCredential(currentUser, credentials).then(async() => {
-        await signOut(auth).then(async() => {
-          await deleteUser(currentUser).then(() => {
-            console.log("User deleted. OK!");
-            window.location.reload();
-          }).catch((error) => {
-            // An error ocurred
-            // ...
-          });
-        }).catch((error) => {})
-
-      })
-
-
+      const { currentUser } = auth;
+      const credentials = EmailAuthProvider.credential(
+        payload.email,
+        payload.password
+      );
+      reauthenticateWithCredential(currentUser, credentials).then(async () => {
+        await signOut(auth)
+          .then(async () => {
+            await deleteUser(currentUser)
+              .then(() => {
+                window.location.reload();
+              })
+              .catch((error) => {
+                // An error ocurred
+                // ...
+              });
+          })
+          .catch((error) => {});
+      });
     } catch (error) {
       console.log(error.message);
     }
   }
 );
 
-// deleteUser(auth.currentUser).then(() => {
-//   // User deleted.
-// }).catch((error) => {
-//   // An error ocurred
-//   // ...
-// });
-
-
 export const signUpAsync = createAsyncThunk(
-    "userAccountSlice/signUp",
-    async (payload) => {
-      try {
-        const userCredentials = await createUserWithEmailAndPassword(
-          auth,
-          payload.email,
-          payload.password
-        ).then(async (userCredential) => {
-          const user = userCredential.user;
-         await sendEmailVerification(user).then(() => {
+  "userAccountSlice/signUp",
+  async (payload) => {
+    try {
+      await createUserWithEmailAndPassword(
+        auth,
+        payload.email,
+        payload.password
+      ).then(async (userCredential) => {
+        const user = userCredential.user;
+        await sendEmailVerification(user).then(() => {
           signOut(auth)
-          .then(() => {
-            // alert(`You've successfully signed out!`);
-            // console.log("User signed out after creating account!");
-            navigate("/");
-          })
-          .catch((err) => {
-            // console.log(err);
-          });
-         });
-         alert("Verification email sent! Please verify your email before logging in!");
+            .then(() => {
+              navigate("/");
+            })
+            .catch((err) => {});
         });
-
-        // return {
-        //   email: userCredentials.user.email,
-        //   userId: userCredentials.user.uid,
-        // };
-      } catch (error) {
-        console.log(error.message);
-        if (error.message === "Firebase: Error (auth/email-already-in-use).") {
-          alert("Email already in use! Try another one!");
-        } else {
-          alert("Something went wrong! Try again!");
-        }
-      }
-    }
-  );
-
-  const userAccountSlice = createSlice({
-    name: "userAccount",
-    initialState: {
-      username: null,
-      email: null,
-      userId: null,
-      isLoggedIn: false,
-      status: "",
-    },
-    reducers: {
-      signInCurrentUser(state, action) {
-        state.email = action.payload.email;
-        state.userId = action.payload.userId;
-        state.isLoggedIn = true;
-        state.status = "Signed in";
-      },
-      signOutCurrentUser(state, action) {
-        state.username = null;
-        state.email = null;
-        state.userId = null;
-        state.isLoggedIn = false;
-        state.status = "Signed out";
-      },
-    },
-    extraReducers: (builder) => {
-      builder.addCase(signUpAsync.fulfilled, (state, action) => {
-        // console.log("extra reducer", action.payload.email, action.payload.userId)
-        // state.email = action.payload.email;
-        // state.userId = action.payload.userId;
-        // console.log(state.email, state.userId);
         alert(
-          `You've successfully created an account!`
+          "Verification email sent! Please verify your email before logging in!"
         );
       });
-    },
-  });
+    } catch (error) {
+      console.log(error.message);
+      if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+        alert("Email already in use! Try another one!");
+      } else {
+        alert("Something went wrong! Try again!");
+      }
+    }
+  }
+);
 
-  export const { signInCurrentUser, signOutCurrentUser } =
+const userAccountSlice = createSlice({
+  name: "userAccount",
+  initialState: {
+    username: null,
+    email: null,
+    userId: null,
+    isLoggedIn: false,
+    status: "",
+  },
+  reducers: {
+    signInCurrentUser(state, action) {
+      state.email = action.payload.email;
+      state.userId = action.payload.userId;
+      state.isLoggedIn = true;
+      state.status = "Signed in";
+    },
+    signOutCurrentUser(state, action) {
+      state.username = null;
+      state.email = null;
+      state.userId = null;
+      state.isLoggedIn = false;
+      state.status = "Signed out";
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(signUpAsync.fulfilled, (state, action) => {
+      alert(`You've successfully created an account!`);
+    });
+  },
+});
+
+export const { signInCurrentUser, signOutCurrentUser } =
   userAccountSlice.actions;
 
-  export default userAccountSlice.reducer;
+export default userAccountSlice.reducer;
 //getters
 export const getUsername = (state) => state.userAccount.username;
 export const getUserEmail = (state) => state.userAccount.email;

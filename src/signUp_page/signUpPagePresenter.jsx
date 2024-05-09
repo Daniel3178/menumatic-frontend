@@ -1,8 +1,8 @@
 import { signUpAsync } from "./userAccountSlice";
 import SingUpPageView from "./signUpPageView";
-import React from 'react'
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const SignUpPagePresenter = () => {
   const navigate = useNavigate();
@@ -15,8 +15,8 @@ const SignUpPagePresenter = () => {
     dispatch(signUpAsync({ email, password }));
     setEmail("");
     setPassword("");
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   return (
     <SingUpPageView
@@ -26,7 +26,7 @@ const SignUpPagePresenter = () => {
       setPassword={setPassword}
       signUp={handleSignUp}
     />
-  )
-}
+  );
+};
 
-export default SignUpPagePresenter
+export default SignUpPagePresenter;

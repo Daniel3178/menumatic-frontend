@@ -1,63 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import HomePageView from "./homePageView";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getApiResults,
-  searchBySpoonacularApiAsync,
-  searchComplexBySpoonacularApiAsync,
-  searchComplexBySpoonacularApiAsyncFoodPref,
-} from "../store/spoonacularAPISlice";
+import { getComplexSearchPromise } from "../store/spoonacularAPISlice";
 import {
   incrementLikesCounter,
   getLikesCounter,
   toggleInfoView,
   getShowInfo,
 } from "./homePageSlice";
-import {
-  getExcludeTags,
-  getIncludeTags,
-  getMealsInPlan,
-} from "../menu/filterPageSlice";
+import { getMealsInPlan } from "../menu/filterPageSlice";
 import { useNavigate } from "react-router-dom";
-import { objects } from "../assets/constObjects";
-import {
-  getApiResultsState,
-  popFirstRecipe,
-} from "../store/spoonacularAPISlice";
+import { popFirstRecipe } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
-import { getIsLoggedIn, getUserId } from "../signUp_page/userAccountSlice";
-import { flushRecommendationList } from "../recommendation_page/recommendationPageSlice";
-import { flushShoplist } from "../shoplist/shoplistSlice";
-import {getMenumaticStates, setUserFoodPrefState} from "../store/menumaticServerAPISlice";
-// import {getApiResultsState} from "../store/spoonacularAPISlice";
+
+import {
+  setStateRecommendBtn,
+  setStateRecommendDialog,
+} from "../menu/menuSlice";
 
 const HomePagePresenter = () => {
-
   const dispatch = useDispatch();
-  const apiResult = useSelector(getApiResults);
-  const likesCounter = useSelector(getLikesCounter); 
+  const likesCounter = useSelector(getLikesCounter);
   const showInfo = useSelector(getShowInfo);
-  const excludeTags = useSelector(getExcludeTags);
-  const includeTags = useSelector(getIncludeTags);
-  const apiResultsState = useSelector(getApiResultsState);
   const navigate = useNavigate();
   const mealsInPlan = useSelector(getMealsInPlan);
   const likeLimit = mealsInPlan * 2;
-  const userStatus = useSelector(getIsLoggedIn);
 
-
-  const {allListState, userFoodPrefState, excludedIngredientState} = useSelector(getMenumaticStates);
-  
+  const { data: complexSearchResult, state: complexSearchState } = useSelector(
+    getComplexSearchPromise
+  );
 
   const handleGetRandomReceipt = () => {
-    if (apiResult.length < 6) {
-      dispatch(
-        searchComplexBySpoonacularApiAsync({
-          intolerances: excludeTags,
-          diet: includeTags,
-        })
-      );
-    }
     dispatch(popFirstRecipe());
 
     //If info view is active, go back to photo view after dislike.
@@ -67,25 +40,25 @@ const HomePagePresenter = () => {
   };
 
   const handleLike = () => {
-    //dispatch(addToReocemmendationList(apiResult.recipes[0]))
-    if (apiResult.length < 6 && apiResult.length > 3) {
-      dispatch(
-        searchComplexBySpoonacularApiAsync({
-          intolerances: excludeTags,
-          diet: includeTags,
-        })
-      );
-    }
     if (likesCounter === 0) {
       dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
     }
+
+    if (likesCounter == mealsInPlan) {
+      dispatch(setStateRecommendBtn(true));
+      dispatch(setStateRecommendDialog(true));
+    }
+
     dispatch(
-      incrementLikesCounter({ recipe: apiResult[0], likeLimit: likeLimit })
+      incrementLikesCounter({
+        recipe: complexSearchResult[0],
+        likeLimit: likeLimit,
+      })
     );
+
     dispatch(popFirstRecipe());
 
-    //If info view is active, go back to photo view after like.
     if (showInfo) {
       dispatch(toggleInfoView());
     }
@@ -103,29 +76,19 @@ const HomePagePresenter = () => {
     dispatch(toggleInfoView());
   };
 
-  // Necessary for presenting a dish before user has pressed like the first time.
-  useEffect(() => {
-    dispatch(flushRecommendationList());
-    dispatch(flushShoplist());
-    
-  }, []);
-
-
   return (
     <div>
       <HomePageView
-        apiResults={apiResult}
-        apiResultsState={apiResultsState}
-        getRandomReceipt={handleGetRandomReceipt}
+        info={showInfo}
+        mealsInPlan={mealsInPlan}
+        likesCounter={likesCounter}
+        apiResults={complexSearchResult}
+        apiResultsState={complexSearchState}
         sendLike={handleLike}
         toggleInfoView={handleToggleInfoView}
-        navigateToFilterPage={handleNavigateToFilterPage}
+        getRandomReceipt={handleGetRandomReceipt}
         navigateToPlanList={handleNavigateToPlanList}
-        info={showInfo}
-
-
-        userStatus= {userStatus}
-        foodPrefState={userFoodPrefState}
+        navigateToFilterPage={handleNavigateToFilterPage}
       />
     </div>
   );
