@@ -1,7 +1,10 @@
 import React from "react";
 import HomePageView from "./homePageView";
 import { useDispatch, useSelector } from "react-redux";
-import { getComplexSearchPromise } from "../store/spoonacularAPISlice";
+import {
+  getComplexSearchPromise,
+  popFirstRecipe,
+} from "../store/spoonacularAPISlice";
 import {
   incrementLikesCounter,
   getLikesCounter,
@@ -10,7 +13,6 @@ import {
 } from "./homePageSlice";
 import { getMealsInPlan } from "../menu/filterPageSlice";
 import { useNavigate } from "react-router-dom";
-import { popFirstRecipe } from "../store/spoonacularAPISlice";
 import { sortLikedDishes } from "../recommendation_page/recommendationPageSlice";
 
 import {

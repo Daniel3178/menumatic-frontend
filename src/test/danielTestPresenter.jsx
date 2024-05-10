@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import DanielTestView from "./danielTestView";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserShopinglist } from "../store/menumaticServerAPISlice";
+import { fetchUserShopinglist } from "../integration/menumaticServerThunks";
 const DanielTestPresenter = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userAccount.userId);

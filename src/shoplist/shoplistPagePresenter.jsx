@@ -11,7 +11,7 @@ import {
 } from "./shoplistSlice";
 import { getSelectedTab } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../menu/userAccountSlice";
-import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice";
+import { saveShoplistToMenumaticDb } from "../integration/menumaticServerThunks";
 import { useNavigate, useLocation } from "react-router-dom";
 /**
  * ShoplistPagePresenter fetches and manages the state for the shopping list,

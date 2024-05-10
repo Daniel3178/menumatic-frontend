@@ -17,9 +17,6 @@ import {
   getMenuStatePassChange,
   getMenuStateRecommendBtn,
   getMenuStateRecommendDialog,
-} from "./menuSlice";
-
-import {
   setStateBase,
   setStateLogin,
   setStateSignup,
@@ -43,7 +40,7 @@ import {
   getMealsInPlan,
   saveTags,
 } from "./filterPageSlice";
-import { deleteUser } from "../store/menumaticServerAPISlice";
+import { deleteUser } from "../integration/menumaticServerThunks";
 
 const MenuPresenter = () => {
   const dispatch = useDispatch();

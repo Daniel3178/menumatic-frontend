@@ -6,8 +6,9 @@ import {
   signInCurrentUser,
   signOutCurrentUser,
 } from "../menu/userAccountSlice";
-import { fetchLocalFoodPref } from "./localStorage";
 import { saveTags } from "../menu/filterPageSlice";
+import { fetchLocalFoodPref } from "./localStorage";
+
 const FirebaseAuthentication = () => {
   const dispatch = useDispatch();
 
