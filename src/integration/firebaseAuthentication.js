@@ -8,6 +8,7 @@ import {
 } from "../menu/userAccountSlice";
 import { saveTags } from "../menu/filterPageSlice";
 import { fetchLocalFoodPref } from "./localStorage";
+
 const FirebaseAuthentication = () => {
   const dispatch = useDispatch();
 

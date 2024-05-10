@@ -17,9 +17,6 @@ import {
   getMenuStatePassChange,
   getMenuStateRecommendBtn,
   getMenuStateRecommendDialog,
-} from "./menuSlice";
-
-import {
   setStateBase,
   setStateLogin,
   setStateSignup,

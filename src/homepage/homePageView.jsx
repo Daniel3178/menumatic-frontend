@@ -1,8 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { dislike_btn, like_btn, clock_icon, noimage } from "../assets";
-import { getMealsInPlan } from "../menu/filterPageSlice";
-import { getLikesCounter } from "./homePageSlice";
 
 import TinderCard from "react-tinder-card";
 
