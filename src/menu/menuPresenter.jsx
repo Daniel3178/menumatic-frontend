@@ -43,7 +43,7 @@ import {
   getMealsInPlan,
   saveTags,
 } from "./filterPageSlice";
-import { deleteUser } from "../store/menumaticServerAPISlice";
+import { deleteUser } from "../integration/menumaticServerThunks";
 
 const MenuPresenter = () => {
   const dispatch = useDispatch();

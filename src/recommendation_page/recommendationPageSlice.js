@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementLikesCounter } from "../homepage/homePageSlice";
-import { saveShoplistToMenumaticDb } from "../store/menumaticServerAPISlice";
+import { saveShoplistToMenumaticDb } from "../integration/menumaticServerThunks";
 
 const recommendation = createSlice({
   name: "recommendation",

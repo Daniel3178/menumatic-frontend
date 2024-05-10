@@ -5,11 +5,11 @@ import {
   removeItemUtil,
 } from "./shoplistUtilities";
 
-import { searchBySpoonacularApiBulkAsync } from "../store/spoonacularAPISlice";
+import { searchBySpoonacularApiBulkAsync } from "../integration/spoonacularServerThunks";
 import {
   saveShoplistToMenumaticDb,
   fetchExcludedIngredients,
-} from "../store/menumaticServerAPISlice";
+} from "../integration/menumaticServerThunks";
 
 const shoplistSlice = createSlice({
   name: "Shoplist",

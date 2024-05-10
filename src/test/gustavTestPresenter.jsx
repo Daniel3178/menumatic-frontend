@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import GustavTestView from "./gustavTestView";
 import { useDispatch } from "react-redux";
 
-import { searchBySpoonacularApiBulkAsync } from "../store/spoonacularAPISlice";
+import { searchBySpoonacularApiBulkAsync } from "../integration/spoonacularServerThunks";
 
 const GustavTestPresenter = () => {
   const dispatch = useDispatch();

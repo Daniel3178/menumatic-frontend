@@ -1,22 +1,66 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { listenerMiddleware } from "../store/store";
+import { signInCurrentUser } from "../menu/userAccountSlice";
+import { popFirstRecipe } from "../store/spoonacularAPISlice";
+import { incrementLikesCounter } from "../homepage/homePageSlice";
+import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
+import { setSelectedList, deleteList } from "../store/menumaticServerAPISlice";
+import {
+  searchBySpoonacularApiBulkAsync,
+  searchComplexBySpoonacularApiAsync,
+} from "./spoonacularServerThunks";
+import {
+  removeItem,
+  restoreItem,
+  generateShoplist,
+  setData,
+} from "../shoplist/shoplistSlice";
+import {
+  loadLocalData,
+  setSelectedTab,
+  sortLikedDishes,
+} from "../recommendation_page/recommendationPageSlice";
 import {
   fetchUserFoodPref,
   fetchUserShopinglist,
   fetchExcludedIngredients,
   saveFoodPrefToMenumaticDb,
-  setSelectedList,
-} from "../store/menumaticServerAPISlice";
-import { saveTags, saveTagsByServer } from "../menu/filterPageSlice";
+  deleteMealPlan,
+} from "./menumaticServerThunks";
 import {
-  searchBySpoonacularApiBulkAsync,
-  searchComplexBySpoonacularApiAsync,
-} from "../store/spoonacularAPISlice";
-import { deleteMealPlan, deleteList } from "../store/menumaticServerAPISlice";
-import { popFirstRecipe } from "../store/spoonacularAPISlice";
-import { incrementLikesCounter } from "../homepage/homePageSlice";
-import { signInCurrentUser } from "../menu/userAccountSlice";
+  getLocalShoplist,
+  getLocalRemovedItems,
+  getLocalSelectedTab,
+  getLocalAffordableDishes,
+  getLocalPopularDishes,
+  getLocalQuickDishes,
+} from "./localStorage";
 
-const MenumaticDatabase = () => {
+const MenumaticListeners = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchLocalData = async () => {
+      const shoplist = getLocalShoplist();
+      const removedItems = getLocalRemovedItems();
+      const affordableDishes = getLocalAffordableDishes();
+      const popularDishes = getLocalPopularDishes();
+      const quickDishes = getLocalQuickDishes();
+      const selectedTab = getLocalSelectedTab();
+      dispatch(setData({ allItems: shoplist, removedItems: removedItems }));
+      dispatch(setSelectedTab(selectedTab));
+      dispatch(
+        loadLocalData({
+          affordable: affordableDishes,
+          popular: popularDishes,
+          quick: quickDishes,
+        })
+      );
+    };
+    fetchLocalData();
+  }, []);
+
   listenerMiddleware.startListening({
     actionCreator: signInCurrentUser,
     effect: async (action, listenerApi) => {
@@ -149,6 +193,77 @@ const MenumaticDatabase = () => {
       }
     },
   });
+
+  listenerMiddleware.startListening({
+    actionCreator: saveTags,
+    effect: async (action, listenerApi) => {
+      const { excludeTags, includeTags, mealsInPlan } = action.payload;
+      localStorage.setItem("include-tags", JSON.stringify(includeTags));
+      localStorage.setItem("exclude-tags", JSON.stringify(excludeTags));
+      localStorage.setItem("meals-in-plan", JSON.stringify(mealsInPlan));
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: generateShoplist,
+    effect: async (action, listenerApi) => {
+      console.log("Listening to generatedShoplist action");
+      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const removedItems =
+        listenerApi.getState().shoplist.generalShoplist.removedItems;
+      localStorage.setItem("shoplist", JSON.stringify(allItems));
+      localStorage.setItem("removed-items", JSON.stringify(removedItems));
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: setSelectedTab,
+    effect: async (action, listenerApi) => {
+      const selectedTab = action.payload;
+      localStorage.setItem("selected-tab", JSON.stringify(selectedTab));
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: removeItem,
+    effect: async (action, listenerApi) => {
+      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const removedItems =
+        listenerApi.getState().shoplist.generalShoplist.removedItems;
+      localStorage.setItem("shoplist", JSON.stringify(allItems));
+      localStorage.setItem("removed-items", JSON.stringify(removedItems));
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: restoreItem,
+    effect: async (action, listenerApi) => {
+      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const removedItems =
+        listenerApi.getState().shoplist.generalShoplist.removedItems;
+      localStorage.setItem("shoplist", JSON.stringify(allItems));
+      localStorage.setItem("removed-items", JSON.stringify(removedItems));
+    },
+  });
+
+  listenerMiddleware.startListening({
+    actionCreator: sortLikedDishes,
+    effect: async (action, listenerApi) => {
+      const affordableDishes =
+        listenerApi.getState().recommendation.affordableDishesList.dishes;
+      const popularDishes =
+        listenerApi.getState().recommendation.popularDishesList.dishes;
+      const quickDishesList =
+        listenerApi.getState().recommendation.quickDishesList.dishes;
+
+      localStorage.setItem(
+        "affordable-dishes",
+        JSON.stringify(affordableDishes)
+      );
+      localStorage.setItem("popular-dishes", JSON.stringify(popularDishes));
+      localStorage.setItem("quick-dishes", JSON.stringify(quickDishesList));
+    },
+  });
 };
 
-export default MenumaticDatabase;
+export default MenumaticListeners;

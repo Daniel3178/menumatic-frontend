@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUserFoodPref } from "../store/menumaticServerAPISlice";
+import { fetchUserFoodPref } from "../integration/menumaticServerThunks";
 
 export const filterPage = createSlice({
   name: "filterPage",
