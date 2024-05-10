@@ -1,23 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RequestOptFactory } from "../config/menumaticApiConfig";
-const url = "http://localhost:8080/api/user/create/";
-const deleteUrl = "http://localhost:8080/api/mealplan/delete/";
+import {
+  menumaticServerBaseURL,
+  RequestOptFactory,
+} from "../config/menumaticApiConfig";
 
 export const saveShoplistToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveShoplistToMenumaticDb",
   async (info, { dispatch }) => {
-    const userId = info.userId;
-    const data = info.data;
-    const excluded = info.excluded;
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "User-id": userId,
-    //   },
-    //   body: JSON.stringify(data),
-    // };
-
+    const { userId, data, excluded } = info;
+    const url = menumaticServerBaseURL + "user/create/";
     const options = RequestOptFactory.createPostOptWithUserId(userId, data);
 
     try {
@@ -37,8 +28,6 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
 export const saveFoodPrefToMenumaticDb = createAsyncThunk(
   "menumaticServerApi/saveFoodPrefToMenumaticDb",
   async (info) => {
-    const userId = info.userId;
-    const data = info.data;
     const parseData = (dataP) => {
       const result = [];
       dataP.includeTags.map((tag) => {
@@ -50,20 +39,16 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
       result.push(`mealsInPlan-${dataP.mealsInPlan}`);
       return result;
     };
-    const newData = parseData(data);
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "User-id": userId,
-    //   },
-    //   body: JSON.stringify(newData),
-    // };
-    const options = RequestOptFactory.createPostOptWithUserId(userId, newData);
 
-    const custUrl = "http://localhost:8080/api/food-preferences/set/";
+    const { userId, data } = info;
+    const url = menumaticServerBaseURL + "food-preferences/set/";
+    const options = RequestOptFactory.createPostOptWithUserId(
+      userId,
+      parseData(data)
+    );
+
     try {
-      await fetch(custUrl, options);
+      await fetch(url, options);
     } catch (error) {
       alert("Saving failed, server is down");
       return error;
@@ -73,42 +58,31 @@ export const saveFoodPrefToMenumaticDb = createAsyncThunk(
 
 export const deleteMealPlan = createAsyncThunk(
   "menumaticServerApi/deleteMealPlan",
-  async (info, { dispatch }) => {
-    const userId = info.userId;
-    const mealPlanId = info.mealPlanId;
-    // const options = {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "User-id": userId,
-    //   },
-    //   body: JSON.stringify({ mealplanId: mealPlanId }),
-    // };
+  async (info) => {
+    const { userId, mealPlanId } = info;
+
+    const url = menumaticServerBaseURL + "mealplan/delete/";
     const options = RequestOptFactory.createDeleteOptForMealPlan(
       userId,
       mealPlanId
     );
-    await fetch(deleteUrl, options);
+
+    await fetch(url, options);
     if (!response.ok) {
       throw new Error("Failed to delete the meal plan.");
     }
   }
 );
 
-//TODO: The method should be delete
 export const deleteUser = createAsyncThunk(
   "menumaticServerApi/deleteMealPlan",
   async (info) => {
-    const userId = info.userId;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "User-id": userId,
-      },
-    };
-    const deleteUserUrl = "http://localhost:8080/api/user/delete/";
-    await fetch(deleteUserUrl, options);
+    const { userId } = info;
+
+    const url = menumaticServerBaseURL + "user/delete/";
+    const options = RequestOptFactory.createDeleteOptWithUserId(userId);
+
+    await fetch(url, options);
     if (!response.ok) {
       throw new Error("Failed to delete the meal plan.");
     }
@@ -118,11 +92,6 @@ export const deleteUser = createAsyncThunk(
 export const saveExcludedIngredients = createAsyncThunk(
   "menumaticServerApi/saveExcludedIngredients",
   async (info) => {
-    const customUrl =
-      "http://localhost:8080/api/mealplan/excluded-ingredients/set/";
-    const mealplanId = info.mealplanId;
-    const data = info.excluded;
-
     const extractIngredientsName = (ingr) => {
       const result = [];
       ingr.map((each) => {
@@ -132,40 +101,27 @@ export const saveExcludedIngredients = createAsyncThunk(
       });
       return result;
     };
-    const ingredients = extractIngredientsName(data);
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "mealplan-id": mealplanId,
-    //   },
-    //   body: JSON.stringify(ingredients),
-    // };
+
+    const { mealplanId, excluded: data } = info;
+
+    const url = menumaticServerBaseURL + "mealplan/excluded-ingredients/set/";
     const options = RequestOptFactory.createPostOptForExclIngr(
       mealplanId,
-      ingredients
+      extractIngredientsName(data)
     );
 
-    await fetch(customUrl, options);
+    await fetch(url, options);
   }
 );
 
 export const fetchExcludedIngredients = createAsyncThunk(
   "menumaticServerApi/fetchExcludedIngredients",
   async (info) => {
-    const customUrl =
-      "http://localhost:8080/api/mealplan/excluded-ingredients/get/";
     const mealplanId = info;
-
-    // const options = {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "mealplan-id": mealplanId,
-    //   },
-    // };
+    const url = menumaticServerBaseURL + "mealplan/excluded-ingredients/get/";
     const options = RequestOptFactory.createGetOptWithMealPlanId(mealplanId);
-    const response = await fetch(customUrl, options);
+
+    const response = await fetch(url, options);
     const data = await response.json();
 
     return { mealplanId: mealplanId, ingredients: data };
@@ -174,58 +130,48 @@ export const fetchExcludedIngredients = createAsyncThunk(
 
 export const fetchUserShopinglist = createAsyncThunk(
   "menumaticServerApi/fetchUserShopinglist",
-  async (info, { dispatch }) => {
-    const customUrl = "http://localhost:8080/api/user/mealplans/";
+  async (info) => {
     const userId = info;
-    // const options = {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "User-id": userId,
-    //   },
-    // };
+    const url = menumaticServerBaseURL + "user/mealplans/";
     const options = RequestOptFactory.createGetOptWithUserId(userId);
-    console.log("Fetching user shopping list is CALLED");
-    const response = await fetch(customUrl, options);
+    const response = await fetch(url, options);
+    const data = await response.json();
 
     if (!response.ok) {
       throw new Error("Failed to fetch user shopList");
     }
-    return await response.json();
+    return data;
   }
 );
 
 export const fetchUserFoodPref = createAsyncThunk(
   "menumaticServerApi/fetchUserFoodPref",
-  async (info, { dispatch }) => {
-    const customUrl = "http://localhost:8080/api/food-preferences/get/";
+  async (info) => {
+    const splitData = (data) => {
+      const includeList = [];
+      const excludeList = [];
+      let mealsInPlan = 7;
+      data.forEach((item) => {
+        const [type, value] = item.split("-");
+        if (type === "include") {
+          includeList.push(value);
+        } else if (type === "exclude") {
+          excludeList.push(value);
+        } else if (type === "mealsInPlan") {
+          mealsInPlan = value;
+        }
+      });
+      return { includeList, excludeList, mealsInPlan };
+    };
+
     const userId = info;
-    // const options = {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "User-id": userId,
-    //   },
-    // };
+    const url = menumaticServerBaseURL + "food-preferences/get/";
     const options = RequestOptFactory.createGetOptWithUserId(userId);
 
-    const response = await fetch(customUrl, options);
+    const response = await fetch(url, options);
     const fetchedData = await response.json();
 
-    const includeList = [];
-    const excludeList = [];
-    let mealsInPlan = 7;
-
-    fetchedData.forEach((item) => {
-      const [type, value] = item.split("-");
-      if (type === "include") {
-        includeList.push(value);
-      } else if (type === "exclude") {
-        excludeList.push(value);
-      } else if (type === "mealsInPlan") {
-        mealsInPlan = value;
-      }
-    });
+    const { includeList, excludeList, mealsInPlan } = splitData(fetchedData);
 
     if (!response.ok) {
       throw new Error("Failed to fetch user shopList");
