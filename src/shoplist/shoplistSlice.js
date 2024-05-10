@@ -69,8 +69,8 @@ const shoplistSlice = createSlice({
     restoreItem: (state, action) => {
       const { allItems, removedItems } = restoreItemUtil({
         payload: action.payload,
-        allItems: state.allItems,
-        removedItems: state.removedItems,
+        allItems: state.generalShoplist.allItems,
+        removedItems: state.generalShoplist.removedItems,
       });
       state.generalShoplist.allItems = allItems;
       state.generalShoplist.removedItems = removedItems;
