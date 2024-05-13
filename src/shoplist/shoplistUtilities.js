@@ -18,7 +18,7 @@
  * with its name, calculated amount, and unit.
  *
  */
-const calcPortionIngredients = (meal) => {
+export const calcPortionIngredients = (meal) => {
   const {
     portions,
     result: { servings, extendedIngredients: ingredients },
