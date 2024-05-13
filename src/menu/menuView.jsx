@@ -272,7 +272,7 @@ const MenuView = (props) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="relative overflow-scroll z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
           <button
             onClick={props.hideFilter}
             className="justify-start ml-6 mt-6"
@@ -596,7 +596,7 @@ const MenuView = (props) => {
   const menuState = () => {
     if (props.isLoggedIn) {
       return (
-        <div className="absolute top-0 right-0 h-screen overflow-auto w-72 bg-cerulean">
+        <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
           {settingsMenu()}
           {filterMenu()}
 
@@ -689,7 +689,7 @@ const MenuView = (props) => {
       );
     } else if (props.isLoggedIn == false) {
       return (
-        <div className="absolute overflow-auto top-0 right-0 h-screen w-72 bg-cerulean">
+        <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
           {filterMenu()}
           {loginMenu()}
           <div className="lg:hidden flex flex-row">
