@@ -13,6 +13,7 @@ import { getSelectedTab } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../menu/userAccountSlice";
 import { saveShoplistToMenumaticDb } from "../integration/menumaticServerThunks";
 import { useNavigate, useLocation } from "react-router-dom";
+import { getBulkSearchPromise } from "../store/spoonacularAPISlice";
 /**
  * ShoplistPagePresenter fetches and manages the state for the shopping list,
  * and renders the ShoplistPageView component.
@@ -30,6 +31,7 @@ const ShoplistPagePresenter = () => {
   const isLoggedIn = useSelector(getIsLoggedIn);
   const userId = useSelector(getUserId);
   const location = useLocation();
+  const bulkSearchApiState = useSelector(getBulkSearchPromise).state
 
   const { dishes: selectedDishes } = useSelector(getSelectedTab);
 
@@ -95,6 +97,7 @@ const ShoplistPagePresenter = () => {
       restoreItem={handleRestoreItem}
       saveMealPlan={handleSaveMealPlan}
       navigateToLogin={handleNavigateToLogIn}
+      bulkSearchApiState={bulkSearchApiState}
     />
   );
 };
