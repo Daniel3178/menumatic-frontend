@@ -35,6 +35,7 @@ import {
   getLocalAffordableDishes,
   getLocalPopularDishes,
   getLocalQuickDishes,
+  flushLocalDishInfo,
 } from "./localStorage";
 
 const MenumaticListeners = () => {
@@ -119,6 +120,11 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: incrementLikesCounter,
     effect: async (action, listenerApi) => {
+      const counter = listenerApi.getState().homepage.likesCounter;
+      if (counter >= 1) {
+        flushLocalDishInfo();
+      }
+
       const complexSearchResult =
         listenerApi.getState().spoonacularApi.complexSearchPromise.data;
       if (complexSearchResult.length < 6 && complexSearchResult.length > 3) {
