@@ -120,13 +120,7 @@ const HomePageView = (props) => {
     if (props.apiResultsState === "ready" || props.apiResults.length > 1) {
       return (
         <div className="h-svh overflow-hidden w-screen pt-32 flex items-center justify-center">
-          <div className="portrait:hidden md:landscape:hidden">
-            <p className="text-gunmetal text-center font-outfit text-lg">
-              This experience is designed to be viewed in portrait. Please rotate your
-              device to view the site.
-            </p>
-          </div>
-          <div className="h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4 md:landscape:block landscape:hidden">
+          <div className="h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4">
             <div className="h-[80%] w-full relative">
               {props.apiResults
                 .slice(1, 2)
