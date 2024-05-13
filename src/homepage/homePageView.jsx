@@ -117,7 +117,7 @@ const HomePageView = (props) => {
   };
 
   const renderHomePage = () => {
-    if (props.apiResultsState === "ready") {
+    if (props.apiResultsState === "ready" || props.apiResults.length > 1) {
       return (
         <div className="h-svh overflow-hidden w-screen pt-32 flex items-center justify-center">
           <div className="h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4">
