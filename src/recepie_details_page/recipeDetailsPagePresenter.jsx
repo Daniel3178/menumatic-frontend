@@ -5,12 +5,14 @@ import { getSelectedRecipe } from "../listOfStoredPlansRelated/plan_content/plan
 import RecipeDetailsPageView from "./recepieDetailsPageView";
 import { getUserCurrentRecipes } from "../store/menumaticServerAPISlice";
 import { getBulkSearchPromise } from "../store/spoonacularAPISlice";
+import { normalizeIngrAmount } from "./recipeDetailsUtilites";
 
 const RecipeDetailsPagePresenter = () => {
   const selectedRecipes = useSelector(getUserCurrentRecipes);
   const recipeIndex = useSelector(getSelectedRecipe);
   const bulkSearchApiState = useSelector(getBulkSearchPromise).state
-  const selectedRecipe = selectedRecipes[recipeIndex];
+  const {result, portions} = selectedRecipes[recipeIndex];
+  const selectedRecipe =  normalizeIngrAmount(result, portions);
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {

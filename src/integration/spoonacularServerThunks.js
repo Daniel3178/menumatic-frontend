@@ -89,38 +89,13 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
       return portion ? portion.portions : undefined;
     };
 
-    const normalizeIngrAmount = (meal, portions) => {
-      const {id, imageType, title, analyzedInstructions,servings, extendedIngredients } =
-        meal;
-      const ingrArr = extendedIngredients.map((ingredient) => {
-        const { measures: {metric: {amount, unitShort}}, name, nameClean } = ingredient;
-        const calcAmount =
-          amount > 0.1 ? amount * (portions / servings) : amount;
-        return {
-          nameClean: nameClean || name,
-          measures: {
-            metric: {
-              amount: calcAmount,
-              unitShort: unitShort,
-            },
-          },
-        };
-      });
 
-      return {
-        id: id,
-        title: title,
-        imageType: imageType,
-        analyzedInstructions: analyzedInstructions,
-        extendedIngredients: ingrArr,
-      };
-    };
 
     const result = jsonResponse.map((recipe) => {
       const foundedPortions = findPortion(recipe.id);
       return {
         portions: foundedPortions,
-        result: normalizeIngrAmount(recipe, foundedPortions),
+        result: recipe ,
       };
     });
 
