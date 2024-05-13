@@ -65,6 +65,9 @@ export default {
         '125': '1.25',
         '150': '1.5',
       },
+      screens: {
+        'xs': '360px',
+      },
     },
   },
   plugins: [],

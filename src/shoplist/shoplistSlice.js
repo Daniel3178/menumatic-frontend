@@ -28,9 +28,11 @@ const shoplistSlice = createSlice({
     },
   },
   reducers: {
-    flushShoplist: (state, action) => {
-      state.allItems = [];
-      state.removedItems = [];
+    flushData: (state, action) => {
+      state.generalShoplist.allItems = [];
+      state.generalShoplist.removedItems = [];
+      state.userShoplistPromise.data.allItems = [];
+      state.userShoplistPromise.data.removedItems = [];
     },
     setData: (state, action) => {
       console.log(
@@ -159,5 +161,6 @@ export const {
   removeItem,
   restoreItem,
   setData,
+  flushData
 } = shoplistSlice.actions;
 export default shoplistSlice.reducer;

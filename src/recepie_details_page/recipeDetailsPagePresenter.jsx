@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { getSelectedRecipe } from "../listOfStoredPlansRelated/plan_content/planSlice";
 import RecipeDetailsPageView from "./recepieDetailsPageView";
 import { getUserCurrentRecipes } from "../store/menumaticServerAPISlice";
+import { getBulkSearchPromise } from "../store/spoonacularAPISlice";
 
 const RecipeDetailsPagePresenter = () => {
   const selectedRecipes = useSelector(getUserCurrentRecipes);
   const recipeIndex = useSelector(getSelectedRecipe);
+  const bulkSearchApiState = useSelector(getBulkSearchPromise).state
   const selectedRecipe = selectedRecipes[recipeIndex];
   const navigate = useNavigate();
 
@@ -27,6 +29,7 @@ const RecipeDetailsPagePresenter = () => {
       ingredients={selectedRecipe.result.extendedIngredients}
       instructions={selectedRecipe.result.analyzedInstructions[0].steps}
       navigateBack={handleNavigateBack}
+      bulkSearchApiState={bulkSearchApiState}
     />
   );
 };

@@ -59,7 +59,7 @@ const PlanListView = (props) => {
   };
 
   function renderList() {
-    return props.allLists.map((planData, index) => {
+    return props.allLists.slice().reverse().map((planData, index) => {
       return (
         <div key={index}>
           <RecepiePlanOverviewRow

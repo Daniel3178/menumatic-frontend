@@ -18,7 +18,7 @@ const ShoplistPageView = (props) => {
 
   const PDFDownloadButton = () => {
     return (
-      <div className="mr-2 p-3 w-40 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
+      <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
         {generateShoppingListPDFLink(props.allItems)}
       </div>
     );
@@ -231,6 +231,10 @@ const ShoplistPageView = (props) => {
           {renderIngredients(props.removedItems, showRestorableIngredients)}
         </div>
       );
+    } else if (props.bulkSearchApiState === "failed") {
+      return (
+      <p className="text-gray-700 text-center">Service is not available at the moment. Please try again later.</p>
+      )
     } else {
       return (
         <p className="text-gray-700 text-center">No shopping list available.</p>

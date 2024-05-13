@@ -58,6 +58,31 @@ const RecipeDetailsPageView = (props) => {
     });
   };
 
+  const renderRecipe = () => {
+    console.log(props.bulkSearchApiState)
+    if(props.bulkSearchApiState === "failed") {
+      return (
+        <p className="text-gray-700 text-center">Service is not available at the moment. Please try again later.</p>
+      )}else{
+        return(
+          <>
+          <div>
+          <p className="mb-8 text-3xl md:text-5xl font-outfit font-bold text-gunmetal tracking-wider">
+            {props.name}
+          </p>
+        </div>
+        <div>
+          {renderIntroSection()}
+          <div className="mt-8 mb-8">
+            {renderInstructionsSteps(props.instructions)}
+          </div>
+        </div>
+        </>
+        )
+        
+      }
+  }
+
   return (
     <div className="pt-32 flex w-screen lg:pl-8 lg:pr-80 justify-center">
       <div className=" pr-4 pl-4 max-w-[840px]">
@@ -70,17 +95,8 @@ const RecipeDetailsPageView = (props) => {
             <img src={backBlack} />
           </button>
         </div>
-        <div>
-          <p className="mb-8 text-3xl md:text-5xl font-outfit font-bold text-gunmetal tracking-wider">
-            {props.name}
-          </p>
-        </div>
-        <div>
-          {renderIntroSection()}
-          <div className="mt-8 mb-8">
-            {renderInstructionsSteps(props.instructions)}
-          </div>
-        </div>
+        {renderRecipe()}
+        
       </div>
     </div>
   );
