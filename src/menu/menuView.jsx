@@ -230,27 +230,26 @@ const MenuView = (props) => {
           >
             <img src={backBlue} />
           </button>
-          <div className="flex flex-col items-center place-content-center mt-10">
+          <div className="flex justify-center flex-col items-center place-content-center  mt-10">
             <button
               onClick={() => setPassChangeToggle(!passChangeToggle)}
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-cerulean text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+              className="tracking-wider mr-2 rounded-full bg-cerulean text-whiteSmoke text-lg font-outfit text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
-              <div className="place-content-center text-whiteSmoke text-lg font-outfit">
+              
                 CHANGE PASSWORD
-              </div>
+              
             </button>
             {passChangeToggle && (
               <HandleResetPassword handlePasswordReset={props.resetPassword} />
             )}
           </div>
-          <div className="flex flex-col items-center place-content-center mt-10">
+          <div className="flex justify-center flex-col items-center place-content-center mt-10">
             <button
               onClick={() => setDeleteAccountToggle(!deleteAccountToggle)}
-              className="tracking-wider mr-2 flex justify-center rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+              className="tracking-wider mr-2 text-whiteSmoke text-lg font-outfit rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
-              <div className="place-content-center text-whiteSmoke text-lg font-outfit">
+              
                 DELETE ACCOUNT
-              </div>
             </button>
             {deleteAccountToggle && (
               <HandleDeleteAccount handleDeleteAccount={props.deleteAccount} />
