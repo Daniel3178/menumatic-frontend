@@ -766,11 +766,11 @@ const MenuView = (props) => {
     <div>
       <div className="lg:hidden fixed top-0 right-0 ">
         <button className="mt-12 mr-12" onClick={props.showMenu}>
-          <div>
+          <div className="absolute top-10 right-11">
             {menuPing()}
-            <img src={menubtn} />
           </div>
-        </button>
+          <img src={menubtn} />
+          </button>
         {renderMenu()}
       </div>
       <div className="hidden lg:block fixed top-0 right-0 bg-cerulean">
