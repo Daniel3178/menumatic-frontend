@@ -125,20 +125,15 @@ const HomePageView = (props) => {
               {props.apiResults
                 .slice(1, 2)
                 .map((recipe) => (
-                  <TinderCard
+                  <div
                     className="h-full w-full absolute z-10"
-                    swipeRequirementType={"position"}
-                    swipeThreshold={100}
-                    key={props.apiResults}
-                    onSwipe={(dir) => swiped(dir)}
-                    onCardLeftScreen={() => outOfFrame(props.apiResults)}
                   >
                     <div className="flex justify-center h-full">
                       <div className="rounded-large w-full">
                         {conditionalRender(recipe)}
                       </div>
                     </div>
-                  </TinderCard>
+                  </div>
                 ))
                 .reverse()}
               {props.apiResults
@@ -150,6 +145,7 @@ const HomePageView = (props) => {
                     swipeThreshold={100}
                     key={props.apiResults}
                     onSwipe={(dir) => swiped(dir, dir)}
+                    preventSwipe={['up', 'down']}
                     onCardLeftScreen={() => outOfFrame(props.apiResults)}
                   >
                     <div className="flex justify-center h-full">
