@@ -626,7 +626,7 @@ const MenuView = (props) => {
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
             <div>
-              <button className="mt-10 hover:underline ">
+              <button onClick={props.navigateToPlan} className="mt-10 hover:underline ">
                 Latest meal plan
               </button>
             </div>

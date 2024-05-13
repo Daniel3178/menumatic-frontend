@@ -7,7 +7,7 @@ import {
   signUpAsync,
 } from "./userAccountSlice";
 import MenuView from "./menuView";
-
+import { setSelectedList } from "../store/menumaticServerAPISlice";
 import {
   getMenuStateBase,
   getMenuStateLogin,
@@ -45,10 +45,16 @@ import { deleteUser } from "../integration/menumaticServerThunks";
 const MenuPresenter = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const mealPlanID = useSelector((state) => state.menumaticServerApi.selectedList.id);
 
   const navigateToPlanList = () => {
     navigate("/plan_list");
   };
+
+  const navigateToPlan = () =>{
+    dispatch(setSelectedList({ id: mealPlanID }));
+    navigate("/plan");
+  }
 
   const navigateToRecommendation = () => {
     dispatch(sortLikedDishes(mealsInPlan));
@@ -194,6 +200,7 @@ const MenuPresenter = () => {
     <MenuView
       navigateToPlanList={navigateToPlanList}
       navigateToRecommendation={navigateToRecommendation}
+      navigateToPlan={navigateToPlan}
       isLoggedIn={isLoggedIn}
       stateBase={stateBase}
       stateLogin={stateLogin}
