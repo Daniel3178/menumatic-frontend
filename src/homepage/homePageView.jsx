@@ -58,10 +58,10 @@ const HomePageView = (props) => {
             </div>
           </div>
 
-          <div className="absolute bottom-0 right-0 pr-2 pb-4">
+          <div className="absolute bottom-0 right-0 pr-1 xs:pr-2 pb-4 xs:pb-4">
             <button
               onClick={props.toggleInfoView}
-              className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10"
+              className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-[8px] xs:text-sm text-bold hover:shadow-mid foucs:shadow-in p-2 xs:p-4 h-6 xs:h-10"
             >
               VIEW LESS
             </button>
@@ -87,24 +87,24 @@ const HomePageView = (props) => {
             }}
           />
           <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large h-[27%]">
-            <div className="pt-3 pl-2">
-              <p className="text-whiteSmoke font-outfit text-xl lg:text-3xl font-medium truncate">
+            <div className="pt-1 pl-1 xs:pt-3 xs:pl-2">
+              <p className="text-whiteSmoke font-outfit text-base xs:text-xl lg:text-3xl font-medium truncate">
                 {recipe.title}
               </p>
             </div>
-            <div className="absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-2">
+            <div className="absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-1 xs:p-2">
               <div className="flex space-x-2 items-center">
                 <div className="mt-2 ml-2 flex text-whiteSmoke">
                   <img src={clock_icon} className="pb-2" />
                 </div>
-                <div className="text-whiteSmoke font-outfit text-lg font-thin">
+                <div className="text-whiteSmoke font-outfit text-sm xs:text-lg font-thin">
                   {recipe.readyInMinutes} min
                 </div>
               </div>
               <div className="items-center flex justify-end">
                 <button
                   onClick={props.toggleInfoView}
-                  className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10"
+                  className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-[8px] xs:text-sm text-bold hover:shadow-mid foucs:shadow-in p-2 xs:p-4 h-6 xs:h-10"
                 >
                   VIEW MORE
                 </button>
