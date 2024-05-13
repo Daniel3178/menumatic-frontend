@@ -15,6 +15,7 @@ import {
   restoreItem,
   generateShoplist,
   setData,
+  flushData,
 } from "../shoplist/shoplistSlice";
 import {
   loadLocalData,
@@ -37,6 +38,7 @@ import {
   getLocalQuickDishes,
   flushLocalDishInfo,
 } from "./localStorage";
+import { list } from "postcss";
 
 const MenumaticListeners = () => {
   const dispatch = useDispatch();
@@ -120,9 +122,10 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: incrementLikesCounter,
     effect: async (action, listenerApi) => {
-      const counter = listenerApi.getState().homepage.likesCounter;
+      const counter = listenerApi.getState().homePage.likesCounter;
       if (counter >= 1) {
         flushLocalDishInfo();
+        listenerApi.dispatch(flushData());
       }
 
       const complexSearchResult =
