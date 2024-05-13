@@ -71,7 +71,6 @@ const PlanListView = (props) => {
       );
     });
   }
-  const errorMessage = "Server is down.";
 
   if (props.serverState === "loading") {
     return (
@@ -129,7 +128,6 @@ const PlanListView = (props) => {
           class="w-32 h-32 text-gunmetal mb-10 stroke-cerulean stroke-[1.75]"
         >
           {" "}
-          {/* Adjusted size and color here */}
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
