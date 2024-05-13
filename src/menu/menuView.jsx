@@ -235,9 +235,7 @@ const MenuView = (props) => {
               onClick={() => setPassChangeToggle(!passChangeToggle)}
               className="tracking-wider mr-2 rounded-full bg-cerulean text-whiteSmoke text-lg font-outfit text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
-              
-                CHANGE PASSWORD
-              
+              CHANGE PASSWORD
             </button>
             {passChangeToggle && (
               <HandleResetPassword handlePasswordReset={props.resetPassword} />
@@ -248,8 +246,7 @@ const MenuView = (props) => {
               onClick={() => setDeleteAccountToggle(!deleteAccountToggle)}
               className="tracking-wider mr-2 text-whiteSmoke text-lg font-outfit rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             >
-              
-                DELETE ACCOUNT
+              DELETE ACCOUNT
             </button>
             {deleteAccountToggle && (
               <HandleDeleteAccount handleDeleteAccount={props.deleteAccount} />
@@ -261,153 +258,163 @@ const MenuView = (props) => {
   };
 
   const filterMenu = () => {
-    if(props.stateFilter){
-    return (
-      <Transition
-        show={props.stateFilter}
-        enter="transition-opacity duration-150"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen tracking-wider text-cerulean animate-slide-in">
-          <button
-            onClick={props.hideFilter}
-            className="justify-start ml-6 mt-6"
-          >
-            <img src={backBlue} />
-          </button>
-          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">
-            FOOD PREFERENCE
-          </h1>{" "}
-          {/* Heading for food preference */}
-          <ul>
-            {" "}
-            {/* List of included tag switches */}
-            {includeTags.map(
-              (
-                ingredient,
-                index // Mapping through includeTags array
-              ) => (
-                <li key={index}>
-                  {" "}
-                  {/* Each tag */}
-                  <div className="inline-block w-32 mr-4 ml-6 mt-2">
-                    {" "}
-                    {/* Tag container */}
-                    <div className="flex font-outfit text-base justify-start">
-                      {ingredient}
-                    </div>{" "}
-                    {/* Tag name */}
-                  </div>
-                  <div className="inline-block mr-4">
-                    {" "}
-                    {/* Checkbox container */}
-                    <div className="flex items-end justify-end">
+    if (props.stateFilter) {
+      return (
+        <Transition
+          show={props.stateFilter}
+          enter="transition-opacity duration-150"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="relative z-1  top-0 right-0 h-screen w-72 bg-yellowGreen">
+            <div className=" h-[85%] overflow-y-scroll tracking-wider text-cerulean">
+              <button
+                onClick={props.hideFilter}
+                className="justify-start ml-6 mt-6"
+              >
+                <img src={backBlue} />
+              </button>
+              <h1 className="font-outfit font-bold text-lg ml-6 mt-6">
+                FOOD PREFERENCE
+              </h1>{" "}
+              {/* Heading for food preference */}
+              <ul>
+                {" "}
+                {/* List of included tag switches */}
+                {includeTags.map(
+                  (
+                    ingredient,
+                    index // Mapping through includeTags array
+                  ) => (
+                    <li key={index}>
                       {" "}
-                      {/* Checkbox position */}
-                      <label className="relative inline-flex cursor-pointer">
+                      {/* Each tag */}
+                      <div className="inline-block w-32 mr-4 ml-6 mt-2">
                         {" "}
-                        {/* Checkbox label */}
-                        <input
-                          type="checkbox"
-                          value={ingredient}
-                          checked={includedItems.includes(ingredient)}
-                          onChange={(event) => includeCheckboxHandler(event)} // On change event for inclusion
-                          className="peer sr-only"
-                        />
-                        <div className="peer h-4 w-11 rounded-full border bg-whiteSmoke after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-cerulean peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>{" "}
-                        {/* Styling for checkbox */}
-                      </label>
-                    </div>
-                  </div>
-                </li>
-              )
-            )}
-          </ul>
-          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">ALLERGIES</h1>{" "}
-          {/* Heading for allergies */}
-          <ul>
-            {" "}
-            {/* List of exclude tag switches */}
-            {excludeTags.map(
-              (
-                ingredient,
-                index // Mapping through excludeTags array
-              ) => (
-                <li key={index}>
-                  {" "}
-                  {/* Each tag */}
-                  <div className="inline-block w-32 mr-4 ml-6 mt-2">
-                    {" "}
-                    {/* Tag container */}
-                    <div className="flex font-outfit justify-start">
-                      {ingredient}
-                    </div>{" "}
-                    {/* Tag name */}
-                  </div>
-                  <div className="inline-block mr-4">
-                    {" "}
-                    {/* Checkbox container */}
-                    <div className="flex items-end justify-end">
+                        {/* Tag container */}
+                        <div className="flex font-outfit text-base justify-start">
+                          {ingredient}
+                        </div>{" "}
+                        {/* Tag name */}
+                      </div>
+                      <div className="inline-block mr-4">
+                        {" "}
+                        {/* Checkbox container */}
+                        <div className="flex items-end justify-end">
+                          {" "}
+                          {/* Checkbox position */}
+                          <label className="relative inline-flex cursor-pointer">
+                            {" "}
+                            {/* Checkbox label */}
+                            <input
+                              type="checkbox"
+                              value={ingredient}
+                              checked={includedItems.includes(ingredient)}
+                              onChange={(event) =>
+                                includeCheckboxHandler(event)
+                              } // On change event for inclusion
+                              className="peer sr-only"
+                            />
+                            <div className="peer h-4 w-11 rounded-full border bg-whiteSmoke after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-cerulean peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>{" "}
+                            {/* Styling for checkbox */}
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                  )
+                )}
+              </ul>
+              <h1 className="font-outfit font-bold text-lg ml-6 mt-6">
+                ALLERGIES
+              </h1>{" "}
+              {/* Heading for allergies */}
+              <ul>
+                {" "}
+                {/* List of exclude tag switches */}
+                {excludeTags.map(
+                  (
+                    ingredient,
+                    index // Mapping through excludeTags array
+                  ) => (
+                    <li key={index}>
                       {" "}
-                      {/* Checkbox position */}
-                      <label className="relative inline-flex cursor-pointer">
+                      {/* Each tag */}
+                      <div className="inline-block w-32 mr-4 ml-6 mt-2">
                         {" "}
-                        {/* Checkbox label */}
-                        <input
-                          type="checkbox"
-                          value={ingredient}
-                          checked={excludedItems.includes(ingredient)}
-                          onChange={(event) => excludeCheckboxHandler(event)} // On change event for exclusion
-                          className="peer sr-only"
-                        />
-                        <div className="peer h-4 w-11 rounded-full border bg-whiteSmoke after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-cerulean peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>{" "}
-                        {/* Styling for checkbox */}
-                      </label>
-                    </div>
-                  </div>
-                </li>
-              )
-            )}
-          </ul>
-          <h1 className="font-outfit font-bold text-lg ml-6 mt-6">
-            DISHES IN MEAL PLAN
-          </h1>{" "}
-          <div className="flex-col justify-center items-center ">
-            <label
-              htmlFor="myRange"
-              className="block ml-6 mb-2 text-sm font-outfit self-center ml-5"
-            >
-              {mealsInPlanSliderValue}
-            </label>
-            <input
-              value={mealsInPlanSliderValue}
-              onChange={handleSliderChange}
-              type="range"
-              min="1"
-              max="7"
-              className="ml-5 w-4/5 h-1 cursor-pointer bg-whiteSmoke border-none shadow-none accent-cerulean thumb-cerulean"
-              id="myRange"
-            />
+                        {/* Tag container */}
+                        <div className="flex font-outfit justify-start">
+                          {ingredient}
+                        </div>{" "}
+                        {/* Tag name */}
+                      </div>
+                      <div className="inline-block mr-4">
+                        {" "}
+                        {/* Checkbox container */}
+                        <div className="flex items-end justify-end">
+                          {" "}
+                          {/* Checkbox position */}
+                          <label className="relative inline-flex cursor-pointer">
+                            {" "}
+                            {/* Checkbox label */}
+                            <input
+                              type="checkbox"
+                              value={ingredient}
+                              checked={excludedItems.includes(ingredient)}
+                              onChange={(event) =>
+                                excludeCheckboxHandler(event)
+                              } // On change event for exclusion
+                              className="peer sr-only"
+                            />
+                            <div className="peer h-4 w-11 rounded-full border bg-whiteSmoke after:absolute after:-top-1 after:left-0 after:h-6 after:w-6 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-cerulean peer-checked:after:translate-x-full peer-focus:ring-green-300"></div>{" "}
+                            {/* Styling for checkbox */}
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                  )
+                )}
+              </ul>
+              <h1 className="font-outfit font-bold text-lg ml-6 mt-6">
+                DISHES IN MEAL PLAN
+              </h1>{" "}
+              <div className="flex-col justify-center items-center ">
+                <label
+                  htmlFor="myRange"
+                  className="block ml-6 mb-2 text-sm font-outfit self-center ml-5"
+                >
+                  {mealsInPlanSliderValue}
+                </label>
+                <input
+                  value={mealsInPlanSliderValue}
+                  onChange={handleSliderChange}
+                  type="range"
+                  min="1"
+                  max="7"
+                  className="ml-5 w-4/5 h-1 cursor-pointer bg-whiteSmoke border-none shadow-none accent-cerulean thumb-cerulean"
+                  id="myRange"
+                />
+              </div>
+            </div>
+            <div className="flex justify-center bottom-0 justify-center pb-4">
+              <div className="justify-center font-outfit text-whiteSmoke pb-2">
+                {/* Button to apply filters */}
+                <button
+                  onClick={applyFilterButton}
+                  className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-cerulean hover:shadow-mid"
+                  id="signup"
+                  type="submit"
+                >
+                  <div className="tracking-wider">APPLY</div>
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-center mt-10 font-outfit text-whiteSmoke">
-            {/* Button to apply filters */}
-            <button
-              onClick={applyFilterButton}
-              className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-cerulean hover:shadow-mid"
-              id="signup"
-              type="submit"
-            >
-              <div className="tracking-wider">APPLY</div>
-            </button>
-          </div>
-        </div>
-      </Transition>
-  
-    );}
+        </Transition>
+      );
+    }
   };
 
   const signupMenu = () => {
@@ -626,7 +633,10 @@ const MenuView = (props) => {
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
             <div>
-              <button onClick={props.navigateToPlan} className="mt-10 hover:underline ">
+              <button
+                onClick={props.navigateToPlan}
+                className="mt-10 hover:underline "
+              >
                 Latest meal plan
               </button>
             </div>
@@ -765,11 +775,9 @@ const MenuView = (props) => {
     <div>
       <div className="lg:hidden fixed top-0 right-0 ">
         <button className="mt-12 mr-12" onClick={props.showMenu}>
-          <div className="absolute top-10 right-11">
-            {menuPing()}
-          </div>
+          <div className="absolute top-10 right-11">{menuPing()}</div>
           <img src={menubtn} />
-          </button>
+        </button>
         {renderMenu()}
       </div>
       <div className="hidden lg:block fixed top-0 right-0 bg-cerulean">
