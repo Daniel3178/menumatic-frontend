@@ -148,6 +148,7 @@ const MenumaticListeners = () => {
     actionCreator: setSelectedList,
     effect: async (action, listenerApi) => {
       const { id } = action.payload;
+      localStorage.setItem("selected-list-id", JSON.stringify(id));
       const allUserList =
         listenerApi.getState().menumaticServerApi.userAllListPromise.data;
       const selectedList = allUserList.find((list) => list.id === id);

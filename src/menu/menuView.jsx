@@ -596,7 +596,7 @@ const MenuView = (props) => {
   const menuState = () => {
     if (props.isLoggedIn) {
       return (
-        <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
+        <div className="absolute top-0 right-0 h-screen overflow-auto w-72 bg-cerulean">
           {settingsMenu()}
           {filterMenu()}
 
@@ -626,7 +626,7 @@ const MenuView = (props) => {
           </div>
           <div className="ml-6 tracking-wider text-whiteSmoke text-xl font-outfit text-semiBold">
             <div>
-              <button className="mt-10 hover:underline ">
+              <button onClick={props.navigateToPlan} className="mt-10 hover:underline ">
                 Latest meal plan
               </button>
             </div>
@@ -689,7 +689,7 @@ const MenuView = (props) => {
       );
     } else if (props.isLoggedIn == false) {
       return (
-        <div className="absolute top-0 right-0 h-screen w-72 bg-cerulean">
+        <div className="absolute overflow-auto top-0 right-0 h-screen w-72 bg-cerulean">
           {filterMenu()}
           {loginMenu()}
           <div className="lg:hidden flex flex-row">
