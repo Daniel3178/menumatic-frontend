@@ -205,8 +205,8 @@ const MenuView = (props) => {
     if (props.stateRecommendBtn) {
       return (
         <span class="relative flex h-3 w-3">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-          <span class="inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellowGreen opacity-75"></span>
+          <span class="inline-flex rounded-full h-3 w-3 bg-yellowGreen"></span>
         </span>
       );
     }
@@ -666,7 +666,7 @@ const MenuView = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-whiteSmoke rounded-[20px] h-30 w-full">
+              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-yellowGreen rounded-[20px] h-30 w-full">
                 <div className="flex-col text-center justify-center">
                   <div className=" text-base mb-2 mt-2 leading-4">
                     Your first {props.mealsInPlan} liked dishes are available!
@@ -737,7 +737,7 @@ const MenuView = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-whiteSmoke rounded-[20px] h-30 w-full">
+              <div className="flex-col bg-gunmetal bg-opacity-50 border-2 border-yellowGreen rounded-[20px] h-30 w-full">
                 <div className="flex-col text-center justify-center">
                   <div className=" text-base mb-2 mt-2 leading-4">
                     Your {props.mealsInPlan} liked dishes are available!
