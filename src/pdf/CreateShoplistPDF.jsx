@@ -1,8 +1,8 @@
 /* The file's sections
-  * generate_Shopping_ListPDFLink section
-  * generate_Recepies_ListPDFLink section
-  * The deprecated CreatePDFForm
-*/
+ * generate_Shopping_ListPDFLink section
+ * generate_Recepies_ListPDFLink section
+ * The deprecated CreatePDFForm
+ */
 
 import React from "react";
 
@@ -72,14 +72,14 @@ const shoplistStyles = StyleSheet.create({
   },
 });
 
-//----------------- generate_Shopping_ListPDFLink section 
+//----------------- generate_Shopping_ListPDFLink section
 
 /* generate_RecipesList_PDFLink(recipes)
  * Pre:
-  * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
-  * fileName: The filename of the downloaded file, (needs to include file extension".pdf"!)
+ * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
+ * fileName: The filename of the downloaded file, (needs to include file extension".pdf"!)
  * Out:
-  * A react component (PDFDownloadLink) which generates a download link for the client.
+ * A react component (PDFDownloadLink) which generates a download link for the client.
  * Author:
  * Gustav Landberg <landbergg@outlook.com>
  * */
@@ -103,7 +103,11 @@ export function generateShoppingListPDFLink(
   return (
     <div>
       <PDFDownloadLink
-        document={<ShoppingListFrame shoplistCategoryAggregations={shoplistCategoryAggregations} />}
+        document={
+          <ShoppingListFrame
+            shoplistCategoryAggregations={shoplistCategoryAggregations}
+          />
+        }
         fileName={fileName}
       >
         {({ blob, url, loading, error }) =>
@@ -116,7 +120,7 @@ export function generateShoppingListPDFLink(
 
 /* ShopplingListFrame (ingredients)
  * Pre: A list of ingredients
-  * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
+ * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
  * Post: A Shopping list PDF documents
  * Author: Gustav Landberg <landbergg@outlook.com>
  * */
@@ -125,12 +129,18 @@ const ShoppingListFrame = ({ shoplistCategoryAggregations }) => (
     <Page size="A5" style={shoplistStyles.page}>
       <View>
         <Text style={shoplistStyles.mainbody}> by menumatic</Text>
-        <Text style={{
-          fontSize: 24,
-          textAlign: "center",
-          marginBottom: 20,
-        }}>Shopping List</Text>
-        <ShoplistBulletList shoplistCategoryAggregations={shoplistCategoryAggregations} />
+        <Text
+          style={{
+            fontSize: 24,
+            textAlign: "center",
+            marginBottom: 20,
+          }}
+        >
+          Shopping List
+        </Text>
+        <ShoplistBulletList
+          shoplistCategoryAggregations={shoplistCategoryAggregations}
+        />
       </View>
     </Page>
   </Document>
@@ -138,38 +148,52 @@ const ShoppingListFrame = ({ shoplistCategoryAggregations }) => (
 
 /* ShoplistBulletList(items, dot, stylesheet): the content inside the ShoplistBulletListFrame
  * Pre:
-  * items:the list of strings which should make up the bullets points
-  * These values have standard values in case that BulletList doesn't set any values for the specific attributes
-    * dot: the character for the dot which shall preface each point in the bullet list, can be empty
-    * stylesheet: the stylesheet which should be used (make sure that the relevant fields for ListItems are defined)
+ * items:the list of strings which should make up the bullets points
+ * These values have standard values in case that BulletList doesn't set any values for the specific attributes
+ * dot: the character for the dot which shall preface each point in the bullet list, can be empty
+ * stylesheet: the stylesheet which should be used (make sure that the relevant fields for ListItems are defined)
  * Post:
-  * A bullet list in a View (must be placed under Document->Page)
+ * A bullet list in a View (must be placed under Document->Page)
  * Author: Gustav Landberg <landbergg@outlook.com>
  * */
-const ShoplistBulletList = ({ shoplistCategoryAggregations, dot = "•", stylesheet = shoplistStyles }) => {
+const ShoplistBulletList = ({
+  shoplistCategoryAggregations,
+  dot = "•",
+  stylesheet = shoplistStyles,
+}) => {
   return (
     <View>
-      <View style={{
-        flexDirection: "row",
-        paddingHorizontal: 8,
-        paddingLeft: 50,
-        alignItems: "center",
-      }}>
-        <Text style={{
-          fontWeight: 'bold',
-          marginBottom: 20,
-          fontSize: 14,
-          marginRight: 8,
-          width: 200,
-        }}>Ingredient</Text>
-        <Text style={{
-          width: 60,
-          textAlign: 'right',
-          marginRight: 105,
-          fontWeight: 'bold',
-          marginBottom: 20,
-          fontSize: 14,
-        }}>Amount</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          paddingHorizontal: 8,
+          paddingLeft: 50,
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontWeight: "bold",
+            marginBottom: 20,
+            fontSize: 14,
+            marginRight: 8,
+            width: 200,
+          }}
+        >
+          Ingredient
+        </Text>
+        <Text
+          style={{
+            width: 60,
+            textAlign: "right",
+            marginRight: 105,
+            fontWeight: "bold",
+            marginBottom: 20,
+            fontSize: 14,
+          }}
+        >
+          Amount
+        </Text>
       </View>
 
       {shoplistCategoryAggregations.map((categoryAggregation) => (
@@ -181,10 +205,13 @@ const ShoplistBulletList = ({ shoplistCategoryAggregations, dot = "•", stylesh
       ))}
     </View>
   );
-}
+};
 
 // The components' deconstruction statements like ListItem's `{ children, dot = '•' }` extracts the desired attributes from props. The "dot = '•'" is just confusing and should be an initial constant
-const ShoplistBulletListCategorySectionFrame = ({ categoryAndIngredients, dot = '•' }) => {
+const ShoplistBulletListCategorySectionFrame = ({
+  categoryAndIngredients,
+  dot = "•",
+}) => {
   // Structure of each rowCategoryAggregation:
   /*
   {
@@ -197,39 +224,47 @@ const ShoplistBulletListCategorySectionFrame = ({ categoryAndIngredients, dot = 
           }
   }
   */
-  return(
+  return (
     <View>
-      <ShoplistCategorySectionTitle titleText={categoryAndIngredients.category}/>
-      {categoryAndIngredients.ingredients.map(ingredient => {
-          return(
-            <ShoplistBulletListRow ingredientName={ingredient.name} measures={ingredient.measures} />
-          )
+      <ShoplistCategorySectionTitle
+        titleText={categoryAndIngredients.category}
+      />
+      {categoryAndIngredients.ingredients.map((ingredient) => {
+        return (
+          <ShoplistBulletListRow
+            ingredientName={ingredient.name}
+            measures={ingredient.measures}
+          />
+        );
       })}
     </View>
-  )
-
+  );
 };
 
-const ShoplistCategorySectionTitle = ({titleText}) => {
-  return(
+const ShoplistCategorySectionTitle = ({ titleText }) => {
+  return (
     <View>
-      <Text style={{
-        fontWeight: "bold",
-        paddingLeft: "5px"
-      }}>
+      <Text
+        style={{
+          fontWeight: "bold",
+          paddingLeft: "5px",
+        }}
+      >
         {titleText}
       </Text>
     </View>
-  )
-}
+  );
+};
 
-const ShoplistBulletListRow = ({ingredientName, measures}) => {
+const ShoplistBulletListRow = ({ ingredientName, measures }) => {
   let measuresAsString = "";
-  measures.forEach(measure => {
-    measuresAsString = measuresAsString + `${Math.ceil((measure.amount*1000))/1000} ${measure.unit}, `
-  })
-  measuresAsString = measuresAsString.slice(0, measuresAsString.length-2) // removing the ", " at the end
-/*
+  measures.forEach((measure) => {
+    measuresAsString =
+      measuresAsString +
+      `${Math.ceil(measure.amount * 1000) / 1000} ${measure.unit}, `;
+  });
+  measuresAsString = measuresAsString.slice(0, measuresAsString.length - 2); // removing the ", " at the end
+  /*
 style={{
         width: 60,
         ,
@@ -239,11 +274,11 @@ style={{
 */
   return (
     <View style={shoplistStyles.listItem}>
-      <Text style={shoplistStyles.bullet}>• {ingredientName} </Text> 
+      <Text style={shoplistStyles.bullet}>• {ingredientName} </Text>
       <Text>{measuresAsString} </Text>
     </View>
   );
-}
+};
 
 //----------------- generate_Recipes_ListPDFLink section
 const recipeStyle = StyleSheet.create({
@@ -290,11 +325,11 @@ const recipeStyle = StyleSheet.create({
 
 /* generateRecipesListPDFLink(recipes)
  * Pre:
-  * recipes: a list of format
-  *  [[title, [ingredient1, ingredient2, ...], [instruction1, instruction2, ...]],...]
-  *  where title, ingredientX, instructionX are strings containing the corresponding information
+ * recipes: a list of format
+ *  [[title, [ingredient1, ingredient2, ...], [instruction1, instruction2, ...]],...]
+ *  where title, ingredientX, instructionX are strings containing the corresponding information
  * Post:
-  * A react component (PDFDownloadLink) which generates a download link for the client.
+ * A react component (PDFDownloadLink) which generates a download link for the client.
  * Author:
  * Gustav Landberg <landbergg@outlook.com>
  * */
@@ -340,25 +375,31 @@ const Recipe = ({ title, ingredients, instructions }) => (
     </View>
     <View style={recipeStyle.section}>
       <Text style={recipeStyle.headline2}>Ingredients:</Text>
-      <ShoplistBulletList bulletListContent={ingredients} stylesheet={recipeStyle} />
+      <ShoplistBulletList
+        bulletListContent={ingredients}
+        stylesheet={recipeStyle}
+      />
     </View>
     <View style={recipeStyle.section}>
       <Text style={recipeStyle.headline2}>Instructions:</Text>
-      <ShoplistBulletList bulletListContent={instructions} dot={""} stylesheet={recipeStyle} />
+      <ShoplistBulletList
+        bulletListContent={instructions}
+        dot={""}
+        stylesheet={recipeStyle}
+      />
     </View>
   </Page>
 );
-
 
 // --------------------- The deprecated CreatePDFForm
 
 /* CreatePDFForm
  * This function is for testing. Remove when no longer necessary
  * **Deprecated**
-*  Pre: none
-*  Post: CreatePDFForm : A simple component which will generate downloads links to two generated PDF documents
-*  Author: Gustav Landberg <landbergg@outlook.com>
-*/
+ *  Pre: none
+ *  Post: CreatePDFForm : A simple component which will generate downloads links to two generated PDF documents
+ *  Author: Gustav Landberg <landbergg@outlook.com>
+ */
 function CreatePDFForm() {
   const [inputText, setInputText] = React.useState("");
 
@@ -367,7 +408,6 @@ function CreatePDFForm() {
   }
 
   var ingredientsList = inArrayExample.map((x) => x.join(" "));
-  // console.log(ingredientsList);
   return (
     <div>
       <PDFDownloadLink

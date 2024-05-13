@@ -18,7 +18,7 @@
  * with its name, calculated amount, and unit.
  *
  */
-export const calcPortionIngredients = (meal) => {
+const calcPortionIngredients = (meal) => {
   const {
     portions,
     result: { servings, extendedIngredients: ingredients },
@@ -42,7 +42,7 @@ export const calcPortionIngredients = (meal) => {
   return ingrArr;
 };
 
-export const normalizeCategoryIngredients = (category) => {
+const normalizeCategoryIngredients = (category) => {
   const newIngredients = [];
   category.ingredients.forEach((ingredient) => {
     const ingrIndex = newIngredients.findIndex(
@@ -63,10 +63,127 @@ export const normalizeCategoryIngredients = (category) => {
   category.ingredients = newIngredients;
 };
 
-export const parseIngredients = (ingredients) => {
+const parseIngredients = (ingredients) => {
   return ingredients.map((ingr) => ({
     category: ingr.category,
     name: ingr.name,
     measures: ingr.measures,
   }));
+};
+
+export const generateShopListUtil = (props) => {
+  const { payload } = props;
+  const tempItems = [];
+  const updateOrAddItems = (props) => {
+    props.forEach((prop) => {
+      const existingItemIndex = tempItems.findIndex(
+        (item) => item.name === prop.name
+      );
+      if (existingItemIndex !== -1) {
+        tempItems[existingItemIndex].amount += prop.amount;
+      } else {
+        tempItems.push(prop);
+      }
+    });
+    tempItems.forEach((item) => {
+      item.amount = Math.ceil(item.amount * 10) / 10;
+    });
+  };
+
+  payload.forEach((item) => {
+    updateOrAddItems(calcPortionIngredients(item));
+  });
+
+  const categorizedIngredients = [];
+  tempItems.forEach((item) => {
+    const category = item.category;
+    const index = categorizedIngredients.findIndex(
+      (categorizedItem) => categorizedItem.category === category
+    );
+    if (index === -1) {
+      categorizedIngredients.push({
+        category: category,
+        ingredients: [item],
+      });
+    } else {
+      categorizedIngredients[index].ingredients.push(item);
+    }
+  });
+  categorizedIngredients.forEach((category) =>
+    normalizeCategoryIngredients(category)
+  );
+  return categorizedIngredients;
+};
+
+export const removeItemUtil = (prop) => {
+  const { payload, allItems, removedItems } = prop;
+
+  const resultAllItem = [];
+  allItems.forEach((category) => {
+    resultAllItem.push({
+      category: category.category,
+      ingredients: parseIngredients(category.ingredients),
+    });
+  });
+  resultAllItem.map((category) => {
+    category.ingredients = category.ingredients.filter(
+      (item) => item.name !== payload.name
+    );
+  });
+  const resultRemovedItem = [];
+  removedItems.forEach((category) => {
+    resultRemovedItem.push({
+      category: category.category,
+      ingredients: parseIngredients(category.ingredients),
+    });
+  });
+  const index = resultRemovedItem.findIndex(
+    (item) => item.category === payload.category
+  );
+  if (index === -1) {
+    resultRemovedItem.push({
+      category: payload.category,
+      ingredients: [payload],
+    });
+  } else {
+    resultRemovedItem[index].ingredients.push(payload);
+  }
+  return { allItems: resultAllItem, removedItems: resultRemovedItem };
+};
+
+export const restoreItemUtil = (prop) => {
+  const { payload, allItems, removedItems } = prop;
+  const resultRemovedItems = [];
+  removedItems.forEach((category) => {
+    resultRemovedItems.push({
+      category: category.category,
+      ingredients: parseIngredients(category.ingredients),
+    });
+  });
+  resultRemovedItems.map((category) => {
+    category.ingredients = category.ingredients.filter(
+      (item) => item.name !== payload.name
+    );
+  });
+  const resultAllItems = [];
+  allItems.forEach((category) => {
+    resultAllItems.push({
+      category: category.category,
+      ingredients: parseIngredients(category.ingredients),
+    });
+  });
+
+  const index = resultAllItems.findIndex(
+    (item) => item.category === payload.category
+  );
+  if (index === -1) {
+    resultAllItems.push({
+      category: payload.category,
+      ingredients: [payload],
+    });
+  } else {
+    resultAllItems[index].ingredients.push(payload);
+  }
+
+  return { allItems: resultAllItems, removedItems: resultRemovedItems };
 };

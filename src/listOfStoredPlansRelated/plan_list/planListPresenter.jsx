@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PlanListView from "./planListView";
 import { useNavigate } from "react-router-dom";
-import { getMenumaticAllList, getMenumaticStates, fetchUserShopinglist, fetchExcludedIngredients } from "../../store/menumaticServerAPISlice";
-import { setSelectedListId } from "./planListSlice";
-import { getUserId } from "../../signUp_page/userAccountSlice";
+import { getUserAllListPromise } from "../../store/menumaticServerAPISlice";
+import { getUserId } from "../../menu/userAccountSlice";
+import { setSelectedList } from "../../store/menumaticServerAPISlice";
+import { deleteList } from "../../store/menumaticServerAPISlice";
 
 const PlanListPresenter = () => {
   const navigate = useNavigate();
-  const allList = useSelector(getMenumaticAllList);
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
-  const {allListState, userFoodPrefState, excludedIngredientState} = useSelector(getMenumaticStates);
+  const { data: allList, state: allListState } = useSelector(
+    getUserAllListPromise
+  );
 
   const selectAndNavigateHandler = (mealPlanID) => {
-    dispatch(setSelectedListId(mealPlanID));
-    dispatch(fetchExcludedIngredients(mealPlanID))
+    dispatch(setSelectedList({ id: mealPlanID }));
     navigate("/plan");
   };
 
@@ -23,23 +24,18 @@ const PlanListPresenter = () => {
     navigate(-1);
   };
 
-  const dummyData = [
-    {id: 1, name: 'W1', recipesName: ['m1', 'm2']},
-    {id: 2, name: 'W2', recipesName: ['m3', 'm4']}
-  ]
-
-  useEffect(() => {
-    dispatch(fetchUserShopinglist( userId))
-  },[])
+  const handleDeleteList = (listId) => {
+    dispatch(deleteList({ listId: listId }));
+  };
 
   return (
     <PlanListView
-    serverState = {allListState}
-      allLists={allList}
-      selectAndNavigateToMealPlan={selectAndNavigateHandler}
       userId={userId}
+      allLists={allList}
+      serverState={allListState}
+      deleteList={handleDeleteList}
       navigateBack={handleNavigateBack}
-      
+      selectAndNavigateToMealPlan={selectAndNavigateHandler}
     />
   );
 };

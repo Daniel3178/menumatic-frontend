@@ -8,11 +8,6 @@ import {
   menubtn,
 } from "../assets";
 import { Transition, Dialog } from "@headlessui/react";
-import {
-  getExcludeTags,
-  getIncludeTags,
-  getMealsInPlan,
-} from "./filterPageSlice";
 
 const MenuView = (props) => {
   //********LOGIN FUNCTION*********
@@ -68,9 +63,7 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setIncludedItems([...includedItems, value]); // If checked, add to included items
-      // //console.log(value + " isChecked");
     } else {
-      // //console.log(value + " isUnChecked");
       setIncludedItems((prevData) => {
         // If unchecked, remove from included items
         return prevData.filter((id) => {
@@ -86,9 +79,7 @@ const MenuView = (props) => {
 
     if (isSelected) {
       setExcludedItems([...excludedItems, value]); // If checked, add to excluded items
-      // //console.log(value + " isChecked");
     } else {
-      // //console.log(value + " isUnChecked");
       setExcludedItems((prevData) => {
         // If unchecked, remove from excluded items
         return prevData.filter((id) => {
@@ -113,7 +104,6 @@ const MenuView = (props) => {
   const applyFilterButton = () => {
     props.hideFilter();
     props.applyFilter(includedItems, excludedItems, mealsInPlanSliderValue);
-    //console.log("EXCLUDED",excludedItems)
   };
 
   const HandleDeleteAccount = (hProp) => {
@@ -776,7 +766,7 @@ const MenuView = (props) => {
         <button className="mt-12 mr-12" onClick={props.showMenu}>
           <div>
             {menuPing()}
-          <img src={menubtn} />
+            <img src={menubtn} />
           </div>
         </button>
         {renderMenu()}

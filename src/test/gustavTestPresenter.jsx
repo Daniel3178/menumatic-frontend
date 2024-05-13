@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import GustavTestView from "./gustavTestView";
-import { useDispatch, useSelector } from "react-redux";
-import { getExcludeTags, getIncludeTags } from "../menu/filterPageSlice";
+import { useDispatch } from "react-redux";
 
-import {
-    getApiResults,
-  searchBySpoonacularApiBulkAsync,
-  searchBySpoonacularApiAsync
-} from "../store/spoonacularAPISlice";
-
+import { searchBySpoonacularApiBulkAsync } from "../integration/spoonacularServerThunks";
 
 const GustavTestPresenter = () => {
-  
-    const dispatch = useDispatch();
-    
+  const dispatch = useDispatch();
 
-    
   useEffect(() => {
-        
-        dispatch(searchBySpoonacularApiBulkAsync([4715538,716429]));
-        // console.log(getApiResults)
+    dispatch(searchBySpoonacularApiBulkAsync([4715538, 716429]));
+    // console.log(getApiResults)
   }, []);
 
-  return (
-    <GustavTestView
-      
-    />
-  );
+  return <GustavTestView />;
 };
 
 export default GustavTestPresenter;
