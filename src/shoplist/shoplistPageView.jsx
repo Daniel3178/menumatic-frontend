@@ -231,6 +231,10 @@ const ShoplistPageView = (props) => {
           {renderIngredients(props.removedItems, showRestorableIngredients)}
         </div>
       );
+    } else if (props.bulkSearchApiState === "failed") {
+      return (
+      <p className="text-gray-700 text-center">Service is not available at the moment. Please try again later.</p>
+      )
     } else {
       return (
         <p className="text-gray-700 text-center">No shopping list available.</p>
