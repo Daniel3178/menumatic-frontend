@@ -88,7 +88,7 @@ const HomePageView = (props) => {
           />
           <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large h-[27%]">
             <div className="pt-1 pl-1 xs:pt-3 xs:pl-2">
-              <p className="text-whiteSmoke font-outfit text-base xs:text-xl lg:text-3xl font-medium truncate">
+              <p className="text-whiteSmoke font-outfit text-base xs:text-xl lg:text-2xl font-medium truncate">
                 {recipe.title}
               </p>
             </div>
