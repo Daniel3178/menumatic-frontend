@@ -262,6 +262,7 @@ const MenuView = (props) => {
   };
 
   const filterMenu = () => {
+    if(props.stateFilter){
     return (
       <Transition
         show={props.stateFilter}
@@ -406,7 +407,8 @@ const MenuView = (props) => {
           </div>
         </div>
       </Transition>
-    );
+  
+    );}
   };
 
   const signupMenu = () => {
