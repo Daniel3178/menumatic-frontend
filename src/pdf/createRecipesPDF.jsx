@@ -65,49 +65,115 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 });
-
 const styles_recipe = StyleSheet.create({
-  headline: {
-    fontSize: 24,
-    textAlign: "right",
-    marginTop: 20,
-    marginRight: 30,
-    marginBottom: 20,
-  },
-  headline_section: {},
-  headline2: {
-    fontSize: 20,
-    marginTop: 20,
-  },
-  mainbody: {
-    fontSize: 14,
-    color: "#aaaaaa",
-  },
+    // Headline styles
+    headline: {
+      fontSize: 24,
+      textAlign: "right",
+      marginBottom: 20,
+      marginRight: 30,
+    },
+    
+    // Headline section styles
+    headline_section: {
+      alignItems: "flex-end",
+      paddingRight: 10,
+      borderBottomWidth: 1,
+      borderColor: 'black',
+      marginBottom: 20,
+    },
+    
+    // Secondary headline styles
+    headline2: {
+      fontSize: 20,
+      marginBottom: 20,
+    },
+    
+    // Main body text styles
+    mainbody: {
+      fontSize: 14,
+      color: "#aaaaaa",
+      marginBottom: 20,
+    },
+    
+    // Page styles
+    page: {
+      flexDirection: "row",
+      backgroundColor: "#FFFFFF",
+      paddingHorizontal: 20,
+      paddingVertical: 30,
+      fontFamily: "Roboto",
+    },
+    
+    // List item styles
+    listItem: {
+      flexDirection: "row",
+      marginBottom: 4,
+      alignItems: "center",
+      fontSize: 10,
+    },
+    
+    // Bullet styles
+    bullet: {
+      fontSize: 10,
+      marginRight: 5,
+      textAlign: "right",
+    },
+    
+    // Section styles
+    section: {
+      borderWidth: 1,
+      borderColor: 'black',
+      marginBottom: 20,
+      padding: 10,
+    },
+  });
 
-  page: {
-    fontFamily: "Roboto",
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-  },
-  listItem: {
-    flexDirection: "row",
-    marginBottom: 4,
-    alignItems: "center",
-    alignSelf: "center",
-    fontSize: 10,
-  },
-  bullet: {
-    fontSize: 10,
-    marginRight: 5,
-    textAlign: "right",
-    alignSelf: "right",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-});
+// const styles_recipe = StyleSheet.create({
+//   headline: {
+//     fontSize: 24,
+//     textAlign: "right",
+//     marginTop: 20,
+//     marginRight: 30,
+//     marginBottom: 20,
+//   },
+//   headline_section: {},
+//   headline2: {
+//     fontSize: 20,
+//     marginTop: 40,
+//   },
+//   mainbody: {
+//     fontSize: 14,
+//     color: "#aaaaaa",
+//   },
+
+//   page: {
+//     fontFamily: "Roboto",
+//     flexDirection: "row",
+//     backgroundColor: "#FFFFFF",
+//   },
+//   listItem: {
+//     flexDirection: "row",
+//     marginBottom: 4,
+//     alignItems: "center",
+//     alignSelf: "center",
+//     fontSize: 10,
+//   },
+//   bullet: {
+//     fontSize: 10,
+//     marginRight: 5,
+//     textAlign: "right",
+//     alignSelf: "right",
+//   },
+//   section: {
+//     margin: 10,
+//     padding: 10,
+//     display: 'flex',
+//     flexDirection: 'column',
+//     borderWidth: 1,
+//     borderColor: 'black',
+//   },
+// });
 const ListItem = ({ children, dot = "•" }) => {
   // console.log("children: " + children);
   const wordsArray = children.split(" ");
@@ -166,7 +232,7 @@ const Recipe = ({ title, ingredients, instructions }) => (
  * Author: Gustav Landberg <landbergg@outlook.com>
  * */
 const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
-console.log("ITEMS THAT IS MAPPED;", items)
+// console.log("ITEMS THAT IS MAPPED;", items)
 
 
   return (

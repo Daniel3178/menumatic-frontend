@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { generateShoppingListPDFLink } from "../pdf/CreateShoplistPDF";
-import {generateRecipesListPDFLink} from "../pdf/createRecipesPDF";
+import { generateRecipesListPDFLink } from "../pdf/createRecipesPDF";
 import { logo } from "../assets";
 
 /**
@@ -18,17 +18,17 @@ const ShoplistPageView = (props) => {
   };
 
   const PDFDownloadButton = () => {
-
-    const recpiecData = props.generateRecepiesData();
-    console.log("EXPORTING PDFFF:",recpiecData);
-
-
     return (
       <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
-        {/* {generateShoppingListPDFLink(props.allItems)} */}
-        {generateRecipesListPDFLink(recpiecData)}
+        {generateShoppingListPDFLink(props.allItems)}
       </div>
     );
+  };
+
+  const PDFDownloadRecipesBtn = () => {
+    const recpiecData = props.generateRecepiesData();
+    console.log("EXPORTING PDFFF:", recpiecData);
+    return <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">{generateRecipesListPDFLink(recpiecData)}</div>;
   };
 
   /**
@@ -67,7 +67,10 @@ const ShoplistPageView = (props) => {
           <div className="ml-2 text-base font-normal text-cerulean">
             Log in to save the meal plan in Menumatic, or download as PDF.
           </div>
-          {PDFDownloadButton()}
+          < div className="flex flex-row px-4">
+            {PDFDownloadButton()}
+            {PDFDownloadRecipesBtn()}
+          </div>
         </div>
       );
     }
@@ -98,7 +101,6 @@ const ShoplistPageView = (props) => {
               id="exportPDF"
               type="exportPDF"
               onClick={function () {
-
                 generateShoppingListPDFLink(
                   transformallItemsIntoStringArray(props.allItems)
                 );
@@ -241,8 +243,10 @@ const ShoplistPageView = (props) => {
       );
     } else if (props.bulkSearchApiState === "failed") {
       return (
-      <p className="text-gray-700 text-center">Service is not available at the moment. Please try again later.</p>
-      )
+        <p className="text-gray-700 text-center">
+          Service is not available at the moment. Please try again later.
+        </p>
+      );
     } else {
       return (
         <p className="text-gray-700 text-center">No shopping list available.</p>
