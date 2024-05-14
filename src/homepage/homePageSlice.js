@@ -9,10 +9,15 @@ const homePage = createSlice({
   reducers: {
     incrementLikesCounter: (state, action) => {
       const prevCount = state.likesCounter;
+
       console.log("prevCount", prevCount);
       console.log("likeLimit", action.payload.likeLimit);
       state.likesCounter = (prevCount + 1) % action.payload.likeLimit;
     },
+    resetLikesCounter: (state) => {
+      state.likesCounter = 1;
+    },
+    
     toggleInfoView: (state, action) => {
       state.showInfo = !state.showInfo;
     },
@@ -21,4 +26,4 @@ const homePage = createSlice({
 export const getLikesCounter = (state) => state.homePage.likesCounter;
 export const getShowInfo = (state) => state.homePage.showInfo;
 export default homePage.reducer;
-export const { incrementLikesCounter, toggleInfoView } = homePage.actions;
+export const { incrementLikesCounter, toggleInfoView, resetLikesCounter } = homePage.actions;

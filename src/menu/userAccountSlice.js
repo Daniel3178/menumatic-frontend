@@ -99,11 +99,7 @@ const userAccountSlice = createSlice({
       localStorage.removeItem("userShoplistData");
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(signUpAsync.fulfilled, (state, action) => {
-      alert(`You've successfully created an account!`);
-    });
-  },
+  
 });
 
 export const { signInCurrentUser, signOutCurrentUser } =

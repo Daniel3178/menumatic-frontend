@@ -10,7 +10,7 @@ const ingredientsList = (items) => {
   );
 
   return (
-    <div className="pl-8 pr-4">
+    <div className="w-full h-full pl-8 pr-4 overflow-auto">
       <ul className="space-y-1 list-disc">
         {uniqueIngredients.map((nameClean, index) => (
           <li
@@ -49,19 +49,19 @@ const HomePageView = (props) => {
         <div className="flex bg-vanilla h-full w-full rounded-large relative shadow-xl">
           <div className="p-2 w-full h-full">
             <div className="">
-              <p className="h-[30%] text-gunmetal truncate text-wrap font-outfit text-base font-medium">
+              <p className="h-[20%] text-gunmetal truncate text-wrap font-outfit text-xs xs:text-base font-medium">
                 {recipe.title}
               </p>
             </div>
-            <div className="h-[70%] overflow-auto">
+            <div className="h-[80%] overflow-auto">
               {ingredientsList(recipe.extendedIngredients)}
             </div>
           </div>
 
-          <div className="absolute bottom-0 right-0 pr-2 pb-4">
+          <div className="absolute bottom-0 right-0 pr-1 xs:pr-2 pb-4 xs:pb-3">
             <button
               onClick={props.toggleInfoView}
-              className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10"
+              className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-[8px] xs:text-sm text-bold hover:shadow-mid foucs:shadow-in p-2 xs:p-4 h-6 xs:h-10"
             >
               VIEW LESS
             </button>
@@ -87,24 +87,24 @@ const HomePageView = (props) => {
             }}
           />
           <div className="absolute inset-x-0 bottom-0 bg-cerulean bg-opacity-50 backdrop-blur-sm rounded-b-large h-[27%]">
-            <div className="pt-3 pl-2">
-              <p className="text-whiteSmoke font-outfit text-xl lg:text-3xl font-medium truncate">
+            <div className="pt-1 pl-1 xs:pt-3 xs:pl-2">
+              <p className="text-whiteSmoke font-outfit text-base xs:text-xl lg:text-2xl font-medium truncate">
                 {recipe.title}
               </p>
             </div>
-            <div className="absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-2">
+            <div className="absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-1 xs:p-2">
               <div className="flex space-x-2 items-center">
                 <div className="mt-2 ml-2 flex text-whiteSmoke">
-                  <img src={clock_icon} className="pb-2" />
+                  <img src={clock_icon} className="pb-2 w-[20px] xs:w-[32px]" />
                 </div>
-                <div className="text-whiteSmoke font-outfit text-lg font-thin">
+                <div className="text-whiteSmoke font-outfit text-xs xs:text-lg font-thin">
                   {recipe.readyInMinutes} min
                 </div>
               </div>
               <div className="items-center flex justify-end">
                 <button
                   onClick={props.toggleInfoView}
-                  className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-sm text-bold hover:shadow-mid foucs:shadow-in p-4 h-10"
+                  className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-[8px] xs:text-sm text-bold hover:shadow-mid foucs:shadow-in p-2 xs:p-4 h-6 xs:h-10"
                 >
                   VIEW MORE
                 </button>
@@ -117,7 +117,7 @@ const HomePageView = (props) => {
   };
 
   const renderHomePage = () => {
-    if (props.apiResultsState === "ready") {
+    if (props.apiResultsState === "ready" || props.apiResults.length > 1) {
       return (
         <div className="h-svh overflow-hidden w-screen pt-32 flex items-center justify-center">
           <div className="h-full max-h-[750px] max-w-full aspect-[3/5] pl-4 pr-4">
@@ -125,20 +125,15 @@ const HomePageView = (props) => {
               {props.apiResults
                 .slice(1, 2)
                 .map((recipe) => (
-                  <TinderCard
+                  <div
                     className="h-full w-full absolute z-10"
-                    swipeRequirementType={"position"}
-                    swipeThreshold={100}
-                    key={props.apiResults}
-                    onSwipe={(dir) => swiped(dir)}
-                    onCardLeftScreen={() => outOfFrame(props.apiResults)}
                   >
                     <div className="flex justify-center h-full">
                       <div className="rounded-large w-full">
                         {conditionalRender(recipe)}
                       </div>
                     </div>
-                  </TinderCard>
+                  </div>
                 ))
                 .reverse()}
               {props.apiResults
@@ -150,6 +145,7 @@ const HomePageView = (props) => {
                     swipeThreshold={100}
                     key={props.apiResults}
                     onSwipe={(dir) => swiped(dir, dir)}
+                    preventSwipe={['up', 'down']}
                     onCardLeftScreen={() => outOfFrame(props.apiResults)}
                   >
                     <div className="flex justify-center h-full">

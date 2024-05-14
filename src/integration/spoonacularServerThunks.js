@@ -89,10 +89,15 @@ export const searchBySpoonacularApiBulkAsync = createAsyncThunk(
       return portion ? portion.portions : undefined;
     };
 
-    const result = jsonResponse.map((recipe) => ({
-      portions: findPortion(recipe.id),
-      result: recipe,
-    }));
+
+
+    const result = jsonResponse.map((recipe) => {
+      const foundedPortions = findPortion(recipe.id);
+      return {
+        portions: foundedPortions,
+        result: recipe ,
+      };
+    });
 
     return { apiData: jsonResponse, userData: result };
   }

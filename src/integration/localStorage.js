@@ -41,6 +41,15 @@ const fetchLocalFoodPref = () => {
   return { excludeTags, includeTags, mealsInPlan };
 };
 
+const flushLocalDishInfo = () =>{
+  localStorage.removeItem("removed-items");
+  localStorage.removeItem("shoplist");
+  localStorage.removeItem("affordable-dishes");
+  localStorage.removeItem("popular-dishes");
+  localStorage.removeItem("quick-dishes");
+  localStorage.removeItem("selected-tab");
+}
+
 export {
   getExcludeTags,
   getIncludeTags,
@@ -52,4 +61,5 @@ export {
   getLocalPopularDishes,
   getLocalQuickDishes,
   fetchLocalFoodPref,
+  flushLocalDishInfo,
 };

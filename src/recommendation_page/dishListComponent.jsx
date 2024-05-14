@@ -160,9 +160,9 @@ const DishListComponent = (props) => {
  * Purpose: Determines a range of a price level to be displayed on the screen, represented by dollar signs.
  */
 function pricePerServingToApproximatePriceLevel(instancePricePerServing) {
-  if (instancePricePerServing < 100) {
+  if (instancePricePerServing < 110) {
     return "$";
-  } else if (instancePricePerServing < 1000) {
+  } else if (instancePricePerServing < 420) {
     return "$$";
   } else {
     return "$$$";

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { generateShoppingListPDFLink } from "../pdf/CreateShoplistPDF";
+import { generateRecipesListPDFLink } from "../pdf/createRecipesPDF";
 import { logo } from "../assets";
 
 /**
@@ -18,10 +19,16 @@ const ShoplistPageView = (props) => {
 
   const PDFDownloadButton = () => {
     return (
-      <div className="mr-2 p-3 w-40 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
+      <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
         {generateShoppingListPDFLink(props.allItems)}
       </div>
     );
+  };
+
+  const PDFDownloadRecipesBtn = () => {
+    const recpiecData = props.generateRecepiesData();
+    console.log("EXPORTING PDFFF:", recpiecData);
+    return <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">{generateRecipesListPDFLink(recpiecData)}</div>;
   };
 
   /**
@@ -35,10 +42,10 @@ const ShoplistPageView = (props) => {
         <div className="flex justify-between  w-full">
           <div className="ml-2 flex-col justify-between w-full">
             <div className="text-[12px] font-normal text-cerulean">
-              shopping list name
+              Shopping list name
             </div>
             <input
-              className="h-8  border-b-[2px] border-yellowGreen text-gunmetal font-semibold outline-none max-w-[70%] bg-whiteSmoke"
+              className="h-8 w-[40%] border-b-[2px] border-yellowGreen text-gunmetal font-semibold outline-none max-w-full bg-whiteSmoke"
               type="text"
               id="nameInput"
               value={nameInput}
@@ -60,7 +67,10 @@ const ShoplistPageView = (props) => {
           <div className="ml-2 text-base font-normal text-cerulean">
             Log in to save the meal plan in Menumatic, or download as PDF.
           </div>
-          {PDFDownloadButton()}
+          < div className="flex flex-row px-4">
+            {PDFDownloadButton()}
+            {PDFDownloadRecipesBtn()}
+          </div>
         </div>
       );
     }
@@ -230,6 +240,12 @@ const ShoplistPageView = (props) => {
           <h1>REMOVED ITEMS</h1>
           {renderIngredients(props.removedItems, showRestorableIngredients)}
         </div>
+      );
+    } else if (props.bulkSearchApiState === "failed") {
+      return (
+        <p className="text-gray-700 text-center">
+          Service is not available at the moment. Please try again later.
+        </p>
       );
     } else {
       return (

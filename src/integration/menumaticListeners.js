@@ -15,6 +15,7 @@ import {
   restoreItem,
   generateShoplist,
   setData,
+  flushData,
 } from "../shoplist/shoplistSlice";
 import {
   loadLocalData,
@@ -35,7 +36,9 @@ import {
   getLocalAffordableDishes,
   getLocalPopularDishes,
   getLocalQuickDishes,
+  flushLocalDishInfo,
 } from "./localStorage";
+import { list } from "postcss";
 
 const MenumaticListeners = () => {
   const dispatch = useDispatch();
@@ -119,6 +122,12 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: incrementLikesCounter,
     effect: async (action, listenerApi) => {
+      const counter = listenerApi.getState().homePage.likesCounter;
+      if (counter >= 1) {
+        flushLocalDishInfo();
+        listenerApi.dispatch(flushData());
+      }
+
       const complexSearchResult =
         listenerApi.getState().spoonacularApi.complexSearchPromise.data;
       if (complexSearchResult.length < 6 && complexSearchResult.length > 3) {
@@ -139,6 +148,7 @@ const MenumaticListeners = () => {
     actionCreator: setSelectedList,
     effect: async (action, listenerApi) => {
       const { id } = action.payload;
+      localStorage.setItem("selected-list-id", JSON.stringify(id));
       const allUserList =
         listenerApi.getState().menumaticServerApi.userAllListPromise.data;
       const selectedList = allUserList.find((list) => list.id === id);

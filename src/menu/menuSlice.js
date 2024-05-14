@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import {signOutCurrentUser} from "../menu/userAccountSlice";
 const menuPage = createSlice({
   name: "menuPage",
   initialState: {
@@ -39,6 +39,21 @@ const menuPage = createSlice({
     setStateRecommendDialog: (state, action) => {
       state.menuState.recommendDialog = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signOutCurrentUser, (state, action) => {
+        state.menuState = {
+            base: false,
+            login: false,
+            signup: false,
+            settings: false,
+            filter: false,
+            passChange: false,
+            recommendBtn: false,
+            recommendDialog: false,
+        }
+      })
   },
 });
 export const getMenuStateBase = (state) => state.menu.menuState.base;

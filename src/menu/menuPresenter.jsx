@@ -7,7 +7,7 @@ import {
   signUpAsync,
 } from "./userAccountSlice";
 import MenuView from "./menuView";
-
+import { setSelectedList, getLatestMealPlanPromise } from "../store/menumaticServerAPISlice";
 import {
   getMenuStateBase,
   getMenuStateLogin,
@@ -41,19 +41,31 @@ import {
   saveTags,
 } from "./filterPageSlice";
 import { deleteUser } from "../integration/menumaticServerThunks";
+import { getLikesCounter, resetLikesCounter } from "../homepage/homePageSlice";
 
 const MenuPresenter = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {data:latestMeal, state:latestMealState} = useSelector(getLatestMealPlanPromise);
 
   const navigateToPlanList = () => {
     navigate("/plan_list");
   };
 
+  const navigateToPlan = () =>{
+    if(latestMealState === "ready" && Object.keys(latestMeal).length > 0){
+    dispatch(setSelectedList({ id: latestMeal.id }));
+    navigate("/plan");}
+    else{
+      alert("You have no meal plan yet")
+    }
+  }
+
   const navigateToRecommendation = () => {
     dispatch(sortLikedDishes(mealsInPlan));
     navigate("/recommendation");
     dispatch(hideRecommendBtn);
+    dispatch(resetLikesCounter())
   };
 
   const isLoggedIn = useSelector(getIsLoggedIn);
@@ -124,8 +136,8 @@ const MenuPresenter = () => {
   const handleSignOutACB = () => {
     signOut(auth)
       .then(() => {
-        window.location.reload();
         navigate("/");
+        // window.location.reload();
       })
       .catch((err) => {});
   };
@@ -146,13 +158,14 @@ const MenuPresenter = () => {
   const handleDeleteAccount = (props) => {
     dispatch(deleteUser({ userId: auth.currentUser.uid }));
     dispatch(deleteUserAsync({ email: props.email, password: props.password }));
+    setStateLogin(false);
   };
 
   const handlePasswordReset = async (props) => {
     sendPasswordResetEmail(auth, props.email)
       .then(() => {
         // Password reset email sent!
-        alert("Password reset email sent to THEN: ", props.email);
+        alert("Password reset email sent to " + props.email);
         // ..
       })
       .catch((error) => {
@@ -194,6 +207,7 @@ const MenuPresenter = () => {
     <MenuView
       navigateToPlanList={navigateToPlanList}
       navigateToRecommendation={navigateToRecommendation}
+      navigateToPlan={navigateToPlan}
       isLoggedIn={isLoggedIn}
       stateBase={stateBase}
       stateLogin={stateLogin}

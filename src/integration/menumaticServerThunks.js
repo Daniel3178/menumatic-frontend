@@ -14,9 +14,12 @@ export const saveShoplistToMenumaticDb = createAsyncThunk(
     try {
       const response = await fetch(url, options);
       const { mealplan_id } = await response.json();
-      dispatch(
+      await dispatch(
         saveExcludedIngredients({ mealplanId: mealplan_id, excluded: excluded })
       );
+      dispatch(
+        fetchUserShopinglist(userId)
+      )
       alert("Data saved successfully");
     } catch (error) {
       alert("Saving failed, server is down");
