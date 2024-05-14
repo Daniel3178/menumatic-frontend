@@ -118,18 +118,34 @@ export const generateShopListUtil = (props) => {
 export const removeItemUtil = (prop) => {
   const { payload, allItems, removedItems } = prop;
 
-  const resultAllItem = [];
-  allItems.forEach((category) => {
-    resultAllItem.push({
-      category: category.category,
-      ingredients: parseIngredients(category.ingredients),
-    });
-  });
-  resultAllItem.map((category) => {
+  const resultAllItem = allItems;
+  // const tempItems = allItems;
+  // console.log("ALL ITEMS STATE TYPE", tempItems);
+  // allItems.forEach((category) => {
+  //   resultAllItem.push({
+  //     category: category.category,
+  //     ingredients: parseIngredients(category.ingredients),
+  //   });
+  // });
+  //  resultAllItem.forEach((category) => {
+  //   category.ingredients = category.ingredients.filter(
+  //     (item) => item.name !== payload.name
+  //   );
+  // });
+
+  const resultAllItemNonEmpty = resultAllItem.filter((category) => {
     category.ingredients = category.ingredients.filter(
       (item) => item.name !== payload.name
     );
+    return category.ingredients.length > 0;
   });
+
+  // console.log("BEFORE FILTER", resultAllItem);
+  // const resultAllItemNonEmpty = resultAllItem.filter(
+  //   (categ) => categ.ingredients.length > 0
+  // );
+  // console.log("AFTER FILTER", resultAllItemNonEmpty);
+
   const resultRemovedItem = [];
   removedItems.forEach((category) => {
     resultRemovedItem.push({
@@ -148,30 +164,42 @@ export const removeItemUtil = (prop) => {
   } else {
     resultRemovedItem[index].ingredients.push(payload);
   }
-  return { allItems: resultAllItem, removedItems: resultRemovedItem };
+  return { allItems: resultAllItemNonEmpty, removedItems: resultRemovedItem };
 };
 
 export const restoreItemUtil = (prop) => {
   const { payload, allItems, removedItems } = prop;
-  const resultRemovedItems = [];
-  removedItems.forEach((category) => {
-    resultRemovedItems.push({
-      category: category.category,
-      ingredients: parseIngredients(category.ingredients),
-    });
-  });
-  resultRemovedItems.map((category) => {
+  // const resultRemovedItems = [];
+  const resultRemovedItems = removedItems;
+
+  // removedItems.forEach((category) => {
+  //   resultRemovedItems.push({
+  //     category: category.category,
+  //     ingredients: parseIngredients(category.ingredients),
+  //   });
+  // });
+
+  // const resultRemovedItemsNonEmpty =  resultRemovedItems.forEach((category) => {
+  //   category.ingredients = category.ingredients.filter(
+  //     (item) => item.name !== payload.name
+  //   );
+  // });
+
+  const resultRemovedItemsNonEmpty = resultRemovedItems.filter((category) => {
     category.ingredients = category.ingredients.filter(
       (item) => item.name !== payload.name
     );
+    return category.ingredients.length > 0;
   });
-  const resultAllItems = [];
-  allItems.forEach((category) => {
-    resultAllItems.push({
-      category: category.category,
-      ingredients: parseIngredients(category.ingredients),
-    });
-  });
+
+  // const resultAllItems = [];
+  const resultAllItems = allItems;
+  // allItems.forEach((category) => {
+  //   resultAllItems.push({
+  //     category: category.category,
+  //     ingredients: parseIngredients(category.ingredients),
+  //   });
+  // });
 
   const index = resultAllItems.findIndex(
     (item) => item.category === payload.category
@@ -185,5 +213,5 @@ export const restoreItemUtil = (prop) => {
     resultAllItems[index].ingredients.push(payload);
   }
 
-  return { allItems: resultAllItems, removedItems: resultRemovedItems };
+  return { allItems: resultAllItems, removedItems: resultRemovedItemsNonEmpty };
 };
