@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { generateShoppingListPDFLink } from "../pdf/CreateShoplistPDF";
+import {generateRecipesListPDFLink} from "../pdf/createRecipesPDF";
 import { logo } from "../assets";
 
 /**
@@ -17,9 +18,15 @@ const ShoplistPageView = (props) => {
   };
 
   const PDFDownloadButton = () => {
+
+    const recpiecData = props.generateRecepiesData();
+    console.log("EXPORTING PDFFF:",recpiecData);
+
+
     return (
       <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
-        {generateShoppingListPDFLink(props.allItems)}
+        {/* {generateShoppingListPDFLink(props.allItems)} */}
+        {generateRecipesListPDFLink(recpiecData)}
       </div>
     );
   };
@@ -91,6 +98,7 @@ const ShoplistPageView = (props) => {
               id="exportPDF"
               type="exportPDF"
               onClick={function () {
+
                 generateShoppingListPDFLink(
                   transformallItemsIntoStringArray(props.allItems)
                 );

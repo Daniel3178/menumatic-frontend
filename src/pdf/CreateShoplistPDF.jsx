@@ -323,6 +323,41 @@ const recipeStyle = StyleSheet.create({
   },
 });
 
+
+/* A recipe (title, ingredients, instructions)
+* Pre:
+* title: The title of the recipe
+* ingredients: a list of strings (ingredients)
+* instructions: a list of strings (instructions)
+* Post:
+*
+* Author: Gustav Landberg <landbergg@outlook.com>
+* */
+
+const Recipe = ({ title, ingredients, instructions }) => (
+  <Page size="A4" orientation={"landscape"} style={recipeStyle.page}>
+    <Text style={recipeStyle.mainbody}> by menumatic</Text>
+    <View style={recipeStyle.headline_section}>
+      <Text style={recipeStyle.headline}>{title}</Text>
+    </View>
+    <View style={recipeStyle.section}>
+      <Text style={recipeStyle.headline2}>Ingredients:</Text>
+      {/* <ShoplistBulletList
+        bulletListContent={ingredients}
+        stylesheet={recipeStyle}
+        /> */}
+    </View>
+    <View style={recipeStyle.section}>
+      <Text style={recipeStyle.headline2}>Instructions:</Text>
+      {/* <ShoplistBulletList
+        bulletListContent={instructions}
+        dot={""}
+        stylesheet={recipeStyle}
+        /> */}
+    </View>
+  </Page>
+);
+
 /* generateRecipesListPDFLink(recipes)
  * Pre:
  * recipes: a list of format
@@ -333,22 +368,36 @@ const recipeStyle = StyleSheet.create({
  * Author:
  * Gustav Landberg <landbergg@outlook.com>
  * */
+{/* {recipes.map((recipe) => (
+  <Recipe
+    key={Math.random()}
+    title={recipe[0]}
+    ingredients={recipe[1]}
+    instruction={recipe[2]}
+  />
+))}
+</Document> */}
+const RecipesDocument = ({recipes}) => (
+  <Document>
+        {recipes.map((recipe) => (
+      <Recipe
+        key={Math.random()}
+        title={recipe.title}
+        ingredients={recipe.ingredients}
+        instruction={recipe.instructions}
+      />
+    ))}
+  </Document>
+);
 export function generateRecipesListPDFLink(recipes) {
-  const recipesDocument = () => (
-    <Document>
-      {recipes.map((recipe) => (
-        <Recipe
-          key={Math.random()}
-          title={recipe[0]}
-          ingredients={recipe[1]}
-          instruction={recipe[2]}
-        />
-      ))}
-    </Document>
-  );
+  
+  // try to use object instead of an array
+
+  console.log("PDF RECIPES IS CALLED ", recipes )
+  
   return (
     <div>
-      <PDFDownloadLink document={recipesDocument} fileName="recipes.pdf">
+      <PDFDownloadLink document={<RecipesDocument recipes={recipes}/>} fileName="recipes.pdf">
         {({ blob, url, loading, error }) =>
           loading ? "Loading document..." : "Download Recipes"
         }
@@ -356,46 +405,11 @@ export function generateRecipesListPDFLink(recipes) {
     </div>
   );
 }
-
-/* A recipe (title, ingredients, instructions)
- * Pre:
- * title: The title of the recipe
- * ingredients: a list of strings (ingredients)
- * instructions: a list of strings (instructions)
- * Post:
- *
- * Author: Gustav Landberg <landbergg@outlook.com>
- * */
-
-const Recipe = ({ title, ingredients, instructions }) => (
-  <Page size="A4" orientation={"landscape"} style={recipeStyle.page}>
-    <Text style={recipeStyle.mainbody}> by menumatic</Text>
-    <View style={recipeStyle.headline_section}>
-      <Text style={recipeStyle.headline}>{title}</Text>
-    </View>
-    <View style={recipeStyle.section}>
-      <Text style={recipeStyle.headline2}>Ingredients:</Text>
-      <ShoplistBulletList
-        bulletListContent={ingredients}
-        stylesheet={recipeStyle}
-      />
-    </View>
-    <View style={recipeStyle.section}>
-      <Text style={recipeStyle.headline2}>Instructions:</Text>
-      <ShoplistBulletList
-        bulletListContent={instructions}
-        dot={""}
-        stylesheet={recipeStyle}
-      />
-    </View>
-  </Page>
-);
-
 // --------------------- The deprecated CreatePDFForm
 
 /* CreatePDFForm
- * This function is for testing. Remove when no longer necessary
- * **Deprecated**
+* This function is for testing. Remove when no longer necessary
+* **Deprecated**
  *  Pre: none
  *  Post: CreatePDFForm : A simple component which will generate downloads links to two generated PDF documents
  *  Author: Gustav Landberg <landbergg@outlook.com>

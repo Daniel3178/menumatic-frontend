@@ -166,7 +166,7 @@ const Recipe = ({ title, ingredients, instructions }) => (
  * Author: Gustav Landberg <landbergg@outlook.com>
  * */
 const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
-// console.log("ITEMS THAT IS MAPPED;", items)
+console.log("ITEMS THAT IS MAPPED;", items)
 
 
   return (
