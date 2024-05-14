@@ -41,6 +41,7 @@ import {
   saveTags,
 } from "./filterPageSlice";
 import { deleteUser } from "../integration/menumaticServerThunks";
+import { getLikesCounter, resetLikesCounter } from "../homepage/homePageSlice";
 
 const MenuPresenter = () => {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const MenuPresenter = () => {
     dispatch(sortLikedDishes(mealsInPlan));
     navigate("/recommendation");
     dispatch(hideRecommendBtn);
+    dispatch(resetLikesCounter())
   };
 
   const isLoggedIn = useSelector(getIsLoggedIn);
