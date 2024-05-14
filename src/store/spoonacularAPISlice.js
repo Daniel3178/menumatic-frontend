@@ -70,7 +70,7 @@ const spoonacularApi = createSlice({
           if (saveOptOverwrite) {
             state.complexSearchPromise.data = results;
           } else {
-            state.complexSearchPromise.data.push(...results);
+            state.complexSearchPromise?.data?.push(...results);
           }
           state.complexSearchPromise.state = "ready";
         }
