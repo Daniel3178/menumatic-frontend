@@ -87,7 +87,7 @@ const MenumaticListeners = () => {
     actionCreator: deleteList,
     effect: async (action, listenerApi) => {
       try {
-        const userId = listenerApi.getState().userAccount.userId;
+        const userId = listenerApi.getState().userAccount?.userId;
         if (userId) {
           listenerApi.dispatch(
             deleteMealPlan({
@@ -107,7 +107,7 @@ const MenumaticListeners = () => {
     effect: async (action, listenerApi) => {
       const complexSearchResult =
         listenerApi.getState().spoonacularApi.complexSearchPromise?.data || [];
-      if (complexSearchResult.length < 6) {
+      if (complexSearchResult.length == 6) {
         listenerApi.dispatch(
           searchComplexBySpoonacularApiAsync({
             intolerances:
@@ -133,14 +133,15 @@ const MenumaticListeners = () => {
 
       const complexSearchResult =
         listenerApi.getState().spoonacularApi.complexSearchPromise?.data || [];
-      if (complexSearchResult.length < 6 && complexSearchResult.length > 3) {
+      if (complexSearchResult.length == 8) {
         listenerApi.dispatch(
           searchComplexBySpoonacularApiAsync({
             intolerances:
-              listenerApi.getState().menu.filterPage.apiPrefs.excludeTags
-                .paramsArray,
-            diet: listenerApi.getState().menu.filterPage.apiPrefs.includeTags
-              .paramsArray,
+              listenerApi.getState().menu.filterPage?.apiPrefs?.excludeTags
+                ?.paramsArray || [],
+            diet:
+              listenerApi.getState().menu.filterPage?.apiPrefs?.includeTags
+                ?.paramsArray || [],
           })
         );
       }
@@ -153,7 +154,8 @@ const MenumaticListeners = () => {
       const { id } = action.payload;
       localStorage.setItem("selected-list-id", JSON.stringify(id));
       const allUserList =
-        listenerApi.getState().menumaticServerApi.userAllListPromise.data;
+        listenerApi.getState().menumaticServerApi.userAllListPromise?.data ||
+        [];
       const selectedList = allUserList.find((list) => list.id === id);
       const allIds = selectedList.recipes.map((recipe) => {
         return { id: recipe.id, portions: recipe.portions };
