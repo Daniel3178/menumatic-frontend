@@ -35,10 +35,10 @@ const ShoplistPageView = (props) => {
         <div className="flex justify-between  w-full">
           <div className="ml-2 flex-col justify-between w-full">
             <div className="text-[12px] font-normal text-cerulean">
-              shopping list name
+              Shopping list name
             </div>
             <input
-              className="h-8  border-b-[2px] border-yellowGreen text-gunmetal font-semibold outline-none max-w-[70%] bg-whiteSmoke"
+              className="h-8 w-[40%] border-b-[2px] border-yellowGreen text-gunmetal font-semibold outline-none max-w-full bg-whiteSmoke"
               type="text"
               id="nameInput"
               value={nameInput}
@@ -233,8 +233,10 @@ const ShoplistPageView = (props) => {
       );
     } else if (props.bulkSearchApiState === "failed") {
       return (
-      <p className="text-gray-700 text-center">Service is not available at the moment. Please try again later.</p>
-      )
+        <p className="text-gray-700 text-center">
+          Service is not available at the moment. Please try again later.
+        </p>
+      );
     } else {
       return (
         <p className="text-gray-700 text-center">No shopping list available.</p>
