@@ -10,7 +10,7 @@ const ingredientsList = (items) => {
   );
 
   return (
-    <div className="pl-8 pr-4">
+    <div className="w-full h-full pl-8 pr-4 overflow-auto">
       <ul className="space-y-1 list-disc">
         {uniqueIngredients.map((nameClean, index) => (
           <li
@@ -49,11 +49,11 @@ const HomePageView = (props) => {
         <div className="flex bg-vanilla h-full w-full rounded-large relative shadow-xl">
           <div className="p-2 w-full h-full">
             <div className="">
-              <p className="h-[30%] text-gunmetal truncate text-wrap font-outfit text-base font-medium">
+              <p className="h-[20%] text-gunmetal truncate text-wrap font-outfit text-xs xs:text-base font-medium">
                 {recipe.title}
               </p>
             </div>
-            <div className="h-[70%] overflow-auto">
+            <div className="h-[80%] overflow-auto">
               {ingredientsList(recipe.extendedIngredients)}
             </div>
           </div>
@@ -95,9 +95,9 @@ const HomePageView = (props) => {
             <div className="absolute inset-x-0 bottom-0 flex space-x-4 items-center justify-between p-1 xs:p-2">
               <div className="flex space-x-2 items-center">
                 <div className="mt-2 ml-2 flex text-whiteSmoke">
-                  <img src={clock_icon} className="pb-2" />
+                  <img src={clock_icon} className="pb-2 w-[20px] xs:w-[32px]" />
                 </div>
-                <div className="text-whiteSmoke font-outfit text-sm xs:text-lg font-thin">
+                <div className="text-whiteSmoke font-outfit text-xs xs:text-lg font-thin">
                   {recipe.readyInMinutes} min
                 </div>
               </div>
