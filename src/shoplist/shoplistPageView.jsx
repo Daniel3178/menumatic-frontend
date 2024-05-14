@@ -224,7 +224,7 @@ const ShoplistPageView = (props) => {
    */
 
   function renderTheIngredientList() {
-    if (props.allItems.length > 0) {
+    if (props.allItems) {
       return (
         <div className="w-full">
           <div className="flex items-center w-full justify-between border-b pb-2">
