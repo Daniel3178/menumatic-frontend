@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     paddingHorizontal: 8,
-    paddingLeft: 130,
+    paddingLeft: 10,
     alignItems: "center",
     fontSize: 9,
   },
@@ -71,16 +71,15 @@ const styles_recipe = StyleSheet.create({
       fontSize: 24,
       textAlign: "right",
       marginBottom: 20,
-      marginRight: 30,
     },
     
     // Headline section styles
     headline_section: {
-      alignItems: "flex-end",
-      paddingRight: 10,
-      borderBottomWidth: 1,
+      width: 600,
+      left: 0,
+      position:"absolute",
+      alignItems: "center",
       borderColor: 'black',
-      marginBottom: 20,
     },
     
     // Secondary headline styles
@@ -100,8 +99,8 @@ const styles_recipe = StyleSheet.create({
     page: {
       flexDirection: "row",
       backgroundColor: "#FFFFFF",
-      paddingHorizontal: 20,
-      paddingVertical: 30,
+      paddingHorizontal: 10,
+      paddingVertical: 10,
       fontFamily: "Roboto",
     },
     
@@ -109,7 +108,7 @@ const styles_recipe = StyleSheet.create({
     listItem: {
       flexDirection: "row",
       marginBottom: 4,
-      alignItems: "center",
+      alignItems: "left",
       fontSize: 10,
     },
     
@@ -121,59 +120,31 @@ const styles_recipe = StyleSheet.create({
     },
     
     // Section styles
-    section: {
+    section:{
+      position: "absolute",
+      flexDirection: "row",
+      marginTop: 50,
+      left: 10,
+    },
+
+    sectionIngr: {
+      left: 0,
+      width: 200,
+      borderWidth: 1,
+      borderColor: 'black',
+      marginBottom: 20,
+    },
+
+    sectionInstr:{
       borderWidth: 1,
       borderColor: 'black',
       marginBottom: 20,
       padding: 10,
     },
+
   });
 
-// const styles_recipe = StyleSheet.create({
-//   headline: {
-//     fontSize: 24,
-//     textAlign: "right",
-//     marginTop: 20,
-//     marginRight: 30,
-//     marginBottom: 20,
-//   },
-//   headline_section: {},
-//   headline2: {
-//     fontSize: 20,
-//     marginTop: 40,
-//   },
-//   mainbody: {
-//     fontSize: 14,
-//     color: "#aaaaaa",
-//   },
 
-//   page: {
-//     fontFamily: "Roboto",
-//     flexDirection: "row",
-//     backgroundColor: "#FFFFFF",
-//   },
-//   listItem: {
-//     flexDirection: "row",
-//     marginBottom: 4,
-//     alignItems: "center",
-//     alignSelf: "center",
-//     fontSize: 10,
-//   },
-//   bullet: {
-//     fontSize: 10,
-//     marginRight: 5,
-//     textAlign: "right",
-//     alignSelf: "right",
-//   },
-//   section: {
-//     margin: 10,
-//     padding: 10,
-//     display: 'flex',
-//     flexDirection: 'column',
-//     borderWidth: 1,
-//     borderColor: 'black',
-//   },
-// });
 const ListItem = ({ children, dot = "•" }) => {
   // console.log("children: " + children);
   const wordsArray = children.split(" ");
@@ -206,18 +177,20 @@ const ListItem = ({ children, dot = "•" }) => {
  * */
 
 const Recipe = ({ title, ingredients, instructions }) => (
-  <Page size="A4" orientation={"landscape"} style={styles_recipe.page}>
+  <Page size="A4" style={styles_recipe.page}>
     <Text style={styles_recipe.mainbody}> by menumatic</Text>
     <View style={styles_recipe.headline_section}>
       <Text style={styles_recipe.headline}>{title}</Text>
     </View>
     <View style={styles_recipe.section}>
-      <Text style={styles_recipe.headline2}>Ingredients:</Text>
-      <BulletList items={ingredients} stylesheet={styles_recipe} />
-    </View>
-    <View style={styles_recipe.section}>
-      <Text style={styles_recipe.headline2}>Instructions:</Text>
-      <BulletList items={instructions} dot={""} stylesheet={styles_recipe} />
+      <View style={styles_recipe.sectionIngr}>
+        <Text style={styles_recipe.headline2}>Ingredients:</Text>
+        <BulletList items={ingredients} stylesheet={styles_recipe} />
+      </View>
+      <View style={styles_recipe.sectionInstr}>
+        <Text style={styles_recipe.headline2}>Instructions:</Text>
+        <BulletList items={instructions} dot={""} stylesheet={styles_recipe} />
+      </View>
     </View>
   </Page>
 );
@@ -241,7 +214,7 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
         style={{
           flexDirection: "row",
           paddingHorizontal: 8,
-          paddingLeft: 130,
+          paddingLeft: 10,
           alignItems: "center",
         }}
       >
@@ -290,7 +263,7 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
  * */
 const ShoppingList = ({ ingredients }) => (
   <Document>
-    <Page size="A5" style={styles.page}>
+    <Page size="A6" style={styles.page}>
       <View>
         <Text style={styles.mainbody}> by menumatic</Text>
         <Text
