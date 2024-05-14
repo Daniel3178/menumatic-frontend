@@ -70,7 +70,7 @@ const ShoplistPageView = (props) => {
           <div className="ml-2 text-base font-normal text-cerulean">
             Log in to save the meal plan in Menumatic, or download as PDF.
           </div>
-          <div className="flex flex-row px-4">
+          <div className="flex flex-col h-28 justify-between ">
             {PDFDownloadButton()}
             {PDFDownloadRecipesBtn()}
           </div>
