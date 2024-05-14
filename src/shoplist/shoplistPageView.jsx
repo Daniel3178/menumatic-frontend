@@ -69,7 +69,6 @@ const ShoplistPageView = (props) => {
           </div>
           < div className="flex flex-row px-4">
             {PDFDownloadButton()}
-            {PDFDownloadRecipesBtn()}
           </div>
         </div>
       );
