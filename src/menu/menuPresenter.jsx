@@ -53,7 +53,7 @@ const MenuPresenter = () => {
   };
 
   const navigateToPlan = () =>{
-    if(latestMealState === "ready" && latestMeal.length > 0){
+    if(latestMealState === "ready" && latestMeal){
     dispatch(setSelectedList({ id: latestMeal.id }));
     navigate("/plan");}
     else{

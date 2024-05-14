@@ -73,7 +73,7 @@ const menumaticServerApi = createSlice({
 
         const fetchedData = action.payload;
         const latest = fetchedData[fetchedData.length - 1];
-        state.latestMealPlanPromise.data = latest || [];
+        state.latestMealPlanPromise.data = latest || {};
         state.latestMealPlanPromise.state = "ready";
 
       })
