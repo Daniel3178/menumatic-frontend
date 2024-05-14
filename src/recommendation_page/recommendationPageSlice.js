@@ -99,7 +99,7 @@ const recommendation = createSlice({
           state.recommendationList = [];
         }
         state.recommendationList.push({
-          portions: 1,
+          portions: 4,
           result: action.payload.recipe,
         });
       })
