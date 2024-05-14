@@ -9,9 +9,10 @@ import {
   removeUserItem,
   restoreUserItem,
 } from "./shoplistSlice";
+import {getMenumaticSelecedList} from "../store/menumaticServerAPISlice"
 import { getSelectedTab } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../menu/userAccountSlice";
-import { saveShoplistToMenumaticDb } from "../integration/menumaticServerThunks";
+import { saveShoplistToMenumaticDb,saveExcludedIngredients } from "../integration/menumaticServerThunks";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getBulkSearchPromise } from "../store/spoonacularAPISlice";
 /**
@@ -34,7 +35,8 @@ const ShoplistPagePresenter = () => {
   const bulkSearchApiState = useSelector(getBulkSearchPromise).state
 
   const { dishes: selectedDishes } = useSelector(getSelectedTab);
-
+  const {id: selectedListId} = useSelector(getMenumaticSelecedList)
+  const {data:{allItems: userAllItems, removedItems: userRemovedItems}, state: userShoplistState} = useSelector(getUserShoplistPromise)
   const extractRecepies = (list) => {
     const recipes = [];
     list.map((meal) => {
@@ -62,6 +64,16 @@ const ShoplistPagePresenter = () => {
     );
     navigate("/");
   };
+
+  const handleUpdateMealPlan = (nameInput)=>{
+    // if(userShoplistState === "ready"){
+      dispatch(saveExcludedIngredients({mealplanId: selectedListId, excluded: removedItemsUser}))
+      alert("Meal plan updated")
+      // }
+    // else{
+      // alert("Required info is not loaded yet, please wait a moment and try again.")
+    // }
+  }
 
   const handleRemoveItem = (item) => {
     if (location.state === "/recommendation") {
@@ -95,7 +107,7 @@ const ShoplistPagePresenter = () => {
       isLoggedIn={isLoggedIn}
       removeItem={handleRemoveItem}
       restoreItem={handleRestoreItem}
-      saveMealPlan={handleSaveMealPlan}
+      saveMealPlan={location.state ==="/recommendation"? handleSaveMealPlan : handleUpdateMealPlan}
       navigateToLogin={handleNavigateToLogIn}
       bulkSearchApiState={bulkSearchApiState}
     />
