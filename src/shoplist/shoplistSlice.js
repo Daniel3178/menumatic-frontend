@@ -35,17 +35,11 @@ const shoplistSlice = createSlice({
       state.userShoplistPromise.data.removedItems = [];
     },
     setData: (state, action) => {
-      console.log(
-        "LOADING DATA FROM LOCAL, SHOPLIST: ",
-        action.payload.allItems
-      );
-      // state.generalShoplist.allItems = action.payload.allItems;
       action.payload.allItems.map((element) => {
         const ingredients = [];
         element.ingredients.map((item) => {
           ingredients.push(item);
         });
-        console.log("INGREDIENTS: ", ingredients);
         state.generalShoplist.allItems.push({
           category: element.category,
           ingredients: [...ingredients],

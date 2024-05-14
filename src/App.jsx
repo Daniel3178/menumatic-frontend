@@ -1,8 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import HomePagePresenter from "./homepage/homePagePresenter";
-import DanielTestPresenter from "./test/danielTestPresenter";
-import GustavTestPresenter from "./test/gustavTestPresenter";
-import CreatePDFForm from "./pdf/CreateShoplistPDF";
 import RecommendationPagePresenter from "./recommendation_page/recommendationPagePresenter";
 import ShoplistPagePresenter from "./shoplist/shoplistPagePresenter";
 import PlanListPresenter from "./listOfStoredPlansRelated/plan_list/planListPresenter";
@@ -29,9 +26,6 @@ const App = () => {
         </div>
         <div className="">
           <Routes>
-            <Route path="/pdf-test" element={<CreatePDFForm />} />
-            <Route path="/daniel-test" element={<DanielTestPresenter />} />
-            <Route path="/gustav-test" element={<GustavTestPresenter />} />
             <Route
               path="/recommendation"
               element={<RecommendationPagePresenter />}
@@ -44,7 +38,6 @@ const App = () => {
               path="/recipeDetails"
               element={<RecipeDetailsPagePresenter />}
             />
-            <Route path="/jonathan-test" element={<MenuPresenter />} />
           </Routes>
         </div>
       </div>

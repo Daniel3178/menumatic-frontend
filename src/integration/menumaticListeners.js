@@ -217,7 +217,6 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: generateShoplist,
     effect: async (action, listenerApi) => {
-      console.log("Listening to generatedShoplist action");
       const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
       const removedItems =
         listenerApi.getState().shoplist.generalShoplist.removedItems;

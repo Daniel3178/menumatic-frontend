@@ -9,9 +9,6 @@ const homePage = createSlice({
   reducers: {
     incrementLikesCounter: (state, action) => {
       const prevCount = state.likesCounter;
-
-      console.log("prevCount", prevCount);
-      console.log("likeLimit", action.payload.likeLimit);
       state.likesCounter = (prevCount + 1) % action.payload.likeLimit;
     },
     resetLikesCounter: (state) => {

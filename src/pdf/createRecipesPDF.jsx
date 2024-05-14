@@ -129,53 +129,7 @@ const styles_recipe = StyleSheet.create({
     },
   });
 
-// const styles_recipe = StyleSheet.create({
-//   headline: {
-//     fontSize: 24,
-//     textAlign: "right",
-//     marginTop: 20,
-//     marginRight: 30,
-//     marginBottom: 20,
-//   },
-//   headline_section: {},
-//   headline2: {
-//     fontSize: 20,
-//     marginTop: 40,
-//   },
-//   mainbody: {
-//     fontSize: 14,
-//     color: "#aaaaaa",
-//   },
-
-//   page: {
-//     fontFamily: "Roboto",
-//     flexDirection: "row",
-//     backgroundColor: "#FFFFFF",
-//   },
-//   listItem: {
-//     flexDirection: "row",
-//     marginBottom: 4,
-//     alignItems: "center",
-//     alignSelf: "center",
-//     fontSize: 10,
-//   },
-//   bullet: {
-//     fontSize: 10,
-//     marginRight: 5,
-//     textAlign: "right",
-//     alignSelf: "right",
-//   },
-//   section: {
-//     margin: 10,
-//     padding: 10,
-//     display: 'flex',
-//     flexDirection: 'column',
-//     borderWidth: 1,
-//     borderColor: 'black',
-//   },
-// });
 const ListItem = ({ children, dot = "•" }) => {
-  // console.log("children: " + children);
   const wordsArray = children.split(" ");
   const [first, second, ...rest] = wordsArray;
   const third = rest.join(" ");
@@ -232,8 +186,6 @@ const Recipe = ({ title, ingredients, instructions }) => (
  * Author: Gustav Landberg <landbergg@outlook.com>
  * */
 const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
-// console.log("ITEMS THAT IS MAPPED;", items)
-
 
   return (
     <View>
@@ -396,7 +348,6 @@ function CreatePDFForm() {
   }
 
   var ingredientsList = inArrayExample.map((x) => x.join(" "));
-  // console.log(ingredientsList);
   return (
     <div>
       <PDFDownloadLink
