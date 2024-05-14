@@ -27,11 +27,7 @@ const ShoplistPageView = (props) => {
 
   const PDFDownloadRecipesBtn = () => {
     const recpiecData = props.generateRecepiesData();
-    return (
-      <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">
-        {generateRecipesListPDFLink(recpiecData)}
-      </div>
-    );
+    return <div className="mr-2 p-3 uppercase text-nowrap h-12 rounded-[100px] text-[1rem] text-center bg-cerulean transition-all duration-500 ease-in-out hover:shadow-mid text-whiteSmoke font-medium">{generateRecipesListPDFLink(recpiecData)}</div>;
   };
 
   /**
@@ -70,7 +66,7 @@ const ShoplistPageView = (props) => {
           <div className="ml-2 text-base font-normal text-cerulean">
             Log in to save the meal plan in Menumatic, or download as PDF.
           </div>
-          <div className="flex flex-col h-28 justify-between ">
+          < div className="flex flex-row px-4">
             {PDFDownloadButton()}
             {PDFDownloadRecipesBtn()}
           </div>
