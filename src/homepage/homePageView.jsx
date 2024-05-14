@@ -58,7 +58,7 @@ const HomePageView = (props) => {
             </div>
           </div>
 
-          <div className="absolute bottom-0 right-0 pr-1 xs:pr-2 pb-4 xs:pb-4">
+          <div className="absolute bottom-0 right-0 pr-1 xs:pr-2 pb-4 xs:pb-3">
             <button
               onClick={props.toggleInfoView}
               className="pressable tracking-wider flex justify-center items-center rounded-full bg-whiteSmoke text-gunmetal font-outfit text-[8px] xs:text-sm text-bold hover:shadow-mid foucs:shadow-in p-2 xs:p-4 h-6 xs:h-10"
