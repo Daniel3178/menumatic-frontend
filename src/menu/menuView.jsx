@@ -391,7 +391,7 @@ const MenuView = (props) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen animate-slide-in">
+        <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen">
           <button
             onClick={props.hideSignup}
             className="justify-start ml-6 mt-6"
