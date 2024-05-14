@@ -48,6 +48,12 @@ const menumaticServerApi = createSlice({
         (item) => item.id !== listId
       );
       state.userAllListPromise.data = updatedData;
+      if(updatedData.length > 0){
+        state.latestMealPlanPromise.data = updatedData[updatedData.length - 1];
+      }
+      else{
+        state.latestMealPlanPromise.data = {};
+      }
     },
     setSelectedList: (state, action) => {
       const { id } = action.payload;
