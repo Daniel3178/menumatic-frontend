@@ -45,6 +45,7 @@ const HomePagePresenter = () => {
     if (likesCounter === 0) {
       dispatch(sortLikedDishes(mealsInPlan));
       navigate("/recommendation");
+      dispatch(setStateRecommendBtn(false))
     }
 
     if (likesCounter == mealsInPlan) {
