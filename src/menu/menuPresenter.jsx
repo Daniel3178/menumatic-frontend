@@ -136,8 +136,8 @@ const MenuPresenter = () => {
   const handleSignOutACB = () => {
     signOut(auth)
       .then(() => {
-        window.location.reload();
         navigate("/");
+        // window.location.reload();
       })
       .catch((err) => {});
   };

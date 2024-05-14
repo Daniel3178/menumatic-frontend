@@ -146,6 +146,11 @@ const menumaticServerApi = createSlice({
           state: "loading",
           error: null,
         };
+        state.latestMealPlanPromise = {
+          data: [],
+          state: "loading",
+          error: null,
+        };
       });
   },
 });

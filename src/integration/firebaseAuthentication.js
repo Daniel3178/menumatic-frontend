@@ -34,6 +34,7 @@ const FirebaseAuthentication = () => {
       } else {
         const { excludeTags, includeTags, mealsInPlan } = fetchLocalFoodPref();
         dispatch(saveTags({ excludeTags, includeTags, mealsInPlan }));
+        dispatch(signOutCurrentUser());
       }
     });
   }, []);
