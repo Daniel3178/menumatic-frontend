@@ -7,7 +7,7 @@ import {
   signUpAsync,
 } from "./userAccountSlice";
 import MenuView from "./menuView";
-import { setSelectedList } from "../store/menumaticServerAPISlice";
+import { setSelectedList, getLatestMealPlanPromise } from "../store/menumaticServerAPISlice";
 import {
   getMenuStateBase,
   getMenuStateLogin,
@@ -45,15 +45,19 @@ import { deleteUser } from "../integration/menumaticServerThunks";
 const MenuPresenter = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const mealPlanID = useSelector((state) => state.menumaticServerApi.selectedList.id);
+  const {data:latestMeal, state:latestMealState} = useSelector(getLatestMealPlanPromise);
 
   const navigateToPlanList = () => {
     navigate("/plan_list");
   };
 
   const navigateToPlan = () =>{
-    dispatch(setSelectedList({ id: mealPlanID }));
-    navigate("/plan");
+    if(latestMealState === "ready" && latestMeal.length > 0){
+    dispatch(setSelectedList({ id: latestMeal.id }));
+    navigate("/plan");}
+    else{
+      alert("You have no meal plan yet")
+    }
   }
 
   const navigateToRecommendation = () => {

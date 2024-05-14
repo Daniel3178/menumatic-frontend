@@ -10,6 +10,11 @@ import {
 const menumaticServerApi = createSlice({
   name: "spoonacularApi",
   initialState: {
+    latestMealPlanPromise:{
+      data: [],
+      state: "loading",
+      error: null,
+    },
     userAllListPromise: {
       data: [],
       state: "loading",
@@ -60,13 +65,21 @@ const menumaticServerApi = createSlice({
     builder
       .addCase(fetchUserShopinglist.pending, (state, action) => {
         state.userAllListPromise.state = "loading";
+        state.latestMealPlanPromise.state = "loading";
       })
       .addCase(fetchUserShopinglist.fulfilled, (state, action) => {
         state.userAllListPromise.data = action.payload;
         state.userAllListPromise.state = "ready";
+
+        const fetchedData = action.payload;
+        const latest = fetchedData[fetchedData.length - 1];
+        state.latestMealPlanPromise.data = latest || [];
+        state.latestMealPlanPromise.state = "ready";
+
       })
       .addCase(fetchUserShopinglist.rejected, (state, action) => {
         state.userAllListPromise.state = "failed";
+        state.latestMealPlanPromise.state = "failed";
       })
       .addCase(fetchUserFoodPref.pending, (state, action) => {
         state.userFoodPrefPromise.state = "loading";
@@ -130,6 +143,8 @@ const menumaticServerApi = createSlice({
       });
   },
 });
+
+export const getLatestMealPlanPromise = (state) => state.menumaticServerApi.latestMealPlanPromise;
 
 export const getUserAllListPromise = (state) =>
   state.menumaticServerApi.userAllListPromise;
