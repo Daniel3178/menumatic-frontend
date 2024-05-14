@@ -9,6 +9,7 @@ import {
   removeUserItem,
   restoreUserItem,
 } from "./shoplistSlice";
+import { normalizeIngrAmount } from "../recepie_details_page/recipeDetailsUtilites";
 import {getMenumaticSelecedList} from "../store/menumaticServerAPISlice"
 import { getSelectedTab } from "../recommendation_page/recommendationPageSlice";
 import { getIsLoggedIn, getUserId } from "../menu/userAccountSlice";
@@ -75,6 +76,29 @@ const ShoplistPagePresenter = () => {
     // }
   }
 
+  const generateRecepiesData = () =>{
+    const dataForPdf =  selectedDishes.map((meal)=>{
+      const {result:recpies, portions} = meal;
+      const {result:{title, analyzedInstructions, extendedIngredients}, portions:normalizedPortions} = normalizeIngrAmount(recpies, portions)
+
+      const ingredients = extendedIngredients.map((ingredient) => {
+        return `${ingredient.measures.metric.amount} ${ingredient.measures.metric.unitShort} ${ingredient.nameClean}`
+      })
+      // console.log("STEPS IN GENERATION: ", steps)
+      console.log("ANALYZED IN GENERATION: ", analyzedInstructions)
+      const instructions = analyzedInstructions[0].steps.map((step) => {
+        return step.step;
+      })
+      return {
+        title: title,
+        ingredients: ingredients,
+        instructions: instructions
+      }
+    })
+
+    return dataForPdf;
+  }
+
   const handleRemoveItem = (item) => {
     if (location.state === "/recommendation") {
       dispatch(removeItem(item));
@@ -110,6 +134,8 @@ const ShoplistPagePresenter = () => {
       saveMealPlan={location.state ==="/recommendation"? handleSaveMealPlan : handleUpdateMealPlan}
       navigateToLogin={handleNavigateToLogIn}
       bulkSearchApiState={bulkSearchApiState}
+
+      generateRecepiesData={generateRecepiesData}
     />
   );
 };
