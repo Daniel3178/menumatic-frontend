@@ -124,10 +124,8 @@ const HomePageView = (props) => {
             <div className="h-[80%] w-full relative">
               {props.apiResults
                 .slice(1, 2)
-                .map((recipe) => (
-                  <div
-                    className="h-full w-full absolute z-10"
-                  >
+                .map((recipe, index) => (
+                  <div className="h-full w-full absolute z-10" key={index}>
                     <div className="flex justify-center h-full">
                       <div className="rounded-large w-full">
                         {conditionalRender(recipe)}
@@ -145,7 +143,7 @@ const HomePageView = (props) => {
                     swipeThreshold={100}
                     key={props.apiResults}
                     onSwipe={(dir) => swiped(dir, dir)}
-                    preventSwipe={['up', 'down']}
+                    preventSwipe={["up", "down"]}
                     onCardLeftScreen={() => outOfFrame(props.apiResults)}
                   >
                     <div className="flex justify-center h-full">

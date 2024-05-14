@@ -25,6 +25,7 @@ const recommendation = createSlice({
       state.affordableDishesList.dishes = action.payload.affordable;
       state.popularDishesList.dishes = action.payload.popular;
       state.quickDishesList.dishes = action.payload.quick;
+      state.selectedTab = action.payload.selectedTab;
     },
     setSelectedTab: (state, action) => {
       state.selectedTab = action.payload;
