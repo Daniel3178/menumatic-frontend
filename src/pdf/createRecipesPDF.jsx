@@ -66,87 +66,84 @@ const styles = StyleSheet.create({
   },
 });
 const styles_recipe = StyleSheet.create({
-    // Headline styles
-    headline: {
-      fontSize: 24,
-      textAlign: "right",
-      marginBottom: 20,
-    },
-    
-    // Headline section styles
-    headline_section: {
-      width: 600,
-      left: 0,
-      position:"absolute",
-      alignItems: "center",
-      borderColor: 'black',
-    },
-    
-    // Secondary headline styles
-    headline2: {
-      fontSize: 20,
-      marginBottom: 20,
-    },
-    
-    // Main body text styles
-    mainbody: {
-      fontSize: 14,
-      color: "#aaaaaa",
-      marginBottom: 20,
-    },
-    
-    // Page styles
-    page: {
-      flexDirection: "row",
-      backgroundColor: "#FFFFFF",
-      paddingHorizontal: 10,
-      paddingVertical: 10,
-      fontFamily: "Roboto",
-    },
-    
-    // List item styles
-    listItem: {
-      flexDirection: "row",
-      marginBottom: 4,
-      alignItems: "left",
-      fontSize: 10,
-    },
-    
-    // Bullet styles
-    bullet: {
-      fontSize: 10,
-      marginRight: 5,
-      textAlign: "right",
-    },
-    
-    // Section styles
-    section:{
-      position: "absolute",
-      flexDirection: "row",
-      marginTop: 50,
-      left: 10,
-    },
+  // Headline styles
+  headline: {
+    fontSize: 24,
+    textAlign: "right",
+    marginBottom: 20,
+  },
 
-    sectionIngr: {
-      left: 0,
-      width: 200,
-      borderWidth: 1,
-      borderColor: 'black',
-      marginBottom: 20,
-    },
+  // Headline section styles
+  headline_section: {
+    width: 600,
+    left: 0,
+    position: "absolute",
+    alignItems: "center",
+    borderColor: "black",
+  },
 
-    sectionInstr:{
-      borderWidth: 1,
-      borderColor: 'black',
-      marginBottom: 20,
-      padding: 10,
-    },
+  // Secondary headline styles
+  headline2: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
 
-  });
+  // Main body text styles
+  mainbody: {
+    fontSize: 14,
+    color: "#aaaaaa",
+    marginBottom: 20,
+  },
 
+  // Page styles
+  page: {
+    flexDirection: "row",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    fontFamily: "Roboto",
+  },
+
+  // List item styles
+  listItem: {
+    flexDirection: "row",
+    marginBottom: 4,
+    alignItems: "left",
+    fontSize: 10,
+  },
+
+  // Bullet styles
+  bullet: {
+    fontSize: 10,
+    marginRight: 5,
+    textAlign: "right",
+  },
+
+  // Section styles
+  section: {
+    position: "absolute",
+    flexDirection: "row",
+    marginTop: 50,
+    left: 10,
+  },
+
+  sectionIngr: {
+    left: 0,
+    width: 200,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+  },
+
+  sectionInstr: {
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
+});
 
 const ListItem = ({ children, dot = "•" }) => {
-  // console.log("children: " + children);
   const wordsArray = children.split(" ");
   const [first, second, ...rest] = wordsArray;
   const third = rest.join(" ");
@@ -205,9 +202,6 @@ const Recipe = ({ title, ingredients, instructions }) => (
  * Author: Gustav Landberg <landbergg@outlook.com>
  * */
 const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
-// console.log("ITEMS THAT IS MAPPED;", items)
-
-
   return (
     <View>
       <View
@@ -318,34 +312,36 @@ function generateShoppingListPDFLink(
  * Gustav Landberg <landbergg@outlook.com>
  * */
 
-const RecipesDocument = ({recipes}) => (
-    // <Document>
-    //   {recipes.map((recipe) => (
-    //     <Recipe
-    //       key={Math.random()}
-    //       title={recipe[0]}
-    //       ingredients={recipe[1]}
-    //       instruction={recipe[2]}
-    //     />
-    //   ))}
-    // </Document>
-    <Document>
-      {recipes.map((recipe) => (
-        <Recipe
-          key={Math.random()}
-          title={recipe.title}
-          ingredients={recipe.ingredients}
-          instructions={recipe.instructions}
-        />
-      ))}
-    </Document>
-  );
+const RecipesDocument = ({ recipes }) => (
+  // <Document>
+  //   {recipes.map((recipe) => (
+  //     <Recipe
+  //       key={Math.random()}
+  //       title={recipe[0]}
+  //       ingredients={recipe[1]}
+  //       instruction={recipe[2]}
+  //     />
+  //   ))}
+  // </Document>
+  <Document>
+    {recipes.map((recipe) => (
+      <Recipe
+        key={Math.random()}
+        title={recipe.title}
+        ingredients={recipe.ingredients}
+        instructions={recipe.instructions}
+      />
+    ))}
+  </Document>
+);
 
 export function generateRecipesListPDFLink(recipes) {
-
   return (
     <div>
-      <PDFDownloadLink document={<RecipesDocument recipes={recipes}/>} fileName="recipes.pdf">
+      <PDFDownloadLink
+        document={<RecipesDocument recipes={recipes} />}
+        fileName="recipes.pdf"
+      >
         {({ blob, url, loading, error }) =>
           loading ? "Loading document..." : "Download Recipes"
         }
@@ -369,7 +365,6 @@ function CreatePDFForm() {
   }
 
   var ingredientsList = inArrayExample.map((x) => x.join(" "));
-  // console.log(ingredientsList);
   return (
     <div>
       <PDFDownloadLink

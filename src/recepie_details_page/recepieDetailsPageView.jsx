@@ -59,7 +59,6 @@ const RecipeDetailsPageView = (props) => {
   };
 
   const renderRecipe = () => {
-    console.log(props.bulkSearchApiState)
     if(props.bulkSearchApiState === "failed") {
       return (
         <p className="text-gray-700 text-center">Service is not available at the moment. Please try again later.</p>

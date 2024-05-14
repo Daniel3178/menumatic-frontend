@@ -11,9 +11,6 @@ import { fetchLocalFoodPref } from "./localStorage";
 
 const FirebaseAuthentication = () => {
   const dispatch = useDispatch();
-
-  //TODO: when server is not available, there is an issue with calling spoonacualr.
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {

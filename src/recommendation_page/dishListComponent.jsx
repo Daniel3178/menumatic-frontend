@@ -92,19 +92,6 @@ const DishListComponent = (props) => {
               </button>
             </div>
           </div>
-          {/* <input className='bg-cerulean'
-            type='number'
-            id={recipe.dayOfTheMeal}
-            name="quantity"
-            value={recipe.portionCount}
-            onChange={(e) => {
-              e.preventDefault();
-              console.log("e.target.value", e.target.value);
-              props.updateCount({ id: recipe.id, portions: e.target.value, list: props.selectedTab });
-            }
-            }
-            min="1"
-          ></input> */}
         </span>
       </div>
     );
