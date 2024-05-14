@@ -110,81 +110,46 @@ const MenuView = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     return (
-      <div className="">
+      <div className="mr-6 ml-6 mt-10">
         <form
-          className="flex flex-col"
+          className="w-full mt-10 flex justify-center items-center flex-col text-whiteSmoke text-lg font-outfit"
           onSubmit={(e) => {
             e.preventDefault();
             hProp.handleDeleteAccount({ email: email, password: password });
           }}
         >
-          <label for="email">Email:</label>
           <input
+            className="m-2 p-2 w-56 h-12 bg-yellowGreen border-b-[2px] border-cerulean placeholder-whiteSmoke outline-none"
             type="email"
             id="email"
             name="email"
+            autocomplete="off"
+            placeholder="e-mail"
             value={email}
             onChange={(e) => {
-              e.preventDefault();
               setEmail(e.target.value);
             }}
             required
           ></input>
-          <label for="password">Password:</label>
           <input
+            className="m-2 p-2 w-56 h-12 bg-yellowGreen border-b-[2px] border-cerulean placeholder-whiteSmoke outline-none"
             type="password"
             value={password}
             onChange={(e) => {
-              e.preventDefault();
               setPassword(e.target.value);
             }}
             id="password"
             name="password"
+            placeholder="password"
+            autocomplete="new-password"
             required
           ></input>
           <button
+            className="tracking-wider mt-6 mr-2 text-whiteSmoke text-lg font-outfit rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
             type="submit"
-            onClick={() => {
-              console.log("delete account btn is clicked");
-            }}
+            onClick={props.deleteAccount}
           >
-            Delete Account
-          </button>
-        </form>
-      </div>
-    );
-  };
-
-  const HandleResetPassword = (hProp) => {
-    const [email, setEmail] = useState("");
-    return (
-      <div className="">
-        <form
-          className="flex flex-col"
-          onSubmit={(e) => {
-            e.preventDefault();
-            hProp.handlePasswordReset({ email: email });
-          }}
-        >
-          <label for="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => {
-              e.preventDefault();
-              setEmail(e.target.value);
-            }}
-            required
-          ></input>
-          <button
-            type="submit"
-            onClick={() => {
-              console.log("reset password btn is clicked");
-            }}
-          >
-            Reset Password
+            DELETE
           </button>
         </form>
       </div>
@@ -192,7 +157,6 @@ const MenuView = (props) => {
   };
 
   const [deleteAccountToggle, setDeleteAccountToggle] = useState(false);
-  const [passChangeToggle, setPassChangeToggle] = useState(false);
   //***********MENU VIEWS***********
 
   const renderMenu = () => {
@@ -224,29 +188,28 @@ const MenuView = (props) => {
         leaveTo="opacity-0"
       >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-yellowGreen font-outfit text-cerulean">
+          {renderForgotPass()}
           <button
             onClick={props.hideSettings}
-            className="justify-start ml-6 mt-6"
+            className="justify-start ml-4 mt-4"
           >
             <img src={backBlue} />
           </button>
-          <div className="flex justify-center flex-col items-center place-content-center  mt-10">
+          <div className="flex justify-center flex-col items-center place-content-center mt-10">
             <button
-              onClick={() => setPassChangeToggle(!passChangeToggle)}
-              className="tracking-wider mr-2 rounded-full bg-cerulean text-whiteSmoke text-lg font-outfit text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+              onClick={props.showPassChange}
+              className="tracking-wider mr-2 rounded-full bg-cerulean text-whiteSmoke text-lg font-outfit text-bold hover:shadow-mid foucs:shadow-in w-60 h-14"
             >
-              CHANGE PASSWORD
+              RESET PASSWORD
             </button>
-            {passChangeToggle && (
-              <HandleResetPassword handlePasswordReset={props.resetPassword} />
-            )}
           </div>
           <div className="flex justify-center flex-col items-center place-content-center mt-10">
             <button
               onClick={() => setDeleteAccountToggle(!deleteAccountToggle)}
-              className="tracking-wider mr-2 text-whiteSmoke text-lg font-outfit rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in w-56 h-14"
+              className="tracking-wider mr-2 w-60 h-14 text-whiteSmoke text-lg font-outfit rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in"
             >
-              DELETE ACCOUNT
+              DELETE ACCOUNT 
+    
             </button>
             {deleteAccountToggle && (
               <HandleDeleteAccount handleDeleteAccount={props.deleteAccount} />
@@ -489,38 +452,59 @@ const MenuView = (props) => {
     );
   };
 
-  const RenderForgotPass = (hProp) => {
-    const [email, setEmail] = useState("");
+  const renderForgotPass = () => {
+    //const [email, setEmail] = useState("");
     return (
-      <div className="">
-        <form
-          className="flex flex-col"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <label for="email">Email:</label>
-          <input
-            className=" text-black"
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => {
-              e.preventDefault();
-              setEmail(e.target.value);
-            }}
-            required
-          ></input>
+      <Transition
+        show={props.statePassChange}
+        enter="transition-opacity duration-150"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="relative z-2 top-0 right-0 h-screen w-72 bg-yellowGreen">
           <button
-            onClick={() => {
-              hProp.handlePasswordReset({ email: email });
-            }}
+            onClick={props.hidePassChange}
+            className="justify-start ml-6 mt-6"
           >
-            Reset Password
+            <img src={backBlue} />
           </button>
-        </form>
-      </div>
+          <div className="place-content-center mt-40">
+            <form
+              className="w-full mt-10 flex justify-center items-center flex-col text-whiteSmoke text-lg font-outfit"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <input
+                className="m-2 p-2 w-56 h-12 bg-yellowGreen border-b-[2px] border-cerulean placeholder-whiteSmoke outline-none"
+                type="email"
+                placeholder="e-mail"
+                id="email"
+                name="email"
+                value={props.email}
+                onChange={(e) => {
+                  e.preventDefault();
+                  props.setEmail(e.target.value);
+                }}
+                required
+              ></input>
+              <button
+                onClick={() => {
+                  props.resetPassword({ email: props.email });
+                }}
+                className="mt-4 mb-16 p-1 w-56 h-14 rounded-[100px] bg-cerulean hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
+                id="signup"
+                type="submit"
+              >
+                RESET PASSWORD
+              </button>
+            </form>
+          </div>
+        </div>
+      </Transition>
     );
   };
 
@@ -539,6 +523,7 @@ const MenuView = (props) => {
       >
         <div className="relative z-1 top-0 right-0 h-screen w-72 bg-cerulean animate-slide-in">
           {signupMenu()}
+          {renderForgotPass()}
           <button onClick={props.hideLogin} className="justify-start ml-6 mt-6">
             <img src={backGreen} />
           </button>
@@ -568,21 +553,21 @@ const MenuView = (props) => {
                 />
                 <span id="wrong_pass_alert"></span>
                 <button
-                  className="mt-4 mb-16 p-1 w-40 h-12 rounded-[100px] bg-yellowGreen hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 mb-10 p-1 w-40 h-12 rounded-[100px] bg-yellowGreen hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
                   id="signup"
                   type="submit"
                 >
                   LOG IN
                 </button>
+                Forgot password?
                 <button
-                  onClick={() => setForgotPassToggle(!forgotPassToggle)}
-                  className="py-4"
+                  onClick={props.showPassChange}
+                  className="mt-4 mb-10 p-1 w-56 h-14 rounded-[100px] bg-yellowGreen hover:shadow-mid text-whiteSmoke disabled:opacity-50 disabled:cursor-not-allowed"
+                  id="signup"
+                  type="submit"
                 >
-                  Forgot password?
+                  RESET PASSWORD
                 </button>
-                {forgotPassToggle && (
-                  <RenderForgotPass handlePasswordReset={props.resetPassword} />
-                )}
                 Don't have an account?
                 <button
                   onClick={props.showSignup}
