@@ -233,7 +233,7 @@ const MenuView = (props) => {
           leaveTo="opacity-0"
         >
           <div className="relative z-1  top-0 right-0 h-screen w-72 bg-yellowGreen">
-            <div className=" h-[85%] overflow-y-scroll tracking-wider text-cerulean">
+            <div className=" h-[80%] overflow-y-scroll tracking-wider text-cerulean">
               <button
                 onClick={props.hideFilter}
                 className="justify-start ml-6 mt-6"
@@ -398,7 +398,7 @@ const MenuView = (props) => {
           >
             <img src={backBlue} />
           </button>
-          <div className="place-content-center mt-40">
+          <div className="place-content-center mt-10">
             <form
               className="w-full mt-10 flex justify-center items-center flex-col text-whiteSmoke text-lg font-outfit"
               onSubmit={props.signUp}
@@ -527,7 +527,7 @@ const MenuView = (props) => {
           <button onClick={props.hideLogin} className="justify-start ml-6 mt-6">
             <img src={backGreen} />
           </button>
-          <div className="place-content-center mt-40">
+          <div className="place-content-center mt-10">
             <div className="flex justify-center">
               <form
                 className="w-full mt-10 flex justify-center items-center flex-col text-whiteSmoke text-lg font-outfit"
