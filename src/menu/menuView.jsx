@@ -361,8 +361,8 @@ const MenuView = (props) => {
                 />
               </div>
             </div>
-            <div className="flex justify-center bottom-0 justify-center pb-4">
-              <div className="justify-center font-outfit text-whiteSmoke pb-2">
+            <div className="flex justify-center bottom-0 justify-center pb-10">
+              <div className="justify-center font-outfit text-whiteSmoke pb-4">
                 {/* Button to apply filters */}
                 <button
                   onClick={applyFilterButton}
