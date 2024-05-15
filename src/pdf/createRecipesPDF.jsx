@@ -66,87 +66,89 @@ const styles = StyleSheet.create({
   },
 });
 const styles_recipe = StyleSheet.create({
-    // Headline styles
-    headline: {
-      fontSize: 24,
-      textAlign: "right",
-      marginBottom: 20,
-    },
-    
-    // Headline section styles
-    headline_section: {
-      width: 600,
-      left: 0,
-      position:"absolute",
-      alignItems: "center",
-      borderColor: 'black',
-    },
-    
-    // Secondary headline styles
-    headline2: {
-      fontSize: 20,
-      marginBottom: 20,
-    },
-    
-    // Main body text styles
-    mainbody: {
-      fontSize: 14,
-      color: "#aaaaaa",
-      marginBottom: 20,
-    },
-    
-    // Page styles
-    page: {
-      flexDirection: "row",
-      backgroundColor: "#FFFFFF",
-      paddingHorizontal: 10,
-      paddingVertical: 10,
-      fontFamily: "Roboto",
-    },
-    
-    // List item styles
-    listItem: {
-      flexDirection: "row",
-      marginBottom: 4,
-      alignItems: "left",
-      fontSize: 10,
-    },
-    
-    // Bullet styles
-    bullet: {
-      fontSize: 10,
-      marginRight: 5,
-      textAlign: "right",
-    },
-    
-    // Section styles
-    section:{
-      position: "absolute",
-      flexDirection: "row",
-      marginTop: 50,
-      left: 10,
-    },
+  // Headline styles
+  headline: {
+    fontSize: 18,
+    textAlign: "right",
+    marginBottom: 20,
+  },
 
-    sectionIngr: {
-      left: 0,
-      width: 200,
-      borderWidth: 1,
-      borderColor: 'black',
-      marginBottom: 20,
-    },
+  // Headline section styles
+  headline_section: {
+    width: 600,
+    left: 0,
+    marginTop: 50,
+    position: "relative",
+    alignItems: "center",
+    borderColor: "black",
+  },
 
-    sectionInstr:{
-      borderWidth: 1,
-      borderColor: 'black',
-      marginBottom: 20,
-      padding: 10,
-    },
+  // Secondary headline styles
+  headline2: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
 
-  });
+  // Main body text styles
+  mainbody: {
+    fontSize: 14,
+    color: "#aaaaaa",
+    marginBottom: 20,
+  },
 
+  // Page styles
+  page: {
+    flexDirection: "column",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    fontFamily: "Roboto",
+  },
+
+  // List item styles
+  listItem: {
+    flexDirection: "row",
+    marginBottom: 4,
+    alignItems: "left",
+    fontSize: 10,
+  },
+
+  // Bullet styles
+  bullet: {
+    width: 200,
+    fontSize: 10,
+    paddingLeft: 35,
+    textAlign: "right",
+    borderWidth: 1,
+    borderColor: "black",
+  },
+
+  // Section styles
+  section: {
+    position: "relative",
+    flexDirection: "row",
+    marginTop: 50,
+    left: 10,
+  },
+
+  sectionIngr: {
+    left: 0,
+    width: 200,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
+
+  sectionInstr: {
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
+});
 
 const ListItem = ({ children, dot = "•" }) => {
-  // console.log("children: " + children);
   const wordsArray = children.split(" ");
   const [first, second, ...rest] = wordsArray;
   const third = rest.join(" ");
@@ -154,15 +156,26 @@ const ListItem = ({ children, dot = "•" }) => {
     <View style={styles.listItem}>
       <Text
         style={{
-          width: 60,
-          fontWeight: "bold",
+          width: 100,
           textAlign: "right",
-          marginRight: 35,
+          marginRight: 15,
+          fontWeight: "bold",
+          fontSize: 10,
         }}
       >
-        {first + " " + second}
+        {parseFloat(first).toFixed(1) + " " + second}
       </Text>
-      <Text style={styles.bullet}>{third}</Text>
+      {/* <Text style={styles.bullet}>{third}</Text> */}
+      <Text
+        style={{
+          fontWeight: "bold",
+          fontSize: 10,
+          marginRight: 8,
+          width: 200,
+        }}
+      >
+        {third}
+      </Text>
     </View>
   );
 };
@@ -189,11 +202,46 @@ const Recipe = ({ title, ingredients, instructions }) => (
       </View>
       <View style={styles_recipe.sectionInstr}>
         <Text style={styles_recipe.headline2}>Instructions:</Text>
-        <BulletList items={instructions} dot={""} stylesheet={styles_recipe} />
+        <BulletListInstruction
+          items={instructions}
+          dot={""}
+          stylesheet={styles_recipe}
+        />
       </View>
     </View>
   </Page>
 );
+
+const BulletListInstruction = ({ items, dot = "•", stylesheet = styles }) => {
+  return (
+    <View>
+      <View
+        style={{
+          flexDirection: "column",
+          paddingHorizontal: 10,
+          paddingLeft: 10,
+          alignItems: "left",
+          width: 335,
+        }}
+      >
+        {items.map((item, index) => (
+          <Text
+            key={item?.id || Math.random()}
+            style={{
+              fontSize: 10,
+              marginBottom: 8,
+              alignItems: "left",
+              textAnchor: "start",
+              textAlign: "left",
+            }}
+          >
+            {`${index + 1}. ${item}`}
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
+};
 
 /* BulletList(items, dot, stylesheet)
  * Pre:
@@ -205,9 +253,6 @@ const Recipe = ({ title, ingredients, instructions }) => (
  * Author: Gustav Landberg <landbergg@outlook.com>
  * */
 const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
-// console.log("ITEMS THAT IS MAPPED;", items)
-
-
   return (
     <View>
       <View
@@ -255,58 +300,6 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
   );
 };
 
-/* ShopplingList (ingredients)
- * Pre: A list of ingredients
- * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
- * Post: A Shopping list PDF documents
- * Author: Gustav Landberg <landbergg@outlook.com>
- * */
-const ShoppingList = ({ ingredients }) => (
-  <Document>
-    <Page size="A6" style={styles.page}>
-      <View>
-        <Text style={styles.mainbody}> by menumatic</Text>
-        <Text
-          style={{
-            fontSize: 24,
-            textAlign: "center",
-            marginBottom: 20,
-          }}
-        >
-          Shopping List
-        </Text>
-        <BulletList items={ingredients} />
-      </View>
-    </Page>
-  </Document>
-);
-
-/* generateRecipesListPDFLink(recipes)
- * Pre:
- * ingredients: a list of strings which describe quantities (with units) of ingredients to be bought
- * fileName: The filename of the downloaded file, (needs to include file extension".pdf"!)
- * Out:
- * A react component (PDFDownloadLink) which generates a download link for the client.
- * Author:
- * Gustav Landberg <landbergg@outlook.com>
- * */
-function generateShoppingListPDFLink(
-  ingredients,
-  fileName = "ShoppingList.pdf"
-) {
-  return (
-    <div>
-      <PDFDownloadLink
-        document={<ShoppingList ingredients={ingredients} />}
-        fileName={fileName}
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download PDF"
-        }
-      </PDFDownloadLink>
-    </div>
-  );
-}
 /* generateRecipesListPDFLink(recipes)
  * Pre:
  * recipes: a list of format
@@ -318,88 +311,30 @@ function generateShoppingListPDFLink(
  * Gustav Landberg <landbergg@outlook.com>
  * */
 
-const RecipesDocument = ({recipes}) => (
-    // <Document>
-    //   {recipes.map((recipe) => (
-    //     <Recipe
-    //       key={Math.random()}
-    //       title={recipe[0]}
-    //       ingredients={recipe[1]}
-    //       instruction={recipe[2]}
-    //     />
-    //   ))}
-    // </Document>
-    <Document>
-      {recipes.map((recipe) => (
-        <Recipe
-          key={Math.random()}
-          title={recipe.title}
-          ingredients={recipe.ingredients}
-          instructions={recipe.instructions}
-        />
-      ))}
-    </Document>
-  );
+const RecipesDocument = ({ recipes }) => (
+  <Document>
+    {recipes.map((recipe) => (
+      <Recipe
+        key={Math.random()}
+        title={recipe.title}
+        ingredients={recipe.ingredients}
+        instructions={recipe.instructions}
+      />
+    ))}
+  </Document>
+);
 
 export function generateRecipesListPDFLink(recipes) {
-
-  return (
-    <div>
-      <PDFDownloadLink document={<RecipesDocument recipes={recipes}/>} fileName="recipes.pdf">
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download Recipes"
-        }
-      </PDFDownloadLink>
-    </div>
-  );
-}
-
-/* CreatePDFForm
- * This function is for testing. Remove when no longer necessary
- * **Deprecated**
- *  Pre: none
- *  Post: CreatePDFForm : A simple component which will generate downloads links to two generated PDF documents
- *  Author: Gustav Landberg <landbergg@outlook.com>
- */
-function CreatePDFForm() {
-  const [inputText, setInputText] = React.useState("");
-
-  function handleChange(event) {
-    setInputText(event.target.value);
-  }
-
-  var ingredientsList = inArrayExample.map((x) => x.join(" "));
-  // console.log(ingredientsList);
   return (
     <div>
       <PDFDownloadLink
-        document={
-          <Document>
-            <Recipe
-              title="chokladbollar"
-              ingredients={ingredientsList}
-              instructions={["1. gör chokladbollarna"]}
-            />
-          </Document>
-        }
+        document={<RecipesDocument recipes={recipes} />}
         fileName="recipes.pdf"
       >
         {({ blob, url, loading, error }) =>
           loading ? "Loading document..." : "Download Recipes"
         }
       </PDFDownloadLink>
-      <br></br>
-      <br></br>
-      <PDFDownloadLink
-        document={<ShoppingList ingredients={ingredientsList} />}
-        fileName="ShoppingList.pdf"
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download Shoppling List"
-        }
-      </PDFDownloadLink>
     </div>
   );
 }
-
-export default CreatePDFForm;

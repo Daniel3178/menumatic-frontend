@@ -10,7 +10,7 @@ import {
   saveShoplistToMenumaticDb,
   fetchExcludedIngredients,
 } from "../integration/menumaticServerThunks";
-
+import { setSelectedTab } from "../recommendation_page/recommendationPageSlice";
 const shoplistSlice = createSlice({
   name: "Shoplist",
   initialState: {
@@ -35,17 +35,11 @@ const shoplistSlice = createSlice({
       state.userShoplistPromise.data.removedItems = [];
     },
     setData: (state, action) => {
-      console.log(
-        "LOADING DATA FROM LOCAL, SHOPLIST: ",
-        action.payload.allItems
-      );
-      // state.generalShoplist.allItems = action.payload.allItems;
       action.payload.allItems.map((element) => {
         const ingredients = [];
         element.ingredients.map((item) => {
           ingredients.push(item);
         });
-        console.log("INGREDIENTS: ", ingredients);
         state.generalShoplist.allItems.push({
           category: element.category,
           ingredients: [...ingredients],
@@ -86,6 +80,11 @@ const shoplistSlice = createSlice({
       });
       state.userShoplistPromise.data.allItems = allItems;
       state.userShoplistPromise.data.removedItems = removedItems;
+
+      localStorage.setItem(
+        "userShoplistData",
+        JSON.stringify(state.userShoplistPromise.data)
+      );
     },
     restoreUserItem: (state, action) => {
       const { allItems, removedItems } = restoreItemUtil({
@@ -95,6 +94,11 @@ const shoplistSlice = createSlice({
       });
       state.userShoplistPromise.data.allItems = allItems;
       state.userShoplistPromise.data.removedItems = removedItems;
+
+      localStorage.setItem(
+        "userShoplistData",
+        JSON.stringify(state.userShoplistPromise.data)
+      );
     },
   },
   extraReducers: (builder) => {
@@ -145,6 +149,10 @@ const shoplistSlice = createSlice({
           "userShoplistData",
           JSON.stringify(state.userShoplistPromise.data)
         );
+      })
+      .addCase(setSelectedTab, (state, action) => {
+        state.generalShoplist.removedItems = [];
+        localStorage.removeItem("removed-items");
       });
   },
 });
@@ -161,6 +169,6 @@ export const {
   removeItem,
   restoreItem,
   setData,
-  flushData
+  flushData,
 } = shoplistSlice.actions;
 export default shoplistSlice.reducer;

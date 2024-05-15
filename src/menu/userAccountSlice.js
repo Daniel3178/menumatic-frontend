@@ -33,7 +33,6 @@ export const deleteUserAsync = createAsyncThunk(
           .catch((error) => {});
       });
     } catch (error) {
-      console.log(error.message);
     }
   }
 );
@@ -60,7 +59,6 @@ export const signUpAsync = createAsyncThunk(
         );
       });
     } catch (error) {
-      console.log(error.message);
       if (error.message === "Firebase: Error (auth/email-already-in-use).") {
         alert("Email already in use! Try another one!");
       } else {

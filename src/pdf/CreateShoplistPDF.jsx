@@ -391,10 +391,6 @@ const RecipesDocument = ({recipes}) => (
 );
 export function generateRecipesListPDFLink(recipes) {
   
-  // try to use object instead of an array
-
-  console.log("PDF RECIPES IS CALLED ", recipes )
-  
   return (
     <div>
       <PDFDownloadLink document={<RecipesDocument recipes={recipes}/>} fileName="recipes.pdf">

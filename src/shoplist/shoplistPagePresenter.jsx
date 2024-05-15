@@ -84,8 +84,6 @@ const ShoplistPagePresenter = () => {
       const ingredients = extendedIngredients.map((ingredient) => {
         return `${ingredient.measures.metric.amount} ${ingredient.measures.metric.unitShort} ${ingredient.nameClean}`
       })
-      // console.log("STEPS IN GENERATION: ", steps)
-      console.log("ANALYZED IN GENERATION: ", analyzedInstructions)
       const instructions = analyzedInstructions[0].steps.map((step) => {
         return step.step;
       })

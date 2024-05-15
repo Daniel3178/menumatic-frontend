@@ -38,7 +38,6 @@ import {
   getLocalQuickDishes,
   flushLocalDishInfo,
 } from "./localStorage";
-import { list } from "postcss";
 
 const MenumaticListeners = () => {
   const dispatch = useDispatch();
@@ -52,12 +51,13 @@ const MenumaticListeners = () => {
       const quickDishes = getLocalQuickDishes();
       const selectedTab = getLocalSelectedTab();
       dispatch(setData({ allItems: shoplist, removedItems: removedItems }));
-      dispatch(setSelectedTab(selectedTab));
+      // dispatch(setSelectedTab(selectedTab));
       dispatch(
         loadLocalData({
           affordable: affordableDishes,
           popular: popularDishes,
           quick: quickDishes,
+          selectedTab: selectedTab,
         })
       );
     };
@@ -73,9 +73,11 @@ const MenumaticListeners = () => {
       listenerApi.dispatch(
         searchComplexBySpoonacularApiAsync({
           intolerances:
-            listenerApi.getState().filterPage.apiPrefs.excludeTags.paramsArray,
-          diet: listenerApi.getState().filterPage.apiPrefs.includeTags
-            .paramsArray,
+            listenerApi.getState().filterPage?.apiPrefs?.excludeTags
+              ?.paramsArray || [],
+          diet:
+            listenerApi.getState().filterPage?.apiPrefs?.includeTags
+              ?.paramsArray || [],
         })
       );
     },
@@ -104,15 +106,16 @@ const MenumaticListeners = () => {
     actionCreator: popFirstRecipe,
     effect: async (action, listenerApi) => {
       const complexSearchResult =
-        listenerApi.getState().spoonacularApi.complexSearchPromise.data;
+        listenerApi.getState().spoonacularApi.complexSearchPromise?.data || [];
       if (complexSearchResult.length < 6) {
         listenerApi.dispatch(
           searchComplexBySpoonacularApiAsync({
             intolerances:
-              listenerApi.getState().filterPage.apiPrefs.excludeTags
-                .paramsArray,
-            diet: listenerApi.getState().filterPage.apiPrefs.includeTags
-              .paramsArray,
+              listenerApi.getState().filterPage?.apiPrefs?.excludeTags
+                ?.paramsArray || [],
+            diet:
+              listenerApi.getState().filterPage?.apiPrefs?.includeTags
+                ?.paramsArray || [],
           })
         );
       }
@@ -122,14 +125,14 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: incrementLikesCounter,
     effect: async (action, listenerApi) => {
-      const counter = listenerApi.getState().homePage.likesCounter;
-      if (counter >= 1) {
+      const counter = listenerApi.getState().homePage?.likesCounter || 1;
+      if (counter == 2) {
         flushLocalDishInfo();
         listenerApi.dispatch(flushData());
       }
 
       const complexSearchResult =
-        listenerApi.getState().spoonacularApi.complexSearchPromise.data;
+        listenerApi.getState().spoonacularApi.complexSearchPromise?.data || [];
       if (complexSearchResult.length < 6 && complexSearchResult.length > 3) {
         listenerApi.dispatch(
           searchComplexBySpoonacularApiAsync({
@@ -167,7 +170,7 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: saveTags,
     effect: async (action, listenerApi) => {
-      const userId = listenerApi.getState().userAccount.userId;
+      const userId = listenerApi.getState().userAccount?.userId;
       try {
         if (userId) {
           listenerApi.dispatch(
@@ -217,10 +220,10 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: generateShoplist,
     effect: async (action, listenerApi) => {
-      console.log("Listening to generatedShoplist action");
-      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const allItems =
+        listenerApi.getState().shoplist?.generalShoplist?.allItems || [];
       const removedItems =
-        listenerApi.getState().shoplist.generalShoplist.removedItems;
+        listenerApi.getState().shoplist?.generalShoplist?.removedItems || [];
       localStorage.setItem("shoplist", JSON.stringify(allItems));
       localStorage.setItem("removed-items", JSON.stringify(removedItems));
     },
@@ -237,9 +240,10 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: removeItem,
     effect: async (action, listenerApi) => {
-      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const allItems =
+        listenerApi.getState().shoplist?.generalShoplist?.allItems || [];
       const removedItems =
-        listenerApi.getState().shoplist.generalShoplist.removedItems;
+        listenerApi.getState().shoplist?.generalShoplist?.removedItems || [];
       localStorage.setItem("shoplist", JSON.stringify(allItems));
       localStorage.setItem("removed-items", JSON.stringify(removedItems));
     },
@@ -248,9 +252,10 @@ const MenumaticListeners = () => {
   listenerMiddleware.startListening({
     actionCreator: restoreItem,
     effect: async (action, listenerApi) => {
-      const allItems = listenerApi.getState().shoplist.generalShoplist.allItems;
+      const allItems =
+        listenerApi.getState().shoplist?.generalShoplist?.allItems || [];
       const removedItems =
-        listenerApi.getState().shoplist.generalShoplist.removedItems;
+        listenerApi.getState().shoplist?.generalShoplist?.removedItems || [];
       localStorage.setItem("shoplist", JSON.stringify(allItems));
       localStorage.setItem("removed-items", JSON.stringify(removedItems));
     },
@@ -260,11 +265,12 @@ const MenumaticListeners = () => {
     actionCreator: sortLikedDishes,
     effect: async (action, listenerApi) => {
       const affordableDishes =
-        listenerApi.getState().recommendation.affordableDishesList.dishes;
+        listenerApi.getState().recommendation?.affordableDishesList?.dishes ||
+        [];
       const popularDishes =
-        listenerApi.getState().recommendation.popularDishesList.dishes;
+        listenerApi.getState().recommendation?.popularDishesList?.dishes || [];
       const quickDishesList =
-        listenerApi.getState().recommendation.quickDishesList.dishes;
+        listenerApi.getState().recommendation?.quickDishesList?.dishes || [];
 
       localStorage.setItem(
         "affordable-dishes",
