@@ -111,7 +111,7 @@ export function generateShoppingListPDFLink(
         fileName={fileName}
       >
         {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download PDF"
+          loading ? "Loading document..." : "Export Shop List"
         }
       </PDFDownloadLink>
     </div>
@@ -433,7 +433,7 @@ function CreatePDFForm() {
         fileName="recipes.pdf"
       >
         {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download Recipes"
+          loading ? "Loading document..." : "Export Recipes"
         }
       </PDFDownloadLink>
       <br></br>
@@ -443,7 +443,7 @@ function CreatePDFForm() {
         fileName="ShoppingList.pdf"
       >
         {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download Shoppling List"
+          loading ? "Loading document..." : "Export Shoppling List"
         }
       </PDFDownloadLink>
     </div>
