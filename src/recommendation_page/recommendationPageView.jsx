@@ -1,5 +1,4 @@
 import React from "react";
-import "./RecepiesForAMealViewCSS.css";
 import DishListComponent from "./dishListComponent";
 import { logo } from "../assets";
 

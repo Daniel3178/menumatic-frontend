@@ -23,7 +23,6 @@ const DishListComponent = (props) => {
    * Returns a table to display a row of the fetched day
    */
   const RecepieForADay = (recipe) => {
-    // Potentially make `id={props.dayOfTheMeal}` into one where `props.dayOfMeal` is provides the meal names. Will nonetheless have to take into account a calendar..
     return (
       <div className="bg-cerulean mb-5 w-full h-[45px] rounded-small font-outfit text-whiteSmoke shadow-mid flex items-center justify-center">
         <span className="text-center w-[10%]"> {recipe.dayOfTheMeal}</span>

@@ -1,9 +1,3 @@
-/* The file's sections
- * generate_Shopping_ListPDFLink section
- * generate_Recepies_ListPDFLink section
- * The deprecated CreatePDFForm
- */
-
 import React from "react";
 
 import {
@@ -342,18 +336,9 @@ const Recipe = ({ title, ingredients, instructions }) => (
     </View>
     <View style={recipeStyle.section}>
       <Text style={recipeStyle.headline2}>Ingredients:</Text>
-      {/* <ShoplistBulletList
-        bulletListContent={ingredients}
-        stylesheet={recipeStyle}
-        /> */}
     </View>
     <View style={recipeStyle.section}>
       <Text style={recipeStyle.headline2}>Instructions:</Text>
-      {/* <ShoplistBulletList
-        bulletListContent={instructions}
-        dot={""}
-        stylesheet={recipeStyle}
-        /> */}
     </View>
   </Page>
 );
@@ -368,15 +353,6 @@ const Recipe = ({ title, ingredients, instructions }) => (
  * Author:
  * Gustav Landberg <landbergg@outlook.com>
  * */
-{/* {recipes.map((recipe) => (
-  <Recipe
-    key={Math.random()}
-    title={recipe[0]}
-    ingredients={recipe[1]}
-    instruction={recipe[2]}
-  />
-))}
-</Document> */}
 const RecipesDocument = ({recipes}) => (
   <Document>
         {recipes.map((recipe) => (
@@ -389,6 +365,7 @@ const RecipesDocument = ({recipes}) => (
     ))}
   </Document>
 );
+
 export function generateRecipesListPDFLink(recipes) {
   
   return (
@@ -401,53 +378,3 @@ export function generateRecipesListPDFLink(recipes) {
     </div>
   );
 }
-// --------------------- The deprecated CreatePDFForm
-
-/* CreatePDFForm
-* This function is for testing. Remove when no longer necessary
-* **Deprecated**
- *  Pre: none
- *  Post: CreatePDFForm : A simple component which will generate downloads links to two generated PDF documents
- *  Author: Gustav Landberg <landbergg@outlook.com>
- */
-function CreatePDFForm() {
-  const [inputText, setInputText] = React.useState("");
-
-  function handleChange(event) {
-    setInputText(event.target.value);
-  }
-
-  var ingredientsList = inArrayExample.map((x) => x.join(" "));
-  return (
-    <div>
-      <PDFDownloadLink
-        document={
-          <Document>
-            <Recipe
-              title="chokladbollar"
-              ingredients={ingredientsList}
-              instructions={["1. gör chokladbollarna"]}
-            />
-          </Document>
-        }
-        fileName="recipes.pdf"
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Export Recipes"
-        }
-      </PDFDownloadLink>
-      <br></br>
-      <br></br>
-      <PDFDownloadLink
-        document={<ShoppingListFrame ingredients={ingredientsList} />}
-        fileName="ShoppingList.pdf"
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Export Shoppling List"
-        }
-      </PDFDownloadLink>
-    </div>
-  );
-}
-
-export default CreatePDFForm;

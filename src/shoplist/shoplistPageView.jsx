@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { generateShoppingListPDFLink } from "../pdf/CreateShoplistPDF";
+import { generateShoppingListPDFLink } from "../pdf/createShoplistPDF";
 import { generateRecipesListPDFLink } from "../pdf/createRecipesPDF";
 import { logo } from "../assets";
 

@@ -12,14 +12,6 @@ import {
   Font,
 } from "@react-pdf/renderer";
 
-const inArrayExample = [
-  ["pärlsocker", 100, "g"],
-  ["socker", 100, "g"],
-  ["smör", 100, "g"],
-  ["kaffe", 10, "g"],
-  ["cocoa", 100, "g"],
-  ["oatmeal,", 100, "g"],
-];
 
 Font.register({
   family: "Roboto",
@@ -165,7 +157,6 @@ const ListItem = ({ children, dot = "•" }) => {
       >
         {parseFloat(first).toFixed(1) + " " + second}
       </Text>
-      {/* <Text style={styles.bullet}>{third}</Text> */}
       <Text
         style={{
           fontWeight: "bold",

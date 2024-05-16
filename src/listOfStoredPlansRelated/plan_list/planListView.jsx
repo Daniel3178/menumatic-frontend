@@ -1,5 +1,4 @@
 import React from "react";
-import "../../recommendation_page/RecepiesForAMealViewCSS.css";
 import { backBlack, logo, closeBtn, trashCan } from "../../assets";
 
 const PlanListView = (props) => {
