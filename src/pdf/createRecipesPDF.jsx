@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 8,
     paddingLeft: 10,
+    paddingLeft: 10,
     alignItems: "center",
     fontSize: 9,
   },
@@ -66,6 +67,87 @@ const styles = StyleSheet.create({
   },
 });
 const styles_recipe = StyleSheet.create({
+  // Headline styles
+  headline: {
+    fontSize: 18,
+    textAlign: "right",
+    marginBottom: 20,
+  },
+
+  // Headline section styles
+  headline_section: {
+    width: 600,
+    left: 0,
+    marginTop: 50,
+    position: "relative",
+    alignItems: "center",
+    borderColor: "black",
+  },
+
+  // Secondary headline styles
+  headline2: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+
+  // Main body text styles
+  mainbody: {
+    fontSize: 14,
+    color: "#aaaaaa",
+    marginBottom: 20,
+  },
+
+  // Page styles
+  page: {
+    flexDirection: "column",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    fontFamily: "Roboto",
+  },
+
+  // List item styles
+  listItem: {
+    flexDirection: "row",
+    marginBottom: 4,
+    alignItems: "left",
+    fontSize: 10,
+  },
+
+  // Bullet styles
+  bullet: {
+    width: 200,
+    fontSize: 10,
+    paddingLeft: 35,
+    textAlign: "right",
+    borderWidth: 1,
+    borderColor: "black",
+  },
+
+  // Section styles
+  section: {
+    position: "relative",
+    flexDirection: "row",
+    marginTop: 50,
+    left: 10,
+  },
+
+  sectionIngr: {
+    left: 0,
+    width: 200,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
+
+  sectionInstr: {
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
+});
   // Headline styles
   headline: {
     fontSize: 18,
@@ -168,6 +250,18 @@ const ListItem = ({ children, dot = "•" }) => {
       {/* <Text style={styles.bullet}>{third}</Text> */}
       <Text
         style={{
+          width: 100,
+          textAlign: "right",
+          marginRight: 15,
+          fontWeight: "bold",
+          fontSize: 10,
+        }}
+      >
+        {parseFloat(first).toFixed(1) + " " + second}
+      </Text>
+      {/* <Text style={styles.bullet}>{third}</Text> */}
+      <Text
+        style={{
           fontWeight: "bold",
           fontSize: 10,
           marginRight: 8,
@@ -191,6 +285,7 @@ const ListItem = ({ children, dot = "•" }) => {
 
 const Recipe = ({ title, ingredients, instructions }) => (
   <Page size="A4" style={styles_recipe.page}>
+  <Page size="A4" style={styles_recipe.page}>
     <Text style={styles_recipe.mainbody}> by menumatic</Text>
     <View style={styles_recipe.headline_section}>
       <Text style={styles_recipe.headline}>{title}</Text>
@@ -208,9 +303,52 @@ const Recipe = ({ title, ingredients, instructions }) => (
           stylesheet={styles_recipe}
         />
       </View>
+      <View style={styles_recipe.sectionIngr}>
+        <Text style={styles_recipe.headline2}>Ingredients:</Text>
+        <BulletList items={ingredients} stylesheet={styles_recipe} />
+      </View>
+      <View style={styles_recipe.sectionInstr}>
+        <Text style={styles_recipe.headline2}>Instructions:</Text>
+        <BulletListInstruction
+          items={instructions}
+          dot={""}
+          stylesheet={styles_recipe}
+        />
+      </View>
     </View>
   </Page>
 );
+
+const BulletListInstruction = ({ items, dot = "•", stylesheet = styles }) => {
+  return (
+    <View>
+      <View
+        style={{
+          flexDirection: "column",
+          paddingHorizontal: 10,
+          paddingLeft: 10,
+          alignItems: "left",
+          width: 335,
+        }}
+      >
+        {items.map((item, index) => (
+          <Text
+            key={item?.id || Math.random()}
+            style={{
+              fontSize: 10,
+              marginBottom: 8,
+              alignItems: "left",
+              textAnchor: "start",
+              textAlign: "left",
+            }}
+          >
+            {`${index + 1}. ${item}`}
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
+};
 
 const BulletListInstruction = ({ items, dot = "•", stylesheet = styles }) => {
   return (
@@ -259,6 +397,7 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
         style={{
           flexDirection: "row",
           paddingHorizontal: 8,
+          paddingLeft: 10,
           paddingLeft: 10,
           alignItems: "center",
         }}
@@ -323,11 +462,24 @@ const RecipesDocument = ({ recipes }) => (
     ))}
   </Document>
 );
+const RecipesDocument = ({ recipes }) => (
+  <Document>
+    {recipes.map((recipe) => (
+      <Recipe
+        key={Math.random()}
+        title={recipe.title}
+        ingredients={recipe.ingredients}
+        instructions={recipe.instructions}
+      />
+    ))}
+  </Document>
+);
 
 export function generateRecipesListPDFLink(recipes) {
   return (
     <div>
       <PDFDownloadLink
+        document={<RecipesDocument recipes={recipes} />}
         document={<RecipesDocument recipes={recipes} />}
         fileName="recipes.pdf"
       >

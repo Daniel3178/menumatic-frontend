@@ -111,7 +111,7 @@ export function generateShoppingListPDFLink(
         fileName={fileName}
       >
         {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download PDF"
+          loading ? "Loading document..." : "Export Shop List"
         }
       </PDFDownloadLink>
     </div>

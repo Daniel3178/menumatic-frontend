@@ -168,9 +168,9 @@ const MenuView = (props) => {
   const menuPing = () => {
     if (props.stateRecommendBtn) {
       return (
-        <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellowGreen opacity-75"></span>
-          <span className="inline-flex rounded-full h-3 w-3 bg-yellowGreen"></span>
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellowGreen opacity-75"></span>
+          <span class="inline-flex rounded-full h-3 w-3 bg-yellowGreen"></span>
         </span>
       );
     }
@@ -208,7 +208,8 @@ const MenuView = (props) => {
               onClick={() => setDeleteAccountToggle(!deleteAccountToggle)}
               className="tracking-wider mr-2 w-60 h-14 text-whiteSmoke text-lg font-outfit rounded-full bg-red-500 text-bold hover:shadow-mid foucs:shadow-in"
             >
-              DELETE ACCOUNT
+              DELETE ACCOUNT 
+    
             </button>
             {deleteAccountToggle && (
               <HandleDeleteAccount handleDeleteAccount={props.deleteAccount} />
@@ -232,7 +233,7 @@ const MenuView = (props) => {
           leaveTo="opacity-0"
         >
           <div className="relative z-1  top-0 right-0 h-screen w-72 bg-yellowGreen">
-            <div className=" h-[85%] overflow-y-scroll tracking-wider text-cerulean">
+            <div className=" h-[80%] overflow-y-scroll tracking-wider text-cerulean">
               <button
                 onClick={props.hideFilter}
                 className="justify-start ml-6 mt-6"
@@ -360,7 +361,7 @@ const MenuView = (props) => {
                 />
               </div>
             </div>
-            <div className="flex justify-center bottom-0 justify-center pb-4">
+            <div className="flex justify-center h-[15%] bottom-0 justify-center pb-8">
               <div className="justify-center font-outfit text-whiteSmoke pb-2">
                 {/* Button to apply filters */}
                 <button
@@ -397,7 +398,7 @@ const MenuView = (props) => {
           >
             <img src={backBlue} />
           </button>
-          <div className="place-content-center mt-40">
+          <div className="place-content-center mt-10">
             <form
               className="w-full mt-10 flex justify-center items-center flex-col text-whiteSmoke text-lg font-outfit"
               onSubmit={props.signUp}
@@ -526,7 +527,7 @@ const MenuView = (props) => {
           <button onClick={props.hideLogin} className="justify-start ml-6 mt-6">
             <img src={backGreen} />
           </button>
-          <div className="place-content-center mt-40">
+          <div className="place-content-center mt-10">
             <div className="flex justify-center">
               <form
                 className="w-full mt-10 flex justify-center items-center flex-col text-whiteSmoke text-lg font-outfit"
