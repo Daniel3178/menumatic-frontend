@@ -332,7 +332,7 @@ export function generateRecipesListPDFLink(recipes) {
         fileName="recipes.pdf"
       >
         {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download Recipes"
+          loading ? "Loading document..." : "Export Recipes"
         }
       </PDFDownloadLink>
     </div>

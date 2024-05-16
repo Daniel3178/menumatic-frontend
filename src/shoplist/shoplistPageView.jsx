@@ -68,7 +68,7 @@ const ShoplistPageView = (props) => {
       return (
         <div className="flex justify-between items-center w-full">
           <div className="ml-2 text-base font-normal text-cerulean">
-            Log in to save the meal plan in Menumatic, or download as PDF.
+            Log in to save the meal plan in Menumatic, or export as PDF.
           </div>
           <div className="flex flex-col h-28 justify-between ">
             {PDFDownloadButton()}
