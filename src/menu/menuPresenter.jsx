@@ -155,10 +155,11 @@ const MenuPresenter = () => {
     }
   };
 
-  const handleDeleteAccount = (props) => {
-    dispatch(deleteUser({ userId: auth.currentUser.uid }));
-    dispatch(deleteUserAsync({ email: props.email, password: props.password }));
+  const handleDeleteAccount = async (props) => {
+    await dispatch(deleteUser({ userId: auth.currentUser.uid }));
+    await dispatch(deleteUserAsync({ email: props.email, password: props.password }));
     setStateLogin(false);
+    navigate("/");
   };
 
   const handlePasswordReset = async (props) => {

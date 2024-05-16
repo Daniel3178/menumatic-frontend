@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {signOutCurrentUser} from "../menu/userAccountSlice";
+import {deleteUserAsync} from "../menu/userAccountSlice";
 const menuPage = createSlice({
   name: "menuPage",
   initialState: {
@@ -53,7 +54,7 @@ const menuPage = createSlice({
             recommendBtn: false,
             recommendDialog: false,
         }
-      })
+      });
   },
 });
 export const getMenuStateBase = (state) => state.menu.menuState.base;

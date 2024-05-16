@@ -151,6 +151,7 @@ const menumaticServerApi = createSlice({
           state: "loading",
           error: null,
         };
+        state.selectedList = {};
       });
   },
 });
