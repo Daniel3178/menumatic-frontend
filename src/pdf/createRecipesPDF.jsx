@@ -140,93 +140,93 @@ const styles_recipe = StyleSheet.create({
     padding: 10,
   },
 
-  // sectionInstr: {
-  //   borderWidth: 1,
-  //   borderColor: "black",
-  //   marginBottom: 20,
-  //   padding: 10,
-  // },
+  sectionInstr: {
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
 
   // Headline styles
-  // headline: {
-  //   fontSize: 18,
-  //   textAlign: "right",
-  //   marginBottom: 20,
-  // },
+  headline: {
+    fontSize: 18,
+    textAlign: "right",
+    marginBottom: 20,
+  },
 
-  // // Headline section styles
-  // headline_section: {
-  //   width: 600,
-  //   left: 0,
-  //   marginTop: 50,
-  //   position: "relative",
-  //   alignItems: "center",
-  //   borderColor: "black",
-  // },
+  // Headline section styles
+  headline_section: {
+    width: 600,
+    left: 0,
+    marginTop: 50,
+    position: "relative",
+    alignItems: "center",
+    borderColor: "black",
+  },
 
-  // // Secondary headline styles
-  // headline2: {
-  //   fontSize: 20,
-  //   marginBottom: 20,
-  // },
+  // Secondary headline styles
+  headline2: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
 
-  // // Main body text styles
-  // mainbody: {
-  //   fontSize: 14,
-  //   color: "#aaaaaa",
-  //   marginBottom: 20,
-  // },
+  // Main body text styles
+  mainbody: {
+    fontSize: 14,
+    color: "#aaaaaa",
+    marginBottom: 20,
+  },
 
-  // // Page styles
-  // page: {
-  //   flexDirection: "column",
-  //   backgroundColor: "#FFFFFF",
-  //   paddingHorizontal: 10,
-  //   paddingVertical: 10,
-  //   fontFamily: "Roboto",
-  // },
+  // Page styles
+  page: {
+    flexDirection: "column",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    fontFamily: "Roboto",
+  },
 
-  // // List item styles
-  // listItem: {
-  //   flexDirection: "row",
-  //   marginBottom: 4,
-  //   alignItems: "left",
-  //   fontSize: 10,
-  // },
+  // List item styles
+  listItem: {
+    flexDirection: "row",
+    marginBottom: 4,
+    alignItems: "left",
+    fontSize: 10,
+  },
 
-  // // Bullet styles
-  // bullet: {
-  //   width: 200,
-  //   fontSize: 10,
-  //   paddingLeft: 35,
-  //   textAlign: "right",
-  //   borderWidth: 1,
-  //   borderColor: "black",
-  // },
+  // Bullet styles
+  bullet: {
+    width: 200,
+    fontSize: 10,
+    paddingLeft: 35,
+    textAlign: "right",
+    borderWidth: 1,
+    borderColor: "black",
+  },
 
-  // // Section styles
-  // section: {
-  //   position: "relative",
-  //   flexDirection: "row",
-  //   marginTop: 50,
-  //   left: 10,
-  // },
+  // Section styles
+  section: {
+    position: "relative",
+    flexDirection: "row",
+    marginTop: 50,
+    left: 10,
+  },
 
-  // sectionIngr: {
-  //   left: 0,
-  //   width: 200,
-  //   borderWidth: 1,
-  //   borderColor: "black",
-  //   marginBottom: 20,
-  //   padding: 10,
-  // },
+  sectionIngr: {
+    left: 0,
+    width: 200,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
 
-  // sectionInstr: {
-  //   borderWidth: 1,
-  //   borderColor: "black",
-  //   marginBottom: 20,
-  //   padding: 10,
-  // },
+  sectionInstr: {
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+    padding: 10,
+  },
 });
 
 const ListItem = ({ children, dot = "•" }) => {
