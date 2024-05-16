@@ -396,7 +396,7 @@ const BulletList = ({ items, dot = "•", stylesheet = styles }) => {
           flexDirection: "row",
           paddingHorizontal: 8,
           paddingLeft: 10,
-          // paddingLeft: 10,
+          paddingLeft: 10,
           alignItems: "center",
         }}
       >
