@@ -147,7 +147,7 @@ const styles_recipe = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
   },
-});
+
   // Headline styles
   headline: {
     fontSize: 18,
@@ -285,7 +285,6 @@ const ListItem = ({ children, dot = "•" }) => {
 
 const Recipe = ({ title, ingredients, instructions }) => (
   <Page size="A4" style={styles_recipe.page}>
-  <Page size="A4" style={styles_recipe.page}>
     <Text style={styles_recipe.mainbody}> by menumatic</Text>
     <View style={styles_recipe.headline_section}>
       <Text style={styles_recipe.headline}>{title}</Text>
@@ -319,36 +318,36 @@ const Recipe = ({ title, ingredients, instructions }) => (
   </Page>
 );
 
-const BulletListInstruction = ({ items, dot = "•", stylesheet = styles }) => {
-  return (
-    <View>
-      <View
-        style={{
-          flexDirection: "column",
-          paddingHorizontal: 10,
-          paddingLeft: 10,
-          alignItems: "left",
-          width: 335,
-        }}
-      >
-        {items.map((item, index) => (
-          <Text
-            key={item?.id || Math.random()}
-            style={{
-              fontSize: 10,
-              marginBottom: 8,
-              alignItems: "left",
-              textAnchor: "start",
-              textAlign: "left",
-            }}
-          >
-            {`${index + 1}. ${item}`}
-          </Text>
-        ))}
-      </View>
-    </View>
-  );
-};
+// const BulletListInstruction = ({ items, dot = "•", stylesheet = styles }) => {
+//   return (
+//     <>
+//       <View
+//         style={{
+//           flexDirection: "column",
+//           paddingHorizontal: 10,
+//           paddingLeft: 10,
+//           alignItems: "left",
+//           width: 335,
+//         }}
+//       >
+//         {items.map((item, index) => (
+//           <Text
+//             key={item?.id || Math.random()}
+//             style={{
+//               fontSize: 10,
+//               marginBottom: 8,
+//               alignItems: "left",
+//               textAnchor: "start",
+//               textAlign: "left",
+//             }}
+//           >
+//             {`${index + 1}. ${item}`}
+//           </Text>
+//         ))}
+//       </View>
+// </>
+//   );
+// };
 
 const BulletListInstruction = ({ items, dot = "•", stylesheet = styles }) => {
   return (
@@ -462,29 +461,28 @@ const RecipesDocument = ({ recipes }) => (
     ))}
   </Document>
 );
-const RecipesDocument = ({ recipes }) => (
-  <Document>
-    {recipes.map((recipe) => (
-      <Recipe
-        key={Math.random()}
-        title={recipe.title}
-        ingredients={recipe.ingredients}
-        instructions={recipe.instructions}
-      />
-    ))}
-  </Document>
-);
+// const RecipesDocument = ({ recipes }) => (
+//   <Document>
+//     {recipes.map((recipe) => (
+//       <Recipe
+//         key={Math.random()}
+//         title={recipe.title}
+//         ingredients={recipe.ingredients}
+//         instructions={recipe.instructions}
+//       />
+//     ))}
+//   </Document>
+// );
 
 export function generateRecipesListPDFLink(recipes) {
   return (
     <div>
       <PDFDownloadLink
         document={<RecipesDocument recipes={recipes} />}
-        document={<RecipesDocument recipes={recipes} />}
         fileName="recipes.pdf"
       >
         {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download Recipes"
+          loading ? "Loading document..." : "Export Recipes"
         }
       </PDFDownloadLink>
     </div>
