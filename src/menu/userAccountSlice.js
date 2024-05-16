@@ -11,7 +11,7 @@ import {
 
 export const deleteUserAsync = createAsyncThunk(
   "userAccountSlice/deleteUser",
-  async (payload) => {
+  async (payload, {dispatch}) => {
     try {
       const { currentUser } = auth;
       const credentials = EmailAuthProvider.credential(
@@ -23,7 +23,7 @@ export const deleteUserAsync = createAsyncThunk(
           .then(async () => {
             await deleteUser(currentUser)
               .then(() => {
-                window.location.reload();
+                // window.location.reload();
               })
               .catch((error) => {
                 // An error ocurred
@@ -31,6 +31,7 @@ export const deleteUserAsync = createAsyncThunk(
               });
           })
           .catch((error) => {});
+          dispatch(signOutCurrentUser());
       });
     } catch (error) {
     }
@@ -97,7 +98,6 @@ const userAccountSlice = createSlice({
       localStorage.removeItem("userShoplistData");
     },
   },
-  
 });
 
 export const { signInCurrentUser, signOutCurrentUser } =
